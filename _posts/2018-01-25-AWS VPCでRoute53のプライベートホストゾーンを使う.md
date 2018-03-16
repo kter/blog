@@ -50,7 +50,7 @@ Route53のページに行ってホストゾーンを作成します。
 
 特に迷うことはないと思いますがこんな感じで
 
-{% responsive_image path: assets/img/20180125/2018-01-25-01.png %}
+![]( /assets/img/20180125/2018-01-25-01.png )
 
 次にレコードを登録しましょう。
 
@@ -79,12 +79,12 @@ VPC一覧のページに移動し、DNSホスト名を```はい```に設定し�
 
 ドメインネームサーバーには```AmazonProvidedDNS```と入力してください。
 
-{% responsive_image path: assets/img/20180125/2018-01-25-04.png %}
+![]( /assets/img/20180125/2018-01-25-04.png )
 
 
 最後にVCPの一覧画面に移動し、DHCPオプションセットの編集から、先ほど作成したオプションセットを指定します。
 
-{% responsive_image path: assets/img/20180125/2018-01-25-05.png %}
+![]( /assets/img/20180125/2018-01-25-05.png )
 
 5分程度待つと、設定したVPC内のインスタンスの```/etc/resolv.conf```が自動で変更され、instance01とinstance02でIPが引けるようになります。
 
