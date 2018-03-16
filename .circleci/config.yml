@@ -22,7 +22,7 @@ jobs:
             google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
             google-cloud-sdk/bin/gcloud config set project personalprojects-189010
             google-cloud-sdk/bin/gcloud --quiet config set container/cluster main-03
-            google-cloud-sdk/bin/gcloud config set compute/zone us-west1-a
+            google-cloud-sdk/bin/gcloud config set compute/zone us-central1-a
             google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials main-03
             google-cloud-sdk/bin/gcloud --quiet components install kubectl
       - run:
