@@ -1,0 +1,9 @@
+FROM ruby:2.3.6-jessie
+
+WORKDIR /app
+
+COPY Gemfile /app
+COPY Gemfile.lock /app
+
+RUN bundle install
+
