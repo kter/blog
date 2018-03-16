@@ -32,7 +32,7 @@ GCP(Google Cloud Platform)アカウントの登録とプロジェクトの作成
 
 クラスタの作成ボタンを押下します。
 
-{% responsive_image path: assets/img/20180211/2018-02-11-01.png %}
+![]( /assets/img/20180211/2018-02-11-01.png )
 
 ## 設定
 
@@ -58,7 +58,7 @@ GCP(Google Cloud Platform)アカウントの登録とプロジェクトの作成
 
 接続ボタンを押下し、"Cloud Shellで実行"を押下します。
 
-{% responsive_image path: assets/img/20180211/2018-02-11-02.png %}
+![]( /assets/img/20180211/2018-02-11-02.png )
 
 ウインドウ下部に、コマンドが入力済みの状態でコンソールが表示されます。
 Enterキーを押してコマンドを実行します。
