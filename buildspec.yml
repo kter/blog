@@ -4,7 +4,11 @@ env:
   variables:
     IMAGE_REPO_NAME: "kter/blog"
   parameter-store:
-    key: "value"
+    DOCKER_EMAIL: "DOCKER_EMAIL"
+    DOCKER_PASS: "DOCKER_PASS"
+    DOCKER_USER: "DOCKER_USER"
+    GCLOUD_SERVICE_KEY: "GCLOUD_SERVICE_KEY"
+    GOOGLE_APPLICATION_CREDENTIALS: "GOOGLE_APPLICATION_CREDENTIALS"
 phases:
   install:
     commands:
