@@ -16,6 +16,7 @@ phases:
       - apt-get update -y
       - apt-get install -y curl python
       - curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-170.0.1-linux-x86_64.tar.gz | tar zx
+      - echo $GCLOUD_SERVICE_KEY
       - echo $GCLOUD_SERVICE_KEY | base64 -d > ${HOME}/gcloud-service-key.json
       - google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
       - google-cloud-sdk/bin/gcloud config set project personalprojects-189010
