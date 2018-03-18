@@ -20,7 +20,7 @@ phases:
       - google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials main-03
       - google-cloud-sdk/bin/gcloud --quiet components install kubectl
       - echo install jekyll
-      - apt-get install -y ruby-bundler
+      # - apt-get install -y ruby-bundler
       - apt-get install -y libffi-dev build-base libxml2-dev libxslt-dev
   pre_build:
     commands:
