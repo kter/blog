@@ -48,15 +48,15 @@ phases:
       - bundle exec jekyll build
       - echo Build completed on `date`
       - echo Building the Docker image...
-      - docker build -t $IMAGE_REPO_NAME:`git rev-parse --short HEAD` .
-      - docker tag $IMAGE_REPO_NAME:`git rev-parse --short HEAD` $IMAGE_REPO_NAME:`git rev-parse --short HEAD`
-      - docker tag $IMAGE_REPO_NAME:`git rev-parse --short HEAD` $IMAGE_REPO_NAME:latest
+      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $IMAGE_REPO_NAME:latest
       - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:`git rev-parse --short HEAD`
+      - docker push $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - docker push $IMAGE_REPO_NAME:latest
   post_build:
     commands:
       - echo deploy to kubernetes
-      - google-cloud-sdk/bin/kubectl set image deployments/blog blog=$IMAGE_REPO_NAME:`git rev-parse --short HEAD`
+      - google-cloud-sdk/bin/kubectl set image deployments/blog blog=$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - google-cloud-sdk/bin/kubectl rollout status deployment/blog
 
