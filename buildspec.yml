@@ -29,7 +29,7 @@ phases:
       - apt-get install -y software-properties-common
       - apt-add-repository -y ppa:brightbox/ruby-ng
       - apt-get update -y
-      - apt-get -y install ruby2.4
+      - apt-get -y install ruby2.4 ruby2.4-dev
       - gem install bundler
       # - apt-get install -y libffi-dev build-base libxml2-dev libxslt-dev
       - apt-get install -y libffi-dev libxml2-dev libxslt-dev
