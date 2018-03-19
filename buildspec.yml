@@ -27,7 +27,7 @@ phases:
       - google-cloud-sdk/bin/gcloud --quiet components install kubectl
       - echo install jekyll
       # - apt-get install -y libffi-dev build-base libxml2-dev libxslt-dev
-      - apt-get install -y libffi-dev libxml2-dev libxslt-dev
+      - apt-get install -y libffi-dev libxml2-dev libxslt-dev ruby-bundler
       # - echo install docker
       # - apt-get install -y docker
   pre_build:
