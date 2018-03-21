@@ -45,7 +45,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo build html
-      - bundle exec jekyll build
+      - JEKYLL_ENV=production bundle exec jekyll build
       - echo Build completed on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
