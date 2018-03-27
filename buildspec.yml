@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     IMAGE_REPO_NAME: "kter/blog"
+    JEKYLL_ENV: "production"
   parameter-store:
     DOCKER_EMAIL: "DOCKER_EMAIL"
     DOCKER_PASS: "DOCKER_PASS"
@@ -45,7 +46,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo build html
-      - JEKYLL_ENV=production bundle exec jekyll build
+      - bundle exec jekyll build
       - echo Build completed on `date`
       - echo Building the Docker image...
       - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
