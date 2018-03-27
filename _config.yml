@@ -27,7 +27,7 @@ disqus:
   shortname: kotoeriburogu
 
 # Tracker
-google_analytics: UA-102810695-1 # Google Analytics
+google_analytics: UA-102810695-1
 
 
 # Build settings
