@@ -26,38 +26,16 @@ phases:
       - google-cloud-sdk/bin/gcloud config set compute/zone us-central1-a
       - google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials main-03
       - google-cloud-sdk/bin/gcloud --quiet components install kubectl
-      - echo install jekyll
-      - apt-get install -y software-properties-common
-      - apt-add-repository -y ppa:brightbox/ruby-ng
-      - apt-get update -y
-      - apt-get -y install ruby2.4 ruby2.4-dev
-      - gem install bundler
-      # - apt-get install -y libffi-dev build-base libxml2-dev libxslt-dev
-      - apt-get install -y libffi-dev libxml2-dev libxslt-dev
-      # - echo install docker
-      # - apt-get install -y docker
   pre_build:
     commands:
       - echo Logging in to Docker Hub...
       - docker login -u $DOCKER_USER --password $DOCKER_PASS
-      - echo setuup jekyll
-      - bundle install --path vendor/bundle
   build:
     commands:
       - echo Build started on `date`
-      - echo build html
-      - bundle exec jekyll build
-      - echo Build completed on `date`
-      - echo Building the Docker image...
-      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION .
-      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION $IMAGE_REPO_NAME:latest
-      - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - docker push $IMAGE_REPO_NAME:latest
   post_build:
     commands:
       - echo deploy to kubernetes
-      - google-cloud-sdk/bin/kubectl set image deployments/stg-blog stg-blog=$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - google-cloud-sdk/bin/kubectl rollout status deployment/stg-blog
+      - google-cloud-sdk/bin/kubectl set image deployments/blog blog=$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - google-cloud-sdk/bin/kubectl rollout status deployment/blog
 
