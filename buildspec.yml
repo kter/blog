@@ -58,6 +58,6 @@ phases:
   post_build:
     commands:
       - echo deploy to kubernetes
-      - google-cloud-sdk/bin/kubectl set image deployments/blog blog=$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - google-cloud-sdk/bin/kubectl rollout status deployment/blog
+      - google-cloud-sdk/bin/kubectl set image deployments/stg-blog stg-blog=$IMAGE_REPO_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - google-cloud-sdk/bin/kubectl rollout status deployment/stg-blog
 
