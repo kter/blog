@@ -1,0 +1,138 @@
+Parameters:
+  PipelineName:
+    Default: "blog2"
+    Description: "Name of Codepipeline"
+    Type: String
+  RepoOwner:
+    Default: "kter"
+    Description: "Name of Codepipeline"
+    Type: String
+  Repo:
+    Default: "blog"
+    Description: "Name of Codepipeline"
+    Type: String
+  ArtifactStoreS3Name:
+    Default: "artifact.codepipeline.kter.jp"
+    Type: String
+  GitHubTokenCodePipeline:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "github_token_codepipeline"
+Resources:
+  ArtifactStoreS3:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Ref ArtifactStoreS3Name
+  CodePipelineRole: 
+    Type: "AWS::IAM::Role"
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "codepipeline.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies: 
+        - 
+          PolicyName: "root"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            # TODO: 権限を絞る
+            Statement: 
+              - 
+                Effect: "Allow"
+                Action: "*"
+                Resource: "*"
+  AppPipeline: 
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties: 
+      Name: !Ref PipelineName
+      RoleArn: !GetAtt CodePipelineRole.Arn
+      Stages: 
+        - 
+          Name: Source
+          Actions: 
+            - 
+              Name: SourceAction
+              ActionTypeId: 
+                Category: Source
+                Owner: ThirdParty
+                Version: 1
+                Provider: GitHub
+              OutputArtifacts: 
+                - 
+                  Name: SourceOutput
+              Configuration: 
+                Owner: !Ref RepoOwner
+                Repo: !Ref Repo
+                Branch: master
+                OAuthToken: !Ref GitHubTokenCodePipeline
+              RunOrder: 1
+              #        - 
+              #          Name: Beta
+              #          Actions: 
+              #            - 
+              #              Name: BetaAction
+              #              InputArtifacts: 
+              #                - 
+              #                  Name: SourceOutput
+              #              ActionTypeId: 
+              #                Category: Deploy
+              #                Owner: AWS
+              #                Version: 1
+              #                Provider: CodeDeploy
+              #              Configuration: 
+              #                ApplicationName: 
+              #                  Ref: ApplicationName
+              #                DeploymentGroupName: 
+              #                  Ref: DeploymentGroupName
+              #              RunOrder: 1
+              #        - 
+              #          Name: Approval
+              #          Actions: 
+              #            - 
+              #              Name: ReleaseAction
+              #              InputArtifacts: 
+              #                - 
+              #                  Name: SourceOutput
+              #              ActionTypeId: 
+              #                Category: Approval
+              #                Owner: AWS
+              #                Version: 1
+              #                Provider: CodeDeploy
+              #              Configuration: 
+              #                ApplicationName: 
+              #                  Ref: ApplicationName
+              #                DeploymentGroupName: 
+              #                  Ref: DeploymentGroupName
+              #              RunOrder: 1
+              #        - 
+              #          Name: Release
+              #          Actions: 
+              #            - 
+              #              Name: ReleaseAction
+              #              InputArtifacts: 
+              #                - 
+              #                  Name: SourceOutput
+              #              ActionTypeId: 
+              #                Category: Deploy
+              #                Owner: AWS
+              #                Version: 1
+              #                Provider: CodeDeploy
+              #              Configuration: 
+              #                ApplicationName: 
+              #                  Ref: ApplicationName
+              #                DeploymentGroupName: 
+              #                  Ref: DeploymentGroupName
+              #              RunOrder: 1
+      ArtifactStore: 
+        Type: S3
+        Location: !Ref ArtifactStoreS3Name
+      DisableInboundStageTransitions: 
+        - 
+          StageName: Release
+          Reason: "Disabling the transition until integration tests are completed"
