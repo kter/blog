@@ -41,12 +41,39 @@ Resources:
           PolicyName: "root"
           PolicyDocument: 
             Version: "2012-10-17"
-            # TODO: 権限を絞る
             Statement: 
               - 
                 Effect: "Allow"
-                Action: "*"
                 Resource: "*"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                  - "s3:GetBucketVersioning"
+              - 
+                Effect: "Allow"
+                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name']]
+                Action:
+                  - "s3:PutObject"
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "codedeploy:CreateDeployment"
+                  - "codedeploy:GetApplicationRevision"
+                  - "codedeploy:GetDeployment"
+                  - "codedeploy:GetDeploymentConfig"
+                  - "codedeploy:RegisterApplicationRevision"
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "cloudformation:GetTemplate"
+                  - "cloudformation:DescribeStackResource"
+                  - "cloudformation:DescribeStackResources"
+                  - "cloudformation:DescribeStackEvents"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:UpdateStack"
+                  - "sns:ListSubscriptionsByTopic"
   AppPipeline: 
     Type: "AWS::CodePipeline::Pipeline"
     Properties: 
