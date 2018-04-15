@@ -158,25 +158,26 @@ Resources:
                 Branch: master
                 OAuthToken: !Ref GitHubTokenCodePipeline
               RunOrder: 1
+        -
+          Name: Beta
+          Actions: 
             - 
-              Name: Beta
-              Actions: 
+              Name: BetaAction
+              InputArtifacts: 
                 - 
-                  Name: BetaAction
-                  InputArtifacts: 
-                    - 
-                      Name: SourceOutput
-                  OutputArtifacts: 
-                    - 
-                      Name: BuildOutput
-                  ActionTypeId: 
-                    Category: Deploy
-                    Owner: AWS
-                    Version: 1
-                    Provider: CodeDeploy
-                  Configuration: 
-                    ProjectName: !Ref BuildProject
-                  RunOrder: 1
+                  Name: SourceOutput
+              OutputArtifacts: 
+                - 
+                  Name: BuildOutput
+              ActionTypeId: 
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CodeDeploy
+              Configuration: 
+                ApplicationName: !Ref BuildProject
+                DeploymentGroupName: !Ref BuildProject
+              RunOrder: 1
               #        - 
               #          Name: Approval
               #          Actions: 
