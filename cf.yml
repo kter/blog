@@ -74,6 +74,43 @@ Resources:
                   - "cloudformation:DescribeStacks"
                   - "cloudformation:UpdateStack"
                   - "sns:ListSubscriptionsByTopic"
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [codebuild.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                  - "s3:GetBucketVersioning"
+              - 
+                Effect: "Allow"
+                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name']]
+                Action:
+                  - "s3:PutObject"
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "codedeploy:CreateDeployment"
+                  - "codedeploy:GetApplicationRevision"
+                  - "codedeploy:GetDeployment"
+                  - "codedeploy:GetDeploymentConfig"
+                  - "codedeploy:RegisterApplicationRevision"
   BuildProject:
     Description: Creating AWS CodeBuild project
     Type: AWS::CodeBuild::Project
@@ -92,7 +129,7 @@ Resources:
         PrivilegedMode: true
         Type: LINUX_CONTAINER
       Name: BuildProject
-      ServiceRole: !GetAtt CodePipelineRole.Arn
+      ServiceRole: !GetAtt CodeBuildRole.Arn
       Source:
         Type: CODEPIPELINE
       TimeoutInMinutes: 5
