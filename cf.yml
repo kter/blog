@@ -74,6 +74,28 @@ Resources:
                   - "cloudformation:DescribeStacks"
                   - "cloudformation:UpdateStack"
                   - "sns:ListSubscriptionsByTopic"
+  BuildProject:
+    Description: Creating AWS CodeBuild project
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Cache:
+        Type: S3
+        Location: !Join [ "/", [ !Ref ArtifactStoreS3Name, buildcache ]]
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        EnvironmentVariables:
+          - Name: Branch
+            Value: master
+        Image: "aws/codebuild/docker:17.09.0"
+        PrivilegedMode: true
+        Type: LINUX_CONTAINER
+      Name: BuildProject
+      ServiceRole: !GetAtt CodePipelineRole.Arn
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 5
   AppPipeline: 
     Type: "AWS::CodePipeline::Pipeline"
     Properties: 
@@ -99,25 +121,25 @@ Resources:
                 Branch: master
                 OAuthToken: !Ref GitHubTokenCodePipeline
               RunOrder: 1
-              #        - 
-              #          Name: Beta
-              #          Actions: 
-              #            - 
-              #              Name: BetaAction
-              #              InputArtifacts: 
-              #                - 
-              #                  Name: SourceOutput
-              #              ActionTypeId: 
-              #                Category: Deploy
-              #                Owner: AWS
-              #                Version: 1
-              #                Provider: CodeDeploy
-              #              Configuration: 
-              #                ApplicationName: 
-              #                  Ref: ApplicationName
-              #                DeploymentGroupName: 
-              #                  Ref: DeploymentGroupName
-              #              RunOrder: 1
+            - 
+              Name: Beta
+              Actions: 
+                - 
+                  Name: BetaAction
+                  InputArtifacts: 
+                    - 
+                      Name: SourceOutput
+                  OutputArtifacts: 
+                    - 
+                      Name: BuildOutput
+                  ActionTypeId: 
+                    Category: Deploy
+                    Owner: AWS
+                    Version: 1
+                    Provider: CodeDeploy
+                  Configuration: 
+                    ProjectName: !Ref BuildProject
+                  RunOrder: 1
               #        - 
               #          Name: Approval
               #          Actions: 
