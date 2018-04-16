@@ -200,25 +200,25 @@ Resources:
                 NotificationArn: !Ref MySNSTopic
                 CustomData: Approval or Reject this change after running Exploratory Tests
               RunOrder: 1
-              #        - 
-              #          Name: Release
-              #          Actions: 
-              #            - 
-              #              Name: ReleaseAction
-              #              InputArtifacts: 
-              #                - 
-              #                  Name: SourceOutput
-              #              ActionTypeId: 
-              #                Category: Deploy
-              #                Owner: AWS
-              #                Version: 1
-              #                Provider: CodeDeploy
-              #              Configuration: 
-              #                ApplicationName: 
-              #                  Ref: ApplicationName
-              #                DeploymentGroupName: 
-              #                  Ref: DeploymentGroupName
-              #              RunOrder: 1
+        - 
+          Name: Release
+          Actions: 
+            - 
+              Name: ReleaseAction
+              InputArtifacts: 
+                - 
+                  Name: SourceOutput
+              ActionTypeId: 
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CodeDeploy
+              Configuration: 
+                ApplicationName: 
+                  !Join ['', [!Ref 'BuildProject', 'deploy']]
+                DeploymentGroupName: 
+                  !Join ['', [!Ref 'BuildProject', 'deploy']]
+              RunOrder: 1
       ArtifactStore: 
         Type: S3
         Location: !Ref ArtifactStoreS3Name
