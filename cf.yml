@@ -176,8 +176,6 @@ Resources:
               InputArtifacts: 
                 - 
                   Name: SourceOutput
-              OutputArtifacts: 
-                  Name: BuildOutput
               ActionTypeId: 
                 Category: Deploy
                 Owner: AWS
