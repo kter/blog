@@ -17,7 +17,17 @@ Parameters:
   GitHubTokenCodePipeline:
     Type: AWS::SSM::Parameter::Value<String>
     Default: "github_token_codepipeline"
+  EmailAddress:
+    Description: Email Address
+    Type: String
+    Default: "me@kter.jp"
 Resources:
+  MySNSTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      Subscription:
+        - Endpoint: !Ref EmailAddress
+          Protocol: email
   ArtifactStoreS3:
     Type: 'AWS::S3::Bucket'
     Properties:
@@ -178,25 +188,21 @@ Resources:
                 ApplicationName: !Ref BuildProject
                 DeploymentGroupName: !Ref BuildProject
               RunOrder: 1
-              #        - 
-              #          Name: Approval
-              #          Actions: 
-              #            - 
-              #              Name: ReleaseAction
-              #              InputArtifacts: 
-              #                - 
-              #                  Name: SourceOutput
-              #              ActionTypeId: 
-              #                Category: Approval
-              #                Owner: AWS
-              #                Version: 1
-              #                Provider: CodeDeploy
-              #              Configuration: 
-              #                ApplicationName: 
-              #                  Ref: ApplicationName
-              #                DeploymentGroupName: 
-              #                  Ref: DeploymentGroupName
-              #              RunOrder: 1
+        -
+          Name: ExploratoryTesting
+          Actions:
+            - InputArtifacts: []
+              Name: QA
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Version: '1'
+                Provider: Manual
+              OutputArtifacts: []
+              Configuration:
+                NotificationArn: !Ref MySNSTopic
+                CustomData: Approval or Reject this change after running Exploratory Tests
+              RunOrder: 1
               #        - 
               #          Name: Release
               #          Actions: 
