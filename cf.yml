@@ -177,7 +177,6 @@ Resources:
                 - 
                   Name: SourceOutput
               OutputArtifacts: 
-                - 
                   Name: BuildOutput
               ActionTypeId: 
                 Category: Deploy
