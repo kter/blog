@@ -172,13 +172,12 @@ Resources:
                 - 
                   Name: SourceOutput
               ActionTypeId: 
-                Category: Deploy
+                Category: Build
                 Owner: AWS
                 Version: 1
-                Provider: CodeDeploy
+                Provider: CodeBuild
               Configuration: 
-                ApplicationName: !Ref BuildProject
-                DeploymentGroupName: !Ref BuildProject
+                ProjectName: !Ref BuildProject
               RunOrder: 1
         -
           Name: ExploratoryTesting
@@ -204,14 +203,12 @@ Resources:
                 - 
                   Name: SourceOutput
               ActionTypeId: 
-                Category: Deploy
+                Category: Build
                 Owner: AWS
                 Version: 1
-                Provider: CodeDeploy
+                Provider: CodeBuild
               Configuration: 
-                ApplicationName: 
-                  !Join ['', [!Ref 'BuildProject', 'deploy']]
-                DeploymentGroupName: 
+                ProjectName: 
                   !Join ['', [!Ref 'BuildProject', 'deploy']]
               RunOrder: 1
       ArtifactStore: 
