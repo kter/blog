@@ -83,7 +83,9 @@ Resources:
                 Action:
                   - codebuild:BatchGetBuilds
                   - codebuild:StartBuild
-                Resource: !GetAtt BuildProject.Arn
+                Resource:
+                  - !GetAtt BuildProject.Arn
+                  - !GetAtt BuildProjectDeploy.Arn
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
@@ -167,6 +169,26 @@ Resources:
       Source:
         Type: CODEPIPELINE
       TimeoutInMinutes: 5
+  BuildProjectDeploy:
+    Description: Creating AWS CodeBuild project
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Cache:
+        Type: S3
+        Location: !Join [ "/", [ !Ref ArtifactStoreS3, buildcache ]]
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: "aws/codebuild/docker:17.09.0"
+        PrivilegedMode: true
+        Type: LINUX_CONTAINER
+      Name: BuildProjectDeploy
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: "buildspec_prd.yml"
+      TimeoutInMinutes: 5
   AppPipeline: 
     Type: "AWS::CodePipeline::Pipeline"
     Properties: 
@@ -237,8 +259,7 @@ Resources:
                 Version: 1
                 Provider: CodeBuild
               Configuration: 
-                ProjectName: 
-                  !Join ['', [!Ref 'BuildProject', 'deploy']]
+                ProjectName: !Ref BuildProjectDeploy
               RunOrder: 1
       ArtifactStore: 
         Type: S3
