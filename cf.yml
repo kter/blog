@@ -78,7 +78,17 @@ Resources:
                   - "cloudformation:DescribeStackEvents"
                   - "cloudformation:DescribeStacks"
                   - "cloudformation:UpdateStack"
-                  - "sns:ListSubscriptionsByTopic"
+                  - "iam:PassRole"
+              - Sid: SNSPublishAccess
+                Effect: Allow
+                Action: sns:Publish
+                Resource: !Ref MySNSTopic
+              - Sid: CodeBuildAccess
+                Effect: Allow
+                Action:
+                  - codebuild:BatchGetBuilds
+                  - codebuild:StartBuild
+                Resource: !GetAtt BuildProject.Arn
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
