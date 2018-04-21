@@ -48,22 +48,17 @@ Resources:
       Path: "/"
       Policies: 
         - 
-          PolicyName: "root"
+          PolicyName: "forcodepipeline"
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
               - 
                 Effect: "Allow"
-                Resource: "*"
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name', '/*']]
                 Action:
-                  - "s3:GetObject"
-                  - "s3:GetObjectVersion"
-                  - "s3:GetBucketVersioning"
-              - 
-                Effect: "Allow"
-                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name']]
-                Action:
-                  - "s3:PutObject"
+                  - "s3:*"
               - 
                 Effect: "Allow"
                 Resource: "*"
