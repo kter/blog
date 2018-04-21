@@ -11,9 +11,6 @@ Parameters:
     Default: "blog"
     Description: "Name of Codepipeline"
     Type: String
-  ArtifactStoreS3Name:
-    Default: "artifact.codepipeline.kter.jp"
-    Type: String
   GitHubTokenCodePipeline:
     Type: AWS::SSM::Parameter::Value<String>
     Default: "github_token_codepipeline"
@@ -30,8 +27,6 @@ Resources:
           Protocol: email
   ArtifactStoreS3:
     Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: !Ref ArtifactStoreS3Name
   CodePipelineRole: 
     Type: "AWS::IAM::Role"
     Properties: 
@@ -55,8 +50,8 @@ Resources:
               - 
                 Effect: "Allow"
                 Resource:
-                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name']]
-                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name', '/*']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3', '/*']]
                 Action:
                   - "s3:*"
               - 
@@ -114,7 +109,7 @@ Resources:
                   - "s3:GetBucketVersioning"
               - 
                 Effect: "Allow"
-                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3Name']]
+                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3']]
                 Action:
                   - "s3:PutObject"
               - 
@@ -134,7 +129,7 @@ Resources:
         Type: CODEPIPELINE
       Cache:
         Type: S3
-        Location: !Join [ "/", [ !Ref ArtifactStoreS3Name, buildcache ]]
+        Location: !Join [ "/", [ !Ref ArtifactStoreS3, buildcache ]]
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         EnvironmentVariables:
@@ -223,7 +218,7 @@ Resources:
               RunOrder: 1
       ArtifactStore: 
         Type: S3
-        Location: !Ref ArtifactStoreS3Name
+        Location: !Ref ArtifactStoreS3
       DisableInboundStageTransitions: 
         - 
           StageName: Release
