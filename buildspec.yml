@@ -4,6 +4,8 @@ env:
   variables:
     JEKYLL_ENV: "production"
   parameter-store:
+    STG_BUCKET: "STG_BUCKET"
+    PRD_BUCKET: "PRD_BUCKET"
 phases:
   install:
     commands:
