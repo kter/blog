@@ -1,8 +1,16 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Static contents distribution using S3 and CloudFront.
- 
+Parameters:
+  Domain:
+    Default: kter.jp
+    Type: String
+  PrdHostname:
+    Default: kter.jp
+    Type: String
+  StgHostname:
+    Default: stg.kter.jp
+    Type: String
 Resources:
-
   StgBlogBucket:
     Type: AWS::S3::Bucket
     Name: stg.kter.jp
@@ -73,3 +81,30 @@ Resources:
     Properties:
       CloudFrontOriginAccessIdentityConfig:
         Comment: !Ref AWS::StackName
+
+  StgDNS:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Ref Domain
+      Name: !Ref Hostname
+      Type: A
+      TTL: '300'
+      AliasTarget:
+        DNSName: !Ref StgBlogDistribution
+        # CloudFormationは決め打ち
+        HostedZoneId: Z2FDTNDATAQYW2
+      ResourceRecords:
+        -  !Ref PrdBlogDistribution
+  PrdDNS:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Ref Domain
+      Name: !Ref Hostname
+      AliasTarget:
+        DNSName: !Ref PrdBlogDistribution
+        # CloudFormationは決め打ち
+        HostedZoneId: Z2FDTNDATAQYW2
+      Type: A
+      TTL: '300'
+      ResourceRecords:
+        -  !Ref StgBlogDistribution
