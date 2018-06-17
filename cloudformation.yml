@@ -1,7 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: Static contents distribution using S3 and CloudFront.
 Parameters:
-  Domain:
+  StgDomain:
+    Default: kter.jp
+    Type: String
+  PrdDomain:
     Default: kter.jp
     Type: String
   PrdHostname:
@@ -13,10 +16,10 @@ Parameters:
 Resources:
   StgBlogBucket:
     Type: AWS::S3::Bucket
-    Name: stg.kter.jp
+    BucketName: stg.kter.jp
   PrdBlogBucket:
     Type: AWS::S3::Bucket
-    Name: kter.jp
+    BucketName: kter.jp
 
   StgBlogBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -85,7 +88,7 @@ Resources:
   StgDNS:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneName: !Ref Domain
+      HostedZoneName: !Ref StgDomain
       Name: !Ref Hostname
       Type: A
       TTL: '300'
@@ -98,7 +101,7 @@ Resources:
   PrdDNS:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneName: !Ref Domain
+      HostedZoneName: !Ref PrdDomain
       Name: !Ref Hostname
       AliasTarget:
         DNSName: !Ref PrdBlogDistribution
@@ -108,3 +111,17 @@ Resources:
       TTL: '300'
       ResourceRecords:
         -  !Ref StgBlogDistribution
+  StgCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName: !Ref StgDNS
+      DomainValidationOptions:
+        DomainName: !Ref StgDNS
+        ValidationDomain: !Ref StgDomain
+  PrdCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName: !Ref PrdDNS
+      DomainValidationOptions:
+        DomainName: !Ref PrdDNS
+        ValidationDomain: !Ref PrdDomain
