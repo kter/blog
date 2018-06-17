@@ -86,7 +86,10 @@ Resources:
   StgDNS:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneName: !Ref StgDomain
+      HostedZoneName: !Join
+        - ''
+        - - !Ref StgDomain
+          - '.'
       Name: !Ref StgHostname
       Type: A
       TTL: '300'
@@ -94,12 +97,13 @@ Resources:
         DNSName: !Ref StgBlogDistribution
         # CloudFormationは決め打ち
         HostedZoneId: Z2FDTNDATAQYW2
-      ResourceRecords:
-        -  !Ref PrdBlogDistribution
   PrdDNS:
     Type: AWS::Route53::RecordSet
     Properties:
-      HostedZoneName: !Ref PrdDomain
+      HostedZoneName: !Join
+        - ''
+        - - !Ref PrdDomain
+          - '.'
       Name: !Ref PrdHostname
       AliasTarget:
         DNSName: !Ref PrdBlogDistribution
