@@ -16,10 +16,8 @@ Parameters:
 Resources:
   StgBlogBucket:
     Type: AWS::S3::Bucket
-    BucketName: stg.kter.jp
   PrdBlogBucket:
     Type: AWS::S3::Bucket
-    BucketName: kter.jp
 
   StgBlogBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -89,7 +87,7 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneName: !Ref StgDomain
-      Name: !Ref Hostname
+      Name: !Ref StgHostname
       Type: A
       TTL: '300'
       AliasTarget:
@@ -102,7 +100,7 @@ Resources:
     Type: AWS::Route53::RecordSet
     Properties:
       HostedZoneName: !Ref PrdDomain
-      Name: !Ref Hostname
+      Name: !Ref PrdHostname
       AliasTarget:
         DNSName: !Ref PrdBlogDistribution
         # CloudFormationは決め打ち
