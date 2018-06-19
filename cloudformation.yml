@@ -5,20 +5,20 @@ Parameters:
   StgDomain:
     Default: kter.jp
     Type: String
-  PrdDomain:
-    Default: kter.jp
-    Type: String
-  PrdHostname:
-    Default: kter.jp
-    Type: String
+  #PrdDomain:
+  #  Default: kter.jp
+  #  Type: String
+  #PrdHostname:
+  #  Default: kter.jp
+  #  Type: String
   StgHostname:
     Default: stg.kter.jp
     Type: String
 Resources:
   StgBlogBucket:
     Type: AWS::S3::Bucket
-  PrdBlogBucket:
-    Type: AWS::S3::Bucket
+  #PrdBlogBucket:
+  #  Type: AWS::S3::Bucket
 
   StgBlogBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -31,17 +31,17 @@ Resources:
             Resource: !Sub arn:aws:s3:::${StgBlogBucket}/*
             Principal:
               AWS: !Sub arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}
-  PrdBlogAssetsBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref PrdBlogBucket
-      PolicyDocument:
-        Statement:
-          - Action: s3:GetObject
-            Effect: Allow
-            Resource: !Sub arn:aws:s3:::${PrdBlogBucket}/*
-            Principal:
-              AWS: !Sub arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}
+  #PrdBlogAssetsBucketPolicy:
+  #  Type: AWS::S3::BucketPolicy
+  #  Properties:
+  #    Bucket: !Ref PrdBlogBucket
+  #    PolicyDocument:
+  #      Statement:
+  #        - Action: s3:GetObject
+  #          Effect: Allow
+  #          Resource: !Sub arn:aws:s3:::${PrdBlogBucket}/*
+  #          Principal:
+  #            AWS: !Sub arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}
  
   StgBlogDistribution:
     Type: AWS::CloudFront::Distribution
@@ -66,29 +66,29 @@ Resources:
           ForwardedValues:
             QueryString: false
           ViewerProtocolPolicy: redirect-to-https
-  PrdBlogDistribution:
-    Type: AWS::CloudFront::Distribution
-    Properties:
-      DistributionConfig:
-        # fail due to circular dependency
-        # ViewerCertificate:
-        #   AcmCertificateArn: !Ref PrdCertificate
-        #   SslSupportMethod: sni-only
-        Aliases:
-          - !Ref PrdHostname
-        Origins:
-        - Id: S3Origin
-          DomainName: !GetAtt PrdBlogBucket.DomainName
-          S3OriginConfig:
-            OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
-        Enabled: true
-        DefaultRootObject: index.html
-        Comment: !Sub ${AWS::StackName} distribution
-        DefaultCacheBehavior:
-          TargetOriginId: S3Origin
-          ForwardedValues:
-            QueryString: false
-          ViewerProtocolPolicy: redirect-to-https
+  #PrdBlogDistribution:
+  #  Type: AWS::CloudFront::Distribution
+  #  Properties:
+  #    DistributionConfig:
+  #      # fail due to circular dependency
+  #      # ViewerCertificate:
+  #      #   AcmCertificateArn: !Ref PrdCertificate
+  #      #   SslSupportMethod: sni-only
+  #      Aliases:
+  #        - !Ref PrdHostname
+  #      Origins:
+  #      - Id: S3Origin
+  #        DomainName: !GetAtt PrdBlogBucket.DomainName
+  #        S3OriginConfig:
+  #          OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
+  #      Enabled: true
+  #      DefaultRootObject: index.html
+  #      Comment: !Sub ${AWS::StackName} distribution
+  #      DefaultCacheBehavior:
+  #        TargetOriginId: S3Origin
+  #        ForwardedValues:
+  #          QueryString: false
+  #        ViewerProtocolPolicy: redirect-to-https
 
   CloudFrontOriginAccessIdentity:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
@@ -109,19 +109,19 @@ Resources:
         DNSName: !GetAtt StgBlogDistribution.DomainName
         # CloudFormationは決め打ち
         HostedZoneId: Z2FDTNDATAQYW2
-  PrdDNS:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      HostedZoneName: !Join
-        - ''
-        - - !Ref PrdDomain
-          - '.'
-      Name: !Ref PrdHostname
-      AliasTarget:
-        DNSName: !GetAtt PrdBlogDistribution.DomainName
-        # CloudFormationは決め打ち
-        HostedZoneId: Z2FDTNDATAQYW2
-      Type: A
+  #PrdDNS:
+  #  Type: AWS::Route53::RecordSet
+  #  Properties:
+  #    HostedZoneName: !Join
+  #      - ''
+  #      - - !Ref PrdDomain
+  #        - '.'
+  #    Name: !Ref PrdHostname
+  #    AliasTarget:
+  #      DNSName: !GetAtt PrdBlogDistribution.DomainName
+  #      # CloudFormationは決め打ち
+  #      HostedZoneId: Z2FDTNDATAQYW2
+  #    Type: A
   StgCertificate:
     Type: "AWS::CertificateManager::Certificate"
     Properties:
@@ -129,10 +129,10 @@ Resources:
       DomainValidationOptions:
         - DomainName: !Ref StgDNS
           ValidationDomain: !Ref StgDomain
-  PrdCertificate:
-    Type: "AWS::CertificateManager::Certificate"
-    Properties:
-      DomainName: !Ref PrdDNS
-      DomainValidationOptions:
-        DomainName: !Ref PrdDNS
-        ValidationDomain: !Ref PrdDomain
+  #PrdCertificate:
+  #  Type: "AWS::CertificateManager::Certificate"
+  #  Properties:
+  #    DomainName: !Ref PrdDNS
+  #    DomainValidationOptions:
+  #      DomainName: !Ref PrdDNS
+  #      ValidationDomain: !Ref PrdDomain
