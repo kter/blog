@@ -1,4 +1,4 @@
-# Run in the us-west-1
+# Run in the us-west-1 (for ACM)
 AWSTemplateFormatVersion: 2010-09-09
 Description: Static contents distribution using S3 and CloudFront.
 Parameters:
