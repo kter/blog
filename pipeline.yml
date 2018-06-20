@@ -147,6 +147,13 @@ Resources:
                   - logs:PutLogEvents
                 Resource:
                   - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*
+              - Sid: KMSParameter
+                Effect: Allow
+                Action:
+                  - ssm:GetParameters
+                Resource:
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/STG_BUCKET
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/PRD_BUCKET
   BuildProject:
     Description: Creating AWS CodeBuild project
     Type: AWS::CodeBuild::Project
