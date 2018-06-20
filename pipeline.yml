@@ -122,12 +122,16 @@ Resources:
                   - "s3:PutObject"
               - 
                 Effect: "Allow"
-                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket']]
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket', '/*']]
                 Action:
                   - "s3:*"
               - 
                 Effect: "Allow"
-                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket']]
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket', '/*']]
                 Action:
                   - "s3:*"
               - 
