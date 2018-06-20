@@ -19,11 +19,11 @@ Parameters:
     Type: String
     Default: "me@kter.jp"
   StgBucket:
-    Type: String
-    Default: "stg.kter.jp"
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "STG_BUCKET"
   PrdBucket:
-    Type: String
-    Default: "kter.jp"
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "PRD_BUCKET"
 Resources:
   MySNSTopic:
     Type: 'AWS::SNS::Topic'
