@@ -3,6 +3,7 @@ version: 0.2
 env:
   variables:
     JEKYLL_ENV: "production"
+    LC_CTYPE: "en_US.UTF-8"
   parameter-store:
     STG_BUCKET: "STG_BUCKET"
     PRD_BUCKET: "PRD_BUCKET"
