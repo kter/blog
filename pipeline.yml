@@ -18,6 +18,12 @@ Parameters:
     Description: Email Address
     Type: String
     Default: "me@kter.jp"
+  StgBucket:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "STG_BUCKET"
+  PrdBucket:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "PRD_BUCKET"
 Resources:
   MySNSTopic:
     Type: 'AWS::SNS::Topic'
@@ -116,6 +122,20 @@ Resources:
                   - "s3:PutObject"
               - 
                 Effect: "Allow"
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket', '/*']]
+                Action:
+                  - "s3:*"
+              - 
+                Effect: "Allow"
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket', '/*']]
+                Action:
+                  - "s3:*"
+              - 
+                Effect: "Allow"
                 Resource: "*"
                 Action:
                   - "codedeploy:CreateDeployment"
@@ -136,17 +156,8 @@ Resources:
                 Action:
                   - ssm:GetParameters
                 Resource:
-                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/DOCKER_EMAIL
-                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/DOCKER_PASS
-                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/DOCKER_USER
-                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/GCLOUD_SERVICE_KEY
-                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/GOOGLE_APPLICATION_CREDENTIALS
-              - Sid: KMSAccess
-                Effect: Allow
-                Action:
-                  - kms:Decrypt
-                Resource:
-                  - !Sub arn:aws:kms:${AWS::Region}:${AWS::AccountId}:key/alias/aws/ssm"
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/STG_BUCKET
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/PRD_BUCKET
   BuildProject:
     Description: Creating AWS CodeBuild project
     Type: AWS::CodeBuild::Project
