@@ -11,5 +11,5 @@ phases:
   post_build:
     commands:
       - echo deploy to S3
-      - aws s3 cp s3://$PRD_BUCKET/ s3://$STG_BUCKET/ --recursive
+      - aws s3 cp s3://$STG_BUCKET/ s3://$PRD_BUCKET/ --recursive
 
