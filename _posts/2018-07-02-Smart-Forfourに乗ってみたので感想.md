@@ -4,7 +4,7 @@ title: Smart Forfourに乗ったので感想
 date: 2018-07-02T15:19:00+09:00
 author: kter
 layout: post
-image: 
+image: /assets/img/20180702/IMG_20180630_104751.jpg
 categories:
   - 日記
 tags:
