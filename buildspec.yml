@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    JEKYLL_ENV: "production"
+    JEKYLL_ENV: "staging"
     LC_CTYPE: "C.UTF-8"
   parameter-store:
     STG_BUCKET: "STG_BUCKET"
