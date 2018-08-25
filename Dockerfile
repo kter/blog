@@ -1,7 +1,8 @@
-FROM kter/nginx-module-vts:1.12.2-0.1.15
+FROM jekyll/jekyll
 
-COPY _site /usr/share/nginx/html
+COPY Gemfile /app/Gemfile
+COPY Gemfile.lock /app/Gemfile.lock
 
-EXPOSE 80
+WORKDIR /app
 
-CMD ["nginx", "-g", "daemon off;"]
+RUN bundle
