@@ -6,13 +6,13 @@ Parameters:
     Default: kter.jp
     Type: String
   PrdDomain:
-    Default: blog.kter.jp
+    Default: kter.jp
     Type: String
   PrdHostname:
     Default: blog.kter.jp
     Type: String
   StgHostname:
-    Default: stg.kter.jp
+    Default: stg-blog.kter.jp
     Type: String
 Resources:
   StgBlogBucket:
