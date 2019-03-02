@@ -134,5 +134,5 @@ Resources:
     Properties:
       DomainName: !Ref PrdDNS
       DomainValidationOptions:
-        DomainName: !Ref PrdDNS
-        ValidationDomain: !Ref PrdDomain
+        - DomainName: !Ref PrdDNS
+          ValidationDomain: !Ref PrdDomain
