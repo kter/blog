@@ -3,16 +3,16 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: Static contents distribution using S3 and CloudFront.
 Parameters:
   StgDomain:
-    Default: kter.jp
+    Default: tomohiko.io
     Type: String
   PrdDomain:
-    Default: kter.jp
+    Default: tomohiko.io
     Type: String
   PrdHostname:
-    Default: blog.kter.jp
+    Default: blog.tomohiko.io
     Type: String
   StgHostname:
-    Default: stg-blog.kter.jp
+    Default: stg-blog.tomohiko.io
     Type: String
 Resources:
   StgBlogBucket:
