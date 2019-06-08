@@ -32,3 +32,4 @@ phases:
     commands:
       - echo deploy to S3
       - aws s3 cp _site/ s3://$STG_BUCKET/ --recursive
+      - aws cloudfront create-invalidation --distribution-id E22457BCB27BR4 --paths '*'

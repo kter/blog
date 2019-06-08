@@ -158,6 +158,12 @@ Resources:
                 Resource:
                   - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/STG_BUCKET
                   - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/PRD_BUCKET
+              - Sid: CloudFront
+                Effect: Allow
+                Action:
+                  - cloudfront:CreateInvalidation
+                Resource:
+                  - "*"
   BuildProject:
     Description: Creating AWS CodeBuild project
     Type: AWS::CodeBuild::Project
