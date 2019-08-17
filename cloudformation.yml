@@ -81,6 +81,8 @@ Resources:
           TargetOriginId: S3Origin
           ForwardedValues:
             QueryString: false
+            Headers:
+              - "Origin"
           ViewerProtocolPolicy: redirect-to-https
   PrdBlogDistribution:
     Type: AWS::CloudFront::Distribution
@@ -104,6 +106,8 @@ Resources:
           TargetOriginId: S3Origin
           ForwardedValues:
             QueryString: false
+            Headers:
+              - "Origin"
           ViewerProtocolPolicy: redirect-to-https
 
   CloudFrontOriginAccessIdentity:
