@@ -17,8 +17,24 @@ Parameters:
 Resources:
   StgBlogBucket:
     Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedMethods:
+              - "GET"
+              - "HEAD"
   PrdBlogBucket:
     Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedMethods:
+              - "GET"
+              - "HEAD"
 
   StgBlogBucketPolicy:
     Type: AWS::S3::BucketPolicy
