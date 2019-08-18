@@ -63,10 +63,9 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
-        # fail due to circular dependency
-        # ViewerCertificate:
-        #   AcmCertificateArn: !Ref StgCertificate
-        #   SslSupportMethod: sni-only
+        ViewerCertificate:
+          AcmCertificateArn: !Ref StgCertificate
+          SslSupportMethod: sni-only
         Aliases:
           - !Ref StgHostname
         Origins:
@@ -88,10 +87,9 @@ Resources:
     Type: AWS::CloudFront::Distribution
     Properties:
       DistributionConfig:
-        # fail due to circular dependency
-        # ViewerCertificate:
-        #   AcmCertificateArn: !Ref PrdCertificate
-        #   SslSupportMethod: sni-only
+        ViewerCertificate:
+          AcmCertificateArn: !Ref PrdCertificate
+          SslSupportMethod: sni-only
         Aliases:
           - !Ref PrdHostname
         Origins:
@@ -145,14 +143,16 @@ Resources:
   StgCertificate:
     Type: "AWS::CertificateManager::Certificate"
     Properties:
-      DomainName: !Ref StgDNS
+      DomainName: !Ref StgHostname
       DomainValidationOptions:
-        - DomainName: !Ref StgDNS
+        - DomainName: !Ref StgHostname
           ValidationDomain: !Ref StgDomain
+      ValidationMethod: DNS
   PrdCertificate:
     Type: "AWS::CertificateManager::Certificate"
     Properties:
-      DomainName: !Ref PrdDNS
+      DomainName: !Ref PrdHostname
       DomainValidationOptions:
-        - DomainName: !Ref PrdDNS
+        - DomainName: !Ref PrdHostname
           ValidationDomain: !Ref PrdDomain
+      ValidationMethod: DNS
