@@ -10,26 +10,17 @@ env:
 phases:
   install:
     commands:
-      - echo install jekyll
-      - apt-get update -y
-      - apt-get install -y software-properties-common
-      - apt-add-repository -y ppa:brightbox/ruby-ng
-      - apt-get update -y
-      - apt-get -y install ruby2.4 ruby2.4-dev
-      - gem install bundler
-      - apt-get install -y libffi-dev libxml2-dev libxslt-dev
-  pre_build:
-    commands:
-      - echo setuup jekyll
-      - bundle install --path vendor/bundle
+      - curl -Ls https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_0.62.1_Linux-64bit.tar.gz -o /tmp/hugo.tar.gz
+      - tar xf /tmp/hugo.tar.gz -C /tmp
+      - mv /tmp/hugo /usr/bin/hugo
+      - git clone https://github.com/spf13/herring-cove.git themes/herring-cove
   build:
     commands:
-      - echo Build started on `date`
-      - echo build html
-      - bundle exec jekyll build
+      - hugo --theme herring-cove
+      - cp -a public/post/index.html public/
       - echo Build completed on `date`
   post_build:
     commands:
       - echo deploy to S3
-      - aws s3 cp _site/ s3://$PRD_BUCKET/ --recursive
+      - aws s3 sync --exact-timestamps --delete public/ s3://$PRD_BUCKET/
       - aws cloudfront create-invalidation --distribution-id E2ZOWTCRKG95GR --paths '/*'
