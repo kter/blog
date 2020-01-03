@@ -13,6 +13,7 @@ phases:
       - curl -Ls https://github.com/gohugoio/hugo/releases/download/v0.62.1/hugo_0.62.1_Linux-64bit.tar.gz -o /tmp/hugo.tar.gz
       - tar xf /tmp/hugo.tar.gz -C /tmp
       - mv /tmp/hugo /usr/bin/hugo
+      - git clone https://github.com/spf13/herring-cove.git themes/herring-cove
   build:
     commands:
       - hugo --theme herring-cove
