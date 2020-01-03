@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>VPC on ことえりブログ</title>
+    <link>/tags/VPC/</link>
+    <description>Recent content in VPC on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Jan 2018 11:50:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/VPC/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS VPCでRoute53のプライベートホストゾーンを使う</title>
+      <link>/post/2018-01-25-AWS-VPC%E3%81%A7Route53%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%9B%E3%82%B9%E3%83%88%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Thu, 25 Jan 2018 11:50:00 +0000</pubDate>
+      
+      <guid>/post/2018-01-25-AWS-VPC%E3%81%A7Route53%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%9B%E3%82%B9%E3%83%88%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>はじめに VPCでのプライベートホストゾーンについて説明します。
+これはroute53.testのような実在しないドメインをRoute53に登録&amp;amp;設定すれば、設定したVPC限定でそのドメインが使えるというものです。
+これを使って例えば次のようなことができます。
+インスタンスAにweb.route53.testというレコードセットをRoute53に登録
+↓
+設定したVPCのインスタンスからはwebという名前でインスタンスAにアクセスできる（どちらかと言うとリゾルバの機能ですが）
+踏み台からのSSHやリレー、プロキシ先の指定などに便利ですよね。
+料金について こちらをご覧ください。月0.5ドルかかります。日割り計算はありません。
+ただし作成から12時間は料金は発生しないようなので、テスト目的ならば12時間以内に削除しましょう。
+設定 ドキュメントにいろいろ書かれていますが、大抵の場合次の手順でいけるはずです。
+ Route53でプライベートホストゾーンを登録 VPCのDNS, DHCP設定を変更  VPCのDHCPの設定を変更すれば/etc/resolv.confの設定は自動で行われます。便利ですね。
+1. Route53でプライベートホストゾーンを登録 Route53のページに行ってホストゾーンを作成します。
+特に迷うことはないと思いますがこんな感じで
+次にレコードを登録しましょう。
+登録するIPはもちろんプライベートIPアドレスで。
+Route53での作業は以上です。
+2. VPCのDHCP設定を変更 VPC一覧のページに移動し、DNSホスト名をはいに設定します。
+次にVPCのDHCP オプションセットというページに移動します。
+ここで予めオプションの値をメモしておいてください。
+※多分こんな感じで設定がされていると思います。
+domain-name = ap-northeast-1.compute.internal;domain-name-servers = AmazonProvidedDNS;
+ドメイン名にメモしたdomain-nameで指定されている値とスペースを開けて今回設定するプライベートホストゾーンの値を入力します。
+ドメインネームサーバーにはAmazonProvidedDNSと入力してください。
+最後にVCPの一覧画面に移動し、DHCPオプションセットの編集から、先ほど作成したオプションセットを指定します。
+5分程度待つと、設定したVPC内のインスタンスの/etc/resolv.confが自動で変更され、instance01とinstance02でIPが引けるようになります。
+※テストで作った場合は忘れずにホストゾーンを削除しましょう！
+注意点 自分は試していないのですが、ドキュメントに記載がある通り、名前空間が重複するパブリックゾーンとプライベートホストゾーンだと注意が必要です。
+たとえばdevドメインのような実在するパブリックなドメインをプライベートホストゾーンに登録してしまうと、パブリックな方のDNSサーバには問い合わせてくれないということです。 気をつけましょう。</description>
+    </item>
+    
+  </channel>
+</rss>

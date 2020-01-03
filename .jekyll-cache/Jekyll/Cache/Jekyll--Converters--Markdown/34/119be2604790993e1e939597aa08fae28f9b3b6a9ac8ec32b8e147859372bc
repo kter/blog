@@ -1,0 +1,16 @@
+I"8<p>s3cmdではデフォルトでUSリージョンが設定されます。</p>
+
+<p>これを東京リージョンで設定するには、ホームディレクトリの.s3cfgを編集します</p>
+
+<p>以下の4つのオプションをそれぞれ書き換えれば大丈夫です</p>
+
+<div class="highlight">
+  <pre><code class="language-">bucket_location = ap-northeast-1
+host_base = s3-ap-northeast-1.amazonaws.com
+host_bucket = %(bucket)s.s3-ap-northeast-1.amazonaws.com
+simpledb_host = sdb.ap-northeast-1.amazonaws.com
+</code></pre>
+</div>
+
+<p>Source: New feed</p>
+:ET

@@ -1,0 +1,22 @@
+I"�<p>コマンドラインから文章をファイルに書き出す方法です</p>
+
+<p>下記コマンドでhoge.txtにline1からline3までの内容を作成することができます。</p>
+
+<p>hoge.txtまで打ったら改行してline1の入力に移ってください。</p>
+
+<p>“`</p>
+
+<p>cat &lt;&gt; hoge.txt</p>
+
+<p>line1</p>
+
+<p>line2</p>
+
+<p>line3</p>
+
+<p>__EOF__</p>
+
+<p>“`</p>
+
+<p>Source: New feed</p>
+:ET

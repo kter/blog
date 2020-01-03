@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mailuで簡単にWebUI付きのメールサーバを立てる</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">Mailuで簡単にWebUI付きのメールサーバを立てる</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-02-06</small></p> <hr/>
+   <div class="post">
+     <h1 id="heading">はじめに</h1>
+<p>自分用のメールサーバを建てようと思った時、セキュリティを気にしながら設定を調べて…となかなか大変ですよね。</p>
+<p>でも<a href="https://github.com/Mailu/Mailu">Mailu</a>を使うと簡単にWebUI付きのメールサーバが構築できます！</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180206/2018-02-06-01.png" alt=""></p>
+<p>この画像のようにWebUIからもメールの送受信ができるので便利です。</p>
+<p><a href="https://mailu.io/demo.html">デモサイト</a>があるので興味のある方は覗いてみてください。</p>
+<p>Mailuが備えている機能は次の通りです。</p>
+<ul>
+<li>IMAP, IMAP+, SMTPのメールサーバ</li>
+<li>WebUIと管理画面</li>
+<li>自動返信、自動転送</li>
+<li>クォーターなどの管理機能</li>
+<li>TLS (Let's Encrypt対応！), DKIM, アンチウイルスなどのセキュリティ</li>
+</ul>
+<p>詳細は<a href="https://mailu.io">プロジェクトのページ</a>を見ていただくとして、早速構築してみます。</p>
+<h1 id="heading-1">構築</h1>
+<p>構築はDigitalOceanという海外のVPS上のdocker-composeでやってみます。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180206/2018-02-06-02.png" alt=""></p>
+<p>ちなみに下記のリンクから登録すると10ドルのクーポンが貰えます。</p>
+<p>一番安いインスタンスであれば2ヶ月間無料で動かせます。是非。</p>
+<p><a href="https://m.do.co/c/dc73cf13e37a">https://m.do.co/c/dc73cf13e37a</a></p>
+<h2 id="heading-2">構築手順</h2>
+<p>今回は公式推奨のDebian Stretch(9.3)を使います。</p>
+<p>インスタンスが立ち上がったらおもむろに下記コマンドを実行してください。</p>
+<h3 id="heading-3">準備</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt update
+<span style="color:#75715e"># すべてYESと答える</span>
+apt install -y iptables-persistent
+apt-get autoremove --purge exim4 exim4-base</code></pre></div>
+<h3 id="docker">Dockerのインストール</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># E: Unable to locate package docker-engineと言われても大丈夫</span>
+apt-get remove docker docker-engine docker.io
+apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl -fsSL https://download.docker.com/linux/<span style="color:#66d9ef">$(</span>. /etc/os-release; echo <span style="color:#e6db74">&#34;</span>$ID<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span>/gpg | sudo apt-key add -
+apt-key fingerprint 0EBFCD88
+add-apt-repository    <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">deb [arch=amd64] https://download.docker.com/linux/</span><span style="color:#66d9ef">$(</span>. /etc/os-release; echo <span style="color:#e6db74">&#34;</span>$ID<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span><span style="color:#e6db74"> \
+</span><span style="color:#e6db74">   </span><span style="color:#66d9ef">$(</span>lsb_release -cs<span style="color:#66d9ef">)</span><span style="color:#e6db74"> \
+</span><span style="color:#e6db74">   stable</span><span style="color:#e6db74">&#34;</span>
+apt-get update
+apt-get install -y docker-ce
+curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-<span style="color:#e6db74">`</span>uname -s<span style="color:#e6db74">`</span>-<span style="color:#e6db74">`</span>uname -m<span style="color:#e6db74">`</span> -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose</code></pre></div>
+<h3 id="mailu">Mailu設定</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir /mailu
+cd /mailu</code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">cat &lt;&lt; <span style="color:#e6db74">&#39;_EOF&#39;</span> &gt; docker-compose.yml
+version: <span style="color:#e6db74">&#39;2&#39;</span>
+
+services:
+
+  front:
+    image: mailu/nginx:$VERSION
+    restart: always
+    env_file: .env
+    ports:
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:80:80&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:443:443&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:110:110&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:143:143&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:993:993&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:995:995&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:25:25&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:465:465&#34;</span>
+    - <span style="color:#e6db74">&#34;$BIND_ADDRESS4:587:587&#34;</span>
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/certs:/certs&#34;</span>
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/redis:/data&#34;</span>
+
+  imap:
+    image: mailu/dovecot:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/data:/data&#34;</span>
+      - <span style="color:#e6db74">&#34;$ROOT/mail:/mail&#34;</span>
+      - <span style="color:#e6db74">&#34;$ROOT/overrides:/overrides&#34;</span>
+    depends_on:
+      - front
+
+  smtp:
+    image: mailu/postfix:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/data:/data&#34;</span>
+      - <span style="color:#e6db74">&#34;$ROOT/overrides:/overrides&#34;</span>
+    depends_on:
+      - front
+
+  antispam:
+    image: mailu/rspamd:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/filter:/var/lib/rspamd&#34;</span>
+      - <span style="color:#e6db74">&#34;$ROOT/dkim:/dkim&#34;</span>
+      - <span style="color:#e6db74">&#34;$ROOT/overrides/rspamd:/etc/rspamd/override.d&#34;</span>
+    depends_on:
+      - front
+
+  antivirus:
+    image: mailu/$ANTIVIRUS:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/filter:/data&#34;</span>
+
+  webdav:
+    image: mailu/$WEBDAV:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/dav:/data&#34;</span>
+
+  admin:
+    image: mailu/admin:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/data:/data&#34;</span>
+      - <span style="color:#e6db74">&#34;$ROOT/dkim:/dkim&#34;</span>
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - redis
+
+  webmail:
+    image: <span style="color:#e6db74">&#34;mailu/$WEBMAIL:$VERSION&#34;</span>
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/webmail:/data&#34;</span>
+
+  fetchmail:
+    image: mailu/fetchmail:$VERSION
+    restart: always
+    env_file: .env
+    volumes:
+      - <span style="color:#e6db74">&#34;$ROOT/data:/data&#34;</span>
+_EOF
+
+cat &lt;&lt; <span style="color:#e6db74">&#39;_EOF&#39;</span> &gt; .env
+<span style="color:#75715e"># Mailu main configuration file</span>
+<span style="color:#75715e">#</span>
+<span style="color:#75715e"># Most configuration variables can be modified through the Web interface,</span>
+<span style="color:#75715e"># these few settings must however be configured before starting the mail</span>
+<span style="color:#75715e"># server and require a restart upon change.</span>
+
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e"># Common configuration variables</span>
+<span style="color:#75715e">###################################</span>
+
+<span style="color:#75715e"># Set this to the path where Mailu data and configuration is stored</span>
+ROOT=/mailu
+
+<span style="color:#75715e"># Mailu version to run (1.0, 1.1, etc. or master)</span>
+VERSION=<span style="color:#ae81ff">1.5</span><span style="color:#ae81ff">.1</span>
+
+<span style="color:#75715e"># Set to a randomly generated 16 bytes string</span>
+SECRET_KEY=
+
+<span style="color:#75715e"># Address where listening ports should bind</span>
+BIND_ADDRESS4=<span style="color:#ae81ff">0.0</span><span style="color:#ae81ff">.0</span><span style="color:#ae81ff">.0</span>
+BIND_ADDRESS6=::<span style="color:#ae81ff">1</span>
+
+<span style="color:#75715e"># Main mail domain</span>
+DOMAIN=
+
+<span style="color:#75715e"># Hostnames for this server, separated with comas</span>
+HOSTNAMES=
+
+<span style="color:#75715e"># Postmaster local part (will append the main mail domain)</span>
+POSTMASTER=admin
+
+<span style="color:#75715e"># Choose how secure connections will behave (value: letsencrypt, cert, notls, mail)</span>
+TLS_FLAVOR=letsencrypt
+
+<span style="color:#75715e"># Authentication rate limit (per source IP address)</span>
+AUTH_RATELIMIT=<span style="color:#ae81ff">10</span>/minute;<span style="color:#ae81ff">1000</span>/hour
+
+<span style="color:#75715e"># Opt-out of statistics, replace with &#34;True&#34; to opt out</span>
+DISABLE_STATISTICS=False
+
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e"># Optional features</span>
+<span style="color:#75715e">###################################</span>
+
+<span style="color:#75715e"># Expose the admin interface (value: true, false)</span>
+ADMIN=<span style="color:#66d9ef">true</span>
+
+<span style="color:#75715e"># Choose which webmail to run if any (values: roundcube, rainloop, none)</span>
+WEBMAIL=rainloop
+
+<span style="color:#75715e"># Dav server implementation (value: radicale, none)</span>
+WEBDAV=radicale
+
+<span style="color:#75715e"># Antivirus solution (value: clamav, none)</span>
+ANTIVIRUS=none
+
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e"># Mail settings</span>
+<span style="color:#75715e">###################################</span>
+
+<span style="color:#75715e"># Message size limit in bytes</span>
+<span style="color:#75715e"># Default: accept messages up to 50MB</span>
+MESSAGE_SIZE_LIMIT=<span style="color:#ae81ff">50000000</span>
+
+<span style="color:#75715e"># Networks granted relay permissions, make sure that you include your Docker</span>
+<span style="color:#75715e"># internal network (default to 172.17.0.0/16)</span>
+RELAYNETS=<span style="color:#ae81ff">172.16</span><span style="color:#ae81ff">.0</span><span style="color:#ae81ff">.0</span>/<span style="color:#ae81ff">12</span>
+
+<span style="color:#75715e"># Will relay all outgoing mails if configured</span>
+RELAYHOST=
+
+<span style="color:#75715e"># Fetchmail delay</span>
+FETCHMAIL_DELAY=<span style="color:#ae81ff">600</span>
+
+<span style="color:#75715e"># Recipient delimiter, character used to delimiter localpart from custom address part</span>
+<span style="color:#75715e"># e.g. localpart+custom@domain;tld</span>
+RECIPIENT_DELIMITER=<span style="color:#e6db74">+
+</span><span style="color:#e6db74"></span><span style="color:#e6db74">
+</span><span style="color:#e6db74"></span><span style="color:#e6db74"># DMARC rua and ruf email</span>
+DMARC_RUA=admin
+DMARC_RUF=admin
+
+<span style="color:#75715e"># Weclome email, enable and set a topic and body if you wish to send welcome</span>
+<span style="color:#75715e"># emails to all users.</span>
+WELCOME=<span style="color:#66d9ef">false</span>
+WELCOME_SUBJECT=Welcome to your new email account
+WELCOME_BODY=Welcome to your new email account, if you can read this, then it is configured properly!
+
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e"># Web settings</span>
+<span style="color:#75715e">###################################</span>
+
+<span style="color:#75715e"># Path to the admin interface if enabled</span>
+WEB_ADMIN=/admin
+
+<span style="color:#75715e"># Path to the webmail if enabled</span>
+WEB_WEBMAIL=/webmail
+
+<span style="color:#75715e"># Website name</span>
+SITENAME=Mailu
+
+<span style="color:#75715e"># Linked Website URL</span>
+WEBSITE=
+
+<span style="color:#75715e">###################################</span>
+<span style="color:#75715e"># Advanced settings</span>
+<span style="color:#75715e">###################################</span>
+
+<span style="color:#75715e"># Docker-compose project name, this will prepended to containers names.</span>
+COMPOSE_PROJECT_NAME=mailu
+
+<span style="color:#75715e"># Default password scheme used for newly created accounts and changed passwords</span>
+<span style="color:#75715e"># (value: SHA512-CRYPT, SHA256-CRYPT, MD5-CRYPT, CRYPT)</span>
+PASSWORD_SCHEME=SHA512-CRYPT
+_EOF</code></pre></div>
+<h2 id="heading-4">設定</h2>
+<p>設定ファイルの記載とドメインの設定を行います。</p>
+<h3 id="heading-5">設定ファイル編集</h3>
+<p>.envファイルをエディタで開き、下記設定を変更します。</p>
+<p>他の設定項目については<a href="https://mailu.io/configuration.html">ドキュメント</a>を参照してください。</p>
+<table>
+<thead>
+<tr>
+<th>設定</th>
+<th>設定値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SECRET_KEY</td>
+<td>16文字の英数文字</td>
+</tr>
+<tr>
+<td>DOMAIN</td>
+<td>メールで使うドメイン</td>
+</tr>
+<tr>
+<td>HOSTNAMES</td>
+<td>mail.(メールで使うドメイン)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dns">DNSレコードの編集</h3>
+<p>次のように編集してください。</p>
+<table>
+<thead>
+<tr>
+<th>レコード名</th>
+<th>レコードタイプ</th>
+<th>設定値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(ドメイン)</td>
+<td>A</td>
+<td>(サーバーIPアドレス)</td>
+</tr>
+<tr>
+<td>(ドメイン)</td>
+<td>MX</td>
+<td>10 mail.(メールで使うドメイン)</td>
+</tr>
+<tr>
+<td>mail.(ドメイン)</td>
+<td>A</td>
+<td>(サーバーIPアドレス)</td>
+</tr>
+<tr>
+<td>(ドメイン)</td>
+<td>SPF</td>
+<td>&ldquo;v=spf1 ip4:(サーバーIPアドレス) ~all&rdquo;</td>
+</tr>
+<tr>
+<td>(ドメイン)</td>
+<td>TXT</td>
+<td>&ldquo;v=spf1 ip4:(サーバーIPアドレス) ~all&rdquo;</td>
+</tr>
+</tbody>
+</table>
+<h1 id="heading-6">使ってみる</h1>
+<p>下記コマンドを実行してしばらく待ってください (自分は25分掛かりました)。</p>
+<p><code>docker-compose logs -f</code> で進捗を確認してもいいと思います。
+DHパラメータの生成やLet's Encryptによる証明書自動取得が終わると、https://mail.(メールで使うドメイン)/ でアクセスできるようになります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">docker-compose up -d</code></pre></div>
+<h2 id="heading-7">アカウントの設定</h2>
+<p>アカウントの設定を行います。</p>
+<p>下記コマンドを実行してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">docker-compose run --rm admin python manage.py admin (ユーザ名) (ドメイン) (パスワード)</code></pre></div>
+<p>ブラウザでhttp://mail.(ドメイン)/ にアクセスし、&quot;(ユーザ名)@(ドメイン名)&ldquo;と設定したパスワードでログインします。</p>
+<p>以上。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-01-25-AWS-VPC%E3%81%A7Route53%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%9B%E3%82%B9%E3%83%88%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%86/"> AWS VPCでRoute53のプライベートホストゾーンを使う</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-02-11-GKE%E3%81%A7Kubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part1/"> GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part1 -クラスタ作成編-</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

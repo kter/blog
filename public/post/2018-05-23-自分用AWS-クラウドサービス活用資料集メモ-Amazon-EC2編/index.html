@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>自分用AWS クラウドサービス活用資料集メモ Amazon EC2編</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">自分用AWS クラウドサービス活用資料集メモ Amazon EC2編</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-05-23</small></p> <hr/>
+   <div class="post">
+     <h1 id="aws-">AWS クラウドサービス活用資料集メモ</h1>
+<h2 id="heading">サービス別資料</h2>
+<h3 id="heading-1">コンピューティング</h3>
+<h4 id="amazon-ec2httpsawsamazoncomjpec2"><a href="https://aws.amazon.com/jp/ec2/">Amazon EC2</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/20180411-aws-black-belt-online-seminar-amazon-ec2">20180411 AWS Black Belt Online Seminar Amazon EC2
+</a></p>
+<ul>
+<li>最新のC5, M5インスタンスはXenベースではなく、KVMベース</li>
+<li>最小: 1vCPU, 0.5GBメモリ</li>
+<li>最大: 128vCPU, 約4TBメモリ</li>
+<li>EC2インスタンスファミリー一覧
+<ul>
+<li>汎用、コンピューティング最適化、ストレージ最適化、メモリ最適化、GPU・FPGAアクセラレーテッド</li>
+</ul>
+</li>
+<li>T2インスタンスのCPUクレジット動作について
+<ul>
+<li>CPUクレジット1につきCPUコアの最大パフォーマンス（バースト性能）を1分間提供</li>
+<li>T2 Unlimitedの場合24時間分のCPUクレジットを前借りして利用できる</li>
+<li>前借りクレジットを使い切った状態においてはvCPU時間あたりLinuxでは$0.05/h, Windowsで$0.096/hが加算請求される</li>
+<li>初期CPUクレジット、一時間あたりに受け取るCPUクレジット、ベースラインパフォーマンス(CPU使用率)、最大獲得CPUクレジットバランスはインスタンスタイプごとに異なる</li>
+</ul>
+</li>
+<li>Dedicated Hostsの場合、AWSまたはMarketplaceで提供されているRHEL, SUSE Linux, Windows　AMIは使えないので注意</li>
+<li>Amazon EC2 Bare Metalについて
+<ul>
+<li>ハードウェアへのダイレクトアクセスを提供するインスタンス</li>
+<li>AWS各種サービスとの連携が可能</li>
+<li>仮想化環境上からは利用できないエミュレータや、独自のハイパーバイザーを導入するときなどに利用</li>
+</ul>
+</li>
+<li>拡張ネットワーキングについて
+<ul>
+<li>Intel 82599VF (ixgbevf)
+<ul>
+<li>M4(m4.16xlarge以外), C3, C4, D2, I2, R3で使える</li>
+</ul>
+</li>
+<li>Elastic Network Adapter (ENA)
+<ul>
+<li>C5, F1, G3, H1, I3, M5, P2, P3, R4, X1, m4.16xlargeで使える</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cluster Placement Groupsについて
+<ul>
+<li>インスタンス間通信を最適化（広帯域、低レイテンシ、高PPS(packets per seconds)</li>
+<li>単一AZに限る</li>
+<li>M4, M5, C3, C4, C5, R3, R4, X1, X1e, D2, I2, I3, F1, G2, P2, P3に対応</li>
+</ul>
+</li>
+<li>EBSボリュームタイプ
+<ul>
+<li>プロビジョンドIOPS SSD, 汎用SSD, スループット最適化HDD（ビッグデータ、DWH,ログデータ用）, コールドHDD (低頻度データ用)</li>
+</ul>
+</li>
+<li>EBS最適化オプション: 通常とネットワークとは別にEBS専用帯域を確保するオプション</li>
+<li>Amazon EC2 Elastic GPU for Windows: EC2インスタンスにGPUによる3Dグラフィックス機能をアタッチ。T2インスタンス等で利用することでG2/G3インスタンスに比べて安価にGPUを利用できる。</li>
+<li>Spread Placement Group: 複数のインスタンス起動時にそれぞれ別の物理サーバに配置される</li>
+<li>EC2のSLAは99.99%。満たない場合はServiceクレジットを返還</li>
+<li>Launch Template: EC2起動時の設定項目をテンプレート化して、起動をシンプル化できる</li>
+<li>EC2は誤って起動しないよう、初期状態ではリージョンごと20インスタンスしか起動できない</li>
+<li>EC2とEBSは秒単位の課金だが、最小請求期間は1分。対象サービスはEC2, EBS, EMR, AWS Batch。ただし追加課金のないLinux OSのみで<strong>Windows RHEL等は対象外</strong>。</li>
+<li>EC2の購入オプション: オンデマンドインスタンス、リザーブドインスタンス、スポットインスタンス、専用ホスト(Dedicated Hosts), ハードウェア専有インスタンス(Dedicated Instance)</li>
+<li>Amazon Inspector: 自動化されたEC2のセキュリティ評価サービス (エージェントを導入するホスト型診断)</li>
+</ul>
+<h4 id="amazon-ec2-windowshttpsawsamazoncomjpwindows"><a href="https://aws.amazon.com/jp/windows/">Amazon EC2 Windows</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-amazon-ec2-windows">AWS Black Belt Online Seminar Amazon EC2 - Windows
+</a></p>
+<ul>
+<li>下記バージョンのWindowsが利用可能
+<ul>
+<li>Windows Server 2012 R2</li>
+<li>Windows Server 2012</li>
+<li>Windows Server 2008 R2</li>
+<li>Windows Server 2008</li>
+<li>Windows Server 2003 R2</li>
+</ul>
+</li>
+<li>Windowsのバージョンに応じたSQL Server導入済みイメージもある
+<ul>
+<li>SQL Server Express Edition (無料)</li>
+<li>SQL Server Web Edition (時間課金)</li>
+<li>SQL Server Standard Edition (時間課金)</li>
+</ul>
+</li>
+<li>Windows AMIは下記ツールがインストールされており、定例パッチ(毎月第2火曜日)の5営業日以内に更新されたWindwos AMIを提供している
+<ul>
+<li>EC2Configサービス</li>
+<li>準仮想化（PV)ドライバ</li>
+<li>AWS Tools for Windows PowerShell</li>
+<li>AWS CloudFormationヘルパースクリプト</li>
+</ul>
+</li>
+<li>なおAmazon SNSでAMIのリリースと利用不可の通知を受け取ることが可能</li>
+<li>EC2Configサービスではインスタンス起動時に下記タスクを実行
+<ul>
+<li>暗号化パスワードの設定</li>
+<li>ユーザーデータの実行</li>
+<li>Windowsのアクティベーション</li>
+<li>ボリュームのフォーマット及びマウント</li>
+</ul>
+</li>
+<li>Sysprep: カスタムAMIを作成するためのツール</li>
+<li>BYOLインスタンスはハードウェア専有インスタンスもしくは専有インスタンスで動かす必要がある。</li>
+<li>CloudWatch Logsを使ってログ監視、保存ができる。保存期間は一日から永久</li>
+<li>AWS Diagnostics for Microsoft Windows Serverツールを使って、Windowsインスタンスのトラブルシュートができる。
+<ul>
+<li>ネットワーク、ドメインとコンピュータ名、ライセンスアクティベーション、時刻設定とタイムゾーン、インストールされているドライバ、Windows firewallとSecurity Groupsの設定、インストール済みのアップデート、一週間以内のミニダンプファイル (クラッシュ時の)</li>
+</ul>
+</li>
+</ul>
+<h4 id="amazon-ec2-hpchttpsawsamazoncomjphpc"><a href="https://aws.amazon.com/jp/hpc/">Amazon EC2 HPC</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2016-hpcaws">AWS Black Belt Online Seminar 2016 HPC分野でのAWS活用</a></p>
+<ul>
+<li>HPC (High Performance Computing)
+<ul>
+<li>膨大な料の数値計算や処理を行う</li>
+<li>同名のサービスがあるわけではない。上記をEC2で行う</li>
+</ul>
+</li>
+<li>CfnCluster: ジョブ本数を監視して計算ノードを自動でスケールさせるクラスタの構築ツール</li>
+<li>Graphics Workspaces: GPUを搭載したWorkspaces (3Dモデラー、エンジニア用)</li>
+</ul>
+<h4 id="amazon-ec2-httpsawsamazoncomjpec2pricingreserved-instances"><a href="https://aws.amazon.com/jp/ec2/pricing/reserved-instances/">[Amazon EC2] リザーブドインスタンス</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-2017-cost-optimization-reserved-instance">AWS Black Belt Online Seminar 2017 AWS のコスト最適化 リザーブドインスタンス</a></p>
+<ul>
+<li>
+<p>DB, キャッシュサーバ, 常時起動するWeb/Appサーバに最適</p>
+</li>
+<li>
+<p>RIは権利の購入なのでインスタンスIDと紐付かない。条件に合致するインスタンスがあれば自動的に割引料金が適応される。</p>
+</li>
+<li>
+<p>スコープをリージョン指定した場合キャパシティの予約はなし。AZ指定だと指定AZのキャパシティの予約がある。</p>
+</li>
+<li>
+<p><strong>リージョン指定の場合</strong>、同一インスタンスファミリー内の<em>別サイズ</em>のインスタンスにも適用される</p>
+</li>
+<li>
+<p>スタンダードの特徴</p>
+<ul>
+<li>割引率が最も高い</li>
+<li>RI権利の変更はできない (同一ファミリー内でのインスタンスタイプ分割/統合, AZ変更は可能)</li>
+<li>契約期間は1年または3年</li>
+</ul>
+</li>
+<li>
+<p>コンバーチブルの特徴
+*　同等以上の価値を持つRIに差額の支払いで交換が可能 (ファミリー、サイズ、プラットフォーム、手ナンシー、支払い方法の変更が可能)
+*　下位の支払い方法は選択できない (全前払い -&gt; 前払いなし等)
+*　交換時の新価格が適用される
+*　契約期間は１年または３年</p>
+</li>
+<li>
+<p>RDSの場合</p>
+<ul>
+<li>スタンダードRIのみ選択可能。インスタンスタイプの分割/統合はできない</li>
+<li>正規化係数により割引が自動割引になる。r3.large -&gt; r3.xlargeに変える場合、r3.largeのRIを買い増すことで対応可能。</li>
+</ul>
+</li>
+<li>
+<p>ElasciCacheとRedshift</p>
+<ul>
+<li>正規化係数による自動割引適用はない</li>
+<li>スタンダードRIのみ</li>
+<li>ElastiCacheは重度使用の１種類のみ</li>
+</ul>
+</li>
+</ul>
+<h4 id="amazon-ec2-httpsawsamazoncomjpec2pricingspot-instances"><a href="https://aws.amazon.com/jp/ec2/pricing/spot-instances/">[Amazon EC2] スポットインスタンス</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2016-amazon-ec2-spot-instances">AWS Black Belt Online Seminar 2016 Amazon EC2 Spot Instances（スポットインスタンス）</a></p>
+<ul>
+<li>種類
+<ul>
+<li>スポットインスタンス
+<ul>
+<li>余ったインスタンスの需要と供給のバランスで価格が変動</li>
+<li>入札価格がスポット価格を上回り、スポットプールに空きがあった場合利用可能</li>
+<li>ターミネートはインスタンスからメタデータをGETすることで２分前から通知を受け取ることが可能 (５秒毎のポーリングを推奨)</li>
+<li>ワンタイムリクエストの場合はターミネート後はインスタンスは起動しない</li>
+<li>永続リクエストの場合はターミネート後もキャンセルもしくは有効期限が切れるまでインスタンスが起動する</li>
+</ul>
+</li>
+<li>スポットブロック
+<ul>
+<li>1~6時間の使用予定期間を指定することで、指定した時間内にブロック価格が高騰してもターミネートされない</li>
+</ul>
+</li>
+<li>スポットフリート
+<ul>
+<li>配分戦略に応じて複数のスポットプールを自動的に利用
+<ul>
+<li>Diversified戦略: 選択したプール内のできるだけ多くのプールに分散</li>
+<li>Lowest Price戦略: 選択したプール内、最も安価なプールを優先的に使う
+*フリート全体でターゲット容量(インスタンス数 or vCPU数)を満たす</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="amazon-ec2-instance-store--elastic-block-storehttpsawsamazoncomjpebs"><a href="https://aws.amazon.com/jp/ebs/">[Amazon EC2] Instance Store &amp; Elastic Block Store</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-instance-store-e">[AWSマイスターシリーズ] Instance Store &amp; Elastic Block Store</a></p>
+<ul>
+<li>AMIはストレージとしてEBS-Backed AMIとInstance Store-Backed AMIの二種類が選べる
+<ul>
+<li>Instance Store-Backed AMIは停止のオプションはない</li>
+<li>EC2を終了するとデータが消える</li>
+<li>EC2 / AMIの場合はRoot Device Typeの項目からInstance Storeかの確認ができる</li>
+</ul>
+</li>
+<li>Instance Storeについて
+<ul>
+<li>EC2の物理筐体のローカルディスク</li>
+<li>インスタンスタイプにより個数, HDD/SDD, サイズが決定</li>
+<li>無料で使える</li>
+<li>ネットワークの影響を受けにくい</li>
+<li>インスタンス停止でデータが消える（ただし再起動では消えない</li>
+</ul>
+</li>
+<li>t1.micro, c1.mediumではスワップ領域が用意されている</li>
+<li>Ephemeral DiskのBlock Device mapping確認
+<ul>
+<li>EC2: <code>GET http://169.254.169.254/latest/meta-data/block-device-mapping/</code> で確認できる</li>
+<li>AMI: Block Deviceの欄で確認できる</li>
+</ul>
+</li>
+<li>Instance StoreのAMI化はAMI作成時のボリューム化としてInstance Storeを選択する</li>
+<li>Ephoemeral DiskのCloud WatchメトリクスはEC2を確認する（EBSの場合はEBSのDisk Metricを確認する）。</li>
+<li>EBSはAZに存在。ただし内部的に冗長化されている</li>
+<li>EBSスナップショットは2回目以降は差分のみS3にバックアップされる</li>
+<li>EBS-Optimized InstanceはEBS用にネットワーク帯域を最適化される。500Mbps ~ 20000MBpsEBS用に帯域が確保される。</li>
+<li>シミュレーションはLinuxの場合Fio等がある</li>
+<li>Ephemeral DiskはEC2と同様に冗長化・レプリケーション、更にS3へのバックアップをすることで耐久性を向上させることができる。</li>
+</ul>
+<h4 id="amazon-ec2-instance-store--elastic-block-storehttpsawsamazoncomjpebs-1"><a href="https://aws.amazon.com/jp/ebs/">[Amazon EC2] Instance Store &amp; Elastic Block Store</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/20120625-aws-meisterreloadedsgvmiepublic">20120625 aws meister-reloaded-sg-vmie-public</a></p>
+<ul>
+<li>AWS Storage Gateway: 既存データセンターのデータをクラウドストレージへ安全にバックアップするサービス
+<ul>
+<li>データ転送・保存を暗号化</li>
+<li>遠隔バックアップ・DRコストを最小化</li>
+<li>仮想アプライアンスとして提供されており、iSCSI対応のストレージになる</li>
+<li>ESXi 4.1/5.0に対応</li>
+<li>書き込まれたデータは自動的にS3に転送される</li>
+<li>差分のみ圧縮して暗号化して転送される</li>
+<li>リカバリはEC2のEBSでもオンプレミスのデータセンタでも可能</li>
+<li>バックアップ・DRの他にデータ移行にも使える</li>
+<li>アップデートやパッチは自動適用される（メンテナンスウインドウ設定可能）</li>
+<li>Cloud Watchで監視・ログ・アラーム設定を行える</li>
+<li>AWS Direct Connectも利用できる
+<ul>
+<li>AWSとデータセンター、オフィス、コロケーション環境間にプライベート接続を確立するサービス</li>
+<li>高スループット、低レイテンシ</li>
+<li>一貫性のあるネットワーク体験</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>VM Import/Export
+<ul>
+<li>データセンターのVMアプリケーションのEC2への移行</li>
+<li>ディザスタリカバリ用イメージの作成</li>
+<li>別途料金はかからない</li>
+<li>対応OS: Windows Server 2003 R2, Windows Server 2008 / R2</li>
+<li>対応フォーマット: VMware vSphere VMDK, Microsoft Hyper-V VHD, Citrix XenServer VHD</li>
+<li>ec2-import-instanceコマンドでOVF形式の仮想マシンをエクスポート</li>
+<li>エクスポートは自動で変換が実行され、終了すると通常のEC2の操作と同様起動できるようになる</li>
+<li>Windows VMをインポートするとWindows ServerライセンスキーがAWSによって用意される。そのため既存のWindowsライセンスはオンプレミス環境で使える</li>
+<li>VMware vSphere Clientからインポートを行うこともできる(仮想アプライアンス</li>
+</ul>
+</li>
+</ul>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-04-30-mktmp-popd-pushd%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/"> mktmp, pushd, popdの使い方</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Elastic-Load-Balancing%E7%B7%A8/"> 自分用AWS クラウドサービス活用資料集メモ Elastic Load Balancing編</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

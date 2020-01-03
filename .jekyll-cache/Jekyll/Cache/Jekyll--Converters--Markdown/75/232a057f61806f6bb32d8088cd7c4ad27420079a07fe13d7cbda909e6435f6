@@ -1,0 +1,95 @@
+I":
+<p>絶対忘れるので使ったコマンドを書いておく。</p>
+
+<p>ElasticSearch 5.5で確認</p>
+
+<p>インデックスを確認</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -XGET localhost:9200/_cat/indices
+</code></pre></div></div>
+
+<p>指定したフィールドを取得</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -XGET 'http://localhost:9200/(インデックス名)/_search?pretty' -d '
+{
+  "_source": [ "(取得するフィールド名1)", "(取得するフィールド名2)"]
+}'
+</code></pre></div></div>
+
+<p>指定フィールドから指定文字列を検索</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -XGET 'http://localhost:9200/(インデックス名)/_search?pretty' -d '
+{
+  "_source": [ "(取得するフィールド名1)", "(取得するフィールド名2)"],
+  "query":{
+    "match":{
+      "(検索フィールド名)": {
+        "query": "(検索文字列)",
+        "type": "phrase"
+      }
+    }
+  }
+}'
+</code></pre></div></div>
+
+<p>指定フィールドから指定文字列を検索 (AND検索)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -XGET 'http://localhost:9200/(インデックス名)/_search?pretty' -d '
+{
+  "_source": [ "(取得するフィールド名1)", "(取得するフィールド名2)"],
+  "query":{
+    "bool":{
+      "must": [
+      {
+        "match":{
+          "(検索フィールド名)": {
+            "query": "(検索文字列)",
+            "type": "phrase"
+          }
+        }
+      },
+      {
+        "match":{
+          "(検索フィールド名)": {
+            "query": "(検索文字列)",
+            "type": "phrase"
+          }
+        }
+      }
+      ]
+    }
+  }
+}'
+</code></pre></div></div>
+
+<p>指定フィールドから指定文字列を検索 (OR検索)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -XGET 'http://localhost:9200/(インデックス名)/_search?pretty' -d '
+{
+  "_source": [ "(取得するフィールド名1)", "(取得するフィールド名2)"],
+  "query":{
+    "bool":{
+      "should": [
+      {
+        "match":{
+          "(検索フィールド名)": {
+            "query": "(検索文字列)",
+            "type": "phrase"
+          }
+        }
+      },
+      {
+        "match":{
+          "(検索フィールド名)": {
+            "query": "(検索文字列)",
+            "type": "phrase"
+          }
+        }
+      }
+      ]
+    }
+  }
+}'
+</code></pre></div></div>
+
+:ET

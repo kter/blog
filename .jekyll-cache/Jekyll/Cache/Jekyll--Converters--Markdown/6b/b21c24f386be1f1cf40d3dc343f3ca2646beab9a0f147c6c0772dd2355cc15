@@ -1,0 +1,60 @@
+I"�<p>調べればいくらでも出てくるんだけど自分用にメモ</p>
+
+<p>“`</p>
+
+<p>openssl genrsa -out server.key 2048</p>
+
+<p>“`</p>
+
+<p>“`</p>
+
+<p>openssl req -new -sha256 -key server.key -out server.csr</p>
+
+<p>“`</p>
+
+<p>“`</p>
+
+<p>openssl x509 -days 3650 -req -signkey server.key server.crt</p>
+
+<p>“`</p>
+
+<p>server.keyが秘密鍵、server.csrが証明書署名要求、server.crtが証明書。</p>
+
+<p>証明書をちゃんとしたCAに作ってもらうなら、途中で生成される証明書署名要求を提出すれば良い。</p>
+
+<p> </p>
+
+<p>自己署名証明書だけ欲しいという時は次のコマンドでも生成できる。</p>
+
+<p>“`</p>
+
+<p>openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout server.key -sha256 -out server.crt</p>
+
+<p>“`</p>
+
+<p> </p>
+
+<p>作成された証明書署名要求と証明書の確認は下記opensslコマンドで行える。</p>
+
+<p>証明書確認</p>
+
+<p>“`</p>
+
+<p>openssl x509 -text -noout -in server.csr</p>
+
+<p>“`&lt;/pre&gt;</p>
+
+<p> </p>
+
+<p><span style="line-height: 1.714285714;font-size: 1rem">証明書署名要求確認</span></p>
+
+<p>“`</p>
+
+<p>openssl req -in certificate.crt -text -noout</p>
+
+<p>“`</p>
+
+<p> </p>
+
+<p>Source: New feed</p>
+:ET

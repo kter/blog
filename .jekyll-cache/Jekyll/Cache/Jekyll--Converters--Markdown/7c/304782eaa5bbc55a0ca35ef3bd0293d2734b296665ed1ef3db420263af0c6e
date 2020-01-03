@@ -1,0 +1,26 @@
+I";<p>Ruby2.1.2のソースインストール時に次のようなエラーが表示された</p>
+
+<p> </p>
+
+<blockquote>
+  <p>generating known_errors.inc</p>
+</blockquote>
+
+<blockquote>
+  <p>executable host ruby is required. use –with-baseruby option.</p>
+</blockquote>
+
+<blockquote>
+  <p>make: *** [known_errors.inc] エラー 1</p>
+
+  <p> </p>
+</blockquote>
+
+<p>RubyをインストールするにはRubyが必要とのことでした</p>
+
+<p>が今まではRubyが入っていない状態でもインストールできていたので、ホストを再起動を試したらインストールできました。</p>
+
+<p>思い当たる節がyum updateとyum groupinstall “Development Tools”を行ったということくらいしかありませんが、多分このせいなんだろうなぁ</p>
+
+<p>Source: New feed</p>
+:ET

@@ -1,0 +1,12 @@
+I"$<p>cronなどでmysqldumpを実行したいけどパスワードをそのまま書くのはちょっと…という場合はパスワードをファイルに書き出し、それを読みこませることでパスワードの指定なしに実行できます。</p>
+
+<p>実行ユーザのホームディレクトリに.my.cnfという名前で下記3行を書きましょう。</p>
+
+<pre class="lang:default decode:true" title=".my.cnf">[mysqldump]<br />
+user=実行ユーザ<br />
+password=pass</pre>
+
+<p>これでOK</p>
+
+<p>Source: New feed</p>
+:ET

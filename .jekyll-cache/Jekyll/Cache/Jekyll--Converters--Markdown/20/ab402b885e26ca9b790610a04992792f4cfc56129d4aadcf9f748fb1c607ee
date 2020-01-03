@@ -1,0 +1,288 @@
+I"iF<p>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。</p>
+
+<p>前回クラスタを作成したので今回はIngressを追加します。</p>
+
+<p>Ingressを追加することで、クラスタ内のサービスにインターネットからアクセスできるようになります。</p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>Ingressは普通にGKEで作成すると、Ingress ControllerがGCPのロードバランサーを作成します。</p>
+
+<p>しかしこれが高い…。月額18ドルも掛かります。</p>
+
+<p>そこでGCPのロードバランサーの代わりにnginx-ingressというNGINXを使います。</p>
+
+<p>こちらを一番小さいf1-microのノードで動かせば4.28ドルで済みます。</p>
+
+<p>しかもf1-microはAlways Freeの条件であるus-east1, us-west1, us-central1のいずれかで動かせばタダで動かせます。</p>
+
+<p>なので今回はロードバランサーを使わず、nginx-ingressを使うことにします。</p>
+
+<h1 id="前提作業">前提作業</h1>
+
+<p>前回の記事のGKEでなるべく安くKubernetesクラスタを作成してPrometheus + Grafanaを使ってみる Part1 -クラスタ作成編-の手順でクラスタを作成してあることを前提とします。</p>
+
+<p>また疎通確認にドメインを使用しますので、用意してください。</p>
+
+<p><del>ドメインを持っていない方はnip.ioとか使うといいと思います。知らんけど。</del></p>
+
+<h1 id="ingress-controller用ノードを作成">Ingress Controller用ノードを作成</h1>
+
+<p>前回作成したクラスタのノードはプリエンプティブノードのため一定時間で削除されます。</p>
+
+<p>nginx-ingressでは静的グローバルIPをノードに割り当てる必要があるため、削除されないノードを別途作成します。</p>
+
+<p>具体的にはIngress Controllerを動かすためのノードプールを作成します。</p>
+
+<ol>
+  <li>クラスタ編集画面を開く</li>
+  <li>“ノードプールを追加”ボタンを選択</li>
+  <li>名前にload-balancerと入力</li>
+  <li>マシンタイプにmicro (f1-micro)を選択</li>
+  <li>ノードあたりのブートディスク サイズに10GBと入力</li>
+</ol>
+
+<h1 id="ingress-controller用ノードの設定">Ingress Controller用ノードの設定</h1>
+
+<p>下記コマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">CLUSTER_NAME</span><span class="o">=</span>クラスタ名
+<span class="nb">export </span><span class="nv">ZONE</span><span class="o">=</span>us-west1-b
+<span class="nb">export </span><span class="nv">REGION</span><span class="o">=</span>us-west1
+<span class="c"># kubectlを使えるようにする</span>
+gcloud container clusters get-credentials <span class="nv">$CLUSTER_NAME</span> <span class="nt">--zone</span> <span class="nv">$ZONE</span>
+<span class="c"># 静的グローバルIPアドレスを確保</span>
+gcloud compute addresses create <span class="nv">$CLUSTER_NAME</span><span class="nt">-ip</span> <span class="nt">--region</span> <span class="nv">$REGION</span>
+<span class="c"># 静的グローバルIPアドレスを取得</span>
+<span class="nb">export </span><span class="nv">LB_ADDRESS_IP</span><span class="o">=</span><span class="si">$(</span>gcloud compute addresses list | <span class="nb">grep</span> <span class="nv">$CLUSTER_NAME</span><span class="nt">-ip</span> | <span class="nb">awk</span> <span class="s1">'{print $3}'</span><span class="si">)</span>
+<span class="c"># nginx-ingressで使うノード名を取得</span>
+<span class="nb">export </span><span class="nv">LB_INSTANCE_NAME</span><span class="o">=</span><span class="si">$(</span>kubectl describe nodes | <span class="nb">grep </span>Name: | <span class="nb">tail</span> <span class="nt">-n1</span> | <span class="nb">awk</span> <span class="s1">'{print $2}'</span><span class="si">)</span>
+<span class="c"># nginx-ingressしか動かないようにする (リソースの確保のため)</span>
+kubectl taint nodes <span class="nv">$LB_INSTANCE_NAME</span> <span class="nv">role</span><span class="o">=</span>nginx-ingress-controller:NoSchedule
+<span class="c"># 静的グローバルIPアドレスをノードに紐付ける</span>
+<span class="nb">export </span><span class="nv">LB_INSTANCE_NAT</span><span class="o">=</span>external-nat
+gcloud compute instances delete-access-config <span class="nv">$LB_INSTANCE_NAME</span> <span class="nt">--access-config-name</span> <span class="s2">"</span><span class="nv">$LB_INSTANCE_NAT</span><span class="s2">"</span> <span class="nt">--zone</span> <span class="nv">$ZONE</span>
+gcloud compute instances add-access-config <span class="nv">$LB_INSTANCE_NAME</span> <span class="nt">--access-config-name</span> <span class="s2">"</span><span class="nv">$LB_INSTANCE_NAT</span><span class="s2">"</span> <span class="nt">--address</span> <span class="nv">$LB_ADDRESS_IP</span> <span class="nt">--zone</span> <span class="nv">$ZONE</span>
+<span class="c"># ラベルの設定</span>
+kubectl label nodes <span class="nv">$LB_INSTANCE_NAME</span> <span class="nv">role</span><span class="o">=</span>load-balancer
+<span class="c"># タグの設定 (これで80と443に外部からアクセスできるようになる)</span>
+gcloud compute instances add-tags <span class="nv">$LB_INSTANCE_NAME</span> <span class="nt">--tags</span> http-server,https-server <span class="nt">--zone</span> <span class="nv">$ZONE</span>
+</code></pre></div></div>
+
+<h1 id="helmの導入">helmの導入</h1>
+
+<p>helmとはKubernetesのパッケージマネージャーです。</p>
+
+<p>nginx-ingressはhelmでも提供されているので、nginx-ingressの導入の前にhelmをまず導入します。</p>
+
+<h2 id="helmをインストール">helmをインストール</h2>
+
+<p>下記コマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ダウンロード先: https://github.com/kubernetes/helm/releases</span>
+curl <span class="nt">-O</span> https://storage.googleapis.com/kubernetes-helm/helm-v2.8.1-linux-amd64.tar.gz
+<span class="nb">tar</span> <span class="nt">-zxvf</span> helm-v2.8.1-linux-amd64.tar.gz
+<span class="nb">sudo mv </span>linux-amd64/helm /usr/local/bin/helm
+</code></pre></div></div>
+
+<h2 id="クラスタにhelmを導入">クラスタにhelmを導入</h2>
+
+<p>下記コマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>helm init <span class="nt">--service-account</span> tiller
+<span class="nb">echo</span> <span class="s2">"apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: tiller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: tiller
+    namespace: kube-system
+"</span> | kubectl apply <span class="nt">-f</span> -
+</code></pre></div></div>
+
+<h1 id="nginx-ingressの導入">nginx-ingressの導入</h1>
+
+<p>一応ドメインとそれに紐づくサービスは下記の通りということで話を進めます。適宜読み替えてください。</p>
+
+<p>※AレコードとしてLB_ADDRESS_IPのIPを登録しておいてください。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ドメイン</th>
+      <th>サービス名</th>
+      <th>用途</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>(ドメイン1)</td>
+      <td>nginx</td>
+      <td>サンプルアプリケーション</td>
+    </tr>
+    <tr>
+      <td>(ドメイン2)</td>
+      <td>prometheus-prometheus</td>
+      <td>Prometheus用　</td>
+    </tr>
+    <tr>
+      <td>(ドメイン3)</td>
+      <td>grafana-grafana</td>
+      <td>Grafana用</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="nginx-ingressの導入-1">nginx-ingressの導入</h2>
+
+<p>helmでnginx-ingressを導入します。</p>
+
+<p>設定をvalues.yamlという名前で保存してからnginx-ingressをインストールします。</p>
+
+<p>下記コマンドを実行してください。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>nginx-ingress <span class="o">&amp;&amp;</span> <span class="nb">cd</span> <span class="nv">$_</span>
+curl <span class="nt">-O</span> https://raw.githubusercontent.com/kter/personal-project/1.1/nginx-ingress/values.yaml
+helm <span class="nb">install </span>stable/nginx-ingress <span class="nt">--name</span> nginx-ingress <span class="nt">-f</span> values.yaml
+</code></pre></div></div>
+
+<h2 id="ingressの設定作成">Ingressの設定作成</h2>
+
+<p>Ingressの設定をyamlで記載します。</p>
+
+<p>nginx-ingress.ymlという名前で保存してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="na">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Ingress</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="na">annotations</span><span class="pi">:</span>
+    <span class="s">kubernetes.io/ingress.class</span><span class="pi">:</span> <span class="s2">"</span><span class="s">nginx"</span>
+    <span class="s">kubernetes.io/tls-acme</span><span class="pi">:</span> <span class="s2">"</span><span class="s">true"</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">tls</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">secretName</span><span class="pi">:</span> <span class="s">kubernetes-ingress-tls</span>
+    <span class="na">hosts</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">(ドメイン1)</span>
+      <span class="pi">-</span> <span class="s">(ドメイン2)</span>
+      <span class="pi">-</span> <span class="s">(ドメイン3)</span>
+  <span class="na">rules</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">host</span><span class="pi">:</span> <span class="s">(ドメイン1)</span>
+    <span class="na">http</span><span class="pi">:</span>
+      <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">serviceName</span><span class="pi">:</span> <span class="s">nginx</span>
+          <span class="na">servicePort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/*</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">serviceName</span><span class="pi">:</span> <span class="s">nginx</span>
+          <span class="na">servicePort</span><span class="pi">:</span> <span class="m">80</span>
+  <span class="pi">-</span> <span class="na">host</span><span class="pi">:</span> <span class="s">(ドメイン2)</span>
+    <span class="na">http</span><span class="pi">:</span>
+      <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">serviceName</span><span class="pi">:</span> <span class="s">prometheus-prometheus-server</span>
+          <span class="na">servicePort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/*</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">serviceName</span><span class="pi">:</span> <span class="s">prometheus-prometheus-server</span>
+          <span class="na">servicePort</span><span class="pi">:</span> <span class="m">80</span>
+  <span class="pi">-</span> <span class="na">host</span><span class="pi">:</span> <span class="s">(ドメイン3)</span>
+    <span class="na">http</span><span class="pi">:</span>
+      <span class="na">paths</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">serviceName</span><span class="pi">:</span> <span class="s">grafana-grafana</span>
+          <span class="na">servicePort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/*</span>
+        <span class="na">backend</span><span class="pi">:</span>
+          <span class="na">serviceName</span><span class="pi">:</span> <span class="s">grafana-grafana</span>
+          <span class="na">servicePort</span><span class="pi">:</span> <span class="m">80</span>
+</code></pre></div></div>
+
+<h2 id="ingressの設定反映">Ingressの設定反映</h2>
+
+<p>下記コマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> nginx-ingress.yml
+</code></pre></div></div>
+
+<h1 id="サンプルアプリケーションをデプロイ">サンプルアプリケーションをデプロイ</h1>
+
+<p>下記yamlをnginx-deployment.ymlとして保存してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">extensions/v1beta1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Deployment</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">replicas</span><span class="pi">:</span> <span class="m">1</span>
+  <span class="na">template</span><span class="pi">:</span>
+    <span class="na">metadata</span><span class="pi">:</span>
+      <span class="na">labels</span><span class="pi">:</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+    <span class="na">spec</span><span class="pi">:</span>
+      <span class="na">containers</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+          <span class="na">image</span><span class="pi">:</span> <span class="s">nginx</span>
+          <span class="na">ports</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="na">containerPort</span><span class="pi">:</span> <span class="m">80</span>
+          <span class="na">resources</span><span class="pi">:</span>
+            <span class="na">requests</span><span class="pi">:</span>
+              <span class="na">cpu</span><span class="pi">:</span> <span class="s">10m</span>
+</code></pre></div></div>
+
+<p>下記yamlをnginx-service.ymlとして保存してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">v1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Service</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="na">labels</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">port</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">targetPort</span><span class="pi">:</span> <span class="m">80</span>
+      <span class="na">protocol</span><span class="pi">:</span> <span class="s">TCP</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">NodePort</span>
+  <span class="na">selector</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">nginx</span>
+</code></pre></div></div>
+
+<p>下記コマンドを実行してnginxをデプロイします。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> blog-deployment.yml
+kubectl apply <span class="nt">-f</span> blog-service.yml
+</code></pre></div></div>
+
+<h1 id="疎通確認">疎通確認</h1>
+
+<p>(ドメイン1)にアクセスし、NGINXの画面が表示されれば成功です。</p>
+
+<p>他のドメインについては、まだデプロイを行っていないのでdefault-backendの表示がされるはずです。</p>
+
+<h1 id="終わりに">終わりに</h1>
+
+<p>今回は作成したクラスタのサービスにアクセスするためのIngressを作成しました。</p>
+
+<p>次回はLet’s Encryptによるhttpsが使えるように設定を行う予定です。</p>
+
+:ET

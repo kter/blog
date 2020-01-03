@@ -1,0 +1,83 @@
+I"C<h1 id="はじめに">はじめに</h1>
+
+<h2 id="laradockについて">Laradockについて</h2>
+
+<p>PHPを開発するのに必要なアプリが全部セットになったDocker環境。
+今回はMySQL + PHP-FPM + NGINX + Laravelでいきますが、データベースにPostgreSQLを選んだり、WebサーバにApacheを選んだりかなり自由度は高いです。</p>
+
+<h2 id="ディレクトリ構成">ディレクトリ構成</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.
+├── laradock-dakoku ←Laradockのコード (docker-composeコマンドはここで実行)
+└── src ←Laravelのコード (コンテナに入らずエディタで編集できる)
+</code></pre></div></div>
+
+<h1 id="コンテナを動かすための初期設定">コンテナを動かすための初期設定</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PROJECT</span><span class="o">=(</span>プロジェクト名<span class="o">)</span>
+<span class="nb">mkdir</span> <span class="nv">$PROJECT</span>
+<span class="nb">cd</span> <span class="o">!</span><span class="err">$</span>
+<span class="c"># イメージを他プロジェクトと共用しないよう名前を変える</span>
+git clone https://github.com/Laradock/laradock.git laradock-<span class="nv">$PROJECT</span>
+<span class="nb">cd </span>laradock-<span class="nv">$PROJECT</span>
+<span class="nb">cp </span>env-example .env
+</code></pre></div></div>
+
+<pre><code class="language-:.env">DB_HOST=mysql
+APP_CODE_PATH_HOST=../src
+# MySQL8の認証方式caching_sha2_passwordにPHPのMySQLライブラリが対応していないため
+MYSQL_VERSION=5.7.25
+</code></pre>
+
+<h1 id="コンテナを動かす">コンテナを動かす</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose up <span class="nt">-d</span> nginx mysql workspace
+</code></pre></div></div>
+
+<h1 id="laravelをインストール">Laravelをインストール</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose <span class="nb">exec </span>workspace bash
+<span class="c"># バージョンは好きなものを指定する。ここでは5.2系</span>
+composer create-project laravel/laravel <span class="nb">.</span> <span class="s2">"5.2.*"</span>
+</code></pre></div></div>
+
+<h1 id="db-migrate実行">DB migrate実行</h1>
+
+<pre><code class="language-:.env">DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=default
+DB_USERNAME=default
+DB_PASSWORD=secret
+</code></pre>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>php artisan migrate
+</code></pre></div></div>
+
+<h1 id="nginx設定">NGINX設定</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>nginx/sites/laravel.conf.example nginx/sites/laravel.conf
+</code></pre></div></div>
+
+<pre><code class="language-:nginx/sites/laravel.conf">root /var/www/src/public;
+</code></pre>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker-compose stop nginx
+docker-compose up <span class="nt">-d</span> nginx
+</code></pre></div></div>
+
+<h1 id="webブラウザでアクセス">Webブラウザでアクセス</h1>
+
+<p>https://localhost/</p>
+
+<h1 id="qa">Q&amp;A</h1>
+
+<p>Q1. artisanコマンドはどうやって実行すればいい？
+A1. laradockのディレクトリで<code class="highlighter-rouge">docker-compose exec workspace bash</code></p>
+
+<p>Q2. NGINXのログはどこ？
+A2. laradock配下の<code class="highlighter-rouge">logs/nginx</code></p>
+
+<p>Q3. MySQLのデータはどこ？
+A3. laradockの.envファイル、DATA_PATH_HOSTに定義されている場所 (デフォルトは~/.laradock/data)。</p>
+
+:ET

@@ -1,0 +1,127 @@
+I".<h1 id="aws-クラウドサービス活用資料集メモ">AWS クラウドサービス活用資料集メモ</h1>
+
+<h2 id="サービス別資料">サービス別資料</h2>
+
+<h3 id="コンピューティング">コンピューティング</h3>
+
+<h4 id="elastic-load-balancing-elb"><a href="https://aws.amazon.com/jp/elasticloadbalancing/">Elastic Load Balancing (ELB)</a></h4>
+
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2016-elastic-load-balancing">AWS Black Belt Online Seminar 2016 Elastic Load Balancing</a></p>
+
+<ul>
+  <li>Application Load Balancer
+    <ul>
+      <li>L7のコンテントベースのロードバランサー</li>
+      <li>ターゲットグループに対してルーティング</li>
+      <li>コンテナベースのアプリケーションのサポート</li>
+      <li>WebSocketとHTTP/2のサポート</li>
+      <li>複数のAZで耐障害性が高い</li>
+      <li>価格はALBの起動時間とLoad Balancer Capacity Units(LCU)の使用量で決まる</li>
+    </ul>
+  </li>
+  <li>Elastic Load Balancing (ELB)
+    <ul>
+      <li>Application Load BalancerとClassic Load Balancerの二種類がある。
+        <ul>
+          <li>Application Load BalancerはL7のコンテントベースのロードバランサー</li>
+          <li>Classic Load BalancerはL4および一部L7機能を提供するロードバランサー</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>ELBは複数AZに設定できる。DNSラウンドロビンで各AZのELBにアクセスが分散される。その後負荷が均等になるようバックエンドのEC2に振り分けられる</li>
+  <li>クロスゾーン負荷分散を使うことで、AZ間のキャパシティ（インスタンス数、サイズ）が異なる場合やクライアントがDNSをキャッシュする環境でも負荷を均等にできる。</li>
+  <li>無通信状態が続くとそのコネクションを自動で切断する。デフォルトでは60秒、最低1秒最高3600秒</li>
+  <li>ELBは自動でスケールするが、瞬間的に急増すると503を返す。
+    <ul>
+      <li>Pre-Warming（暖機運転）の申請を行うあ負荷を段階的にかける</li>
+      <li>ただしPre-WarmingはBusiness/Enterpriseサポートが必要</li>
+    </ul>
+  </li>
+  <li>サブネットは最小/27、空きIPは8以上</li>
+  <li>ICMP Echo Request/Replyを許可すれば、ELBがpingにも応答する</li>
+  <li>Perfect Forward Secrecyのサポート</li>
+  <li>Server Order Preference対応</li>
+  <li>スティッキーセッション
+    <ul>
+      <li>同じユーザから来たリクエストをすべて同じEC2インスタンスに送信</li>
+      <li>ELBで生成するCookieかアプリケーションで生成するCookieか選べる</li>
+    </ul>
+  </li>
+  <li>Connection Draining
+    <ul>
+      <li>ELBから登録解除したりヘルスチェックが失敗したときに、新規割り振りは中止して処理中のリクエストが終わるまで一定期間末</li>
+    </ul>
+  </li>
+  <li>CLBはTCP/SSLによる負荷分散が可能</li>
+  <li>CLBはバックエンドインスタンスのサーバ証明書認証ができる</li>
+  <li>CLBのコンテントベースルーティングはサブドメインかNGINXで行う。</li>
+  <li>Load Balancer Capacity Unitsは新規接続数、アクティブ接続数、帯域幅のうち、最も使用量が高いディメンションのみ請求
+    <ul>
+      <li>新規接続数: 1秒あたりの新規接続数</li>
+      <li>アクティブ接続数: 1分あたりのアクティブ接続数</li>
+      <li>トラフィック量（Mbps)</li>
+    </ul>
+  </li>
+  <li>1 LCUには1秒あたり最大25の新規接続数 (4KB証明書の場合は最大5), 1分あたり最大3000個のアクティブ接続, 最大2.22Mbpsの帯域幅が含まれている</li>
+  <li>Route53 DNS フェイルオーバー対応 (Route53のヘルスチェックに失敗するとS3のSorryページにアクセスさせるようにできる)</li>
+  <li>負荷テスト時の注意事項
+    <ul>
+      <li>ELB暖機運転</li>
+      <li>5分間隔で50%以上のトラフィック増加をしないよう負荷テストを設定</li>
+      <li>テストクライアント側で少なくとも1分に1回DNSの再解決をする</li>
+      <li>スティッキーセッションに注意</li>
+      <li><strong>バックエンドインスタンスのアイドルタイムアウトをELBのタイムアウト以上</strong>に設定しないと不健全なホストとみなされる可能性がある</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="elastic-load-balancing-ロードバランサと-socket-接続を使用したイベント通知サーバの負荷分散">[Elastic Load Balancing] ロードバランサと Socket 接続を使用したイベント通知サーバの負荷分散</h4>
+
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/socket-15753751">WebSocket on AWS (ロードバランサとSocket接続を使用したイベント通知サーバの負荷分散)</a></p>
+
+<ul>
+  <li>WebSocketはセッションごとTCPセッションが作成され、セッション中破継続的に利用する。
+    <ul>
+      <li>そのため間にLBを挟むとLBのコネクションも専有し、LBのリソースがボトルネックになる</li>
+      <li>WebSocketはサーバーとクライアントを1対1でセションを確立させそれを維持する仕組みなのでLBはあまり意味がない</li>
+      <li>→セッション確立時の時のみLBを使うのがいい
+        <ul>
+          <li>LBにGETし、Responseとしてアプリサーバのアドレスを返す</li>
+          <li>クライアント側で再接続の仕組みも必要</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="elastic-load-balancing-elbを評価するためのベストプラクティス">[Elastic Load Balancing] ELBを評価するためのベストプラクティス</h4>
+
+<p>情報元: <a href="http://d36cz9buwru1tt.cloudfront.net/jp/documentation/BestPracticesInEvaluatingELB-ja-final.pdf">Elastic Load Balancing(ELB)を評価するためのベストプラクティス</a></p>
+
+<ul>
+  <li>負荷テストの際にはDNSの名前解決について留意する
+    <ul>
+      <li>ELBがスケールする際にIPアドレスが増えるため</li>
+      <li>少なくとも1分に1回名前の再解決を行うようにする</li>
+    </ul>
+  </li>
+  <li>負荷の増やし方は5分おきに50%未満のレートで負荷を増やすことが推奨される</li>
+  <li>メトリクスは次の通り
+    <ul>
+      <li>遅延時間</li>
+      <li>リクエスト数</li>
+      <li>健全なホスト数</li>
+      <li>不健全なホスト数</li>
+      <li>バックエンドからの 2xx-5xx のレスポンス数</li>
+      <li>ELB からの 4xx-5xx のレスポンス数</li>
+    </ul>
+  </li>
+  <li>インスタンスのアイドルタイムアウトは少なくとも60秒に設定する
+    <ul>
+      <li>ELBは60秒後にアイドルコネクションをクローズするため</li>
+    </ul>
+  </li>
+</ul>
+
+:ET

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>news on ことえりブログ</title>
+    <link>/categories/news/</link>
+    <description>Recent content in news on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Mar 2014 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title></title>
+      <link>/post/vendor/bundle/ruby/2.6.0/gems/jekyll-feed-0.13.0/spec/fixtures/2014-03-02-march-the-second/</link>
+      <pubDate>Sun, 02 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vendor/bundle/ruby/2.6.0/gems/jekyll-feed-0.13.0/spec/fixtures/2014-03-02-march-the-second/</guid>
+      <description>March the second!</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/post/vendor/bundle/ruby/2.6.0/gems/jekyll-feed-0.13.0/spec/fixtures/2013-12-12-dec-the-second/</link>
+      <pubDate>Thu, 12 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vendor/bundle/ruby/2.6.0/gems/jekyll-feed-0.13.0/spec/fixtures/2013-12-12-dec-the-second/</guid>
+      <description>December the twelfth, actually. </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>RPMファイルから設定ファイルを抜き出す方法</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">RPMファイルから設定ファイルを抜き出す方法</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2014-12-15</small></p> <hr/>
+   <div class="post">
+     <p>とあるRPMパッケージでインストールしたソフトのデフォルトの設定ファイルが欲しい時があって調べたので手順をメモしておく。</p>
+<ol>
+<li> RPMファイルをダウンロードする
+<ol>
+<li>yumリポジトリからRPMをダウンロードする場合は<!-- raw HTML omitted -->yumdownloader [パッケージ名]<!-- raw HTML omitted --> を使うと良い。yumにない場合は適当にググってダウンロードする。
+<!-- raw HTML omitted --></li>
+</ol>
+</li>
+</ol>
+<pre><code>&lt;/li&gt; 
+
+  * rpm2cpioコマンドを使って取り出す 
+    &amp;#8220;\`
+
+    rpm2cpio ファイル名.rpm | cpio -id
+
+    &amp;#8220;\` 
+    
+    &lt;/li&gt; 
+    
+    &lt;/ol&gt; 
+    
+    以上のコマンドによりRPMファイルからファイルを取り出すことができる。
+    
+    ファイルとディレクトリはカレントディレクトリをルートにして作成されるので、適当なディレクトリを作成してその中でやるといいかもしれない。
+    
+    Source: New feed</code></pre>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2014-12-08-ami%E3%81%8B%E3%82%89%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%9F%E6%99%82%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC-ext2-fs-sda1-couldnt-mount-because-of-unsupported-optional-features-244/"> AMIから起動した時のエラー EXT2-fs: sda1: couldn&amp;#039;t mount because of unsupported optional features (244).</a></li>
+      &nbsp;<li class="next"><a href="/post/2014-12-18-pgobjectinuse-error-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9database_name%E3%81%AF%E4%BB%96%E3%81%AE%E3%83%A6%E3%83%BC%E3%82%B6%E3%81%8B%E3%82%89%E3%82%A2%E3%82%AF/"> PG::ObjectInUse: ERROR: データベース&amp;quot;database_name&amp;quot;は他のユーザからアクセスされています</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

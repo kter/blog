@@ -1,0 +1,109 @@
+I"9<p>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。</p>
+
+<p>前回クラスタとそこにIngressを追加したので、今回はIngressでSSLを使えるようにします。</p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p><a href="https://github.com/jetstack/cert-manager">cert-manager</a>を使ってLet’s Encryptから証明書を取得・設定していきます。</p>
+
+<p>cert-managerで証明書を取得するためにはDNS認証かHTTP認証のいずれかを行う必要があります。</p>
+
+<p>DNS認証はRoute53ではうまく動かなかったので、HTTP認証で行います。</p>
+
+<h1 id="cert-managerのインストール">cert-managerのインストール</h1>
+
+<p>helmを使ってインストールします。</p>
+
+<p>下記コマンドを実行してください。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/jetstack/cert-manager
+<span class="nb">cd </span>cert-manager
+helm <span class="nb">install</span> <span class="se">\</span>
+    <span class="nt">--name</span> cert-manager <span class="se">\</span>
+    <span class="nt">--namespace</span><span class="o">=</span>kube-system <span class="se">\</span>
+    contrib/charts/cert-manager <span class="se">\</span>
+    <span class="nt">--set</span> ingressShim.extraArgs<span class="o">=</span><span class="s1">'{--default-issuer-name=letsencrypt-prod,--default-issuer-kind=ClusterIssuer}'</span>
+</code></pre></div></div>
+
+<h1 id="設定">設定</h1>
+
+<p>下記yamlをClusterIssuer.ymlとして保存してください。</p>
+
+<p>※メールアドレスは自分のものを設定してください。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">certmanager.k8s.io/v1alpha1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterIssuer</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">letsencrypt-prod</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">acme</span><span class="pi">:</span>
+    <span class="c1"># The ACME server URL</span>
+    <span class="na">server</span><span class="pi">:</span> <span class="s">https://acme-v01.api.letsencrypt.org/directory</span>
+    <span class="c1"># Email address used for ACME registration</span>
+    <span class="na">email</span><span class="pi">:</span> <span class="s">(メールアドレス)</span>
+    <span class="c1"># Name of a secret used to store the ACME account private key</span>
+    <span class="na">privateKeySecretRef</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">letsencrypt-prod</span>
+    <span class="c1"># Enable the HTTP-01 challenge provider</span>
+    <span class="na">http01</span><span class="pi">:</span> <span class="pi">{}</span>
+</code></pre></div></div>
+
+<p>下記yamlをcertificate.ymlとして保存してください。</p>
+
+<p>各ドメインは自分のものを設定してください。</p>
+
+<p>commonNameは証明書の通称として使われるものなので、(ドメイン1)を指定するといいと思います。</p>
+
+<p>dnsNamesで指定したドメインは<a href="https://jp.globalsign.com/support/faq/516.html">SAN (Subject Alternative Name)</a>として登録されます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">apiVersion</span><span class="pi">:</span> <span class="s">certmanager.k8s.io/v1alpha1</span>
+<span class="na">kind</span><span class="pi">:</span> <span class="s">Certificate</span>
+<span class="na">metadata</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">(ハイフンつながりのドメインex</span><span class="pi">:</span> <span class="s">kter-jp)-tls</span>
+  <span class="na">namespace</span><span class="pi">:</span> <span class="s">default</span>
+<span class="na">spec</span><span class="pi">:</span>
+  <span class="na">secretName</span><span class="pi">:</span> <span class="s">(ハイフンつながりのドメイン)-tls</span>
+  <span class="na">issuerRef</span><span class="pi">:</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">letsencrypt-prod</span>
+    <span class="na">kind</span><span class="pi">:</span> <span class="s">ClusterIssuer</span>
+  <span class="na">commonName</span><span class="pi">:</span> <span class="s">(ドメインex</span><span class="pi">:</span> <span class="s">kter.jp)</span>
+  <span class="na">dnsNames</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">(ドメイン1)</span>
+  <span class="pi">-</span> <span class="s">(ドメイン2)</span>
+  <span class="pi">-</span> <span class="s">(ドメイン3)</span>
+  <span class="na">acme</span><span class="pi">:</span>
+    <span class="na">config</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">http01</span><span class="pi">:</span>
+        <span class="na">ingressClass</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">domains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">(ドメイン1)</span>
+    <span class="pi">-</span> <span class="na">http01</span><span class="pi">:</span>
+        <span class="na">ingressClass</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">domains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">(ドメイン2)</span>
+    <span class="pi">-</span> <span class="na">http01</span><span class="pi">:</span>
+        <span class="na">ingressClass</span><span class="pi">:</span> <span class="s">nginx</span>
+      <span class="na">domains</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">(ドメイン3)</span>
+</code></pre></div></div>
+
+<p>設定を反映します。</p>
+
+<p>下記コマンドを実行してください。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kubectl apply <span class="nt">-f</span> ClusterIssuer.yml
+kubectl apply <span class="nt">-f</span> certificate.yml
+</code></pre></div></div>
+
+<p>進捗は下記コマンドで確認出来ます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+kubectl describe certificate
+</code></pre></div></div>
+
+<h1 id="確認">確認</h1>
+
+<p>各ドメインにhttpsでアクセスして、証明書が正しく設定されるか確認します。</p>
+
+:ET

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SSL on ことえりブログ</title>
+    <link>/tags/SSL/</link>
+    <description>Recent content in SSL on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Jul 2017 13:05:28 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/SSL/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+      <link>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sun, 09 Jul 2017 13:05:28 +0000</pubDate>
+      
+      <guid>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>kubernetes on GKEでLet’s Encryptを使ったときのメモ
+kubenetesでLet’s Encryptを使うのに、kube-legoを使用します。
+kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。
+ 7月13日追記
+GCEのロードバランサーを使わない手順ができました。
+https://github.com/kter/kube-study/tree/master/ingress/nginx-tls
+kube-legoのダウンロード (メールアドレスを自分のものに編集)
+ IPの払い出し IPを払い出す
+払い出したIPにドメインを紐付けておく。
+ ファイルの作成 kube-legoで使用するnginx-ingress.ymlを作成する。
+SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。
+ kube-legoを作成する 設定が反映されるまで、十数分掛かるので暫く待つ。
+備考 作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は--namespace kube-legoが必要になる。</description>
+    </item>
+    
+  </channel>
+</rss>

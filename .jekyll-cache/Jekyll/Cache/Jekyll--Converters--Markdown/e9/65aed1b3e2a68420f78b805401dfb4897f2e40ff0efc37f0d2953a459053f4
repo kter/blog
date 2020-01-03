@@ -1,0 +1,18 @@
+I"�<h1 id="前提">前提</h1>
+
+<ol>
+  <li>更新したいドメインがRoute53で管理されている</li>
+  <li>Route53の操作権を持つIAMロールを割り当てたEC2で作業する</li>
+  <li>EC2でDockerが使える</li>
+</ol>
+
+<h1 id="手順">手順</h1>
+
+<p>下記コマンドを実行するだけ。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>docker run <span class="nt">-it</span> <span class="nt">--rm</span> <span class="nt">-e</span> <span class="nv">AWS_HOSTED_ZONE_ID</span><span class="o">=(</span>対象ドメインのHosted Zone ID<span class="o">)</span>  <span class="nt">-v</span> <span class="nv">$PWD</span>:/app xenolf/lego <span class="nt">--path</span><span class="o">=</span>/app <span class="nt">--email</span><span class="o">=</span><span class="s2">"(メールアドレス)"</span> <span class="nt">--domains</span><span class="o">=</span><span class="s2">"(対象のドメイン)"</span> <span class="nt">--dns</span> route53 run
+</code></pre></div></div>
+
+<p>証明書がカレントディレクトリのcertificatesディレクトリ以下に保存される。</p>
+
+:ET

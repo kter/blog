@@ -1,0 +1,20 @@
+I"N<p>s3cmdでserver-side-encryptionを使おうとして普通に–server-side-encryptionをオプションとしてつけても</p>
+
+<pre>s3cmd: error: no such option: --server-side-encryption</pre>
+
+<p>と言われるだけでだめだった。</p>
+
+<p>その代わり、</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--add-header=x-amz-server-side-encryption:AES256
+</code></pre></div></div>
+
+<p>というオプションをつけるとちゃんと暗号化された。</p>
+
+<p>要するにこんな感じでコマンドを実行すると</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>s3cmd put --add-header=x-amz-server-side-encryption:AES256 uploadfile s3:&amp;#047;&amp;#047;bucketname&amp;#047;&lt;/p&gt; 
+</code></pre></div></div>
+
+<p>Source: New feed</p>
+:ET

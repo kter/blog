@@ -1,0 +1,35 @@
+version: 0.2
+
+env:
+  variables:
+    JEKYLL_ENV: "production"
+    LC_CTYPE: "C.UTF-8"
+  parameter-store:
+    STG_BUCKET: "STG_BUCKET"
+    PRD_BUCKET: "PRD_BUCKET"
+phases:
+  install:
+    commands:
+      - echo install jekyll
+      - apt-get update -y
+      - apt-get install -y software-properties-common
+      - apt-add-repository -y ppa:brightbox/ruby-ng
+      - apt-get update -y
+      - apt-get -y install ruby2.4 ruby2.4-dev
+      - gem install bundler
+      - apt-get install -y libffi-dev libxml2-dev libxslt-dev
+  pre_build:
+    commands:
+      - echo setuup jekyll
+      - bundle install --path vendor/bundle
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo build html
+      - bundle exec jekyll build
+      - echo Build completed on `date`
+  post_build:
+    commands:
+      - echo deploy to S3
+      - aws s3 cp _site/ s3://$PRD_BUCKET/ --recursive
+      - aws cloudfront create-invalidation --distribution-id E2ZOWTCRKG95GR --paths '/*'

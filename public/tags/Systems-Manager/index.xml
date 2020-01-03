@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Systems Manager on ことえりブログ</title>
+    <link>/tags/Systems-Manager/</link>
+    <description>Recent content in Systems Manager on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 19 Jul 2017 21:47:14 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Systems-Manager/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>OpsJAWS Systems Manager勉強会メモ</title>
+      <link>/post/2017-07-19-opsjaws-systems-manager%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Wed, 19 Jul 2017 21:47:14 +0000</pubDate>
+      
+      <guid>/post/2017-07-19-opsjaws-systems-manager%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%83%A1%E3%83%A2/</guid>
+      <description>OpsJAWSの Meetup#12 ~ Systems Manager祭り ~に参加してきたので内容をメモ。
+Amazon EC2 Systems Manager OS内部の構成を管理
+下記の自動化
+  ソフトウェアインベントリの収集
+  OSパッチの適用
+  システムイメージの作成
+  OS設定
+  Systems Managerは複数サービスで構成されている
+Run Command リモートから任意の実行が可能
+JSONベースでコマンド・タスクを定義
+SSHポートを開ける必要がない
+ステートマネージャー OSとアプリケーションの設定を定義、状態を維持する
+JSONベースでポリシーを定義
+EC2だけではなくオンプレも管理できる
+インベントリ ソフトウェアインベントリの情報収集
+オンプレも対応
+JSONベースで取得するデータを定義
+ステートマネージャから定期的に呼び出せる
+メンテナンスウィンドウ 事前に設定した時間でメンテナンスを実施
+組み込み済みのコマンド、Run Commandの実行が可能
+可用性と信頼性の向上
+時間と繰り返し間隔を設定 -&amp;gt; メンテナンス対象のターゲットを指定 -&amp;gt; 実行するタスクを設定
+パッチマネージャ ベースラインを定義してWindows/Linuxのパッチを適用
+Patch Baselineを使ってカスタムパッチポリシーを定義
+オートメーション シンプルなワークフローをつかって一般的なタスクを自動化
+パラメータストア IT資産の集中管理
+ログイン、DB接続情報などを一元管理
+Run Command, State Manager, Automationやコンソールから参照、更新可能
+細かく権限管理して必要な人に必要な情報を提供
+KMSで暗号化
+IAMで制限できるため、パラメータ名の命名規則によって、環境ごとにアクセス可能なユーザを定義することができる
+定義済みドキュメントが豊富</description>
+    </item>
+    
+  </channel>
+</rss>

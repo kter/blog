@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lambda (Python) から特定のログストリームにログを書こうとして苦戦した2つのポイント</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">Lambda (Python) から特定のログストリームにログを書こうとして苦戦した2つのポイント</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-07-17</small></p> <hr/>
+   <div class="post">
+     <p>Lambda (Python) から指定のログストリームにログを書こうとして苦戦したのでメモ。</p>
+<p>今日使い始めたばかりなので間違ってる点があるかもしれません。もし間違っていたら教えてくださいm(_ _)m</p>
+<h1 id="1--put-log-events-">苦戦ポイント1 -put_log_events()の使い方-</h1>
+<p>結論から言って次のようにする必要があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">
+      logs_client <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>client(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">logs</span><span style="color:#e6db74">&#39;</span>)
+
+      res <span style="color:#f92672">=</span> logs_client<span style="color:#f92672">.</span>describe_log_streams(
+          logGroupName<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">(ロググループ名)</span><span style="color:#e6db74">&#39;</span>,
+          logStreamNamePrefix<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">(ログストリーム名)</span><span style="color:#e6db74">&#39;</span>,
+      )
+      seq_token <span style="color:#f92672">=</span> res[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">logStreams</span><span style="color:#e6db74">&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">uploadSequenceToken</span><span style="color:#e6db74">&#39;</span>]
+
+      res <span style="color:#f92672">=</span> logs_client<span style="color:#f92672">.</span>put_log_events(
+          logGroupName<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">(ロググループ名)</span><span style="color:#e6db74">&#39;</span>,
+          logStreamName<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">(ログストリーム名)</span><span style="color:#e6db74">&#39;</span>,
+          logEvents<span style="color:#f92672">=</span>[
+              {
+                  <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">timestamp</span><span style="color:#e6db74">&#39;</span>: int(time<span style="color:#f92672">.</span>time()) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>,
+                  <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">message</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> backed up successfully</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> (message)
+              },
+          ],
+          sequenceToken<span style="color:#f92672">=</span>seq_token
+      )
+</code></pre></div><p>注意する点が2点ほどあります。</p>
+<h3 id="timestamp">timestampの指定</h3>
+<p>まず1点目、timestampはUNIX時間に1000を掛けたものを<strong>整数</strong>で指定しましょう。つまり単位が<strong>ミリ秒</strong>です。</p>
+<h3 id="sequencetoken">sequenceToken</h3>
+<p>2点目、ログを書き出すput_log_events()にはsequenceTokenというパラメータが必要になります。
+ログストリームへの初回の書き込みなら（多分）いらないのですが、2回目以降は必要になります。</p>
+<p>上記コードではsequenceTokenをdescribe_log_streams()から取得していますが、put_log_events()のレスポンスの中にもありますのでそれを使ってもいいです。</p>
+<h1 id="2--iam--">苦戦ポイント2 -IAM ポリシー-</h1>
+<p>結論から言って次のようにする必要があります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+        {
+            <span style="color:#f92672">&#34;Action&#34;</span>: [
+                <span style="color:#e6db74">&#34;logs:CreateLogGroup&#34;</span>,
+                <span style="color:#e6db74">&#34;logs:CreateLogStream&#34;</span>,
+                <span style="color:#e6db74">&#34;logs:PutLogEvents&#34;</span>,
+            ],
+            <span style="color:#f92672">&#34;Resource&#34;</span>: [
+                <span style="color:#e6db74">&#34;arn:aws:logs:*:*:/aws/lambda/(Lambda関数名☆ワイルドカード可☆)&#34;</span>,
+                <span style="color:#e6db74">&#34;arn:aws:logs:*:*:log-group:(ロググループ名):log-stream:(ログストリーム名)&#34;</span>
+            ],
+            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;Action&#34;</span>: [
+                <span style="color:#e6db74">&#34;logs:DescribeLogStreams&#34;</span>
+            ],
+            <span style="color:#f92672">&#34;Resource&#34;</span>: [
+                <span style="color:#e6db74">&#34;arn:aws:logs:*:*:*&#34;</span>
+            ],
+            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>
+        }
+    ]
+}
+</code></pre></div><p>ポリシーについて先に説明させていただきますと、最初のCreateLogGroup, CreateLogStream, PutLogEventsはCloudWatch Logsにログを書き出す（ログストリームの作成も）時に必要です。</p>
+<p>最初のResource内の1つ目　（<code>&quot;arn:aws:logs:*:*:/aws/lambda/(Lambda関数名☆ワイルドカード可☆)&quot;</code>）は、Lambdaからprint()やloggerを使った時、自動でCloudWatch Logsに送られるのでその時用です。</p>
+<p>その上での注意する点はResourceの指定です。</p>
+<h3 id="resource">Resource指定</h3>
+<p>最初のResource内の2つ目（<code>arn:aws:logs:*:*:log-group:(ロググループ名):log-stream:(ログストリーム名)</code>）は今回の問題である特定のログストリームに書くときのArn指定です。
+自分は最初間違えて<code>arn:aws:logs:*:*:(ロググループ名)/(ログストリーム名)</code>とかやってました。</p>
+<p>前述のdescribe_log_streamsのためにlogs:DescribeLogStreamsをarn:aws:logs:<em>:</em>:*に対して設定するのも忘れないでください。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-07-02-Smart-Forfour%E3%81%AB%E4%B9%97%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F%E3%81%AE%E3%81%A7%E6%84%9F%E6%83%B3/"> Smart Forfourに乗ったので感想</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-07-26-%E6%A9%9F%E5%AF%86%E6%83%85%E5%A0%B1%E3%82%92Lambda%E3%81%A7%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E3%81%A8%E3%81%8D/"> 機密情報をLambdaで使いたいとき</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

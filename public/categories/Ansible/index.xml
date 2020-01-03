@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ansible on ことえりブログ</title>
+    <link>/categories/Ansible/</link>
+    <description>Recent content in Ansible on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Dec 2017 16:29:47 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Ansible/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AnsibleでLetsencryptによる証明書を自動作成する</title>
+      <link>/post/2017-12-08-Ansible%E3%81%A7Letsencrypt%E3%81%AB%E3%82%88%E3%82%8B%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E8%87%AA%E5%8B%95%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/</link>
+      <pubDate>Fri, 08 Dec 2017 16:29:47 +0000</pubDate>
+      
+      <guid>/post/2017-12-08-Ansible%E3%81%A7Letsencrypt%E3%81%AB%E3%82%88%E3%82%8B%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E8%87%AA%E5%8B%95%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B/</guid>
+      <description>証明書を作成するためにはドメインを登録しないといけませんが、下記Taskで自動作成できます。
+登録するIPアドレスはipify.orgで取得しています。
+注意点としてはfullchain-pathで指定したディレクトリ配下にdomain1の名前でディレクトリが作成され、そのディレクトリ内に証明書と秘密鍵が生成されることです。
+- name: &amp;#34;外部アドレスを取得&amp;#34; uri: url: https://api.ipify.org/ return_content: yes register: external_address - name: &amp;#34;レコード登録 (反映を待つので少し時間がかかります)&amp;#34; route53: aws_access_key: (アクセスキー) aws_secret_key: (シークレットアクセスキー) command: create zone: (Route53ゾーン名) record: &amp;#34;{{ item }}&amp;#34; type: A ttl: 300 value: &amp;#34;{{ external_address.content }}&amp;#34; wait: yes with_items: - (ドメイン1) - (ドメイン2) - name: &amp;#34;certbot インストールディレクトリの作成&amp;#34; file: path=/opt/certbot state=directory owner=root group=root mode=0755 - name: &amp;#34;certbot のダウンロード&amp;#34; get_url: url: https://dl.eff.org/certbot-auto dest: /opt/certbot/certbot-auto mode: 755 - name: &amp;#34;certbot を実行してSSL証明書を取得&amp;#34; shell: | /opt/certbot/certbot-auto certonly \ --debug \ --text \ --non-interactive \ --agree-tos \ --standalone \ --fullchain-path=(設置場所) \ --email (メールアドレス) \ -d (ドメイン1) \ -d (ドメイン2) </description>
+    </item>
+    
+    <item>
+      <title>Ansibleで配列を定義する</title>
+      <link>/post/2017-12-08-ansible%E3%81%A7%E9%85%8D%E5%88%97%E3%82%92%E5%AE%9A%E7%BE%A9%E3%81%99%E3%82%8B/</link>
+      <pubDate>Fri, 08 Dec 2017 13:15:47 +0000</pubDate>
+      
+      <guid>/post/2017-12-08-ansible%E3%81%A7%E9%85%8D%E5%88%97%E3%82%92%E5%AE%9A%E7%BE%A9%E3%81%99%E3%82%8B/</guid>
+      <description>Ansibleで配列を定義するには、角括弧で配列の中身をくくり、カンマで区切れば良い。
+例:
+array=[&amp;quot;data1&amp;quot;,&amp;quot;data2&amp;quot;] </description>
+    </item>
+    
+    <item>
+      <title>ImportError: No module named paramiko</title>
+      <link>/post/2017-08-20-importerror-no-module-named-paramiko/</link>
+      <pubDate>Sun, 20 Aug 2017 15:38:54 +0000</pubDate>
+      
+      <guid>/post/2017-08-20-importerror-no-module-named-paramiko/</guid>
+      <description>Ansible徹底入門を写経していたところ、Dynamic Inventoryのvagrant.py実行で下記エラーが出てしまった。
+ 元入ってるpythonとこの本に従って入れたpythonがごっちゃになっているようだった。
+vagrant.pyの実行だけなら “`python2 ./vagrant.py“` で動くが、ansible-playbookでインベントリにvagrant.pyを使うとなるとエラーとなる。
+そこでvirtualenvを使って、ディレクトリ単位でpythonを管理する。
+ 具体的には次のようにする。
+ virtualenv環境を終了する場合は次のコマンドを実行する。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

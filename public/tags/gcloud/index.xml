@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gcloud on ことえりブログ</title>
+    <link>/tags/gcloud/</link>
+    <description>Recent content in gcloud on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 14 Jul 2017 13:04:59 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/gcloud/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>minikubeを使った後にGKEを使いたい場合</title>
+      <link>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Fri, 14 Jul 2017 13:04:59 +0000</pubDate>
+      
+      <guid>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>minikubeを使ったあとにGKEを使おうと(kubectlコマンドを実行)すると、次のエラーが発生して接続できない。
+対応としてはgcloud container clustersコマンドでクラスタ名を指定すればよい。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

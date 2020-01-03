@@ -1,0 +1,35 @@
+I"�<p>MFA設定後、AWS CLIからMFAを使うためには一時的なクレデンシャルを発行する必要があります。</p>
+
+<h2 id="前提">前提</h2>
+
+<p>IAMポリシーにこんな感じでConditionを設定するとMFAが有効になっていない時の設定を行うことができます。</p>
+
+<p>ここで例えばEffectをDenyに、Actionをiam:DeleteUserとすると、MFA認証なしではDeleteUserができなくなります。</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>            <span class="dl">"</span><span class="s2">Condition</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="dl">"</span><span class="s2">Bool</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="dl">"</span><span class="s2">aws:MultiFactorAuthPresent</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">false</span><span class="dl">"</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+</code></pre></div></div>
+
+<p>MFAを設定しておけば、AWSマネジメントコンソールにログインしようとするとMFAのコード入力画面が勝手に出てきますが、AWS CLIの場合は出てきません。</p>
+
+<h2 id="本題">本題</h2>
+
+<p>どうするのかというと次のコマンドを実行し、一時的なクレデンシャルを発行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+aws sts get-session-token <span class="nt">--serial-number</span> <span class="o">(</span>登録MFAのARN 例：arn:aws:iam::500000000:mfa/kter<span class="o">)</span> <span class="nt">--token-code</span> <span class="o">(</span>MFAコード<span class="o">)</span>
+</code></pre></div></div>
+
+<p>環境変数にクレデンシャルを突っ込むワンライナーはこちら。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">eval</span> <span class="sb">`</span>aws sts get-session-token <span class="nt">--serial-number</span> <span class="o">(</span>登録MFAのARN<span class="o">)</span> <span class="nt">--token-code</span> <span class="o">(</span>MFAコード<span class="o">)</span> | <span class="nb">awk</span> <span class="s1">' $1 == "\"AccessKeyId\":" { gsub(/\"/,""); gsub(/,/,""); print "export AWS_ACCESS_KEY_ID="$2 } $1 == "\"SecretAccessKey\":" { gsub(/\"/,""); gsub(/,/,""); print "export AWS_SECRET_ACCESS_KEY="$2 } $1 == "\"SessionToken\":" { gsub(/\"/,""); gsub(/,/,""); print "export AWS_SESSION_TOKEN="$2 } '</span><span class="sb">`</span>
+</code></pre></div></div>
+
+<h3 id="参考にさせていただいたページ">参考にさせていただいたページ</h3>
+
+<p>https://www.slideshare.net/tetsunorinishizawa/aws-cliassume-role</p>
+
+:ET

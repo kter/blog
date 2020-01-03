@@ -1,0 +1,11 @@
+I"�<p>こんな感じで拒否できる (Apache 2.2系以前の場合)。</p>
+
+<pre class="lang:default decode:true">SetEnvIf User-Agent "ユーザエージェント名" ng_ua
+Order allow,deny
+Allow from all
+deny from env=ng_ua</pre>
+
+<p> </p>
+
+<p> </p>
+:ET

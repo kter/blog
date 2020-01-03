@@ -1,0 +1,45 @@
+I"�
+<p>yum updateが異常に遅い(10kbpsほどの)マシンがあり、その解決に手間取ったので解決策をここに書き記しておきます。</p>
+
+<p>まず、yumでfastestmirrorプラグインが有効になっているかどうか確認します。</p>
+
+<p>確認方法は、yum updateの実行の際、Loaded plugins: fastestmirrorと表示されれば有効になっています。</p>
+
+<p>有効になっている場合はキャッシュファイルを削除してみます。キャッシュファイルは、/etc/yum/pluginconf.d/fastestmirror.confのhostfilepathという項目に場所が書いてあります。</p>
+
+<p>私の場合は/var/cache/yum/timedhosts.txtでした。これをリネームして読み込まないようにしてみます。</p>
+
+<p>これでも解決しませんでしたので、/sbin/ifconfigでインターフェースの状態を確認してみます。</p>
+
+<p>すると、errorパケットがかなりあり、現在進行形で増えているようでした。</p>
+
+<p>/sbin/ethtool eth0でさらに詳しく状態を見てみると、Speedが100Mb/sに設定されていました。</p>
+
+<p>他のマシンは1000Mbpsで設定されていたので設定を合わせます。</p>
+
+<p>/etc/sysconfig/network-scripts/ifcfg-eth0を確認してみると、ETHTOOL_OPTS=”autoneg off speed 100 duplex full”とあったので、Speedを1000に設定して/etc/init.d/network restartで再起動して有効にしようとしました。</p>
+
+<p>しかし、Bringing up interface eth0: Cannot set new settings: Invalid argumentというエラーが表示されて変更できないようでした。</p>
+
+<p>/sbin/ethtool -s eth0 speed 1000 duplex full autoneg offを実行しても下記のような同様の結果でした。</p>
+
+<p>Cannot set new settings: Invalid argument</p>
+
+<p>not setting speed</p>
+
+<p>not setting duplex</p>
+
+<p>not setting autoneg</p>
+
+<p>おかしいなーと思いつつググると、Speedが1000の時はautonegがonになっている必要があるとの情報を発見しました。</p>
+
+<p><a href="http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=40505&amp;forum=10&amp;start=16">http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=40505&amp;forum=10&amp;start=16</a></p>
+
+<p>さっそく/sbin/ethtool -s eth0 speed 1000 duplex full autoneg onを実行したところうまく設定することができました。</p>
+
+<p>再起動しても有効になるよう、ifcfg-eth0にもETHTOOL_OPTS=”autoneg on speed 1000 duplex full”と書いておきます。</p>
+
+<p>最後にyum updateを実行すると一瞬でダウンロードが終わりましたｗ</p>
+
+<p>Source: New feed</p>
+:ET

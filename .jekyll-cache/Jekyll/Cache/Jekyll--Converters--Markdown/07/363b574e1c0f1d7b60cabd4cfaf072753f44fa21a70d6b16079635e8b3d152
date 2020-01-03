@@ -1,0 +1,23 @@
+I"�<p>急にインスタンス名を取得したくなった時などにどうぞ。
+※EC2のDescribeInstances権限が必要です。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 describe-instances <span class="se">\</span>
+  <span class="nt">--instance-ids</span> <span class="sb">`</span>/usr/bin/curl <span class="nt">-s</span> http://169.254.169.254/latest/meta-data/instance-id<span class="sb">`</span> <span class="se">\</span>
+  <span class="nt">--query</span> <span class="s1">'Reservations[].Instances[].[Tags[?Key==`Name`].Value]'</span> <span class="se">\</span>
+  <span class="nt">--output</span> text
+</code></pre></div></div>
+
+<p>変数に入れる時はこんな感じで</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">INSTANCE_NAME</span><span class="o">=</span><span class="si">$(</span>aws ec2 describe-instances <span class="se">\</span>
+  <span class="nt">--instance-ids</span> <span class="sb">`</span>/usr/bin/curl <span class="nt">-s</span> http://169.254.169.254/latest/meta-data/instance-id<span class="sb">`</span> <span class="se">\</span>
+  <span class="nt">--query</span> <span class="s1">'Reservations[].Instances[].[Tags[?Key==`Name`].Value]'</span> <span class="se">\</span>
+  <span class="nt">--output</span> text<span class="si">)</span>
+</code></pre></div></div>
+
+<p>コピペ用</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws ec2 describe-instances <span class="nt">--instance-ids</span> <span class="sb">`</span>/usr/bin/curl <span class="nt">-s</span> http://169.254.169.254/latest/meta-data/instance-id<span class="sb">`</span> <span class="nt">--query</span> <span class="s1">'Reservations[].Instances[].[Tags[?Key==`Name`].Value]'</span> <span class="nt">--output</span> text
+</code></pre></div></div>
+
+:ET

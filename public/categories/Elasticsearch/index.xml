@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Elasticsearch on ことえりブログ</title>
+    <link>/categories/Elasticsearch/</link>
+    <description>Recent content in Elasticsearch on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Sep 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Elasticsearch/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kibana&#43;ElasticSearchで検索した時Courier Fetch: X of Y shards failedとエラーが出てしまったときの対処</title>
+      <link>/post/2018-09-26-Kibana&#43;ElasticSearch%E3%81%A7%E6%A4%9C%E7%B4%A2%E3%81%97%E3%81%9F%E6%99%82Courier-Fetch-X-of-Y-shards-failed%E3%81%A8%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%87%A6/</link>
+      <pubDate>Wed, 26 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-26-Kibana&#43;ElasticSearch%E3%81%A7%E6%A4%9C%E7%B4%A2%E3%81%97%E3%81%9F%E6%99%82Courier-Fetch-X-of-Y-shards-failed%E3%81%A8%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%81%A6%E3%81%97%E3%81%BE%E3%81%A3%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%87%A6/</guid>
+      <description>Kibana+ElasticSearchで検索した時、Courier Fetch: X of Y shards failedとエラーが出てしまったときの対処
+結論から言うとおかしなインデックスを削除したら直りました。
+1. インデックスを確認 curl localhost:9200/_cat/shards?v | awk &#39;{ print $1 }&#39; | sort | uniq index .kibana logstash-2018.09.12 logstash-2018.09.13 logstash-2018.09.14 logstash-2018.09.15 logstash-2018.09.16 logstash-2018.09.17 logstash-2018.09.18 logstash-2018.09.19 logstash-2018.09.20 logstash-2018.09.21 logstash-2018.09.22 logstash-2018.09.23 logstash-2018.09.24 logstash-2018.09.25 logstash-2018.09.26 logstash-503830.12.31 # こんな感じの変なインデックスがある 2. インデックスの削除 curl -XDELETE localhost:9200/logstash-503830.12.31?pretty 3. 再起動 service elasticsearch restart こうなった原因ははっきりとはしませんが、直近で大量のドキュメントがElasticSearchに流れ込み、負荷が高い状態が続いた時があったので、そのときにインデックスが変になってしまったのかもしれません。</description>
+    </item>
+    
+    <item>
+      <title>ElasticSearchコマンドメモ</title>
+      <link>/post/2018-09-21-ElasticSearch%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Fri, 21 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-21-ElasticSearch%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A1%E3%83%A2/</guid>
+      <description>絶対忘れるので使ったコマンドを書いておく。
+ElasticSearch 5.5で確認
+インデックスを確認
+curl -XGET localhost:9200/_cat/indices 指定したフィールドを取得
+curl -XGET &#39;http://localhost:9200/(インデックス名)/_search?pretty&#39; -d &#39; { &amp;quot;_source&amp;quot;: [ &amp;quot;(取得するフィールド名1)&amp;quot;, &amp;quot;(取得するフィールド名2)&amp;quot;] }&#39; 指定フィールドから指定文字列を検索
+curl -XGET &#39;http://localhost:9200/(インデックス名)/_search?pretty&#39; -d &#39; { &amp;quot;_source&amp;quot;: [ &amp;quot;(取得するフィールド名1)&amp;quot;, &amp;quot;(取得するフィールド名2)&amp;quot;], &amp;quot;query&amp;quot;:{ &amp;quot;match&amp;quot;:{ &amp;quot;(検索フィールド名)&amp;quot;: { &amp;quot;query&amp;quot;: &amp;quot;(検索文字列)&amp;quot;, &amp;quot;type&amp;quot;: &amp;quot;phrase&amp;quot; } } } }&#39; 指定フィールドから指定文字列を検索 (AND検索)
+curl -XGET &#39;http://localhost:9200/(インデックス名)/_search?pretty&#39; -d &#39; { &amp;quot;_source&amp;quot;: [ &amp;quot;(取得するフィールド名1)&amp;quot;, &amp;quot;(取得するフィールド名2)&amp;quot;], &amp;quot;query&amp;quot;:{ &amp;quot;bool&amp;quot;:{ &amp;quot;must&amp;quot;: [ { &amp;quot;match&amp;quot;:{ &amp;quot;(検索フィールド名)&amp;quot;: { &amp;quot;query&amp;quot;: &amp;quot;(検索文字列)&amp;quot;, &amp;quot;type&amp;quot;: &amp;quot;phrase&amp;quot; } } }, { &amp;quot;match&amp;quot;:{ &amp;quot;(検索フィールド名)&amp;quot;: { &amp;quot;query&amp;quot;: &amp;quot;(検索文字列)&amp;quot;, &amp;quot;type&amp;quot;: &amp;quot;phrase&amp;quot; } } } ] } } }&#39; 指定フィールドから指定文字列を検索 (OR検索)</description>
+    </item>
+    
+  </channel>
+</rss>

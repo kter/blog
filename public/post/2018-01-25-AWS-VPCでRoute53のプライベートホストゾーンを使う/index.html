@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AWS VPCでRoute53のプライベートホストゾーンを使う</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">AWS VPCでRoute53のプライベートホストゾーンを使う</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-01-25</small></p> <hr/>
+   <div class="post">
+     <h1 id="heading">はじめに</h1>
+<p>VPCでのプライベートホストゾーンについて説明します。</p>
+<p>これは<code>route53.test</code>のような実在しないドメインをRoute53に登録&amp;設定すれば、設定したVPC限定でそのドメインが使えるというものです。</p>
+<p>これを使って例えば次のようなことができます。</p>
+<p>インスタンスAに<code>web.route53.test</code>というレコードセットをRoute53に登録</p>
+<p>↓</p>
+<p>設定したVPCのインスタンスからはwebという名前でインスタンスAにアクセスできる（どちらかと言うとリゾルバの機能ですが）</p>
+<p>踏み台からのSSHやリレー、プロキシ先の指定などに便利ですよね。</p>
+<h1 id="heading-1">料金について</h1>
+<p><a href="https://aws.amazon.com/jp/route53/pricing/">こちら</a>をご覧ください。月0.5ドルかかります。日割り計算はありません。</p>
+<p>ただし作成から12時間は料金は発生しないようなので、テスト目的ならば12時間以内に削除しましょう。</p>
+<h1 id="heading-2">設定</h1>
+<p>ドキュメントにいろいろ書かれていますが、大抵の場合次の手順でいけるはずです。</p>
+<ol>
+<li>Route53でプライベートホストゾーンを登録</li>
+<li>VPCのDNS, DHCP設定を変更</li>
+</ol>
+<p>VPCのDHCPの設定を変更すれば<code>/etc/resolv.conf</code>の設定は自動で行われます。便利ですね。</p>
+<h2 id="1-route53">1. Route53でプライベートホストゾーンを登録</h2>
+<p>Route53のページに行ってホストゾーンを作成します。</p>
+<p>特に迷うことはないと思いますがこんな感じで</p>
+<p><img src="/assets/img/20180125/2018-01-25-01.png" alt=""></p>
+<p>次にレコードを登録しましょう。</p>
+<p>登録するIPはもちろんプライベートIPアドレスで。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180125/2018-01-25-02.png" alt=""></p>
+<p>Route53での作業は以上です。</p>
+<h2 id="2-vpcdhcp">2. VPCのDHCP設定を変更</h2>
+<p>VPC一覧のページに移動し、DNSホスト名を<code>はい</code>に設定します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180125/2018-01-25-03.png" alt=""></p>
+<p>次にVPCの<code>DHCP オプションセット</code>というページに移動します。</p>
+<p>ここで予めオプションの値をメモしておいてください。</p>
+<p>※多分こんな感じで設定がされていると思います。</p>
+<p><code>domain-name = ap-northeast-1.compute.internal;domain-name-servers = AmazonProvidedDNS;</code></p>
+<p>ドメイン名にメモした<code>domain-name</code>で指定されている値と<strong>スペースを開けて</strong>今回設定するプライベートホストゾーンの値を入力します。</p>
+<p>ドメインネームサーバーには<code>AmazonProvidedDNS</code>と入力してください。</p>
+<p><img src="/assets/img/20180125/2018-01-25-04.png" alt=""></p>
+<p>最後にVCPの一覧画面に移動し、DHCPオプションセットの編集から、先ほど作成したオプションセットを指定します。</p>
+<p><img src="/assets/img/20180125/2018-01-25-05.png" alt=""></p>
+<p>5分程度待つと、設定したVPC内のインスタンスの<code>/etc/resolv.conf</code>が自動で変更され、instance01とinstance02でIPが引けるようになります。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180125/2018-01-25-06.png" alt=""></p>
+<p>※テストで作った場合は忘れずにホストゾーンを削除しましょう！</p>
+<h1 id="heading-3">注意点</h1>
+<p>自分は試していないのですが、<a href="https://docs.aws.amazon.com/ja_jp/Route53/latest/DeveloperGuide/hosted-zones-private.html">ドキュメント</a>に記載がある通り、名前空間が重複するパブリックゾーンとプライベートホストゾーンだと注意が必要です。</p>
+<p>たとえばdevドメインのような実在するパブリックなドメインをプライベートホストゾーンに登録してしまうと、パブリックな方のDNSサーバには問い合わせてくれないということです。
+気をつけましょう。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-01-13-KubernetesMeetupTokyo9/"> Kubernetes Meetup Tokyo #9 レポート</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-02-06-Mailu%E3%81%A7%E7%B0%A1%E5%8D%98%E3%81%ABWebUI%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B/"> Mailuで簡単にWebUI付きのメールサーバを立てる</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

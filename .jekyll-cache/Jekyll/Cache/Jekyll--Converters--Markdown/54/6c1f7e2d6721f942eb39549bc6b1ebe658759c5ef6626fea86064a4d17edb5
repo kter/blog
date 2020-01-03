@@ -1,0 +1,40 @@
+I"�<p>Passengerをインストールするとき、passenger-install-apache2-moduleを実行しますが、Apacheをソースインストールしていたりすると、次のようなエラーが出てうまくインストールできません。</p>
+
+<div class="highlight">
+  <pre><code class="language-">Checking for required software...
+
+* GNU C++ compiler... found at /usr/bin/g++
+* Curl development headers with SSL support... not found
+* OpenSSL development headers... found
+* Zlib development headers... found
+* Ruby development headers... found
+* OpenSSL support for Ruby... found
+* RubyGems... found
+* Rake... found at /usr/bin/rake
+* rack... found
+* Apache 2... not found
+* Apache 2 development headers... not found
+* Apache Portable Runtime (APR) development headers... not found
+* Apache Portable Runtime Utility (APU) development headers... not found
+</code></pre>
+</div>
+
+<p>上記例では</p>
+
+<p>`<br /></p>
+<ul>
+  <li>Curl development headers with SSL support… not found<br />
+`</li>
+</ul>
+
+<p>とあるので、yumかなにかでcurl-develをインストールします(yum install curl-devel)。</p>
+
+<p>Apache関係はソースインストールしたせいで、パスを見失っているだけなので、下記コマンドで場所を教えてあげます</p>
+
+<div class="highlight">
+  <pre><code class="language-">passenger-install-apache2-module --apxs2-path /usr/local/apache2/bin/apxs --apr-config-path /usr/local/apache2/bin/apr-1-config
+</code></pre>
+</div>
+
+<p>Source: New feed</p>
+:ET

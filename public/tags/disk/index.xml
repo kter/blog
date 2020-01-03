@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>disk on ことえりブログ</title>
+    <link>/tags/disk/</link>
+    <description>Recent content in disk on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Jun 2017 17:20:08 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/disk/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ディスク容量 / ディスク使用量が空き容量 (%)と一致しない場合</title>
+      <link>/post/2017-06-23-%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E5%AE%B9%E9%87%8F-%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E4%BD%BF%E7%94%A8%E9%87%8F%E3%81%8C%E7%A9%BA%E3%81%8D%E5%AE%B9%E9%87%8F-%E3%81%A8%E4%B8%80%E8%87%B4/</link>
+      <pubDate>Fri, 23 Jun 2017 17:20:08 +0000</pubDate>
+      
+      <guid>/post/2017-06-23-%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E5%AE%B9%E9%87%8F-%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E4%BD%BF%E7%94%A8%E9%87%8F%E3%81%8C%E7%A9%BA%E3%81%8D%E5%AE%B9%E9%87%8F-%E3%81%A8%E4%B8%80%E8%87%B4/</guid>
+      <description>ext4ディスクの場合、デフォルトで総容量の5%が/root用として予約されている。
+ディスク容量 / ディスク使用量が空き容量 (%)と一致しない場合、こちらの可能性が高い。
+ この領域を使用しない場合はこの予約容量を0にすることができる。
+ 予約容量の確認  Reserved block count × Block size が 予約容量[byte]となる。
+ 予約容量の削除   </description>
+    </item>
+    
+  </channel>
+</rss>

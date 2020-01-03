@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Kubernetes Meetup Tokyo #10レポート</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">Kubernetes Meetup Tokyo #10レポート</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-03-10</small></p> <hr/>
+   <div class="post">
+     <p>内容の正当性は保証できません。こういう雰囲気でした。</p>
+<p>スライドとか公開されたら更新します。</p>
+<h2 id="heading">概要</h2>
+<p>Kubernetes Meetup Tokyo #10
+日時: 2018年3月8日19時から
+URL: <a href="https://k8sjp.connpass.com/event/76816/">https://k8sjp.connpass.com/event/76816/</a></p>
+<h2 id="open-service-broker-apikubernetes-service-catalog">Open Service Broker APIとKubernetes Service Catalog</h2>
+<p>by Toshiaki Maki (@making) (Pivotal)</p>
+<p>データベースをどこにだれが作成していますか？</p>
+<p>よくある例: 開発者がDBが必要な時にDBAに依頼 (DB作成、ユーザ作成)。</p>
+<p>Service Brokerを使えば、DBの作成・構築・設定まで自動で行える。</p>
+<p>Service Brokerを使うにはOpen Service Broker APIを使う。
+これはもともとはCloud Foundryのサービスだった。</p>
+<p>KubernetesではService Catalogを経由してService Brokerを使う。</p>
+<p>Service Brokerによって作成される機密情報はSecretに入れてくれる・</p>
+<p>helmでインストールできる。</p>
+<p>ブローカーが構築済みであれば、開発者は下記手順を踏むことでリソース(DB等)を用意できる。</p>
+<ol>
+<li>ServiceInstance作成 -&gt; リソース（DB等）が作成される</li>
+<li>ServiceBinding作成 -&gt; パスワード等がシークレットにセットされる</li>
+</ol>
+<h2 id="kubernetes">Kubernetesセキュリティベストプラクティス</h2>
+<p>by Ian Lewis (Google)</p>
+<p>Guestbookアプリを例にベストプラクティスを紹介。</p>
+<ul>
+<li>フロントはHTML/CSS/JS</li>
+<li>メッセージが保存・閲覧できる</li>
+<li>NGワード検出機能がある</li>
+<li>よくあるマイクロサービス</li>
+</ul>
+<h3 id="kubernetes-api-server">Kubernetes API Serverについて</h3>
+<h4 id="-podapi">シナリオ: フロントエンドPodからトークン取得、APIサーバを攻撃、シークレットを取得しさらに攻撃</h4>
+<p>Podにはトークンがマウントされているので、Podに侵入されるとトークンが抜かれるおそれがある。
+トークンを使ってAPIサーバにアクセスすればシークレット（パスワード等)が抜かれる。</p>
+<h4 id="1-rbac">改善策1: RBACを使おう</h4>
+<p>例えばWebサーバはAPIサーバにアクセスする必要が無いので、アクセス出来ないようRBACを設定する。
+GKEだとIAMと連携でき、管理が楽。</p>
+<h4 id="2-api">改善策2: APIサーバにファイアウォールを設定しよう</h4>
+<p>APIサーバへのアクセスをIPアドレスに制限
+<code>gcloud container clusters create --enable-master-authorized-networks --master-authorized-networks=...</code>
+<a href="https://cloud.google.com/sdk/gcloud/reference/container/clusters/create">https://cloud.google.com/sdk/gcloud/reference/container/clusters/create</a></p>
+<h4 id="3-">改善策3: ネットワークポリシーを設定しよう</h4>
+<p>データベースへのアクセスを必要なPodに制限したりする。
+networkpolicyのpodSelectorを使う。iptablesが設定される。</p>
+<h3 id="heading-1">ホストについて</h3>
+<h4 id="-">シナリオ: コンテナを突破され、ホスト上で色々される。</h4>
+<p>Podはサンドボックスで実行されるのでrootで動いていても通常問題ないが、コンテナを突破されるとホストにrootで入られてしまう。</p>
+<h4 id="1-non-root">改善策1: non-rootで実行</h4>
+<p>podのrunAsUserを使う。</p>
+<h4 id="2-">改善策2: 読み込み専用ファイルシステム</h4>
+<p>podのreadOnlyRootFilesystemを使う。</p>
+<h4 id="3-no-new-privs">改善策3: no_new_privs</h4>
+<p>podのallowPrivilegeEscalationを使う。
+コンテナを実行する時、フォークする時自分以上の権限を与えない。</p>
+<h4 id="heading-2">その他改善策:</h4>
+<p>seccomp, AppArmor, SELinuxを使う。または組み合わせる。</p>
+<p>おすすめはruntimeのdefaultを使う。</p>
+<h4 id="2-kubelet">その他改善策2: kubeletの権限を制限する</h4>
+<p>できるだけkubeletに必要な権限だけ与える。</p>
+<pre><code>--authorization-node=RBAC,Node
+--admission-control=...,NodeRestriction
+</code></pre><p>kubeletの証明書をローテーションする
+<code>kublet... --rotate-certificates</code></p>
+<p>短い期間でローテーションすれば盗まれても有効期間が限られる。</p>
+<h3 id="unsecured-pods">Unsecured Pods</h3>
+<h4 id="-pod">シナリオ: 同じクラスタ内にセキュリティが甘いPodがある場合がある。そこから色々されてしまう。</h4>
+<h4 id="1-podsecuritypolicy">改善策1: PodSecurityPolicyを使う</h4>
+<h3 id="heading-3">トラフィック傍受</h3>
+<h4 id="--1">シナリオ: ネットワークトラフィクを傍受され、サービス拒否攻撃等をされる。</h4>
+<h4 id="1-istio">改善策1: istioを使う</h4>
+<ul>
+<li>サービス間のプロキシ</li>
+<li>暗号化</li>
+<li>証明書の自動更新</li>
+<li>ポリシーの集中管理</li>
+</ul>
+<h2 id="debugging-applications-in-kubernetes">Debugging Applications in Kubernetes</h2>
+<p>by Takashi Kusumi (Z Lab)</p>
+<h3 id="heading-4">問題点</h3>
+<ul>
+<li>PodやServiceにクラスタ外からアクセスできない（負荷試験など）</li>
+<li>コンテナにデバッグツールがはいってない（tcpdumpとか)</li>
+</ul>
+<h3 id="kubectl">kubectlでの基本</h3>
+<p>使えるサブコマンド</p>
+<ul>
+<li>run
+<ul>
+<li>-itでインタラクティブに操作できる</li>
+<li>クラスタ内からPodやServiceにアクセスしたい時に最適</li>
+<li>&ndash;rmと&ndash;restart=Neverをつけよう</li>
+<li>&ndash;serviceaccountオプションを使うとServiceAccount権限周りのデバッグに便利。この時googlのhyperkubeイメージを使うと便利。</li>
+<li>&ndash;overridesオプションを使うと、JSONの上書きができる。runでは設定できないフィールドも設定できる。</li>
+</ul>
+</li>
+<li>logs
+<ul>
+<li>&ndash;sinceで時間を指定できる</li>
+<li>&ndash;timestampでタイムスタンプを表示できる</li>
+<li>wercker/sternというツールを使うと複数のログを一度に見れて便利</li>
+</ul>
+</li>
+<li>exec
+<ul>
+<li>コンテナ内で任意のコマンドを実行</li>
+</ul>
+</li>
+<li>port-forward
+<ul>
+<li>ポートフォワード</li>
+<li>ローカルにListenしてるものにも使える</li>
+</ul>
+</li>
+<li>cp</li>
+<li>top
+<ul>
+<li>ノードとPodのCPU/メモリ使用率がわかる</li>
+</ul>
+</li>
+</ul>
+<h3 id="podlinux">PodとLinux名前空間</h3>
+<p>Podで共有されるのは</p>
+<ul>
+<li>IPC
+<ul>
+<li>シグナルとか送れる</li>
+<li>pauseというコンテナが共有する舐め空間を保持している</li>
+<li>scratchのイメージだとシェル入ってない
+<ul>
+<li>/proc/[pid]/rootでそのPIDがマウントしているルートがみれる</li>
+<li>kubectl get podsしてノードを確認</li>
+<li>&ndash;overridesでdockerを起動</li>
+<li>docker run &ndash;pidを使う</li>
+<li></li>
+<li>マウントしているディレクトリを覗ける</li>
+</ul>
+</li>
+<li>scratch-debuggerツールを使う</li>
+</ul>
+</li>
+<li>Network</li>
+</ul>
+<h3 id="heading-5">今後使える新機能</h3>
+<p>Debug Containers
+kubectl debugでデバッグコンテナが使える</p>
+<h2 id="lt-kubernetes">LT 『入門Kubernetes』の紹介</h2>
+<p>by @dblmkt</p>
+<p>自身が翻訳した入門Kubernetesの書籍の紹介。
+トピックとしては1.9までの情報を追加している。</p>
+<h2 id="lt--pod-preemption">LT 猫でもわかる Pod Preemption</h2>
+<p>by @y_taka_23</p>
+<p>Podをノードに振り分ける時、キャパシティ不足になった。</p>
+<ul>
+<li>Priorityを高いものを配置する時、低いものを落として高いものを配置する</li>
+</ul>
+<p>意義について　</p>
+<ul>
+<li>今までは積極的にPodを追い出す方法がなかった。</li>
+<li>ノードがスケールしない環境がある。</li>
+<li>ノードのスケールには時間がかかる</li>
+<li>コストが予測可能になる</li>
+</ul>
+<p>仕組み</p>
+<ul>
+<li>配置しようとするPodのプライオリティより低い物を選ぶ</li>
+<li>Nodeに順位付けして配置</li>
+</ul>
+<p>ただしAffinityの指定が問題になるので、注意する。</p>
+<h2 id="lt-amazon-container-services">LT Amazon Container Services</h2>
+<p>by @riywo</p>
+<p>Amazon Container Servicesの信条</p>
+<ol>
+<li>エンタープライズのワークロードを動かす</li>
+<li>UpstreamのK8s</li>
+<li>AWSサービスとの連携</li>
+<li>コントリビュート</li>
+</ol>
+<p>他AWSサービスと連携できる。</p>
+<p>例えば</p>
+<ul>
+<li>kubectlのクレデンシャルにIAMが使える</li>
+<li>EFSをPersistentVolumeで使える</li>
+<li>IngressでALBで使える。Route53連携もできる。</li>
+</ul>
+<h2 id="lt-other-ingress-voyager">LT other ingress voyager</h2>
+<p>by @gavinzhm</p>
+<p>voyagerはAppCodeが開発しているIngress</p>
+<ul>
+<li>Ingressが一つで済む</li>
+<li>Lets Encryptが使いやすい</li>
+<li>ワイルドカード証明書対応</li>
+<li>ネームスペース超えができる</li>
+<li>ドキュメントクオリティーが高い</li>
+<li>issue対応が早い (5分でレスポンスが帰ってきたことも)</li>
+<li>…等</li>
+</ul>
+<h2 id="lt-dockerhelm">LT DockerでHelmを使おう</h2>
+<p>by @ShoutaYoshikai</p>
+<p>ローカル / 開発でHelmを使うと色々便利
+しかしhelmでは設定できない項目があったりする。</p>
+<p>helmみんなも使っていこうぜ。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-03-02-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part3-SSL%E7%B7%A8-/"> GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part3 -SSL編-</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-03-21-JAWS-DAYS-2018-%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/"> JAWS DAYS 2018 レポート</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,30 @@
+I"<p>http通信をhttpsにリダイレクトしたり、またゾーンアペックスからサブドメインへのリダイレクト (google.com -&gt; www.google.com のような)は一般だとNGINXやApacheで設定…となりますが、AWSのサービスを駆使すれば必要ありません。
+それぞれ説明します。</p>
+
+<h2 id="http通信をhttpsにリダイレクト">http通信をhttpsにリダイレクト</h2>
+
+<p>ALBを使います。
+80番のターゲットグループでリダイレクトの設定を行えばOK.</p>
+
+<p><img src="/assets/img/20181127/alb.png" alt="" /></p>
+
+<h2 id="ゾーンアペックスからサブドメインへのリダイレクト">ゾーンアペックスからサブドメインへのリダイレクト</h2>
+
+<p>Route53とS3を使います。もしhttpsもリダイレクトしたい場合はCloudFrontも使います。</p>
+
+<h3 id="s3">S3</h3>
+
+<p>ゾーンアペックス名でバケットを作った後、Static website hostingでリダイレクトの設定を行います。
+※バケットポリシー等の設定は不要です。</p>
+
+<h3 id="cloudfront-httpsも使う場合">CloudFront (httpsも使う場合）</h3>
+
+<p>S3をオリジンとしたCloudFrontを用意します。わざわざCloudFrontを利用する理由は、S3だとカスタムのhttps証明書が入らないからです。
+なのでCloudFrontではhttps証明書も設定します。
+<strong>※オリジンの設定にはリストで出てくるS3ではなく、Static website hostingで出てくるエンドポイントのドメイン部分をコピペして設定します。</strong></p>
+
+<h3 id="route53">Route53</h3>
+
+<p>ゾーンアペックスのAレコードのエイリアスとしてCloudFront　(CloudFrontを使用しない場合はS3)　を指定します。</p>
+
+:ET

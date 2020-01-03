@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Kubernetes Meetup Tokyo #9 レポート</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">Kubernetes Meetup Tokyo #9 レポート</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-01-13</small></p> <hr/>
+   <div class="post">
+     <p>内容の正当性は保証できません。こういう雰囲気でした。</p>
+<h2 id="heading">概要</h2>
+<p>Kubernetes Meetup Tokyo #9</p>
+<p>日時: 2018年1月12日19時から</p>
+<p>URL: <a href="https://k8sjp.connpass.com/event/75328">https://k8sjp.connpass.com/event/75328</a></p>
+<h2 id="heading-1">タイムテーブル</h2>
+<p>19:00-19:05 - Organizer &amp; CyberAgent, Opening (5min)</p>
+<p>19:05-19:20 - ianlewis, KubeCon Overview(15min)</p>
+<p>19:25-19:40 - riywo, Review Adrian Cockroft’s keynote (15min)</p>
+<p>19:45-20:00 - jyoshise, GPU, Deep Learning or Service mesh (15min)</p>
+<p>20:05-20:20 - tnir, Kubernetes at GitHub (15min)</p>
+<p>20:25-20:45 - CyberAgent Sponsor Session (20min)</p>
+<h2 id="review-adrian-cockrofts-keynote">Review Adrian Cockroft’s keynote</h2>
+<p>@riywo</p>
+<ul>
+<li>AWSはCNCFに対してクレジットを補助したり、自社のサービスに取り入れたりと積極的にコントリビュートしている</li>
+<li>KubernetesのCNIのプラグインも作った</li>
+<li>ECSは繁盛している</li>
+<li>AWS Fargateをリリースした
+<ul>
+<li>LambdaのECS版的な</li>
+</ul>
+</li>
+<li>Kuberentesをデプロイしているユーザーの68%はAWSにもデプロイしている</li>
+<li>HeptioとかがKubernetesをAWSで動かすためのインテグレーションを開発している
+<ul>
+<li>IAM連携とか</li>
+</ul>
+</li>
+<li>AWS Fargate + Amazon EKSは2018年
+<ul>
+<li>フィードバックもよろしくね</li>
+</ul>
+</li>
+</ul>
+<h2 id="gpu-deep-learning-or-service-mesh">GPU, Deep Learning or Service mesh</h2>
+<p>@jyoshise</p>
+<ul>
+<li>ServiceMesh
+<ul>
+<li>マイクロサービス間をつなぐ</li>
+</ul>
+</li>
+<li>Istio
+<ul>
+<li>今アツいServiceMeshの実装</li>
+<li>マイクロサービスでのカナリアテストがやりやすい</li>
+<li>サービスごとにネットワークのポリシーを適用できる</li>
+</ul>
+</li>
+<li>ML/DL on k8s
+<ul>
+<li>機材が高価なのでk8sでスケジュールしてやる</li>
+<li>ネットワークが問題
+<ul>
+<li>GPUノード間の通信がキツイ</li>
+</ul>
+</li>
+<li>やり方はいろいろある。
+<ul>
+<li>Microsoftはこれ用にCNIを作った</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="kubernetes-at-github">Kubernetes at GitHub</h2>
+<p>@tnir</p>
+<ul>
+<li>GitHubがK8sに移行
+<ul>
+<li>chatopsでnode追加</li>
+<li>node設定はPuppetで</li>
+<li>1つのPodに3つのコンテナを入れている
+<ul>
+<li>Nginx, Unicorn, failbot(エラートラッキング)</li>
+<li>Unix Socketを使用</li>
+</ul>
+</li>
+<li>cousul-service-router with haproxy (k8s以外のアプリへの通信？）</li>
+<li>Node Portを使用。Ingressは使っていない</li>
+<li>kubectl get系のコマンドはchatから使える</li>
+<li>canary deployをannotationを使ってやっている</li>
+<li>Persistent Volumeは分散システムを使用</li>
+</ul>
+</li>
+</ul>
+<h2 id="deploying-to-kubernetes-thouthand-deploys">Deploying to Kubernetes Thouthand Deploys</h2>
+<ul>
+<li>High Velocity重要 (こまめにリリースしよう）
+<ul>
+<li>リスク削減</li>
+<li>コスト効率
+<ul>
+<li>コミットを貯めない</li>
+</ul>
+</li>
+<li>セキュリティ
+<ul>
+<li>直ぐに脆弱性の対応等ができる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Image First
+<ul>
+<li>Immutableなコンテナにする
+<ul>
+<li>local /dev / prdで同じイメージを</li>
+<li>コンテナ実行時にプログラムをDLしない</li>
+<li>localでビルドしない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Shift Left
+<ul>
+<li>コードレビューはコスト高いので、テスト等を事前にやっておく</li>
+</ul>
+</li>
+<li>Maintain Application Portability
+<ul>
+<li>クラスタが消し飛んだときに復旧できるか？</li>
+<li>設定ファイルはコンテナイメージに内包せず、ConfigMap / Secretを使う
+<ul>
+<li>Docker Buildはできるだけ避ける</li>
+</ul>
+</li>
+<li>Helm Chart化
+<ul>
+<li>一括管理</li>
+</ul>
+</li>
+<li>DRのテスト</li>
+</ul>
+</li>
+<li>Outsource Cluster Management
+<ul>
+<li>クラスタの管理は専門のチームに任せる</li>
+<li>ただしスケーラビリティや冗長化を頭に入れて開発しておく</li>
+<li>Certified Kubernetes Conformance Programに準拠した構成に使用
+<ul>
+<li>一部のKubernetes環境にしかない機能は使わないようにしよう</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Connect all the dots
+<ul>
+<li>CodeFresh使うとか
+<ul>
+<li>Spinnaker + Concourse CI + DockerHub的なやつ</li>
+<li>設定をコード化できる</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="serverless-openfaas">Serverlessについて ~OpenFaaSの概要~</h2>
+<p>@徳田拓也</p>
+<ul>
+<li>OpenFaas</li>
+<li>FunctionWatchdog
+<ul>
+<li>リクエストのBodyを対象のSTDINに流す</li>
+</ul>
+</li>
+<li>API Gateway /UIポータル
+<ul>
+<li>Prometheus経由でメトリクスを収集</li>
+</ul>
+</li>
+<li>同期処理 / 非同期処理 / 非同期処理+コールバック</li>
+<li><code>faas new --lang python sample</code> でFunctionが作成される
+<ul>
+<li>Build後、Dockerイメージ化</li>
+</ul>
+</li>
+</ul>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-01-10-EC2IAM%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E9%81%A9%E7%94%A8%E3%82%92CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/"> EC2 IAMロールの作成と適用をCLIから行う</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-01-25-AWS-VPC%E3%81%A7Route53%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%9B%E3%82%B9%E3%83%88%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%86/"> AWS VPCでRoute53のプライベートホストゾーンを使う</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

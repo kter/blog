@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on ことえりブログ</title>
+    <link>/categories/Docker/</link>
+    <description>Recent content in Docker on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Apr 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel入門 -Laradock導入-</title>
+      <link>/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/</link>
+      <pubDate>Sun, 07 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/</guid>
+      <description>はじめに Laradockについて PHPを開発するのに必要なアプリが全部セットになったDocker環境。 今回はMySQL + PHP-FPM + NGINX + Laravelでいきますが、データベースにPostgreSQLを選んだり、WebサーバにApacheを選んだりかなり自由度は高いです。
+ディレクトリ構成 . ├── laradock-dakoku ←Laradockのコード (docker-composeコマンドはここで実行) └── src ←Laravelのコード (コンテナに入らずエディタで編集できる) コンテナを動かすための初期設定 PROJECT=(プロジェクト名) mkdir $PROJECT cd !$ # イメージを他プロジェクトと共用しないよう名前を変える git clone https://github.com/Laradock/laradock.git laradock-$PROJECT cd laradock-$PROJECT cp env-example .env DB_HOST=mysql APP_CODE_PATH_HOST=../src # MySQL8の認証方式caching_sha2_passwordにPHPのMySQLライブラリが対応していないため MYSQL_VERSION=5.7.25 コンテナを動かす docker-compose up -d nginx mysql workspace Laravelをインストール docker-compose exec workspace bash # バージョンは好きなものを指定する。ここでは5.2系 composer create-project laravel/laravel . &amp;#34;5.2.*&amp;#34; DB migrate実行 DB_HOST=mysql DB_PORT=3306 DB_DATABASE=default DB_USERNAME=default DB_PASSWORD=secret php artisan migrate NGINX設定 cp nginx/sites/laravel.</description>
+    </item>
+    
+    <item>
+      <title>Debian Jessie以降でDockerをインストールする</title>
+      <link>/post/2018-09-17-Debian-Jessie%E4%BB%A5%E9%99%8D%E3%81%A7Docker%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</link>
+      <pubDate>Mon, 17 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-17-Debian-Jessie%E4%BB%A5%E9%99%8D%E3%81%A7Docker%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</guid>
+      <description>Debian Jessie以降で下記コマンドを順に実行するとDockerがインストールできます。
+詳細はこちらの公式サイトを参照してください。
+sudo apt-get update sudo apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - # 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88で終わることを確認 sudo apt-key fingerprint 0EBFCD88 sudo add-apt-repository &amp;quot;deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable&amp;quot; sudo apt-get update sudo apt-get install docker-ce # 動作確認 sudo docker run hello-world </description>
+    </item>
+    
+    <item>
+      <title>GKEからminikubeに移行した</title>
+      <link>/post/2017-11-01-gke%E3%81%8B%E3%82%89minikube%E3%81%AB%E7%A7%BB%E8%A1%8C%E3%81%97%E3%81%9F/</link>
+      <pubDate>Wed, 01 Nov 2017 01:08:47 +0000</pubDate>
+      
+      <guid>/post/2017-11-01-gke%E3%81%8B%E3%82%89minikube%E3%81%AB%E7%A7%BB%E8%A1%8C%E3%81%97%E3%81%9F/</guid>
+      <description>GKEがとにかく高い。
+ロードバランサーとn1-standard-1 (だったかな？)2つで月5, 6千円はかかっていた。
+いままでは3万円分くらいのクレジットを使って実質無料で運用できていたけど、それも尽きそうだったので月1000円 メモリ2GBのVPSでminikubeを使って運用することにした。
+移行はそこまで大変ではなく、NFSのデータとMySQLのダンプデータを載せ替えることと、GKE特有の設定の修正だけだった。
+具体的には
+ nodeSelectorの削除 gcePersistentDiskをhostPathに変更 ingressの静的IPアドレス設定を削除 ingressタイプをgceからnginxに変更 (annotationのingress.classをgceからnginxに変更) ingressのpathsで、既存の/*だけではなく/も追加 (GCEでは/*だけでも動いた） readinessProbeとlivenessProbeの秒数を長めに (スペックが落ちるので)  これでクレジット切れでサーバ運用費が極端に高くなることはなくなった。
+この調子で他のメールサーバやjenkinsもkubenetesに集約して節約したい。
+今回は調べた限りで一番安かったVultrというVPSサービスを利用した。
+メモリ512MBで2.5ドル、1GBでは5ドルで、さくらVPSと比べるとほぼ半額ほど。
+海外のサービスだけど東京リージョンもあるので、何ら不自由なく使えている。
+ちなみに登録は下記バナーからしていただけると私にデポジットが入るので是非。</description>
+    </item>
+    
+    <item>
+      <title>KubernetesでNFSを使う</title>
+      <link>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Wed, 19 Jul 2017 16:50:32 +0000</pubDate>
+      
+      <guid>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>KurbernetesのPod / Node間でファイルを共有するために、NFSを使ってみる。
+ググったり公式のリポジトリを参考にしたけどうまくいかなかったのでメモ。
+ おおまかな手順   Compute Engineでディスクを用意
+  NFSコンテナの用意
+  コンテナからNFSを利用
+   手順  Compute Engineでディスクを用意 コンソールかCLI等から普通に作成。
+  NFSコンテナの用意 下記2ファイルを用意してkubectl createする。</description>
+    </item>
+    
+    <item>
+      <title>minikubeを使った後にGKEを使いたい場合</title>
+      <link>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Fri, 14 Jul 2017 13:04:59 +0000</pubDate>
+      
+      <guid>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>minikubeを使ったあとにGKEを使おうと(kubectlコマンドを実行)すると、次のエラーが発生して接続できない。
+対応としてはgcloud container clustersコマンドでクラスタ名を指定すればよい。
+  </description>
+    </item>
+    
+    <item>
+      <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+      <link>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sun, 09 Jul 2017 13:05:28 +0000</pubDate>
+      
+      <guid>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>kubernetes on GKEでLet’s Encryptを使ったときのメモ
+kubenetesでLet’s Encryptを使うのに、kube-legoを使用します。
+kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。
+ 7月13日追記
+GCEのロードバランサーを使わない手順ができました。
+https://github.com/kter/kube-study/tree/master/ingress/nginx-tls
+kube-legoのダウンロード (メールアドレスを自分のものに編集)
+ IPの払い出し IPを払い出す
+払い出したIPにドメインを紐付けておく。
+ ファイルの作成 kube-legoで使用するnginx-ingress.ymlを作成する。
+SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。
+ kube-legoを作成する 設定が反映されるまで、十数分掛かるので暫く待つ。
+備考 作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は--namespace kube-legoが必要になる。</description>
+    </item>
+    
+    <item>
+      <title>docker-composeのインストール</title>
+      <link>/post/2017-06-03-docker-compose%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/</link>
+      <pubDate>Sat, 03 Jun 2017 08:13:23 +0000</pubDate>
+      
+      <guid>/post/2017-06-03-docker-compose%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/</guid>
+      <description>AmazonLinuxでDockerが使いたくて、yum install dockerでDockerをインストールしたものの、docker-composeが使えなかった。
+調べたところ、docker-composeのインストールは、バイナリをダウンロードするだけのようだった。
+具体的にはGitHubのリリースページからダウンロードする。
+実際に実行したコマンドは次の通り。</description>
+    </item>
+    
+  </channel>
+</rss>

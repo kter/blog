@@ -1,0 +1,17 @@
+I"_<pre class="lang:default decode:true">$ rails generate rspec:install</pre>
+
+<p>を実行した時次のエラーが表示された(Rails4.0.5)。</p>
+
+<pre class="lang:default decode:true">&#047;home&#047;kter&#047;rails_projects&#047;sample_app&#047;config&#047;environments&#047;development.rb:1:in `': undefined method `configure' for # (NoMethodError)<br />
+</pre>
+
+<p> </p>
+
+<p>config/environments/development.rbの一行目を次のように変更するとうまく行った。</p>
+
+<pre class="lang:default decode:true ">SampleApp::Application.configure do</pre>
+
+<p> </p>
+
+<p>Source: New feed</p>
+:ET

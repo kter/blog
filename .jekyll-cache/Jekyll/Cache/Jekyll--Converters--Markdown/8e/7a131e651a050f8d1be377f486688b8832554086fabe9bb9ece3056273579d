@@ -1,0 +1,43 @@
+I"<p>本当に今更だけどCodeBuildを使って、GitHubリポジトリのDockerfileをビルド&amp;イメージプッシュ &amp; Kubernetesにデプロイする設定を入れたので知見をメモする。</p>
+
+<h3 id="githubと連携できる">GitHubと連携できる</h3>
+
+<p>てっきりリポジトリにコミットされたらCodeBuildを実行〜みたいな時、CodeCommitじゃないとできないのかなと思っていたのですが、GitHubでもできました。</p>
+
+<h3 id="codebuildでdockerイメージをビルドdockerコマンドの実行する際にはcodebuildオリジナルのdockerイメージを使わなければならない">CodeBuildでDockerイメージをビルド(dockerコマンドの実行)する際には、CodeBuildオリジナルのDockerイメージを使わなければならない</h3>
+
+<p>“特権付与”にチェックを入れても、CodeBuild用のaws/codebuild/dockerイメージでなければdockerコマンドは使えません。</p>
+
+<h3 id="codebuildコンテナでのrubyインストール方法">CodeBuildコンテナでのRubyインストール方法</h3>
+
+<p>前述の理由によりRubyを使いたい時、Rubyイメージが使えずコンテナにRubyをインストールするしかないのですが、普通にapt-get install rubyだと1.9が入ってしまいます。</p>
+
+<p>2.4等新しいものをインストールする場合は次のようにします。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get <span class="nb">install</span> <span class="nt">-y</span> software-properties-common
+apt-add-repository <span class="nt">-y</span> ppa:brightbox/ruby-ng
+apt-get update <span class="nt">-y</span>
+apt-get <span class="nt">-y</span> <span class="nb">install </span>ruby2.4 ruby2.4-dev
+</code></pre></div></div>
+
+<h3 id="イメージのタグなどに使う用のgitコミットid取得方法">イメージのタグなどに使う用のGitコミットID取得方法</h3>
+
+<p>下記変数が自動的にセットされているので、これが使えます。</p>
+
+<p>※CodeBuild上のファイルは.gitがないようです。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CODEBUILD_RESOLVED_SOURCE_VERSION
+</code></pre></div></div>
+
+<h3 id="シークレットの取り扱い">シークレットの取り扱い</h3>
+
+<p>CodeBuildで環境変数を設定できるが、パスワード等のシークレットはAWS Systems Managerのパラメータストアを使います。</p>
+
+<p>下記例は、パラメータストアにvalという名前で登録した値を、CodeBuild内でkeyという環境変数名前で使用できます。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">env</span><span class="pi">:</span>
+  <span class="na">parameter-store</span><span class="pi">:</span>
+    <span class="na">key</span><span class="pi">:</span> <span class="s2">"</span><span class="s">val"</span>
+</code></pre></div></div>
+
+:ET

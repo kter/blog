@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>jQuery on ことえりブログ</title>
+    <link>/tags/jQuery/</link>
+    <description>Recent content in jQuery on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 23 Apr 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/jQuery/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>jQueryのajaxデバッグ方法</title>
+      <link>/post/2019-04-23-jQuery%E3%81%AEajax%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Tue, 23 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-23-jQuery%E3%81%AEajax%E3%83%87%E3%83%90%E3%83%83%E3%82%B0%E6%96%B9%E6%B3%95/</guid>
+      <description>表題の通り、jQueryのajaxをデバッグするには、コールバックを登録すればいいらしい。 ついでにキャッシュも無効化しよう。
+$.ajax({ type: &amp;#39;GET&amp;#39;, url: &amp;#39;/api.php&amp;#39;, dataType: &amp;#39;json&amp;#39;, data: { hoge: &amp;#39;hage&amp;#39; }, async: false }) .done(function(response) { result = response; }) .fail(function () { console.log(&amp;#39;error&amp;#39;); }); $.ajax({ type: &amp;#39;GET&amp;#39;, url: &amp;#39;/api.php&amp;#39;, dataType: &amp;#39;json&amp;#39;, data: { hoge: &amp;#39;hage&amp;#39; }, async: false, cache: false, success: function(result){ console.debug(&amp;#34;result&amp;#34; + result); }, error: function(jqxhr, status, exception) { console.debug(&amp;#39;jqxhr&amp;#39;, jqxhr); console.debug(&amp;#39;status&amp;#39;, status); console.debug(&amp;#39;exception&amp;#39;, exception); } }) .done(function(response) { result = response; }) .fail(function () { console.</description>
+    </item>
+    
+  </channel>
+</rss>

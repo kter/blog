@@ -1,0 +1,17 @@
+I"�<h2 id="課題">課題</h2>
+
+<p>Dockerコンテナ内でMacのSSH設定を引き継ごうと思い、ボリュームマウントで対応したものの、Macでしか使えないUseKeychainが邪魔をしてエラーとなってしまう。</p>
+
+<h2 id="結論">結論</h2>
+
+<p>IgnoreUnknownオプションを使う。
+具体的には下記のようにする。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IgnoreUnknown UseKeychain
+  UseKeychain yes
+</code></pre></div></div>
+
+<p>参考
+<a href="https://developer.apple.com/library/archive/technotes/tn2449/_index.html">Technical Note TN2449: OpenSSH updates in macOS 10.12.2</a></p>
+
+:ET

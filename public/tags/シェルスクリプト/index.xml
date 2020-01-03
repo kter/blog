@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>シェルスクリプト on ことえりブログ</title>
+    <link>/tags/%E3%82%B7%E3%82%A7%E3%83%AB%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88/</link>
+    <description>Recent content in シェルスクリプト on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 12 May 2017 19:02:55 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E3%82%B7%E3%82%A7%E3%83%AB%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%97%E3%83%88/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linuxコマンドで添付ファイル付きのメールを送る</title>
+      <link>/post/2017-05-12-linux%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E6%B7%BB%E4%BB%98%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%92%E9%80%81%E3%82%8B/</link>
+      <pubDate>Fri, 12 May 2017 19:02:55 +0000</pubDate>
+      
+      <guid>/post/2017-05-12-linux%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E6%B7%BB%E4%BB%98%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%92%E9%80%81%E3%82%8B/</guid>
+      <description>Linuxコマンドで添付ファイル付きのメールを送りたい場合の手順です。
+下記内容をsendmail -i -tにパイプで渡します。
+`From: (送信元メールアドレス)To: (送信先メールアドレス)Subject: (件名)Content-Type: multipart/mixed; boundary=&amp;quot;BOUNDARY&amp;quot;・コンテンツタイプにはapplication/pdf等添付ファイルに応じたものを入力します。
+・boundary=&amp;quot;BOUNDARY&amp;quot;のBOUNDARYは任意の文字列で大丈夫です。</description>
+    </item>
+    
+  </channel>
+</rss>

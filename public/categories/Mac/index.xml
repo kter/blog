@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on ことえりブログ</title>
+    <link>/categories/Mac/</link>
+    <description>Recent content in Mac on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Apr 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Mac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Macのログイン画面に管理者(Admin)のアカウントしか出てこないとき</title>
+      <link>/post/2019-04-18-Mac%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2%E3%81%AB%E7%AE%A1%E7%90%86%E8%80%85Admin%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%97%E3%81%8B%E5%87%BA%E3%81%A6%E3%81%93%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D/</link>
+      <pubDate>Thu, 18 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-18-Mac%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2%E3%81%AB%E7%AE%A1%E7%90%86%E8%80%85Admin%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%97%E3%81%8B%E5%87%BA%E3%81%A6%E3%81%93%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D/</guid>
+      <description>表題の通り、Macのログイン画面に管理者(Admin)のアカウントしか出てこないときの対応です。
+FileVaultの許可ユーザーを設定 (99%これで解決)  システム環境設定 -&amp;gt; セキュリティ -&amp;gt; FileVaultのタブにアクセス 左下の鍵マークを選択し、管理者パスワードを入力 許可されていないユーザーがあります的なボタンが出てくるので、それを押してそのユーザーのパスワードを入力  IsHidden要素を設定 ユーザーに設定されているIsHidden要素が1だとログイン画面に出てこないらしい。
+  Terminal.appで下記コマンドを実行。
+sudo dscl . create /Users/(ユーザー名) IsHidden 0   （変更確認方法） Terminal.appで下記コマンドを実行
+dscl . -read /Users/_(ユーザー名)   参考 macOS でユーザアカウントを非表示にする - Apple サポート
+適当なユーザーを作って削除 よく分からんが自分の場合はこれで解決
+ 適当なユーザーを作成する 再起動してログイン画面に表示したいユーザーと作成したユーザーが出ることを確認 作成したユーザーを削除  </description>
+    </item>
+    
+    <item>
+      <title>KarabinerでCtrl &#43; [をEscの代わりにする設定</title>
+      <link>/post/2019-04-12-Karabiner%E3%81%A7Ctrl-&#43;-%E3%82%92Esc%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%AB%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A/</link>
+      <pubDate>Fri, 12 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-12-Karabiner%E3%81%A7Ctrl-&#43;-%E3%82%92Esc%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%AB%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A/</guid>
+      <description>表題の通りKarabinerでCtrl + [をEscの代わりにする設定です。
+VSCodeでVimのキーバインドを導入した際、EscがCtrl+]に割り当てられており、キーバインドを変更してみたのですが、効果がなかったのでOSレベルでキーバインドを変更してしまいます。
+{ &amp;#34;title&amp;#34;: &amp;#34;Change ctrl+[ to ESC&amp;#34;, &amp;#34;rules&amp;#34;: [{ &amp;#34;description&amp;#34;: &amp;#34;Change ctrl+[ key to Escape key&amp;#34;, &amp;#34;manipulators&amp;#34;: [{ &amp;#34;type&amp;#34;: &amp;#34;basic&amp;#34;, &amp;#34;from&amp;#34;: { &amp;#34;key_code&amp;#34;: &amp;#34;open_bracket&amp;#34;, &amp;#34;modifiers&amp;#34;: { &amp;#34;mandatory&amp;#34;: [&amp;#34;control&amp;#34;] } }, &amp;#34;to&amp;#34;: [{ &amp;#34;key_code&amp;#34;: &amp;#34;escape&amp;#34; }] }] }] } 上記ファイルを作成すれば自動的にComplex ModificationsのAdd Rule内に項目が出てくるのでEnableをクリックするだけです。
+ちなみに環境はMac (JIS配列) + 外付けUS配列キーボードでした。</description>
+    </item>
+    
+    <item>
+      <title>Macから別のMacへのThunderbirdの移行をしたら簡単だった</title>
+      <link>/post/2017-12-27-Mac%E3%81%8B%E3%82%89Mac%E3%81%B8%E3%81%AEThunderbird%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%82%92%E3%81%97%E3%81%9F%E3%82%89%E7%B0%A1%E5%8D%98%E3%81%A0%E3%81%A3%E3%81%9F/</link>
+      <pubDate>Wed, 27 Dec 2017 01:01:00 +0000</pubDate>
+      
+      <guid>/post/2017-12-27-Mac%E3%81%8B%E3%82%89Mac%E3%81%B8%E3%81%AEThunderbird%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%82%92%E3%81%97%E3%81%9F%E3%82%89%E7%B0%A1%E5%8D%98%E3%81%A0%E3%81%A3%E3%81%9F/</guid>
+      <description>職場で使っているMacを別のMacに移行をする必要があり、使っていたThunderbirdをどうやって移行するか調べた。
+自分で試した限り、~/Library/Thunderbird/以下のディレクトリをそのまま古いMacから新しいMacにコピーすれば大丈夫だった。
+Thunderbirdの設定やメールも保持された。
+なお新旧Mac間のファイルコピーはAirDropを使うのがおすすめ。</description>
+    </item>
+    
+  </channel>
+</rss>

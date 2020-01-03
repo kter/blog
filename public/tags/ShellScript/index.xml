@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ShellScript on ことえりブログ</title>
+    <link>/tags/ShellScript/</link>
+    <description>Recent content in ShellScript on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 30 Apr 2018 16:36:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ShellScript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>mktmp, pushd, popdの使い方</title>
+      <link>/post/2018-04-30-mktmp-popd-pushd%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/</link>
+      <pubDate>Mon, 30 Apr 2018 16:36:00 +0000</pubDate>
+      
+      <guid>/post/2018-04-30-mktmp-popd-pushd%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/</guid>
+      <description>mktmp, pushd, popdはセットで使われることが多いと思います。 シェルスクリプト内で、一時ディレクトリを作成してそこにカレントディレクトリを変更し、また以前のカレントディレクトリに戻るといったときに使われます。
+# (処理) # /tmp以下に一時ディレクトリを作成し、TMPDIR変数にパスを格納 TMPDIR=$(mktemp -d --tmpdir=/tmp) # 一時ディレクトリに移動 pushd $TMPDIR &amp;gt; /dev/null # (処理) # 元いたディレクトリに戻る popd &amp;gt; /dev/null # (処理) </description>
+    </item>
+    
+  </channel>
+</rss>

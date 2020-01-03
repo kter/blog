@@ -1,0 +1,1521 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>未分類 on ことえりブログ</title>
+    <link>/categories/%E6%9C%AA%E5%88%86%E9%A1%9E/</link>
+    <description>Recent content in 未分類 on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Sep 2017 23:52:51 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/%E6%9C%AA%E5%88%86%E9%A1%9E/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ThinkPad X220を買った</title>
+      <link>/post/2017-09-04-thinkpad-x220%E3%82%92%E8%B2%B7%E3%81%A3%E3%81%9F/</link>
+      <pubDate>Mon, 04 Sep 2017 23:52:51 +0000</pubDate>
+      
+      <guid>/post/2017-09-04-thinkpad-x220%E3%82%92%E8%B2%B7%E3%81%A3%E3%81%9F/</guid>
+      <description>目的   Windowsで遊びたかった ThinkPadにあこがれていた Microsoftがデベロッパー寄りになっているし、Linux SubsystemでWindowsも開発に使えるのではないかと思った  PCについて 
+ ThinkPad X220 i5-2520M, 4GB, 300GB オークションで入手 送料込みで1.1万円程度 英字キーボード Windows10 Pro 充放電サイクル82回  やったこと 初期化 Windows自体の機能で初期化の機能がついているのでこれを利用する。
+設定 -&amp;gt; 更新とセキュリティ -&amp;gt; このPCを初期状態に戻す -&amp;gt; すべて削除する
+更新 Windows Updateを実行
+キー配列変更 キー配列をJISから英字に変更。
+設定 -&amp;gt; 時刻と言語 -&amp;gt; 地域と言語 -&amp;gt; 日本語 -&amp;gt; オプション -&amp;gt; レイアウトを変更する
+参考: Windows10日本語版で英語配列キーボードを使用する
+System Update LenovoからSystem Updateをインストール
+Lenovoのサポートサイトから各ドライバをインストール（Windows10向けのものはないため、Windows8を使う)
+Linux Sybsystem Microsoftの手順に従ってインストールをする
+hyper-v Microsoftの手順に従ってインストールをする
+cmder cmderというターミナルから直接Ubuntuのbashにアクセスする
+http://cmder.net/
+http://qiita.com/yutaszk/items/fb77435296b131fd0a3a
+Ubuntu環境構築 zsh apt-get install zsh</description>
+    </item>
+    
+    <item>
+      <title>Androidアプリの定期購入の返金（払い戻し・キャンセル）方法</title>
+      <link>/post/2017-09-04-android%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E5%AE%9A%E6%9C%9F%E8%B3%BC%E5%85%A5%E3%81%AE%E8%BF%94%E9%87%91%E6%89%95%E3%81%84%E6%88%BB%E3%81%97%E3%82%AD%E3%83%A3%E3%83%B3%E3%82%BB/</link>
+      <pubDate>Mon, 04 Sep 2017 22:45:26 +0000</pubDate>
+      
+      <guid>/post/2017-09-04-android%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E5%AE%9A%E6%9C%9F%E8%B3%BC%E5%85%A5%E3%81%AE%E8%BF%94%E9%87%91%E6%89%95%E3%81%84%E6%88%BB%E3%81%97%E3%82%AD%E3%83%A3%E3%83%B3%E3%82%BB/</guid>
+      <description>Androidアプリの場合、定期購入の課金がされてしまっても、48時間以内なら返金できる場合があります。
+次の手順にしたがって返金申請を行いましょう。
+ 下記ページにアクセス  https://play.google.com/store/account
+ 払い戻ししたいアプリの横の3点アイコンを選択
+  “問題を報告”を選択
+  フォームに必要事項を記入 (無料期間中にキャンセルするつもりだったが、キャンセルするのを忘れていたことを記載)
+  以上のステップで返金できる場合があります。
+私の場合はフォーム記入・送信後すぐに返金するとの旨のメールを受信しました。
+参考:
+https://support.google.com/googleplay/answer/2479637</description>
+    </item>
+    
+    <item>
+      <title>ExpansysでXperia Z5 Compactを買った</title>
+      <link>/post/2016-06-11-expansys%E3%81%A7xperia-z5-compact%E3%82%92%E8%B2%B7%E3%81%A3%E3%81%9F/</link>
+      <pubDate>Sat, 11 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-06-11-expansys%E3%81%A7xperia-z5-compact%E3%82%92%E8%B2%B7%E3%81%A3%E3%81%9F/</guid>
+      <description>ExpansysでXperia Z5 Compactを購入しました。
+買うきっかけはスマホ版艦これをプレイするためです。
+手持ちのAndroid端末はOSが4.4で推奨環境を満たせないことと、バッテリがすぐ切れることと。それから動作がもっさりしていたので新しく買うことにしました。
+Z5 Compactの理由は技適が通っていて、スペックも良く、また4万円前半で手に入るからでした。
+また以前Z3 Compactを使っていたという理由もあります。
+注文したのが6月6日15時、渋谷で受け取れたのが6月8日の2時半でした。
+触ってみての感想は側面がやや安っぽく見えるものの背面のサラサラ感はいいと思いました。
+画面の解像度は低めですがディスプレイが小さいことも相まって気になりません。
+またIIJmioのデータ通信専用SIMを使っているせいか、セルスタンバイ現象と常に「選択したネットワークは利用不可です」という警告が通知バーに出ています。
+そのためSMSシムに交換手続きをしました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦これアーケードプレイの巻</title>
+      <link>/post/2016-05-30-%E8%89%A6%E3%81%93%E3%82%8C%E3%82%A2%E3%83%BC%E3%82%B1%E3%83%BC%E3%83%89%E3%83%97%E3%83%AC%E3%82%A4%E3%81%AE%E5%B7%BB/</link>
+      <pubDate>Mon, 30 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-05-30-%E8%89%A6%E3%81%93%E3%82%8C%E3%82%A2%E3%83%BC%E3%82%B1%E3%83%BC%E3%83%89%E3%83%97%E3%83%AC%E3%82%A4%E3%81%AE%E5%B7%BB/</guid>
+      <description>春イベントの最終海域で沼ることを想定して5月30日は有給をとっていました。
+ところが最終海域は割とあっさり抜け、また親潮も割と直ぐ邂逅できたため、前からやりたかった艦これアーケードをプレイしてきました。
+まず動いている艦娘が大画面で見れるのがいいと思いました。
+ゲーム内容も運に任せるしかないブラウザ版にくらべて、プレイヤーの操作次第で結果を変えられるアーケード版はストレスがなくていいですね。
+ただ難があるのは順番待ち時間。平日の午前中に行ったにもかからわずプレイまで2時間も掛かりました。
+戦果はこんな感じ。運良く中破ホロを二回連続で引くことができました。
+帰りは前から食べたかったシロノワールを食べて帰宅。うわさ通りの美味しさでした。
+しかし900キロカロリーもあるとは…
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>2016年春イベント 開設！基地航空隊</title>
+      <link>/post/2016-05-29-2016%E5%B9%B4%E6%98%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-%E9%96%8B%E8%A8%AD%E5%9F%BA%E5%9C%B0%E8%88%AA%E7%A9%BA%E9%9A%8A/</link>
+      <pubDate>Sun, 29 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-05-29-2016%E5%B9%B4%E6%98%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-%E9%96%8B%E8%A8%AD%E5%9F%BA%E5%9C%B0%E8%88%AA%E7%A9%BA%E9%9A%8A/</guid>
+      <description>艦これ 2016年春イベント 「開設！基地航空隊」をクリアしたので所感のほどを。
+難易度は報酬と海域の難易度で決めていますが、今回はすべて甲で。
+イベント攻略に要したリソースは次の通り。
+  消費資材
+63000/66000/8000/27000
+  消費高速修復材
+296
+  以下各海域と掘りのメモ。
+E-1   消費資源
+4000/4500/1000/600
+  消費高速修復材
+31
+  艦隊編成
+  撃破時
+  E-2   消費資源
+5000/8000/2000/100
+  消費高速修復材
+20
+  艦隊編成
+  撃破時
+  E-3   消費資源
+2000/-100/-5000/-1000
+  消費高速修復材
+22
+  艦隊編成
+  撃破時
+  E-4   消費資源</description>
+    </item>
+    
+    <item>
+      <title>よこすかカレーフェスティバルに行ってきた</title>
+      <link>/post/2016-05-17-%E3%82%88%E3%81%93%E3%81%99%E3%81%8B%E3%82%AB%E3%83%AC%E3%83%BC%E3%83%95%E3%82%A7%E3%82%B9%E3%83%86%E3%82%A3%E3%83%90%E3%83%AB%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</link>
+      <pubDate>Tue, 17 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-05-17-%E3%82%88%E3%81%93%E3%81%99%E3%81%8B%E3%82%AB%E3%83%AC%E3%83%BC%E3%83%95%E3%82%A7%E3%82%B9%E3%83%86%E3%82%A3%E3%83%90%E3%83%AB%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</guid>
+      <description>5月14日に横須賀 三笠公園で開催された よこすかカレーフェスティバル に行ってきました。
+ハイスクール・フリートのコラボ中だったので、カレーフェスティバルの前に、さかくら総本家にも行きました。
+コラボ商品はどら焼き、ラムネ、プリンがありました。
+プリンについては人気で売り切れていましたが、並んでいる時に入荷したため運良く買うことができました。
+その後カレーフェスティバルの会場である三笠公園に移動。
+よこすかカレーフェスティバルでは、全国ご当地カレーグランプリと、よこすか海軍カレーと横須賀海上自衛隊カレーのバイキングがありました。
+ただ15時少し前についたためほとんど売り切れという悲しい状態でした。
+その中で頂いたのは黒部ダムカレー、銀山温泉のカリーパンでした。
+帰り際串かつが割引になっていたので夕飯に買いました。
+その後ヴェルニー公園でバラを見てきました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦これオーケストラに行ってきた</title>
+      <link>/post/2016-05-07-%E8%89%A6%E3%81%93%E3%82%8C%E3%82%AA%E3%83%BC%E3%82%B1%E3%82%B9%E3%83%88%E3%83%A9%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</link>
+      <pubDate>Sat, 07 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-05-07-%E8%89%A6%E3%81%93%E3%82%8C%E3%82%AA%E3%83%BC%E3%82%B1%E3%82%B9%E3%83%88%E3%83%A9%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</guid>
+      <description>5月7日、東京オペラシティにて「艦これ」クラシックスタイルオーケストラに行ってきました。
+オーケストラを生演奏で聴くのは初めてのことでしたが、普段聴いている音楽がこうして演奏されるのは感慨深いものがありました。
+特に終盤の母港と出撃の曲は一番よく聞く曲だけに感動もひとしおで、その後の提督との絆で泣けてしまいました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>上野東照宮ぼたん苑に行ってきた</title>
+      <link>/post/2016-04-24-%E4%B8%8A%E9%87%8E%E6%9D%B1%E7%85%A7%E5%AE%AE%E3%81%BC%E3%81%9F%E3%82%93%E8%8B%91%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</link>
+      <pubDate>Sun, 24 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-04-24-%E4%B8%8A%E9%87%8E%E6%9D%B1%E7%85%A7%E5%AE%AE%E3%81%BC%E3%81%9F%E3%82%93%E8%8B%91%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</guid>
+      <description>タイトルの通り上野にある 上野東照宮ぼたん苑 に行ってきました。
+何枚か写真を撮ったのでそれをお見せします。
+
+
+
+
+
+
+
+
+
+ぼたん苑の後は上野東照宮にお参りし、上野恩賜公園と花園稲荷神社と不忍池弁天堂に寄って帰ってきました。
+ぼたん苑は5月10日までやっています。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>LetsEncrypt証明書発行方法</title>
+      <link>/post/2016-04-17-letsencrypt%E8%A8%BC%E6%98%8E%E6%9B%B8%E7%99%BA%E8%A1%8C%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sun, 17 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-04-17-letsencrypt%E8%A8%BC%E6%98%8E%E6%9B%B8%E7%99%BA%E8%A1%8C%E6%96%B9%E6%B3%95/</guid>
+      <description>Dockerで証明書を発行できる。
+※外部から443にアクセスできるようポートを開けておく
+生成されたファイルは下記ファイルに保存される
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>3-5北ルート編成</title>
+      <link>/post/2016-03-21-3-5%E5%8C%97%E3%83%AB%E3%83%BC%E3%83%88%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Mon, 21 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-03-21-3-5%E5%8C%97%E3%83%AB%E3%83%BC%E3%83%88%E7%B7%A8%E6%88%90/</guid>
+      <description>3-5北ルート編成を自分用にメモ
+南ルートに比べて資源消費は多いけどその分大破撤退は少ないので攻略は楽
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>4-4艦隊編成</title>
+      <link>/post/2016-03-21-4-4%E8%89%A6%E9%9A%8A%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Mon, 21 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-03-21-4-4%E8%89%A6%E9%9A%8A%E7%B7%A8%E6%88%90/</guid>
+      <description>4-4の艦隊編成です。
+ウィークリー任務の南方海域珊瑚諸島沖の制空権を握れ！の任務の前提が的東方中枢艦隊を撃破せよ！となっており、4-4のボス戦をAもしくはS勝利を一度する必要があります。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>敵北方艦隊主力を撃滅せよ！任務編成</title>
+      <link>/post/2016-03-21-%E6%95%B5%E5%8C%97%E6%96%B9%E8%89%A6%E9%9A%8A%E4%B8%BB%E5%8A%9B%E3%82%92%E6%92%83%E6%BB%85%E3%81%9B%E3%82%88%E4%BB%BB%E5%8B%99%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Mon, 21 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-03-21-%E6%95%B5%E5%8C%97%E6%96%B9%E8%89%A6%E9%9A%8A%E4%B8%BB%E5%8A%9B%E3%82%92%E6%92%83%E6%BB%85%E3%81%9B%E3%82%88%E4%BB%BB%E5%8B%99%E7%B7%A8%E6%88%90/</guid>
+      <description>ウィークリー任務の的北方主力を撃滅せよ！任務の艦隊編成です。
+敵艦隊を撃破せよと、敵艦隊主力を撃滅せよと、敵補給艦3隻撃沈せよと、い号作戦と、海上護衛戦を終えると出てきます。
+内容は3-3〜3-5ボス戦勝利5回ですが、私は3-3で行っています。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>水上打撃部隊南方へ！任務艦隊編成</title>
+      <link>/post/2016-03-21-%E6%B0%B4%E4%B8%8A%E6%89%93%E6%92%83%E9%83%A8%E9%9A%8A%E5%8D%97%E6%96%B9%E3%81%B8%E4%BB%BB%E5%8B%99%E8%89%A6%E9%9A%8A%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Mon, 21 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-03-21-%E6%B0%B4%E4%B8%8A%E6%89%93%E6%92%83%E9%83%A8%E9%9A%8A%E5%8D%97%E6%96%B9%E3%81%B8%E4%BB%BB%E5%8B%99%E8%89%A6%E9%9A%8A%E7%B7%A8%E6%88%90/</guid>
+      <description>マンスリー任務の水上打撃部隊南方へ任務の艦隊編成です。
+高速戦艦不可で、戦艦3隻、軽巡1隻、他2隻で5-1ボス戦S勝利が条件です。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>2016年冬イベント攻略しました</title>
+      <link>/post/2016-02-28-2016%E5%B9%B4%E5%86%AC%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E6%94%BB%E7%95%A5%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link>
+      <pubDate>Sun, 28 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-02-28-2016%E5%B9%B4%E5%86%AC%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E6%94%BB%E7%95%A5%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+      <description>2016年冬イベント攻略しました。
+時間的にも戦力的にもかなり危うかったです。
+E-1 E-2 E-3 今回はかなり苦戦しました。
+最初は削り中は旗艦撃破が1度しかありませんでした。
+ゲージ破壊段階で二十数回ほど試行した後、火力キャップ等を考慮し今の編成に落ち着きました。
+大口径砲の装備改修が進んでなかったのがつらかったです。
+やはり装備と編成は重要ですね。最後は小破0でボスにT字有利でたどり着きS勝利を収めることができました。
+輸送作戦 本作戦 消費資源・資材     燃料 弾薬 鋼材 ボーキサイト 高速修復材     イベント前 174461 99029 156892 59168 784   E-2攻略後 168837 95352 155583 60126 744   E-3攻略後 96801 38804 78090 56990 539   イベント開始前後差分 77660 60225 78802 2178 245    Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Jekyllでテーブルを表示できるようにする</title>
+      <link>/post/2016-02-28-jekyll%E3%81%A7%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B/</link>
+      <pubDate>Sun, 28 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-02-28-jekyll%E3%81%A7%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%82%92%E8%A1%A8%E7%A4%BA%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B/</guid>
+      <description>Jekyllでテーブルを表示できるように設定する。
+_config.ymlに次の行を追加する。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>DaisyDiskでMacのディスク空き容量を増やした</title>
+      <link>/post/2016-02-11-daisydisk%E3%81%A7mac%E3%81%AE%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E7%A9%BA%E3%81%8D%E5%AE%B9%E9%87%8F%E3%82%92%E5%A2%97%E3%82%84%E3%81%97%E3%81%9F/</link>
+      <pubDate>Thu, 11 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-02-11-daisydisk%E3%81%A7mac%E3%81%AE%E3%83%87%E3%82%A3%E3%82%B9%E3%82%AF%E7%A9%BA%E3%81%8D%E5%AE%B9%E9%87%8F%E3%82%92%E5%A2%97%E3%82%84%E3%81%97%E3%81%9F/</guid>
+      <description>Macの空きディスク容量が1割を切ったので、原因となっているファイルを調べてみた。
+フリーのツールもいくつかあるのだが、今回はDaisyDiskという有償のアプリを使って調べてみた。
+256GBのSSDの調査に数十秒かかり、後はディレクトリをたどりながら、今いるディレクトリの使用容量を円グラフで表示できる。
+これで調べてみるとどうやらEvernoteで約20GB使っているようだった。
+Evernoteは今後デスクトップアプリ版ではなく、Webアプリ版を使用することにして、アプリはAppCleanerで削除しました。
+というような作業を繰り返し、最終的にホームディレクトリの使用量を142GBまでに広げることができました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>AWS 請求情報のみ閲覧できるIAMユーザ</title>
+      <link>/post/2016-01-28-aws-%E8%AB%8B%E6%B1%82%E6%83%85%E5%A0%B1%E3%81%AE%E3%81%BF%E9%96%B2%E8%A6%A7%E3%81%A7%E3%81%8D%E3%82%8Biam%E3%83%A6%E3%83%BC%E3%82%B6/</link>
+      <pubDate>Thu, 28 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-01-28-aws-%E8%AB%8B%E6%B1%82%E6%83%85%E5%A0%B1%E3%81%AE%E3%81%BF%E9%96%B2%E8%A6%A7%E3%81%A7%E3%81%8D%E3%82%8Biam%E3%83%A6%E3%83%BC%E3%82%B6/</guid>
+      <description>請求情報のみ閲覧できるIAMユーザの作り方
+下記のポリシーを割り当てるとともに、別途設定が必要です。
+こちらの指示に従って、上部ナビゲーションバーのアカウント名を選択しMy Accountを選択し、IAM User Access to Billing InformationのEditボタンを押してActivate IAM Accessのチェックボックスにチェックを入れる必要があります（英語の場合)。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>拡張海域1-6編成</title>
+      <link>/post/2016-01-14-%E6%8B%A1%E5%BC%B5%E6%B5%B7%E5%9F%9F1-6%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Thu, 14 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-01-14-%E6%8B%A1%E5%BC%B5%E6%B5%B7%E5%9F%9F1-6%E7%B7%A8%E6%88%90/</guid>
+      <description>拡張海域1-6の編成をメモ。
+航空マスの敗北がいやなので航巡とあきつ丸を編成に加えています。
+ただしこの編成の場合ルートが北に逸れる場合があります。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>6-2クリア</title>
+      <link>/post/2016-01-04-6-2%E3%82%AF%E3%83%AA%E3%82%A2/</link>
+      <pubDate>Mon, 04 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-01-04-6-2%E3%82%AF%E3%83%AA%E3%82%A2/</guid>
+      <description>新春任務の迎春！「機動部隊」抜錨せよ！で6-2を初攻略しました。
+道中ワンパン大破が続いたものの、たまたまだったようで数回道中撤退した後はスムーズにボスまで行きS勝利をおさめることができました。
+編成は下記のとおりでした。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>6-3クリア</title>
+      <link>/post/2016-01-04-6-3%E3%82%AF%E3%83%AA%E3%82%A2/</link>
+      <pubDate>Mon, 04 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-01-04-6-3%E3%82%AF%E3%83%AA%E3%82%A2/</guid>
+      <description>長らくほったらかしだった6-3をクリアしました。
+理由は新春任務の前提っぽかったためです。でもこれとは関係無かったかも。
+かなり難易度が高く苦労しましたが、結局練度150以上の阿賀野型3隻を投入し無事クリア。
+軽巡3隻とすることで戦闘回数は増えますがこちらのほうが安定しました。
+確か3回中3回ともボスまで到達し、うちS勝利1回、A勝利2回だったと思います。やはり阿賀野型か。
+編成は下記のとおりでした。今気がついたけど瑞穂の艦載機熟練度が飛んでる…
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦これ 2015年新春グラフィック</title>
+      <link>/post/2016-01-01-%E8%89%A6%E3%81%93%E3%82%8C-2015%E5%B9%B4%E6%96%B0%E6%98%A5%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-01-01-%E8%89%A6%E3%81%93%E3%82%8C-2015%E5%B9%B4%E6%96%B0%E6%98%A5%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF/</guid>
+      <description>艦これ 2015年新春グラフィックをまとめました。
+秋津洲
+秋津洲 中破
+香取
+香取 中破
+瑞鳳
+瑞鳳 中破
+天城
+天城 中破
+扶桑
+扶桑 中破
+山城
+山城 中破
+龍鳳
+龍鳳 中破
+子日
+子日 中破
+伊401
+伊401 中破
+夕雲
+夕雲 中破
+瑞穂
+瑞穂 中破
+潮改二
+潮改二 中破
+大鯨
+大鯨 中破
+巻雲
+巻雲 中破
+夕立改二
+夕立改二 中破
+大淀
+大淀 中破
+明石
+明石 中破
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>コミックマーケットC89二日目に参加してきた</title>
+      <link>/post/2015-12-30-%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%83%9E%E3%83%BC%E3%82%B1%E3%83%83%E3%83%88c89%E4%BA%8C%E6%97%A5%E7%9B%AE%E3%81%AB%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%8D%E3%81%9F/</link>
+      <pubDate>Wed, 30 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-30-%E3%82%B3%E3%83%9F%E3%83%83%E3%82%AF%E3%83%9E%E3%83%BC%E3%82%B1%E3%83%83%E3%83%88c89%E4%BA%8C%E6%97%A5%E7%9B%AE%E3%81%AB%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%8D%E3%81%9F/</guid>
+      <description>2015年通称冬コミ2日目に参加してきました。
+コミケに参加するのは5年程以来で、冬コミは初参加でした。
+始発で参加するため、前日は22時就寝の4時起床。あまり寝られた気がしませんでしたが。
+1車両につき1つのドアしか空いてませんでした。
+こんなに空いている新宿駅始めてみましたよ…
+その後若干人の多い山手線を乗り継ぎゆりかもめで超満員のまま国際展示場駅まで運ばれ、そのまま自分の意志で動くことができず気がついたら改札前まで運ばれていました。
+道中、まだ暗いです。
+待機列に並んだ直後です。まだ夜明け前ですがうっすら東の空が明るくなっています。
+靴下に貼るタイプと衣服に貼るタイプのカイロを使いましたが、海に近いせいかあまり役に立ちませんでした。
+待機列はこんな感じでした。奥の方に仮設トイレが並んでいます。列には8時までに戻ってくるようにとのことでした。
+MacBook Proを持って行きましたが、テザリングの調子が悪くて艦隊運営はできませんでした…
+夜が明けてきました。奥に見えるのは東京ゲートブリッジでしょうか。
+完全に日が昇りました。
+東待機列はこの辺りでした。
+入場時の様子です。
+一番混む時間・場所では満員電車並みの混雑でした。一番並んだサークルでは1時間程並んでいました。
+予めチェックしていたサークルを回った後は西に行っていろんなジャンルのサークルを回り、予定外ではありましたが幾つか興味を引いたものを購入しました。
+西は本当に色々なジャンルがあって同じ島を何周もしました。
+久しぶりのコミケ参加でしたが、やはりあの独特の雰囲気は好きです。
+いつか何か出展する側になりたいものです。
+戦利品1
+戦利品2
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>2015年クリスマス限定グラフィック</title>
+      <link>/post/2015-12-29-2015%E5%B9%B4%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%9E%E3%82%B9%E9%99%90%E5%AE%9A%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF/</link>
+      <pubDate>Tue, 29 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-29-2015%E5%B9%B4%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%9E%E3%82%B9%E9%99%90%E5%AE%9A%E3%82%B0%E3%83%A9%E3%83%95%E3%82%A3%E3%83%83%E3%82%AF/</guid>
+      <description>2015年クリスマス限定グラフィック
+今年は初風と谷風と江風と大淀に実装されたようです。
+初風
+谷風
+江風
+大淀
+初風(中破)
+谷風(中破)
+江風(中破)
+大淀(中破)
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>ちきゅう一般開放</title>
+      <link>/post/2015-12-29-%E3%81%A1%E3%81%8D%E3%82%85%E3%81%86%E4%B8%80%E8%88%AC%E9%96%8B%E6%94%BE/</link>
+      <pubDate>Tue, 29 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-29-%E3%81%A1%E3%81%8D%E3%82%85%E3%81%86%E4%B8%80%E8%88%AC%E9%96%8B%E6%94%BE/</guid>
+      <description>先月ですが横浜のちきゅう一般開放に行ってきました。
+ちきゅうとは国立研究開発法人 海洋研究開発機構が所有する地球深部調査船です。
+海底を掘削して地震のメカニズムや生命の起源などを調査しているようです。
+今回は就航10周年ということで船内を見学できる一般公開が催されました。
+
+
+相当大きいです
+
+かっこいい計器たち
+
+特徴的な掘削機
+
+
+
+船内とは思えない
+
+掘削に使うライザー管
+
+
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>拡張海域4-5編成</title>
+      <link>/post/2015-12-28-%E6%8B%A1%E5%BC%B5%E6%B5%B7%E5%9F%9F4-5%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Mon, 28 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-28-%E6%8B%A1%E5%BC%B5%E6%B5%B7%E5%9F%9F4-5%E7%B7%A8%E6%88%90/</guid>
+      <description>拡張海域4-5の編成をメモ
+各空母には艦爆を積んで、ボス戦で旗艦の随伴艦みを倒し夜戦で旗艦を仕留める作戦です。
+削り編成 ゲージ破壊編成 Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>AttributeError: &amp;#039;module&amp;#039; object has no attribute &amp;#039;GPIO&amp;#039;</title>
+      <link>/post/2015-12-27-attributeerror-module-object-has-no-attribute-gpio/</link>
+      <pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-27-attributeerror-module-object-has-no-attribute-gpio/</guid>
+      <description>PythonからwebiopiのGPIOを使おうとした時、
+AttributeError: &amp;lsquo;module&amp;rsquo; object has no attribute &amp;lsquo;GPIO&amp;rsquo;
+と表示される場合の対処。
+WebIOPi-0.7.1をRaspberry Pi2に対応させます こちらを参考にpython/native/cpuinfo.cとpython/native/gpio.cを修正します。
+  cpuinfo.c
+BCM2708をBCM2709に変更
+  gpio.c
+define BCM2708_PERI_BASE 0x20000000をdefine BCM2708_PERI_BASE 0x3f000000に変更
+  その後setup.shを実行し直します。
+WiringPi2-PythonをPython3で動くようにします Python3をインストール
+sudo aptitude install python3
+Python3をデフォルトにする
+&amp;lt;br /&amp;gt; sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1&amp;lt;br /&amp;gt; sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.4 2&amp;lt;br /&amp;gt;
+WiringPi2-Pythonをインストールしなおす
+sudo ./setup.py install
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦隊安全お飾り材料集め</title>
+      <link>/post/2015-12-27-%E8%89%A6%E9%9A%8A%E5%AE%89%E5%85%A8%E3%81%8A%E9%A3%BE%E3%82%8A%E6%9D%90%E6%96%99%E9%9B%86%E3%82%81/</link>
+      <pubDate>Sun, 27 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-27-%E8%89%A6%E9%9A%8A%E5%AE%89%E5%85%A8%E3%81%8A%E9%A3%BE%E3%82%8A%E6%9D%90%E6%96%99%E9%9B%86%E3%82%81/</guid>
+      <description>艦隊安全お飾りの材料集め
+検討した結果、未攻略のEO海域のほか、2-5を周回してお飾り材料を集めることにしました。
+2-5周回編成は次の通りです。
+お飾り材料ですが大体8割位？ほぼ毎回お飾り材料はドロップしていたと思います。
+実は必要個数を勘違いしていて32個で良いはずが36個集めていました…
+消費資源は燃料2000、弾薬-2000、鋼材1000、ボーキサイト2000、バケツ50ほどでした。
+余ったお飾り材料は燃料にできます。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>個人用名刺作った</title>
+      <link>/post/2015-12-22-%E5%80%8B%E4%BA%BA%E7%94%A8%E5%90%8D%E5%88%BA%E4%BD%9C%E3%81%A3%E3%81%9F/</link>
+      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-22-%E5%80%8B%E4%BA%BA%E7%94%A8%E5%90%8D%E5%88%BA%E4%BD%9C%E3%81%A3%E3%81%9F/</guid>
+      <description>前々から作ろう作ろうと思っていてなかなか作れずにいた個人用の名刺をついに作りました。
+選んだサービスはプリントライです。
+フリーソフトで始める印刷通販：プリントライ
+こちらを選んだ理由は自分で名刺のデザインを作れる上、GIMPなどのフリーソフト (というかPNG形式など) にも対応しているところです。
+自分でデザインを作れるところはたくさんあるのですがその殆どが.aiファイルが必要だったり専門知識が必要だったりするようでした。
+その点こちらのサイトではテンプレートファイルを配布していますしデータの作り方も丁寧に説明されていました。
+22日の17時くらいにデータの入稿をすませ、発送されたのが23日の15時でした。その間もデータ確認着手、完了、請求、作成開始などのお知らせメールが届いていました。
+今回の名刺は片面カラー60枚の、マット180kgで料金は806円+配送料支払い手数料(PayPal)193円で999円でした。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>高専カンファレンス100に参加してきました</title>
+      <link>/post/2015-12-22-%E9%AB%98%E5%B0%82%E3%82%AB%E3%83%B3%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9100%E3%81%AB%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F/</link>
+      <pubDate>Tue, 22 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-22-%E9%AB%98%E5%B0%82%E3%82%AB%E3%83%B3%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9100%E3%81%AB%E5%8F%82%E5%8A%A0%E3%81%97%E3%81%A6%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+      <description>高専カンファレンス100に参加してきたので所感をば。
+高専カンファレンス100は12月19日、20日に電気通信大学で開催されました。
+高専カンファレンスとは高等専門学校生とそのOBや関係者が集まり発表やLTをする場です。
+今回は記念すべき100回ということと、割と近くということで初参加と相成りました。
+http://kosenconf.jp/?100tokyo
+会場の電通大
+B棟というところが会場でした。
+二日間のうち両日+懇親会に参加してきました。
+一日目 おもいっきり寝坊しアイスブレイクの途中から参加。
+コミュ力が足りず隅のほうで愛想笑いをしてやり過ごしました…。
+その後夢これというLTが行われ懇親会へ。
+懇親会では今まで一度もあっていなあったフォロワー数人と会えてよかった！
+二日間 4セッション同時進行でどれを聴こうか迷いましたが、
+ インフラ Node.jsではじめるウェブ開発 移動させるだけではもったいない「ルンバ」の魅力と攻略方法 15分でおぼえる！イマドキの電子工作のすゝめ入門編  を選択しました。
+全体としてみんな高度なことやってるなぁという印象でした。
+高専2年生でNode.jsでウェブ開発とか、私が同じ2年生の頃なんてネトゲやりまくって単位落としかけてた記憶しかない…。
+学生でこれなのだから将来はもっとすごいことになっているだろうなと思うと同時に、自分もこのままではいけない、もっと頑張ろうという危機感のような刺激を受けることができました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Raspberry PiでWiFiに繋ぐ方法</title>
+      <link>/post/2015-12-18-raspberry-pi%E3%81%A7wifi%E3%81%AB%E7%B9%8B%E3%81%90%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Fri, 18 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-18-raspberry-pi%E3%81%A7wifi%E3%81%AB%E7%B9%8B%E3%81%90%E6%96%B9%E6%B3%95/</guid>
+      <description>Raspberry PiでWiFiに繋ぐ方法
+Xが立ち上がっていない場合のWiFiの設定方法が分からなかったのでメモ。
+次のファイルに下記内容を追記すれば良い。
+繋げたいWiFiが複数ある場合は、そのままnetworkの項目を増やせばいい。
+/etc/wpa_supplicant/wpa_supplicant.conf
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>VPC削除時、We could not delete the following VPCと表示され削除できない場合</title>
+      <link>/post/2015-12-13-vpc%E5%89%8A%E9%99%A4%E6%99%82we-could-not-delete-the-following-vpc%E3%81%A8%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E5%89%8A%E9%99%A4%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Sun, 13 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-13-vpc%E5%89%8A%E9%99%A4%E6%99%82we-could-not-delete-the-following-vpc%E3%81%A8%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E5%89%8A%E9%99%A4%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>VPC削除時、We could not delete the following VPCと表示され削除できない場合
+VPCにエンドポイントがあるとだめらしいので、VPCエンドポイントを手動で削除してからVPCを削除する。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Zabbix FrontendでDBに接続できない場合の対処</title>
+      <link>/post/2015-12-13-zabbix-frontend%E3%81%A7db%E3%81%AB%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%87%A6/</link>
+      <pubDate>Sun, 13 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-12-13-zabbix-frontend%E3%81%A7db%E3%81%AB%E6%8E%A5%E7%B6%9A%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%87%A6/</guid>
+      <description>zabbix-serverはDBに繋がるのにweb frontはDBがタイムアウトになる場合
+RPMでインストールした場合、フロントエンドのDB設定は/usr/share/zabbix/conf/zabbix.conf.phpではなく/etc/zabbix/web/zabbix.conf.phpを参照するため、このファイルを変更する必要があります。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Nginxで特定のヘッダの有無や内容によってアクセスを制限する方法について</title>
+      <link>/post/2015-08-31-nginx%E3%81%A7%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%98%E3%83%83%E3%83%80%E3%81%AE%E6%9C%89%E7%84%A1%E3%82%84%E5%86%85%E5%AE%B9%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/</link>
+      <pubDate>Mon, 31 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-08-31-nginx%E3%81%A7%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%98%E3%83%83%E3%83%80%E3%81%AE%E6%9C%89%E7%84%A1%E3%82%84%E5%86%85%E5%AE%B9%E3%81%AB%E3%82%88%E3%81%A3%E3%81%A6%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9/</guid>
+      <description>Nginxで特定のヘッダ (リクエストヘッダ) の有無や内容によってアクセスを制限する方法
+こんな感じにすればOK。
+$http_ACCESS_RESTRICTIONのACCESS_RESTRICTION部分は制限させたいヘッダを書きます。
+ただし小文字は大文字に、ハイフンはアンダースコアにしてください。
+の部分はヘッダの内容を書きます。=なので完全一致です。
+もし内容ではなくヘッダの有無だけ確認したい場合はこの部分は必要ないです。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>docker-machineでStarted machines may have new IP addresses. You may need to re-run the `docker-machine env` command.と言われる件について</title>
+      <link>/post/2015-08-29-docker-machine%E3%81%A7started-machines-may-have-new-ip-addresses-you-may-need-to-re-run-the-docker-machine-env-command-%E3%81%A8%E8%A8%80%E3%82%8F%E3%82%8C%E3%82%8B%E4%BB%B6%E3%81%AB%E3%81%A4/</link>
+      <pubDate>Sat, 29 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-08-29-docker-machine%E3%81%A7started-machines-may-have-new-ip-addresses-you-may-need-to-re-run-the-docker-machine-env-command-%E3%81%A8%E8%A8%80%E3%82%8F%E3%82%8C%E3%82%8B%E4%BB%B6%E3%81%AB%E3%81%A4/</guid>
+      <description>docker-machineでStarted machines may have new IP addresses. You may need to re-run the `docker-machine env` command.と言われる件について
+とdocker-machine envを実行してもdocker-machine startを実行しろと言われ堂々巡りに。
+おもむろにVirtualBoxで直接起動しようとしたらエラーがでて起動できませんでした。
+VirtualBoxのバグのようなので4.3にダウングレードしました。
+その後docker-machine start default, docker-machine regenerate-certs default, docker-machine env defaultで無事dockerが使えるようになりました。Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>nasneのtorneアプリで音が途切れ途切れになる</title>
+      <link>/post/2015-08-25-nasne%E3%81%AEtorne%E3%82%A2%E3%83%97%E3%83%AA%E3%81%A7%E9%9F%B3%E3%81%8C%E9%80%94%E5%88%87%E3%82%8C%E9%80%94%E5%88%87%E3%82%8C%E3%81%AB%E3%81%AA%E3%82%8B/</link>
+      <pubDate>Tue, 25 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-08-25-nasne%E3%81%AEtorne%E3%82%A2%E3%83%97%E3%83%AA%E3%81%A7%E9%9F%B3%E3%81%8C%E9%80%94%E5%88%87%E3%82%8C%E9%80%94%E5%88%87%E3%82%8C%E3%81%AB%E3%81%AA%E3%82%8B/</guid>
+      <description>前々から欲しかったnasneを買ったので、PS3のtorneアプリで早速テレビを見てみました。
+しかし音声がとぎれとぎれ…というより、たまに音声が聞こえなくなります。
+ PS3が古いのでそのせいかなぁと思っていましたが、PS3をWiFiではなくLANケーブルで接続したところ音が途切れることはなくなりました。
+WiFiの帯域が不足していたようです。
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>NginxでSSL証明書を設定するとX509_check_private_key:key values mismatchが表示される件について</title>
+      <link>/post/2015-08-25-nginx%E3%81%A7ssl%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E3%81%A8x509_check_private_keykey-values-mismatch%E3%81%8C%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B/</link>
+      <pubDate>Tue, 25 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-08-25-nginx%E3%81%A7ssl%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E3%81%A8x509_check_private_keykey-values-mismatch%E3%81%8C%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B/</guid>
+      <description>NginxでSSLを使用とした時、次のようなエラーが発生した。
+ 検索すると証明書が間違っているとか出てきますが、私は中間証明書のインストール位置を間違えていました。
+中間証明書は証明書の末尾に追記しましょう。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>WordPressのpermalinksの設定を変更したら500エラーが発生した件</title>
+      <link>/post/2015-08-22-wordpress%E3%81%AEpermalinks%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%9F%E3%82%89500%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E4%BB%B6/</link>
+      <pubDate>Sat, 22 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-08-22-wordpress%E3%81%AEpermalinks%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%97%E3%81%9F%E3%82%89500%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E7%99%BA%E7%94%9F%E3%81%97%E3%81%9F%E4%BB%B6/</guid>
+      <description>WordPressのpermalinksの設定を変更したら500 Internal Server Errorが発生し、一切のアクセスができなくなった。
+問題はApacheの設定で、.htaccessファイルの設定が有効になっていなかったせいでした。
+具体的にはAllowOverrideの設定を
+に変更したらページが表示されるようになりました。
+ 参考
+core – Apache HTTP サーバ バージョン 2.2 Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>muninから09:06にメールが届く件について</title>
+      <link>/post/2015-07-31-munin%E3%81%8B%E3%82%890906%E3%81%AB%E3%83%A1%E3%83%BC%E3%83%AB%E3%81%8C%E5%B1%8A%E3%81%8F%E4%BB%B6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link>
+      <pubDate>Fri, 31 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-31-munin%E3%81%8B%E3%82%890906%E3%81%AB%E3%83%A1%E3%83%BC%E3%83%AB%E3%81%8C%E5%B1%8A%E3%81%8F%E4%BB%B6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</guid>
+      <description>Muninから9時6分頃にこんなメールが来るようになった
+ これは9時ジャストに行われているMuninの処理が次の9時5分になっても終わっていないため送信されている。
+なぜ終わっていないのかというと、午前9時に日毎、週ごと、年ごとのグラフが更新されているらしかった。
+生成されるグラフの数が多いためこのようなことが起こっているのだろう。
+ Muninの処理は各サーバから情報を収集、グラフの生成、HTMLの生成の3つが行われており、通常は&#39;usr&#39;bin&#39;munin-cronがその3つの処理を個別に呼び出している。
+ ということなので、9時5分に関しては情報の収集だけ行うことにした。
+&#39;etc&#39;cron.d&#39;muninは下記のようになった。</description>
+    </item>
+    
+    <item>
+      <title>tarファイルの部分解凍</title>
+      <link>/post/2015-07-29-tar%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E9%83%A8%E5%88%86%E8%A7%A3%E5%87%8D/</link>
+      <pubDate>Wed, 29 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-29-tar%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E9%83%A8%E5%88%86%E8%A7%A3%E5%87%8D/</guid>
+      <description>でっかいtarファイルがあってこの中のあるディレクトリだけ取り出したいというときは次のようにすれば良い
+  Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>標準エラー出力を標準出力とする方法</title>
+      <link>/post/2015-07-24-%E6%A8%99%E6%BA%96%E3%82%A8%E3%83%A9%E3%83%BC%E5%87%BA%E5%8A%9B%E3%82%92%E6%A8%99%E6%BA%96%E5%87%BA%E5%8A%9B%E3%81%A8%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Fri, 24 Jul 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-24-%E6%A8%99%E6%BA%96%E3%82%A8%E3%83%A9%E3%83%BC%E5%87%BA%E5%8A%9B%E3%82%92%E6%A8%99%E6%BA%96%E5%87%BA%E5%8A%9B%E3%81%A8%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</guid>
+      <description>標準エラー出力を標準出力とする方法例えばcrontabなどで、標準エラー出力にerrorという文字列があった場合メールを送信するという時は次のようにすれば良い何らかの処理 3&amp;gt;&#39;dev&#39;null 2&amp;gt;&amp;amp;1 1&amp;gt;&amp;amp;3 | grep -i error
+標準出力は3のファイルディスクリプタ経由で&#39;dev&#39;nullに送り、標準エラー出力は標準出力に送るという流れ。
+これで標準エラー出力は標準出力として送られるのでパイプで処理することができる。
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Nortonの自動延長が有効になっていたので返金してもらった話</title>
+      <link>/post/2015-06-15-norton%E3%81%AE%E8%87%AA%E5%8B%95%E5%BB%B6%E9%95%B7%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E8%BF%94%E9%87%91%E3%81%97%E3%81%A6%E3%82%82/</link>
+      <pubDate>Mon, 15 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-06-15-norton%E3%81%AE%E8%87%AA%E5%8B%95%E5%BB%B6%E9%95%B7%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%84%E3%81%9F%E3%81%AE%E3%81%A7%E8%BF%94%E9%87%91%E3%81%97%E3%81%A6%E3%82%82/</guid>
+      <description>タイトルのとおりですが、Nortonはデフォルトで自動延長が有効になっているようです。
+クレジットカードの利用明細で初めて気が付きました。
+ 対象のPCは既に処分しているのでサポートに連絡して自動延長の無効と返金をお願いしました。
+お願いしたのは平日の22時台でしたが直ぐにサポートとチャットでつながりスムーズに解約出来ました。
+対応いいなあ
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦これ 2015年春イベント</title>
+      <link>/post/2015-05-09-%E8%89%A6%E3%81%93%E3%82%8C-2015%E5%B9%B4%E6%98%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88/</link>
+      <pubDate>Sat, 09 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-05-09-%E8%89%A6%E3%81%93%E3%82%8C-2015%E5%B9%B4%E6%98%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88/</guid>
+      <description>E-1
+
+ E-2
+
+
+ E-3
+
+
+ E-4
+
+
+ E-5
+
+ E-6
+
+
+
+
+ 全作戦成功
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>vagrant plugin install vagrant-awsでインストールに失敗するとき</title>
+      <link>/post/2015-02-20-vagrant-plugin-install-vagrant-aws%E3%81%A7%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%AB%E5%A4%B1%E6%95%97%E3%81%99%E3%82%8B%E3%81%A8%E3%81%8D/</link>
+      <pubDate>Fri, 20 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-02-20-vagrant-plugin-install-vagrant-aws%E3%81%A7%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%AB%E5%A4%B1%E6%95%97%E3%81%99%E3%82%8B%E3%81%A8%E3%81%8D/</guid>
+      <description>vagrant plugin install vagrant-awsdでインストールに失敗するとき
+-vvvオプションを付けるとnokogiriのインストールで失敗しているのが分かった。
+nokogiri単体でのインストールは上手く行っていた。
+最終的にはNOKOGIRI_USE_SYSTEM_LIBRARIES=1をつけてvagrant installすることで上手く行った。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>MuninのMySQLプラグイン有効方法</title>
+      <link>/post/2015-01-15-munin%E3%81%AEmysql%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E6%9C%89%E5%8A%B9%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Thu, 15 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-01-15-munin%E3%81%AEmysql%E3%83%97%E3%83%A9%E3%82%B0%E3%82%A4%E3%83%B3%E6%9C%89%E5%8A%B9%E6%96%B9%E6%B3%95/</guid>
+      <description>初期状態ではMuninがMySQLのRootアカウントを使用してデータを収集しようとするので失敗する。
+そのためMuninのデータ収集用MySQLアカウントを作成し、そのアカウントでデータ収集するよう設定する必要がある。
+専用MySQLアカウント作成
+ 専用MySQLアカウントを使用するようMuninを設定
+  設定の確認と反映
+  参考URL:
+http:&#39;&#39;alexcline.net&#39;2013&#39;07&#39;12&#39;setting-up-the-mysql_-plugin-in-munin&#39;
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>（自己署名）証明書の作成方法とその確認方法</title>
+      <link>/post/2015-01-14-%E8%87%AA%E5%B7%B1%E7%BD%B2%E5%90%8D%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%81%AE%E4%BD%9C%E6%88%90%E6%96%B9%E6%B3%95%E3%81%A8%E3%81%9D%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Wed, 14 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-01-14-%E8%87%AA%E5%B7%B1%E7%BD%B2%E5%90%8D%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%81%AE%E4%BD%9C%E6%88%90%E6%96%B9%E6%B3%95%E3%81%A8%E3%81%9D%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95/</guid>
+      <description>調べればいくらでも出てくるんだけど自分用にメモ
+“`
+openssl genrsa -out server.key 2048
+“`
+“`
+openssl req -new -sha256 -key server.key -out server.csr
+“`
+“`
+openssl x509 -days 3650 -req -signkey server.key server.crt
+“`
+server.keyが秘密鍵、server.csrが証明書署名要求、server.crtが証明書。
+証明書をちゃんとしたCAに作ってもらうなら、途中で生成される証明書署名要求を提出すれば良い。
+ 自己署名証明書だけ欲しいという時は次のコマンドでも生成できる。
+“`
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout server.key -sha256 -out server.crt
+“`
+ 作成された証明書署名要求と証明書の確認は下記opensslコマンドで行える。
+証明書確認
+“`
+openssl x509 -text -noout -in server.csr
+“` 証明書署名要求確認“`
+openssl req -in certificate.crt -text -noout
+“`
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>PG::ObjectInUse: ERROR: データベース&amp;quot;database_name&amp;quot;は他のユーザからアクセスされています</title>
+      <link>/post/2014-12-18-pgobjectinuse-error-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9database_name%E3%81%AF%E4%BB%96%E3%81%AE%E3%83%A6%E3%83%BC%E3%82%B6%E3%81%8B%E3%82%89%E3%82%A2%E3%82%AF/</link>
+      <pubDate>Thu, 18 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-12-18-pgobjectinuse-error-%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9database_name%E3%81%AF%E4%BB%96%E3%81%AE%E3%83%A6%E3%83%BC%E3%82%B6%E3%81%8B%E3%82%89%E3%82%A2%E3%82%AF/</guid>
+      <description>Postgresqlを使用している時、データベースの削除などをした時下記のようなエラーが表示された時の対処
+エラー文の通り操作しようとしているデータベースにアクセスしているユーザがいるためなので、このユーザを強制的に追い出します。
+まずアクセスしているユーザを調べます。
+“`
+SELECT * FROM pg_stat_activity;
+“`
+該当ユーザのprocidとusernameをメモし、追い出します
+“`
+SELECT pg_terminate_backend(procpid) FROM pg_stat_activity WHERE usename = ‘usename’;
+“`
+ 以上
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>RPMファイルから設定ファイルを抜き出す方法</title>
+      <link>/post/2014-12-15-rpm%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8B%E3%82%89%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E6%8A%9C%E3%81%8D%E5%87%BA%E3%81%99%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Mon, 15 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-12-15-rpm%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8B%E3%82%89%E8%A8%AD%E5%AE%9A%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E6%8A%9C%E3%81%8D%E5%87%BA%E3%81%99%E6%96%B9%E6%B3%95/</guid>
+      <description>とあるRPMパッケージでインストールしたソフトのデフォルトの設定ファイルが欲しい時があって調べたので手順をメモしておく。
+  RPMファイルをダウンロードする  yumリポジトリからRPMをダウンロードする場合はyumdownloader [パッケージ名]を使うと良い。yumにない場合は適当にググってダウンロードする。     &amp;lt;/li&amp;gt; * rpm2cpioコマンドを使って取り出す &amp;amp;#8220;\` rpm2cpio ファイル名.rpm | cpio -id &amp;amp;#8220;\` &amp;lt;/li&amp;gt; &amp;lt;/ol&amp;gt; 以上のコマンドによりRPMファイルからファイルを取り出すことができる。 ファイルとディレクトリはカレントディレクトリをルートにして作成されるので、適当なディレクトリを作成してその中でやるといいかもしれない。 Source: New feed </description>
+    </item>
+    
+    <item>
+      <title>AMIから起動した時のエラー EXT2-fs: sda1: couldn&amp;#039;t mount because of unsupported optional features (244).</title>
+      <link>/post/2014-12-08-ami%E3%81%8B%E3%82%89%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%9F%E6%99%82%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC-ext2-fs-sda1-couldnt-mount-because-of-unsupported-optional-features-244/</link>
+      <pubDate>Mon, 08 Dec 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-12-08-ami%E3%81%8B%E3%82%89%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%9F%E6%99%82%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC-ext2-fs-sda1-couldnt-mount-because-of-unsupported-optional-features-244/</guid>
+      <description>ちょっと古いEC2のインスタンスのボリュームをスナップショット経由でAMIにしてそれを起動した時、一向に起動しない事案があった。
+Instance SettingsのGet System Logでログを覗くと次のエラーが
+カーネルを同じにすればよいとのことだったので、既存のインスタンスと同じKernel IDを、Image作成時に指定すればよいのでした。
+それからImage作成時にArchitectureの指定もしっかり合わせましょう。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>秋イベント E-4攻略編成</title>
+      <link>/post/2014-11-16-%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-e-4%E6%94%BB%E7%95%A5%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Sun, 16 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-16-%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-e-4%E6%94%BB%E7%95%A5%E7%B7%A8%E6%88%90/</guid>
+      <description>編成は次の通り。ゴリ押し編成です。
+空母4だとボスの前にIマスに飛ばされ大破するので、ボスでの航空優勢は完全に捨てて空母2にした上で艦戦もなるべく減らしました。
+クリア後に知ったけど道中2戦になる編成があるみたいですね…
+
+
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>秋イベント全海域クリア！</title>
+      <link>/post/2014-11-16-%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E5%85%A8%E6%B5%B7%E5%9F%9F%E3%82%AF%E3%83%AA%E3%82%A2/</link>
+      <pubDate>Sun, 16 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-16-%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88%E5%85%A8%E6%B5%B7%E5%9F%9F%E3%82%AF%E3%83%AA%E3%82%A2/</guid>
+      <description>消費資材
+燃料: 18566
+弾薬: 19864
+鋼材: 12680
+ボーキサイト: 2957
+高速修復材: 104
+
+
+
+いやあ、金曜日の深夜から初めて土曜日の深夜に終わりました。中規模とはいえこんなに早くイベントクリアしたのは初めてですね。
+残り期間は初風と朝雲を探しに行きます。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>2014年秋イベント E-3攻略編成</title>
+      <link>/post/2014-11-15-2014%E5%B9%B4%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-e-3%E6%94%BB%E7%95%A5%E7%B7%A8%E6%88%90/</link>
+      <pubDate>Sat, 15 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-15-2014%E5%B9%B4%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-e-3%E6%94%BB%E7%95%A5%E7%B7%A8%E6%88%90/</guid>
+      <description>E-3は大和型でごり押せたから楽でした。支援もいらなかったしキラ付けももちろん必要なかった。
+
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>清霜三隈でました！</title>
+      <link>/post/2014-11-15-%E6%B8%85%E9%9C%9C%E4%B8%89%E9%9A%88%E3%81%A7%E3%81%BE%E3%81%97%E3%81%9F/</link>
+      <pubDate>Sat, 15 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-15-%E6%B8%85%E9%9C%9C%E4%B8%89%E9%9A%88%E3%81%A7%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+      <description>E-3ボスドロップです！
+やっと三隈手に入ったー！
+
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦これ 2014年秋イベント E-1</title>
+      <link>/post/2014-11-15-%E8%89%A6%E3%81%93%E3%82%8C-2014%E5%B9%B4%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-e-1/</link>
+      <pubDate>Sat, 15 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-15-%E8%89%A6%E3%81%93%E3%82%8C-2014%E5%B9%B4%E7%A7%8B%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88-e-1/</guid>
+      <description>2軍でも余裕でしたね。ルートもそれなかったし
+
+
+SSとってから気がついたけど五十鈴…
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>s3cmdでERROR: Parameter problem: Nothing to upload.と表示される場合の対処</title>
+      <link>/post/2014-11-11-s3cmd%E3%81%A7error-parameter-problem-nothing-to-upload-%E3%81%A8%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%87%A6/</link>
+      <pubDate>Tue, 11 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-11-s3cmd%E3%81%A7error-parameter-problem-nothing-to-upload-%E3%81%A8%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%87%A6/</guid>
+      <description>s3cmd putで下記エラーが出たことがある
+原因は簡単で宛先のS3のパスの最後に&#39;が抜けているだけだった。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>コマンドラインからファイルを作成する方法</title>
+      <link>/post/2014-11-10-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Mon, 10 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-10-%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%83%A9%E3%82%A4%E3%83%B3%E3%81%8B%E3%82%89%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</guid>
+      <description>コマンドラインから文章をファイルに書き出す方法です
+下記コマンドでhoge.txtにline1からline3までの内容を作成することができます。
+hoge.txtまで打ったら改行してline1の入力に移ってください。
+“`
+cat &amp;lt;&amp;gt; hoge.txt
+line1
+line2
+line3
+__EOF__
+“`
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>ApacheのSSLの設定で、エラーログにOops, no RSA or DSA server certificate found for &amp;#039;server.host.name:0&amp;#039;?!と表示された時の対処</title>
+      <link>/post/2014-11-09-apache%E3%81%AEssl%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%81%A7%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%AD%E3%82%B0%E3%81%ABoops-no-rsa-or-dsa-server-certificate-found-for-server-host-name0/</link>
+      <pubDate>Sun, 09 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-09-apache%E3%81%AEssl%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%81%A7%E3%82%A8%E3%83%A9%E3%83%BC%E3%83%AD%E3%82%B0%E3%81%ABoops-no-rsa-or-dsa-server-certificate-found-for-server-host-name0/</guid>
+      <description>ApacheのSSLの設定で、エラーログにOops, no RSA or DSA server certificate found for ‘server.host.name:0’?!と表示された時の対処
+設定していたVirtualHostにSSLEngine onを追記したらうまくいきました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>VirtualBoxにWindows8をインストールしようとした時のエラーについて</title>
+      <link>/post/2014-11-09-virtualbox%E3%81%ABwindows8%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%97%E3%81%9F%E6%99%82%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AB/</link>
+      <pubDate>Sun, 09 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-09-virtualbox%E3%81%ABwindows8%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%97%E3%81%9F%E6%99%82%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%AB/</guid>
+      <description>VirtualBoxにWindows8をインストールしようとしたら次のようなエラーが表示されました。
+Your PC needs to restart.
+Please hold down the power button.
+Error code: 0x000000C4
+…
+対処ですが、まず下記コマンドを実行してVMの名前を調べます。
+次に下記コマンドを実行してからVMを起動し直すと、起動できるようになります。
+参考URL:
+Windows Server 2012 R2 on VirtualBox – Error 0x000000C4Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>横須賀軍港めぐり</title>
+      <link>/post/2014-11-08-%E6%A8%AA%E9%A0%88%E8%B3%80%E8%BB%8D%E6%B8%AF%E3%82%81%E3%81%90%E3%82%8A/</link>
+      <pubDate>Sat, 08 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-08-%E6%A8%AA%E9%A0%88%E8%B3%80%E8%BB%8D%E6%B8%AF%E3%82%81%E3%81%90%E3%82%8A/</guid>
+      <description>先月横須賀軍港めぐりに行ってきました。
+遊覧船に乗って湾内の護衛艦を周るツアーですね。
+何が見れるかはその時のお楽しみで、私が行った時の停泊しているイージス艦はアメリカの1隻だけでした。
+料金は1400円ですが、めったに見られない護衛艦を間近で見ることができるのでおすすめです。
+当日券もあるようですが下記URLから予約もできます。
+YOKOSUKA軍港めぐり公式サイト
+   
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>mysqldumpをパスワードなしで実行する</title>
+      <link>/post/2014-11-06-mysqldump%E3%82%92%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AA%E3%81%97%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B/</link>
+      <pubDate>Thu, 06 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-06-mysqldump%E3%82%92%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%81%AA%E3%81%97%E3%81%A7%E5%AE%9F%E8%A1%8C%E3%81%99%E3%82%8B/</guid>
+      <description>cronなどでmysqldumpを実行したいけどパスワードをそのまま書くのはちょっと…という場合はパスワードをファイルに書き出し、それを読みこませることでパスワードの指定なしに実行できます。
+実行ユーザのホームディレクトリに.my.cnfという名前で下記3行を書きましょう。
+これでOK
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>PostfixでHost or domain name not found. Name service error for name=hostname type=A: Hostというエラーが出る場合の対処</title>
+      <link>/post/2014-11-06-postfix%E3%81%A7host-or-domain-name-not-found-name-service-error-for-namehostname-typea-host%E3%81%A8%E3%81%84%E3%81%86%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Thu, 06 Nov 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-11-06-postfix%E3%81%A7host-or-domain-name-not-found-name-service-error-for-namehostname-typea-host%E3%81%A8%E3%81%84%E3%81%86%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B%E5%A0%B4%E5%90%88/</guid>
+      <description>CentOSのPostfixで
+Host or domain name not found. Name service error for name=hostname type=A: Host not found
+などというエラーが出て上手くいかない時
+設定が合っている場合でもOS側でsendmailが選択されている場合があります。
+sudo alternatives –config mtaコマンドでpostfixを選択してみてください。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>艦これ拡張海域2-5攻略メンバー</title>
+      <link>/post/2014-10-25-%E8%89%A6%E3%81%93%E3%82%8C%E6%8B%A1%E5%BC%B5%E6%B5%B7%E5%9F%9F2-5%E6%94%BB%E7%95%A5%E3%83%A1%E3%83%B3%E3%83%90%E3%83%BC/</link>
+      <pubDate>Sat, 25 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-10-25-%E8%89%A6%E3%81%93%E3%82%8C%E6%8B%A1%E5%BC%B5%E6%B5%B7%E5%9F%9F2-5%E6%94%BB%E7%95%A5%E3%83%A1%E3%83%B3%E3%83%90%E3%83%BC/</guid>
+      <description>2-5攻略メンバーを載せておく。
+最初重巡2航巡1としたが、2回連続で逸れたので重巡1航巡2としたら殆どそれ無くなった。
+装備などはもっと考察する余地はあると思う。というかほとんど考えていない
+普通にクリアする分にはこれでも十分だった。
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>rails generate rspec:installのときundefined methodが出るときの対処</title>
+      <link>/post/2014-10-06-rails-generate-rspecinstall%E3%81%AE%E3%81%A8%E3%81%8Dundefined-method%E3%81%8C%E5%87%BA%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%87%A6/</link>
+      <pubDate>Mon, 06 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-10-06-rails-generate-rspecinstall%E3%81%AE%E3%81%A8%E3%81%8Dundefined-method%E3%81%8C%E5%87%BA%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%87%A6/</guid>
+      <description>を実行した時次のエラーが表示された(Rails4.0.5)。
+ config&#39;environments&#39;development.rbの一行目を次のように変更するとうまく行った。
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Apache 2.4系でのサーバ情報抑制</title>
+      <link>/post/2014-09-28-apache-2-4%E7%B3%BB%E3%81%A7%E3%81%AE%E3%82%B5%E3%83%BC%E3%83%90%E6%83%85%E5%A0%B1%E6%8A%91%E5%88%B6/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-09-28-apache-2-4%E7%B3%BB%E3%81%A7%E3%81%AE%E3%82%B5%E3%83%BC%E3%83%90%E6%83%85%E5%A0%B1%E6%8A%91%E5%88%B6/</guid>
+      <description>Apache 2.4系でもデフォルトでサーバ情報をリクエストヘッダに出力します。
+表示を最小限にするには次の行を追加する必要があります
+ また、PHPの情報を出力しないようにするためには次の行をphp.iniに書く必要があります
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Rails Passengerでstderr: &amp;#047;usr&amp;#047;bin&amp;#047;env: ruby No such file or directory</title>
+      <link>/post/2014-07-08-rails-passenger%E3%81%A7stderr-usrbinenv-ruby-no-such-file-or-directory/</link>
+      <pubDate>Tue, 08 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-07-08-rails-passenger%E3%81%A7stderr-usrbinenv-ruby-no-such-file-or-directory/</guid>
+      <description>passengerを組み込んだapacheのerror_logに次の行が表示される時の対処
+ App 7560 stderr: &#39;usr&#39;bin&#39;env:
+  App 7560 stderr: ruby
+  App 7560 stderr: : No such file or directory
+ apacheからパスが通っていないので、&#39;etc&#39;sysconfig&#39;httpdに次の行を追記します。
+ export PATH=&#39;usr&#39;local&#39;bin:$PATH
+ パスは適宜変更してください。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>[warn] _default_ VirtualHost overlap on port 80, the first has precedenceと表示される時の対処</title>
+      <link>/post/2014-07-07-warn-_default_-virtualhost-overlap-on-port-80-the-first-has-precedence%E3%81%A8%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B%E6%99%82%E3%81%AE%E5%AF%BE%E5%87%A6/</link>
+      <pubDate>Mon, 07 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-07-07-warn-_default_-virtualhost-overlap-on-port-80-the-first-has-precedence%E3%81%A8%E8%A1%A8%E7%A4%BA%E3%81%95%E3%82%8C%E3%82%8B%E6%99%82%E3%81%AE%E5%AF%BE%E5%87%A6/</guid>
+      <description>バーチャルホストを使用するときapachectl -tなどで、[warn] _default_ VirtualHost overlap on port 80, the first has precedenceと表示される時の対処
+httpd.confに次の行を書きましょう。デフォルトではコメントアウトになっているはずです。
+ NameVirtualHost *:80
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>yum remove phpでphpが削除されない</title>
+      <link>/post/2014-06-24-yum-remove-php%E3%81%A7php%E3%81%8C%E5%89%8A%E9%99%A4%E3%81%95%E3%82%8C%E3%81%AA%E3%81%84/</link>
+      <pubDate>Tue, 24 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-06-24-yum-remove-php%E3%81%A7php%E3%81%8C%E5%89%8A%E9%99%A4%E3%81%95%E3%82%8C%E3%81%AA%E3%81%84/</guid>
+      <description>yum remove phpでphpが削除されない場合
+phpのモジュールがインストールされている場合があります
+ yum remove php*
+ とすればphpのモジュールが削除できます。
+ Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>redis, redis-sentinelが起動しない場合の対処</title>
+      <link>/post/2014-06-19-redis-redis-sentinel%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%87%A6/</link>
+      <pubDate>Thu, 19 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-06-19-redis-redis-sentinel%E3%81%8C%E8%B5%B7%E5%8B%95%E3%81%97%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%87%A6/</guid>
+      <description>設定ファイルがredis, redis-sentinelユーザで書き込めないと起動しないっぽいです
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>generating known_errors.inc executable host ruby is required. use &amp;#8211;with-baseruby option. make: *** [known_errors.inc] エラー 1</title>
+      <link>/post/2014-06-12-generating-known_errors-inc-executable-host-ruby-is-required-use-with-baseruby-option-make-known_errors-inc-%E3%82%A8%E3%83%A9%E3%83%BC-1/</link>
+      <pubDate>Thu, 12 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-06-12-generating-known_errors-inc-executable-host-ruby-is-required-use-with-baseruby-option-make-known_errors-inc-%E3%82%A8%E3%83%A9%E3%83%BC-1/</guid>
+      <description>Ruby2.1.2のソースインストール時に次のようなエラーが表示された
+  generating known_errors.inc
+  executable host ruby is required. use –with-baseruby option.
+  make: *** [known_errors.inc] エラー 1
+  RubyをインストールするにはRubyが必要とのことでした
+が今まではRubyが入っていない状態でもインストールできていたので、ホストを再起動を試したらインストールできました。
+思い当たる節がyum updateとyum groupinstall “Development Tools”を行ったということくらいしかありませんが、多分このせいなんだろうなぁ
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>メール送信でRelay access denied</title>
+      <link>/post/2014-06-12-%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E3%81%A7relay-access-denied/</link>
+      <pubDate>Thu, 12 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-06-12-%E3%83%A1%E3%83%BC%E3%83%AB%E9%80%81%E4%BF%A1%E3%81%A7relay-access-denied/</guid>
+      <description>Postfixでメールを送信しようとしたところ、rcptでRelay access deniedと言われてしまいました。
+このとき&#39;var&#39;log&#39;maillogを見ると次のようにありました。
+よくみると、RCPT from localhost[::1]と、IPv6のアドレスでアクセスしていることが分かります。 main.cfのinet_protocolsを次のようにしてIPv4を使うようにすればOKです
+腑に落ちませんがこれで解消ですSource: New feed</description>
+    </item>
+    
+    <item>
+      <title>ZabbixでSSH server is runningがどうしても障害(Down)とされてしまう場合の対処</title>
+      <link>/post/2014-05-26-zabbix%E3%81%A7ssh-server-is-running%E3%81%8C%E3%81%A9%E3%81%86%E3%81%97%E3%81%A6%E3%82%82%E9%9A%9C%E5%AE%B3down%E3%81%A8%E3%81%95%E3%82%8C%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Mon, 26 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-05-26-zabbix%E3%81%A7ssh-server-is-running%E3%81%8C%E3%81%A9%E3%81%86%E3%81%97%E3%81%A6%E3%82%82%E9%9A%9C%E5%AE%B3down%E3%81%A8%E3%81%95%E3%82%8C%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E5%A0%B4%E5%90%88/</guid>
+      <description>Zabbixを使っているとき、SSH server is runnningが障害と見なされる場合があります。
+そもそもこのアイテムはどう判定しているのかというと、サーバからエージェントのアクセスでは無く、エージェントから自身のSSHサーバにアクセスして判定をしています。
+ということでssh localhostと打って確認してみましょう。
+ …どうでしょうか。ssh_exchange_identificationと表示されたなら、次に&#39;etc&#39;hosts.allowを確認してみてください。
+おそらく何かかしらのルールが書いてあるはずなので、sshd : localhostなどと書いておきましょう。
+これでいけるはずです
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>s3cmdでserver-side-encryptionを使うようにする</title>
+      <link>/post/2014-05-22-s3cmd%E3%81%A7server-side-encryption%E3%82%92%E4%BD%BF%E3%81%86%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B/</link>
+      <pubDate>Thu, 22 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-05-22-s3cmd%E3%81%A7server-side-encryption%E3%82%92%E4%BD%BF%E3%81%86%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B/</guid>
+      <description>s3cmdでserver-side-encryptionを使おうとして普通に–server-side-encryptionをオプションとしてつけても
+と言われるだけでだめだった。
+その代わり、
+--add-header=x-amz-server-side-encryption:AES256  というオプションをつけるとちゃんと暗号化された。
+要するにこんな感じでコマンドを実行すると
+s3cmd put --add-header=x-amz-server-side-encryption:AES256 uploadfile s3:&amp;amp;#047;&amp;amp;#047;bucketname&amp;amp;#047;&amp;lt;/p&amp;gt;  Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>ホスト名を再起動なしで変更する</title>
+      <link>/post/2014-05-21-%E3%83%9B%E3%82%B9%E3%83%88%E5%90%8D%E3%82%92%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%AA%E3%81%97%E3%81%A7%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B/</link>
+      <pubDate>Wed, 21 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-05-21-%E3%83%9B%E3%82%B9%E3%83%88%E5%90%8D%E3%82%92%E5%86%8D%E8%B5%B7%E5%8B%95%E3%81%AA%E3%81%97%E3%81%A7%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B/</guid>
+      <description>ホスト名を再起動なしで変更するには次のようにします
+ &#39;etc&#39;sysconfig&#39;networkのHOSTNAMEという項目を変更後のホスト名で置き換えます。
+これで再起動すれば(しても)ホスト名が変更されます。
+ echo ‘変更後のホスト名’ &amp;gt; &#39;proc&#39;sys&#39;kernel&#39;hostname
+こうすることで再起動せずともホスト名が変更できます。
+ 一度ログアウトしてからもう一度入り直すと変更後のホスト名が確認できると思います。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>卯月出ました！</title>
+      <link>/post/2014-05-03-%E5%8D%AF%E6%9C%88%E5%87%BA%E3%81%BE%E3%81%97%E3%81%9F/</link>
+      <pubDate>Sat, 03 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-05-03-%E5%8D%AF%E6%9C%88%E5%87%BA%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+      <description>春イベントE-1道中にて
+やったぜ
+ 
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>浜風でました</title>
+      <link>/post/2014-05-01-%E6%B5%9C%E9%A2%A8%E3%81%A7%E3%81%BE%E3%81%97%E3%81%9F/</link>
+      <pubDate>Thu, 01 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-05-01-%E6%B5%9C%E9%A2%A8%E3%81%A7%E3%81%BE%E3%81%97%E3%81%9F/</guid>
+      <description>2-2でポロッと…まさか出るとは思わなかったからびっくりした。
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Ruby2.1系をソースからインストールしたときのOpenSSLのインストール</title>
+      <link>/post/2014-04-12-ruby2-1%E7%B3%BB%E3%82%92%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%8B%E3%82%89%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AEopenssl%E3%81%AE%E3%82%A4/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-04-12-ruby2-1%E7%B3%BB%E3%82%92%E3%82%BD%E3%83%BC%E3%82%B9%E3%81%8B%E3%82%89%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AEopenssl%E3%81%AE%E3%82%A4/</guid>
+      <description>Ruby2.1系をソースインストールした時、Railsなどをインストールしようとすると、OpenSSLのインストールを促されますが、OpenSSLパッケージをインストールするだけではいけません。
+ソースのext&#39;opensslでextconf.rbを実行し、生成されたMakefileでmake installする必要がありますが、Makefileが間違えているので修正する必要があります。修正しないと次のエラーが出ます
+ make: *** `ossl.o’ に必要なターゲット `&#39;thread_native.h’ を make するルールがありません. 中止.
+ よってRuby2.1.0でOpenSSLをインストールする際は次のようにする必要があります。
+cd &#39;usr&#39;local&#39;src&#39;ruby2.1.0&#39;ext&#39;openssl
+&#39;usr&#39;local&#39;bin&#39;ruby extconf.rb
+cp -iv Makefile .__Makefile.bak
+vim Makefile
+diff Makefile .__Makefile.20140407-01
+17d16
+&amp;lt; top_srcdir = $(srcdir)&#39;..&#39;..
+sudo make
+sudo make install
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>Zabbix-Server2.2をRPMだけでインストールする</title>
+      <link>/post/2014-04-12-zabbix-server2-2%E3%82%92rpm%E3%81%A0%E3%81%91%E3%81%A7%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</link>
+      <pubDate>Sat, 12 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-04-12-zabbix-server2-2%E3%82%92rpm%E3%81%A0%E3%81%91%E3%81%A7%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/</guid>
+      <description>やたら依存パッケージが多いのでメモを残しておきます。ちなみにMySQL使う場合です
+PHPをソースからインストールした場合は少し違うかも知れません
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>SIMパスワードを3回間違えた時の対処法</title>
+      <link>/post/2014-03-16-sim%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%82%923%E5%9B%9E%E9%96%93%E9%81%95%E3%81%88%E3%81%9F%E6%99%82%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/</link>
+      <pubDate>Sun, 16 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-03-16-sim%E3%83%91%E3%82%B9%E3%83%AF%E3%83%BC%E3%83%89%E3%82%923%E5%9B%9E%E9%96%93%E9%81%95%E3%81%88%E3%81%9F%E6%99%82%E3%81%AE%E5%AF%BE%E5%87%A6%E6%B3%95/</guid>
+      <description>SIMパスワードをかけたのはいいが、パスワードを忘れてしまってロックが掛かってしまった時の対処。
+画面に書かれていると思いますが、PUKコードを入力すればパスワードをリセットすることができます
+docomoの場合はこちらに対処法が書いてありますが、PINロック解除コード（PUK）というコードを入力すればよいです。
+ このコードはXiサービス契約申込書に8桁のPINロック解除コードとして書いてあります。これを入力すればパスワードがロックできます！
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>yumのfastestmirrorが有効にもかかわらずダウンロードが遅い場合</title>
+      <link>/post/2014-03-07-yum%E3%81%AEfastestmirror%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%AB%E3%82%82%E3%81%8B%E3%81%8B%E3%82%8F%E3%82%89%E3%81%9A%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%8C%E9%81%85%E3%81%84/</link>
+      <pubDate>Fri, 07 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-03-07-yum%E3%81%AEfastestmirror%E3%81%8C%E6%9C%89%E5%8A%B9%E3%81%AB%E3%82%82%E3%81%8B%E3%81%8B%E3%82%8F%E3%82%89%E3%81%9A%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%8C%E9%81%85%E3%81%84/</guid>
+      <description>yumプラグインのfastestmirrorが有効にもかかわらずダウンロードが遅い場合の対処法
+Ctrl+cを押しましょう。次のミラーサイトへの接続で続行されます
+ &#39;var&#39;cache&#39;yum以下にあるtimedhosts.txtに各ミラーサイトの応答速度が書いてるので、これを削除してリセット。という手もありますが、大抵の場合は遅かったらもう次のミラーサイトで接続というようにやっちゃった方がいいんじゃないかなーっと思います
+それでも駄目ならネットワークインターフェースが怪しいので以前書いた記事を参考に、どうぞ！
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>【艦これ】5-3クリア</title>
+      <link>/post/2014-03-01-%E8%89%A6%E3%81%93%E3%82%8C5-3%E3%82%AF%E3%83%AA%E3%82%A2/</link>
+      <pubDate>Sat, 01 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-03-01-%E8%89%A6%E3%81%93%E3%82%8C5-3%E3%82%AF%E3%83%AA%E3%82%A2/</guid>
+      <description>総試行回数20回ほど
+編成はこちら！
+ただこの装備だと3回中1回しかボスの潜水艦を落とせなかった気がするので、駆逐艦は全員対潜装備にしたほうがいいかもね
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>矢矧さん</title>
+      <link>/post/2014-03-01-%E7%9F%A2%E7%9F%A7%E3%81%95%E3%82%93/</link>
+      <pubDate>Sat, 01 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-03-01-%E7%9F%A2%E7%9F%A7%E3%81%95%E3%82%93/</guid>
+      <description>つい先日矢矧さんを引き当てることに成功しました。
+阿賀野型は全員Lv100超えてたからうれしい！
+ちなみに大型建造初期資材で13回ほど回しました。
+
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>AWS EC2でタイムゾーンがUTCに戻る場合の対応</title>
+      <link>/post/2014-01-23-aws-ec2%E3%81%A7%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BE%E3%83%BC%E3%83%B3%E3%81%8Cutc%E3%81%AB%E6%88%BB%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%BF%9C/</link>
+      <pubDate>Thu, 23 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-01-23-aws-ec2%E3%81%A7%E3%82%BF%E3%82%A4%E3%83%A0%E3%82%BE%E3%83%BC%E3%83%B3%E3%81%8Cutc%E3%81%AB%E6%88%BB%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E5%AF%BE%E5%BF%9C/</guid>
+      <description>タイムゾーンって/usr/share/zoneinfo/Asia/Tokyoを/etc/localtimeにコピーするなりシンボリックリンクを貼るなりすると思うんですけど、EC2の場合はyum updateのタイミングでUTCに戻ってしまう場合があります。ありました
+ということで、/etc/sysconfig/clockを書き換えましょう。
+/etc/sysconfig/clockは、ハードウェアクロックから読み込んだ値を制御するそうです。
+http://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-rg-ja-4/ch-sysconfig.html
+/etc/sysconfig/clockの内容は
+となってると思います。それを
+と書き換えましょう。
+私の場合は今のところこれでタイムゾーンがJSTで設定できています。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>大鳳お迎え完了！</title>
+      <link>/post/2014-01-13-%E5%A4%A7%E9%B3%B3%E3%81%8A%E8%BF%8E%E3%81%88%E5%AE%8C%E4%BA%86/</link>
+      <pubDate>Mon, 13 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-01-13-%E5%A4%A7%E9%B3%B3%E3%81%8A%E8%BF%8E%E3%81%88%E5%AE%8C%E4%BA%86/</guid>
+      <description>はい。
+ということで大型建造で無事大鳳をお迎えすることができました。
+4000&#39;3500&#39;6010&#39;6000　開発資材は20でした
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>yum updateが異常に遅い</title>
+      <link>/post/2014-01-10-yum-update%E3%81%8C%E7%95%B0%E5%B8%B8%E3%81%AB%E9%81%85%E3%81%84/</link>
+      <pubDate>Fri, 10 Jan 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2014-01-10-yum-update%E3%81%8C%E7%95%B0%E5%B8%B8%E3%81%AB%E9%81%85%E3%81%84/</guid>
+      <description>yum updateが異常に遅い(10kbpsほどの)マシンがあり、その解決に手間取ったので解決策をここに書き記しておきます。
+まず、yumでfastestmirrorプラグインが有効になっているかどうか確認します。
+確認方法は、yum updateの実行の際、Loaded plugins: fastestmirrorと表示されれば有効になっています。
+有効になっている場合はキャッシュファイルを削除してみます。キャッシュファイルは、/etc/yum/pluginconf.d/fastestmirror.confのhostfilepathという項目に場所が書いてあります。
+私の場合は/var/cache/yum/timedhosts.txtでした。これをリネームして読み込まないようにしてみます。
+これでも解決しませんでしたので、/sbin/ifconfigでインターフェースの状態を確認してみます。
+すると、errorパケットがかなりあり、現在進行形で増えているようでした。
+/sbin/ethtool eth0でさらに詳しく状態を見てみると、Speedが100Mb/sに設定されていました。
+他のマシンは1000Mbpsで設定されていたので設定を合わせます。
+/etc/sysconfig/network-scripts/ifcfg-eth0を確認してみると、ETHTOOL_OPTS=&amp;quot;autoneg off speed 100 duplex full&amp;quot;とあったので、Speedを1000に設定して/etc/init.d/network restartで再起動して有効にしようとしました。
+しかし、Bringing up interface eth0: Cannot set new settings: Invalid argumentというエラーが表示されて変更できないようでした。
+/sbin/ethtool -s eth0 speed 1000 duplex full autoneg offを実行しても下記のような同様の結果でした。
+Cannot set new settings: Invalid argument
+not setting speed
+not setting duplex
+not setting autoneg
+おかしいなーと思いつつググると、Speedが1000の時はautonegがonになっている必要があるとの情報を発見しました。
+http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=40505&amp;amp;forum=10&amp;amp;start=16
+さっそく/sbin/ethtool -s eth0 speed 1000 duplex full autoneg onを実行したところうまく設定することができました。
+再起動しても有効になるよう、ifcfg-eth0にもETHTOOL_OPTS=&amp;quot;autoneg on speed 1000 duplex full&amp;quot;と書いておきます。</description>
+    </item>
+    
+    <item>
+      <title>File &amp;#039;./mysql-bin.index&amp;#039; not found (Errcode: 13)</title>
+      <link>/post/2013-12-05-file-mysql-bin-index-not-found-errcode-13/</link>
+      <pubDate>Thu, 05 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-12-05-file-mysql-bin-index-not-found-errcode-13/</guid>
+      <description>mysqlをソースからインストールして、mysqld_safeなどで起動しようとした時、次のエラーが発生
+インストールが終わった後にmysql_install_dbでデータベースを初期化?したのだが、オプションを指定しないといけなかったらしい。多分datadirの指定が必要だったんだな。
+というわけでインストール先ディレクトリのオーナーとグループを mysqlに
+mysql_install_dbにオプションを付けて次のように実行
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>configure: error: Jabber library not found</title>
+      <link>/post/2013-12-03-configure-error-jabber-library-not-found/</link>
+      <pubDate>Tue, 03 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-12-03-configure-error-jabber-library-not-found/</guid>
+      <description>Zabbix 1.8をソースからインストールした時次のエラーが発生。
+iksemeはEPELリポジトリからインストールします。
+AmazonAMIならば次のコマンドでiksemelインストールできるでしょう
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>熊野遂に来たる</title>
+      <link>/post/2013-12-01-%E7%86%8A%E9%87%8E%E9%81%82%E3%81%AB%E6%9D%A5%E3%81%9F%E3%82%8B/</link>
+      <pubDate>Sun, 01 Dec 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-12-01-%E7%86%8A%E9%87%8E%E9%81%82%E3%81%AB%E6%9D%A5%E3%81%9F%E3%82%8B/</guid>
+      <description>熊野がついに実装されました
+よそ見しながら建造してたら、聞きなれない声が聞こえたので、ふと画面を見たらそこに熊野がいました
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>railsのインストール中のエラー</title>
+      <link>/post/2013-11-29-rails%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E4%B8%AD%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC/</link>
+      <pubDate>Fri, 29 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-11-29-rails%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E4%B8%AD%E3%81%AE%E3%82%A8%E3%83%A9%E3%83%BC/</guid>
+      <description>railsをgem installしようとしたら次のエラーが
+rdocがないということなのでrdocをgem installしますが次のエラーが発生します。
+ということでyum install ruby-irbでruby-irbをインストールしましょう。
+これでエラーがでなくなるのでrdocとrailsをインストールし直しました。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>EC2にEBSボリュームの追加する</title>
+      <link>/post/2013-11-26-ec2%E3%81%ABebs%E3%83%9C%E3%83%AA%E3%83%A5%E3%83%BC%E3%83%A0%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B/</link>
+      <pubDate>Tue, 26 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-11-26-ec2%E3%81%ABebs%E3%83%9C%E3%83%AA%E3%83%A5%E3%83%BC%E3%83%A0%E3%81%AE%E8%BF%BD%E5%8A%A0%E3%81%99%E3%82%8B/</guid>
+      <description>EC2はEBSボリュームの追加を追加することができます。
+ですが追加したディスクのフォーマットやマウントは自分で行う必要があります。
+マウントするためにはまず、lsblkコマンドでどの名前でEBSが認識されているのかを確認します。
+この場合はxvdbという名前で認識されています。xvda1はシステムが入っているRootパーティションですね。
+次にファイルシステムを作成します。
+ext4で作成するにはmke2fsコマンドを使います
+Allocating group tables: done Writing inode tables: done Creating journal (32768 blocks): done Writing superblocks and filesystem accounting information: done これでマウントする準備が出来ました。mountコマンドでマウントしましょう。
+下記の例は/dev/xvdbを/mntにマウントします。
+システム起動時に自動的にマウントしたい時は/etc/fstabに必要な情報を記入します。
+基本的には下記のとおりでいいかと。/dev/xvdbで始まる行が追加した行です。
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>EC2ストレージ容量が増えない</title>
+      <link>/post/2013-11-26-ec2%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E5%AE%B9%E9%87%8F%E3%81%8C%E5%A2%97%E3%81%88%E3%81%AA%E3%81%84/</link>
+      <pubDate>Tue, 26 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-11-26-ec2%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%E5%AE%B9%E9%87%8F%E3%81%8C%E5%A2%97%E3%81%88%E3%81%AA%E3%81%84/</guid>
+      <description>EC2のインスタンスのEBS容量を増やして作成したのにdfコマンドで確認しても8GBしかない…
+resize2fsコマンドを使うと本来のサイズに増やせる。
+なら
+でOK
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>衣笠さん</title>
+      <link>/post/2013-11-26-%E8%A1%A3%E7%AC%A0%E3%81%95%E3%82%93/</link>
+      <pubDate>Tue, 26 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-11-26-%E8%A1%A3%E7%AC%A0%E3%81%95%E3%82%93/</guid>
+      <description>ついに衣笠さんが実装されました。
+改二(だっけ？)にするぜー
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>長門</title>
+      <link>/post/2013-11-25-%E9%95%B7%E9%96%80/</link>
+      <pubDate>Mon, 25 Nov 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-11-25-%E9%95%B7%E9%96%80/</guid>
+      <description>念願の長門を手に入れたぞ！
+秘書加賀400 30 600 30にて
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>mod_pythonをインストールしようとした時checking for Py_NewInterpreter in -lpython2.6&amp;#8230; no configure: error: Can not link to pythonとエラーが出る</title>
+      <link>/post/2013-09-06-mod_python%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%97%E3%81%9F%E6%99%82checking-for-py_newinterpreter-in-lpython2-6-no-configure-e/</link>
+      <pubDate>Fri, 06 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-09-06-mod_python%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%97%E3%81%9F%E6%99%82checking-for-py_newinterpreter-in-lpython2-6-no-configure-e/</guid>
+      <description>mod_pythonを入れようとして、
+と表示された場合。
+で解決
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>passenger-install-apache2-moduleが失敗する件について</title>
+      <link>/post/2013-09-06-passenger-install-apache2-module%E3%81%8C%E5%A4%B1%E6%95%97%E3%81%99%E3%82%8B%E4%BB%B6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</link>
+      <pubDate>Fri, 06 Sep 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-09-06-passenger-install-apache2-module%E3%81%8C%E5%A4%B1%E6%95%97%E3%81%99%E3%82%8B%E4%BB%B6%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/</guid>
+      <description>Passengerをインストールするとき、passenger-install-apache2-moduleを実行しますが、Apacheをソースインストールしていたりすると、次のようなエラーが出てうまくインストールできません。
+ GNU C++ compiler&amp;hellip; found at /usr/bin/g++ Curl development headers with SSL support&amp;hellip; not found OpenSSL development headers&amp;hellip; found Zlib development headers&amp;hellip; found Ruby development headers&amp;hellip; found OpenSSL support for Ruby&amp;hellip; found RubyGems&amp;hellip; found Rake&amp;hellip; found at /usr/bin/rake rack&amp;hellip; found Apache 2&amp;hellip; not found Apache 2 development headers&amp;hellip; not found Apache Portable Runtime (APR) development headers&amp;hellip; not found Apache Portable Runtime Utility (APU) development headers&amp;hellip; not found   上記例では</description>
+    </item>
+    
+    <item>
+      <title>s3cmdのデフォルトリージョンを東京にする</title>
+      <link>/post/2013-08-30-s3cmd%E3%81%AE%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E6%9D%B1%E4%BA%AC%E3%81%AB%E3%81%99%E3%82%8B/</link>
+      <pubDate>Fri, 30 Aug 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-08-30-s3cmd%E3%81%AE%E3%83%87%E3%83%95%E3%82%A9%E3%83%AB%E3%83%88%E3%83%AA%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%82%92%E6%9D%B1%E4%BA%AC%E3%81%AB%E3%81%99%E3%82%8B/</guid>
+      <description>s3cmdではデフォルトでUSリージョンが設定されます。
+これを東京リージョンで設定するには、ホームディレクトリの.s3cfgを編集します
+以下の4つのオプションをそれぞれ書き換えれば大丈夫です
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>SSH fingerprintの確認方法</title>
+      <link>/post/2013-07-30-ssh-fingerprint%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Tue, 30 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-07-30-ssh-fingerprint%E3%81%AE%E7%A2%BA%E8%AA%8D%E6%96%B9%E6%B3%95/</guid>
+      <description>OS再インストールした時、remote host identification has changedとか言われるのはこの公開鍵が変わるからなのね。
+参考
+http://d.hatena.ne.jp/Artisan/20130325/1364222117
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>ERROR: While executing gem &amp;#8230; (NoMethodError) undefined method `map&amp;#039; for Gem::Specification:Class</title>
+      <link>/post/2013-07-03-error-while-executing-gem-nomethoderror-undefined-method-map-for-gemspecificationclass/</link>
+      <pubDate>Wed, 03 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-07-03-error-while-executing-gem-nomethoderror-undefined-method-map-for-gemspecificationclass/</guid>
+      <description>とか表示されるとき
+~/.gemrcに
+gem: --no-rdoc --no-ri
+を追加すればよろし。
+sudo gem install hogehoge_gem --no-rdoc --no-ri
+でも同じことだと思う(未確認)
+参考
+http://stackoverflow.com/questions/7535737/using-no-rdoc-and-no-ri-with-bundler
+Source: New feed</description>
+    </item>
+    
+    <item>
+      <title>gemでpgをインストールしようとするとNo pg_config&amp;#8230; trying anyway. If building fails, please try again withとエラーが表示される</title>
+      <link>/post/2013-07-01-gem%E3%81%A7pg%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%99%E3%82%8B%E3%81%A8no-pg_config-trying-anyway-if-building-fails-please-try/</link>
+      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-07-01-gem%E3%81%A7pg%E3%82%92%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%97%E3%82%88%E3%81%86%E3%81%A8%E3%81%99%E3%82%8B%E3%81%A8no-pg_config-trying-anyway-if-building-fails-please-try/</guid>
+      <description>gemでpgをインストールしようとするとNo pg_config… trying anyway. If building fails, please try again withとエラーが表示される
+ERROR: Error installing pg: ERROR: Failed to build gem native extension.
+/usr/local/bin/ruby extconf.rb checking for pg_config&amp;hellip; no No pg_config&amp;hellip; trying anyway. If building fails, please try again with &amp;ndash;with-pg-config=/path/to/pg_config checking for libpq-fe.h&amp;hellip; no Can&#39;t find the &amp;lsquo;libpq-fe.h header *** extconf.rb failed *** Could not create Makefile due to some reason, probably lack of necessary libraries and/or headers. Check the mkmf.</description>
+    </item>
+    
+    <item>
+      <title>pg gemインストール時にPlease install the postgresql adapterとエラーが出る</title>
+      <link>/post/2013-07-01-pg-gem%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%99%82%E3%81%ABplease-install-the-postgresql-adapter%E3%81%A8%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B/</link>
+      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2013-07-01-pg-gem%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E6%99%82%E3%81%ABplease-install-the-postgresql-adapter%E3%81%A8%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B/</guid>
+      <description>このlibpq.so.5は/usr/local/pgsql/libに入っているので
+/usr/lib/にシンボリックリンクを貼ってみる
+sudo ln -s /usr/local/pgsql/lib/libpq.so.5 /usr/lib
+これでおｋ Source: New feed</description>
+    </item>
+    
+  </channel>
+</rss>

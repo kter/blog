@@ -1,0 +1,20 @@
+I"�<p>WordPressのpermalinksの設定を変更したら500 Internal Server Errorが発生し、一切のアクセスができなくなった。</p>
+
+<p>問題はApacheの設定で、.htaccessファイルの設定が有効になっていなかったせいでした。</p>
+
+<p>具体的にはAllowOverrideの設定を</p>
+
+<pre class="lang:default decode:true ">AllowOverride All</pre>
+
+<p>に変更したらページが表示されるようになりました。</p>
+
+<p> </p>
+
+<p>参考</p>
+
+<p><a href="http:&#047;&#047;httpd.apache.org&#047;docs&#047;2.2&#047;ja&#047;mod&#047;core.html#allowoverride" target="_blank">core – Apache HTTP サーバ バージョン 2.2</a></p>
+
+<p> </p>
+
+<p>Source: New feed</p>
+:ET

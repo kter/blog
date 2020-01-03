@@ -1,0 +1,13 @@
+I"�<p>ちょっと古いEC2のインスタンスのボリュームをスナップショット経由でAMIにしてそれを起動した時、一向に起動しない事案があった。</p>
+
+<p>Instance SettingsのGet System Logでログを覗くと次のエラーが</p>
+
+<pre class="lang:default decode:true ">EXT2-fs: sda1: couldn't mount because of unsupported optional features (244).</pre>
+<p>&lt;/p&gt;</p>
+
+<p>カーネルを同じにすればよいとのことだったので、既存のインスタンスと同じKernel IDを、Image作成時に指定すればよいのでした。</p>
+
+<p>それからImage作成時にArchitectureの指定もしっかり合わせましょう。</p>
+
+<p>Source: New feed</p>
+:ET

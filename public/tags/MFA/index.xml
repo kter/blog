@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MFA on ことえりブログ</title>
+    <link>/tags/MFA/</link>
+    <description>Recent content in MFA on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 28 Jul 2018 15:15:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/MFA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS CLIでMFAを使う</title>
+      <link>/post/2018-07-28-AWS-CLI%E3%81%A7MFA%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sat, 28 Jul 2018 15:15:00 +0000</pubDate>
+      
+      <guid>/post/2018-07-28-AWS-CLI%E3%81%A7MFA%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>MFA設定後、AWS CLIからMFAを使うためには一時的なクレデンシャルを発行する必要があります。
+前提 IAMポリシーにこんな感じでConditionを設定するとMFAが有効になっていない時の設定を行うことができます。
+ここで例えばEffectをDenyに、Actionをiam:DeleteUserとすると、MFA認証なしではDeleteUserができなくなります。
+&amp;#34;Condition&amp;#34;: { &amp;#34;Bool&amp;#34;: { &amp;#34;aws:MultiFactorAuthPresent&amp;#34;: &amp;#34;false&amp;#34; } } MFAを設定しておけば、AWSマネジメントコンソールにログインしようとするとMFAのコード入力画面が勝手に出てきますが、AWS CLIの場合は出てきません。
+本題 どうするのかというと次のコマンドを実行し、一時的なクレデンシャルを発行します。
+aws sts get-session-token --serial-number (登録MFAのARN 例：arn:aws:iam::500000000:mfa/kter) --token-code (MFAコード) 環境変数にクレデンシャルを突っ込むワンライナーはこちら。
+eval `aws sts get-session-token --serial-number (登録MFAのARN) --token-code (MFAコード) | awk &amp;#39; $1 == &amp;#34;\&amp;#34;AccessKeyId\&amp;#34;:&amp;#34; { gsub(/\&amp;#34;/,&amp;#34;&amp;#34;); gsub(/,/,&amp;#34;&amp;#34;); print &amp;#34;export AWS_ACCESS_KEY_ID=&amp;#34;$2 } $1 == &amp;#34;\&amp;#34;SecretAccessKey\&amp;#34;:&amp;#34; { gsub(/\&amp;#34;/,&amp;#34;&amp;#34;); gsub(/,/,&amp;#34;&amp;#34;); print &amp;#34;export AWS_SECRET_ACCESS_KEY=&amp;#34;$2 } $1 == &amp;#34;\&amp;#34;SessionToken\&amp;#34;:&amp;#34; { gsub(/\&amp;#34;/,&amp;#34;&amp;#34;); gsub(/,/,&amp;#34;&amp;#34;); print &amp;#34;export AWS_SESSION_TOKEN=&amp;#34;$2 } &amp;#39;` 参考にさせていただいたページ https://www.slideshare.net/tetsunorinishizawa/aws-cliassume-role</description>
+    </item>
+    
+  </channel>
+</rss>

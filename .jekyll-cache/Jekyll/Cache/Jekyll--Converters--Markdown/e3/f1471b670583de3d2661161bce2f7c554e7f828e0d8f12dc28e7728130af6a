@@ -1,0 +1,24 @@
+I"0<p>passengerを組み込んだapacheのerror_logに次の行が表示される時の対処</p>
+
+<blockquote>
+  <p>App 7560 stderr: /usr/bin/env:</p>
+</blockquote>
+
+<blockquote>
+  <p>App 7560 stderr: ruby</p>
+</blockquote>
+
+<blockquote>
+  <p>App 7560 stderr: : No such file or directory</p>
+</blockquote>
+
+<p>apacheからパスが通っていないので、/etc/sysconfig/httpdに次の行を追記します。</p>
+
+<blockquote>
+  <p>export PATH=/usr/local/bin:$PATH</p>
+</blockquote>
+
+<p>パスは適宜変更してください。</p>
+
+<p>Source: New feed</p>
+:ET

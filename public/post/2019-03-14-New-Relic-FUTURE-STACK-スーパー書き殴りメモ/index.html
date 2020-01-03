@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>New Relic {FUTURE} STACK スーパー書き殴りメモ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">New Relic {FUTURE} STACK スーパー書き殴りメモ</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2019-03-14</small></p> <hr/>
+   <div class="post">
+     <p>New Relic {Future} STACK
+2019年3月14日
+<a href="https://futurestack19-lp.eventcloudmix.com/">https://futurestack19-lp.eventcloudmix.com/</a></p>
+<h1 id="heading">ハンズオン</h1>
+<h2 id="heading-1">はじめに</h2>
+<h3 id="heading-2">アプリケーション監視が特別である理由</h3>
+<ul>
+<li>影響を受ける要素が多い
+外部サービス・DB・ユーザー入力・出力・ほかプロセス</li>
+<li>ただ動いているだけでは十分ではない
+マネタイズしているか</li>
+</ul>
+<h3 id="heading-3">データ収集の仕組み</h3>
+<ul>
+<li>トランザクション（リクエスト窓口）の自動検出とパフォーマンス計測</li>
+<li>外部プロセスとの通信の自動検出とパフォーマンス計測</li>
+</ul>
+<h3 id="heading-4">やるべきこと</h3>
+<ul>
+<li>ビジネス目標を達成したか
+<ul>
+<li>Insightsで確認できる</li>
+</ul>
+</li>
+<li>全体のパフォーマンスを確認
+<ul>
+<li>ヒストグラムでデータの分布区分ごとの件数（1秒台が10件…など）を確認</li>
+<li>パーセンタイルでデータを小さい順に並べたときの、全体の割合とその値を時系列で確認</li>
+<li>Apdexスコア (満足の件数 + やや満足の件数の半分) / 総数</li>
+</ul>
+</li>
+<li>個別のトラブルシューティングもしくは全体の最適化
+<ul>
+<li>Trancactionsで消費時間・処理時間が遅い順でソートできる。そこから処理ごとの詳細サマリが見られる</li>
+</ul>
+</li>
+</ul>
+<h3 id="heading-5">重要なこと</h3>
+<ul>
+<li>トランザクションがどんな処理なのかを理解すること
+<ul>
+<li>Key Transactionを考慮してみる</li>
+</ul>
+</li>
+<li>ビジネス目標を意識すること</li>
+<li>トランザクション全体のパフォーマンスを意識する</li>
+<li>個別事象の対応なのか、全体の最適化なのかを意識すること
+<ul>
+<li>個別の事象の確認: トランザクショントレース、エラーアナライティクス</li>
+<li>全体の最適化</li>
+</ul>
+</li>
+</ul>
+<h2 id="insights">Insights</h2>
+<p>データを分析しダッシュボードを作成</p>
+<ul>
+<li>
+<p>一番簡単なダッシュボードの作成は、既存のチャートを貼り付ける。</p>
+</li>
+<li>
+<p>APMの各チャートをマウスホバーするとメニューが出る。</p>
+</li>
+<li>
+<p>エージェントは対象上で発生した各種イベントを検出し、様々な属性と一緒にInsightsのデータベースにストアする。</p>
+</li>
+<li>
+<p>InsightsではそのイベントをNRQL (New Relic Query Language) を使って分析することができる</p>
+<ul>
+<li>APMではTransaction, Transaction Errorがストアされる。</li>
+<li>Transactionでは例えばデフォルト定義のものの他にユーザー定義も設定できる</li>
+</ul>
+</li>
+<li>
+<p>Data Explorerからマウスをポチポチするとグラフができる。NRQLも生成されダッシュボードにも追加できる。</p>
+</li>
+<li>
+<p>QueryからNRQLを実行することができる。補完も効く</p>
+<ul>
+<li>関数を使って集計もできる</li>
+<li>NRQLでsinceをつけないと１時間前までのデータが対象</li>
+<li>しきい値を設定して色を付けることもできる</li>
+<li>compare withで過去のデータと比較できる</li>
+<li>timeseriesでグラフ化できる</li>
+<li>WHERE, LIKEも当然できる</li>
+<li>FACET (ファシット）で指定した列をグループ化し、結果によってはリストで出したり棒グラフで出したり円グラフで出したりできる</li>
+<li>FILTER()で複数のグラフを同時に出せる</li>
+<li>HISTGRAM()でヒストグラムを出せる。FACETと一緒に使える</li>
+<li>FUNNEL()でこれの人で更にこれの人は何%というものが出せる (トップページ100%, 商品ページ70%, カートページ30%, 購入ページ5%みたいな）</li>
+</ul>
+</li>
+</ul>
+<h3 id="custom-attribute">custom attribute</h3>
+<p>エージェントにアプリケーションソース上の任意のデータをカスタム属性として取得させ、自分のアカウントに送信させて、ダッシュボード上で利用することができる。</p>
+<h3 id="custom-events">custom events</h3>
+<p>custom attributeと同様APIを使うかREST APIでJSONを送信。
+custom attributeとは違い、テーブルを新規追加するイメージ。
+※Insightsのオプション料金が発生</p>
+<h3 id="data-apps">Data Apps</h3>
+<p>複数のダッシュボードをタブで管理できる。
+キオスクモードもある。</p>
+<h2 id="alerts">Alerts</h2>
+<p>アラートポリシー</p>
+<ul>
+<li>インシデントプリファレンス</li>
+<li>コンディション</li>
+<li>Notificationチャネル
+<ul>
+<li>適切なものだけ通知</li>
+</ul>
+</li>
+</ul>
+<p>通知が行われるタイミング</p>
+<ul>
+<li>コンディション違反ごとではなく、インシデントごとに通知</li>
+<li>インシデントプリファレンス: インシデントの粒度の設定</li>
+</ul>
+<p>インシデントライフサイクル</p>
+<ul>
+<li>インシデントをwebhook経由でInsights（カスタムイベント）に送り、インシデントの傾向を分析する</li>
+<li>ブログポスト&quot;Sending Alerts Data to Insights&quot;参考</li>
+</ul>
+<p>しきい値について</p>
+<ul>
+<li>
+<p>固定値</p>
+</li>
+<li>
+<p>ベースライン</p>
+<ul>
+<li>常に値が変動するもの、非線形、曜日や時間によって傾向が変わるもの</li>
+<li>幅を設定してそれを超えたらコンディション違反</li>
+<li>時間ごとの幅のベースはNew RelicのAIが自動調整</li>
+</ul>
+</li>
+<li>
+<p>外れ値</p>
+<ul>
+<li>上記かつ対象が複数</li>
+<li>複数のコンテナやホストが入り交ざってるときなど (この場合はfacet hostすると便利)</li>
+</ul>
+</li>
+<li>
+<p>ラベルを設定し、ラベルごとに共通のアラートを適応できる。</p>
+<ul>
+<li>たとえばDevelopmentラベルとStagingでは共通のアラートを設定するなど</li>
+</ul>
+</li>
+<li>
+<p>REST APIでアラートの設定を自動化できる</p>
+<ul>
+<li>Puppet, Chef, Ansibleから設定できる</li>
+<li>New Relic API Explorer</li>
+</ul>
+</li>
+</ul>
+<h1 id="heading-6">インサイトとデータを組織の力にする</h1>
+<p>ハイパフォーマンス組織を目指し、インサイトとデータで約1.7倍のパフォーマンスアップを達成した話</p>
+<p>マイクロサービスをやっていくに当たり、開発タスクの約七割がメンテナンス・バグフィックスの時間が当てられた。
+なかでも原因追求にかかる時間が一番多く、生産性を下げる悩みのタネだった。
+また、IoTやスマートデバイスが増えることで悪化の一方だった。</p>
+<p>可視化のためGoogle Analytics, New Relic, Tableauを導入した。
+New Relicは監視を外部化するために移行した。</p>
+<p>CI/CDにCloudFormation, CodeDeploy, Terraform &amp; Packer, Travis CIを使い、Prod, Staging, Dev環境をBlue / Green環境に変更した。</p>
+<ul>
+<li>より実環境に近づけるようにした</li>
+<li>環境間の際をなくせるようにした</li>
+</ul>
+<p>TablueauへはTAIGA, New Relic, Githubから各ETLサービスを使ってデータを入れる</p>
+<h2 id="zozotownnew-relic">急成長するZOZOTOWNのシステムリプレースメントにおけるNew Relic活用術</h2>
+<p>New Relicを使う理由 -&gt; 明確なパフォーマンスについてのルールがなかったから。
+サイト表示が0.1%遅くなると売上が1%落ちるECサイトでこれは致命的</p>
+<p>ルールのない曖昧なチューニングから定量化された有益なチューニングに変化した
+今まで間隔でしかわかっていなかったことが数値として確認できるようになった。</p>
+<p>ルールや基準ができたので、誰でもパフォーマンスの良し悪しがわかるようになった。</p>
+<p>Kubernetesを使っているので、スケールイン・スケールアウトに対応し、更に多数のPODの一元管理ができる必要があった。
+特定のPODが配置されているノードがわかりやすく、APMとの連回も可能。</p>
+<p>エラーでPODが落ちたとき、ノード、POD、アプリケーションのどれが悪いのかがすぐに分かるようになった。</p>
+<p>アラートについて</p>
+<p>アラートはSlack、緊急事態はPagerdutyを使っている。
+インフラからアプリまで対応できる必要があるので、属人化しないよう情報共有と勉強会を実施している。
+週替りで監視担当を分担している。</p>
+<p>今後はビジネス・インフラ・アプリ含め一人ひとり意識するような組織にしていきたい。</p>
+<h1 id="400new-relic--new-relic-">全世界400万人が利用する家族アルバム「みてね」を支えるNew Relic -高度な改善を繰り返す開発チームにおけるNew Relicの役割-</h1>
+<ul>
+<li>
+<p>立ち上げ期から利用しており、開発環境のエラーや課題を迅速に対応することができていた。</p>
+</li>
+<li>
+<p>成長期ではAPMを中心にアプリエンジニアが運用文化を醸成しサービスを支えてきた</p>
+<ul>
+<li>デイリーのヘルスチェック</li>
+</ul>
+</li>
+<li>
+<p>スケール期は負荷が上がるだけではなく技術的課題が増えてきた。</p>
+<ul>
+<li>様々な視点からインフラの課題を抽出するための分析・モニタリング</li>
+<li>APM: Web/Job Queueアプリケーション視点</li>
+<li>MOBILE: クライアントアプリ視点</li>
+<li>INFRASTRUCTURE: 各ホスト視点</li>
+<li>SYNTHETICS: APIの死活監視</li>
+<li>INSIGHTS:</li>
+</ul>
+</li>
+<li>
+<p>SYNTETICS: 世界中のロケーションからAPIリクエストを実行しパフォーマンスを改善</p>
+</li>
+<li>
+<p>MOBILE/INSIGHTS: MOBILEで取得したメトリクスをINSIGHTSでダッシュボード化</p>
+<ul>
+<li>各国からの画像や動画アップロード速度</li>
+</ul>
+</li>
+</ul>
+<h1 id="9300">年間9300万件のサロン予約を支えるホットペッパービューティー</h1>
+<p>システム投資に対して説明責任を果たすため、サービスを健全に継続するために今の状態を把握し、品質改善の必要性を提示する必要があった</p>
+<p>サービスに対して何を守るべきなのかを少なくとも開発チーム全体で目線合わせを行う必要がある。</p>
+<p>スモールスタートでスタート。SRE本のレイテンシとエラーの目標値を内部で定めるところからスタート。一般論からの数値でもよいので決める。</p>
+<p>New Relicでは各画面のレスポンスタイムとエラー状況が可視化されリアルタイムで把握できるため採用。</p>
+<p>APM, BROWSER, INSIGHTSを利用</p>
+<p>モニタリングの結果をもとに、サービスの企画者から開発者まで巻き込んだ意識醸成を行うことが大切。</p>
+<p>CHECK: 定常モニタリング: アラートに現れない変化（特に機能追加案件実施後など）
+DO: 定期レポート: 案件の定義や優先度の意思決定者に対して稼働状況含めたレポートを提供 (ダッシュボードから気が付きづらい過去のスナップショットからの気付きもある）
+ACTION: 定例ミーティング: 開発チーム代表者が参加しレポートをもとに優先的な改善ポイントを確認。確認だけではなく改善方式について一定の議論も行っている。技術力の全体の底上げとチーム横断での品質向上も狙っている
+PLAN: 案件起案: モニタリングとレポートから定量的な改善施策を起案。改善後に改めてモニタリングを行うことで改善状況を把握 -&gt; 目に見えた品質改善が開発チームのモチベーションにも繋がる</p>
+<p>PDCAサイクルを回すことで、意識に加えて品質改善の取り組みを加速させることができる
+攻めの案件だけではなく、改善企画も多くなってきた。
+事業成長に直結する企画だけではなく改善の重要性も開発者含め企画側も理解し、成長企画も改善企画も平等に判断できるようになった。</p>
+<p>コンバージョンと品質の相関を可視化できれば開発者だけではなく意思決定者や企画者も含めて改善施策に対するモチベーション動機づけに繋がる。</p>
+<h1 id="heading-7">システム開発に喜びと驚きの連鎖を</h1>
+<p>ウォーターフォール型とアジャイル型でどちらも良さがあり、欠点がある。両方を兼ね備えた組織が強い。
+両方が存在することで安定する。
+ウォーターフォール型のモード2が方向を変えながら進むべき方向性を模索する。
+アジャイル型のモード１は方向性が決まったら、前輪に少し遅れて自転車や事業を真っ直ぐに力強く進める。
+どちらも敬意を持って楽しくやっていくのが大切。</p>
+<p>HRTの原則
+Humility・謙虚さ
+Respect・尊敬
+Trust・信頼</p>
+<p>あらゆる人間関係の衝突は謙虚・尊敬・信頼の欠如によるもの</p>
+<p>AI(After Internet)時代の基本原則</p>
+<ul>
+<li>Compass over maps
+<ul>
+<li>複雑かつスピードの早い世界ではすぐに書き換わってしまう地図を持つより優れたコンパスを持つことが大切</li>
+</ul>
+</li>
+<li>Practice over theory</li>
+</ul>
+<p>モード１とモード２を組み合わせることで創業50年の会社がAWSで表彰されたりIoTのロボットアームに製品を組みこんだりできる。</p>
+<p>ラストマンの育成ある場所、ある分野で一番を目指す。新人でも中途でも
+向いてなかったら落胆することなくピボットする。向いていたら進む。
+ラストマンになることで誇りが生まれ成長できる</p>
+<p>今後の最重要強化ポイント
+UI
+UX
+機能要件を満たしていても使いづらかったら使われなくなる。エンタープライズもこういった流れがある。</p>
+<p>Fun Place to Work
+すべての基本だと思っている</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2019-02-14-DynamoDB%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%88%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%97%E3%81%8D%E3%81%84%E5%80%A4%E8%A8%AD%E5%AE%9A%E3%82%92AWS-CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/"> DynamoDBのオートスケールしきい値設定をAWS CLIから行う</a></li>
+      &nbsp;<li class="next"><a href="/post/2019-03-18-%E6%9C%80%E9%80%9F%E3%81%A7Lets-Encrypt%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92GET%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/"> 最速でLet&#39;s Encryptの証明書をGETする方法</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

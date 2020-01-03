@@ -1,0 +1,20 @@
+I"�<p>mktmp, pushd, popdはセットで使われることが多いと思います。
+シェルスクリプト内で、一時ディレクトリを作成してそこにカレントディレクトリを変更し、また以前のカレントディレクトリに戻るといったときに使われます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c"># (処理)</span>
+
+<span class="c"># /tmp以下に一時ディレクトリを作成し、TMPDIR変数にパスを格納</span>
+<span class="nv">TMPDIR</span><span class="o">=</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span> <span class="nt">--tmpdir</span><span class="o">=</span>/tmp<span class="si">)</span>
+<span class="c"># 一時ディレクトリに移動</span>
+<span class="nb">pushd</span> <span class="nv">$TMPDIR</span> <span class="o">&gt;</span> /dev/null
+
+<span class="c"># (処理)</span>
+
+<span class="c"># 元いたディレクトリに戻る</span>
+<span class="nb">popd</span> <span class="o">&gt;</span> /dev/null
+
+<span class="c"># (処理)</span>
+
+</code></pre></div></div>
+:ET

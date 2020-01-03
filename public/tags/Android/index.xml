@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Android on ことえりブログ</title>
+    <link>/tags/Android/</link>
+    <description>Recent content in Android on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Sep 2017 22:45:26 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Android/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Androidアプリの定期購入の返金（払い戻し・キャンセル）方法</title>
+      <link>/post/2017-09-04-android%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E5%AE%9A%E6%9C%9F%E8%B3%BC%E5%85%A5%E3%81%AE%E8%BF%94%E9%87%91%E6%89%95%E3%81%84%E6%88%BB%E3%81%97%E3%82%AD%E3%83%A3%E3%83%B3%E3%82%BB/</link>
+      <pubDate>Mon, 04 Sep 2017 22:45:26 +0000</pubDate>
+      
+      <guid>/post/2017-09-04-android%E3%82%A2%E3%83%97%E3%83%AA%E3%81%AE%E5%AE%9A%E6%9C%9F%E8%B3%BC%E5%85%A5%E3%81%AE%E8%BF%94%E9%87%91%E6%89%95%E3%81%84%E6%88%BB%E3%81%97%E3%82%AD%E3%83%A3%E3%83%B3%E3%82%BB/</guid>
+      <description>Androidアプリの場合、定期購入の課金がされてしまっても、48時間以内なら返金できる場合があります。
+次の手順にしたがって返金申請を行いましょう。
+ 下記ページにアクセス  https://play.google.com/store/account
+ 払い戻ししたいアプリの横の3点アイコンを選択
+  “問題を報告”を選択
+  フォームに必要事項を記入 (無料期間中にキャンセルするつもりだったが、キャンセルするのを忘れていたことを記載)
+  以上のステップで返金できる場合があります。
+私の場合はフォーム記入・送信後すぐに返金するとの旨のメールを受信しました。
+参考:
+https://support.google.com/googleplay/answer/2479637</description>
+    </item>
+    
+  </channel>
+</rss>

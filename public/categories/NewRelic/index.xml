@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NewRelic on ことえりブログ</title>
+    <link>/categories/NewRelic/</link>
+    <description>Recent content in NewRelic on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 14 Mar 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/NewRelic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>New Relic {FUTURE} STACK スーパー書き殴りメモ</title>
+      <link>/post/2019-03-14-New-Relic-FUTURE-STACK-%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E6%9B%B8%E3%81%8D%E6%AE%B4%E3%82%8A%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Thu, 14 Mar 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-03-14-New-Relic-FUTURE-STACK-%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E6%9B%B8%E3%81%8D%E6%AE%B4%E3%82%8A%E3%83%A1%E3%83%A2/</guid>
+      <description>New Relic {Future} STACK 2019年3月14日 https://futurestack19-lp.eventcloudmix.com/
+ハンズオン はじめに アプリケーション監視が特別である理由  影響を受ける要素が多い 外部サービス・DB・ユーザー入力・出力・ほかプロセス ただ動いているだけでは十分ではない マネタイズしているか  データ収集の仕組み  トランザクション（リクエスト窓口）の自動検出とパフォーマンス計測 外部プロセスとの通信の自動検出とパフォーマンス計測  やるべきこと  ビジネス目標を達成したか  Insightsで確認できる   全体のパフォーマンスを確認  ヒストグラムでデータの分布区分ごとの件数（1秒台が10件…など）を確認 パーセンタイルでデータを小さい順に並べたときの、全体の割合とその値を時系列で確認 Apdexスコア (満足の件数 + やや満足の件数の半分) / 総数   個別のトラブルシューティングもしくは全体の最適化  Trancactionsで消費時間・処理時間が遅い順でソートできる。そこから処理ごとの詳細サマリが見られる    重要なこと  トランザクションがどんな処理なのかを理解すること  Key Transactionを考慮してみる   ビジネス目標を意識すること トランザクション全体のパフォーマンスを意識する 個別事象の対応なのか、全体の最適化なのかを意識すること  個別の事象の確認: トランザクショントレース、エラーアナライティクス 全体の最適化    Insights データを分析しダッシュボードを作成
+  一番簡単なダッシュボードの作成は、既存のチャートを貼り付ける。
+  APMの各チャートをマウスホバーするとメニューが出る。</description>
+    </item>
+    
+  </channel>
+</rss>

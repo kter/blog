@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CodePipeline on ことえりブログ</title>
+    <link>/tags/CodePipeline/</link>
+    <description>Recent content in CodePipeline on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 30 Sep 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/CodePipeline/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CloudFormationで作るCodePipelineで継続的デリバリされるECSクラスタを考えてみた</title>
+      <link>/post/2018-09-30-CloudFormation%E3%81%A7%E4%BD%9C%E3%82%8BCodePipeline%E3%81%A7%E7%B6%99%E7%B6%9A%E7%9A%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%81%95%E3%82%8C%E3%82%8BECS%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E8%80%83%E3%81%88%E3%81%A6%E3%81%BF%E3%81%9F/</link>
+      <pubDate>Sun, 30 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-30-CloudFormation%E3%81%A7%E4%BD%9C%E3%82%8BCodePipeline%E3%81%A7%E7%B6%99%E7%B6%9A%E7%9A%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%81%95%E3%82%8C%E3%82%8BECS%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E8%80%83%E3%81%88%E3%81%A6%E3%81%BF%E3%81%9F/</guid>
+      <description>CloudFormationで作るCodePipelineで継続的デリバリされるECSクラスタを考えてみました。
+前提  リポジトリにはGitHubを使う CloudFormationで環境一式が作成される ECSは単一タスク定義にコンテナ2つ  WebとAppコンテナ   CodepipelineはWeb, Appコンテナ用それぞれ用意  コンポーネント GitHub リポジトリを分けます。分ける理由はファイル更新時のデリバリー範囲を狭めるためです (Webコンテナの設定変更だけならAppコンテナは反映しない)。
+ learning_of_codepipeline_ecs  CloudFormation設定ファイル   learning_of_codepipeline_ecs_app  Appコンテナ用 Dockerfile Appコンテナ用 Codebuild設定ファイル   learning_of_codepipeline_ecs_web  Webコンテナ用 Dockerfile Webコンテナ用 Codebuild設定ファイル    CloudFormation 下記リソースの作成を行います。
+ CodePipeline CodeBuild  App, WebコンテナイメージをビルドしてECRにPush   ECSクラスタ  App, Webコンテナを動かす    CodePipeline 単一PipelineでApp, WebコンテナのビルドとECSへのデプロイをやろうと思ったのですが、下記問題があったのでWebとAppで別のPipelineにしました。
+ Web, Appどちらかの更新で両方のビルドが始まってしまう ECSへのデプロイ時に片方が常に失敗する  成果物 CodePipeline https://github.com/kter/learning_of_codepipeline_ecs Webコンテナ用 https://github.com/kter/learning_of_codepipeline_ecs_web Appコンテナ用 https://github.</description>
+    </item>
+    
+  </channel>
+</rss>

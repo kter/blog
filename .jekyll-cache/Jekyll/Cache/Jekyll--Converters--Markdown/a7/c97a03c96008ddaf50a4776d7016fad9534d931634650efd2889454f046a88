@@ -1,0 +1,123 @@
+I"�<h2 id="目的">目的</h2>
+
+<ul>
+  <li> Windowsで遊びたかった</li>
+  <li>ThinkPadにあこがれていた</li>
+  <li>Microsoftがデベロッパー寄りになっているし、Linux SubsystemでWindowsも開発に使えるのではないかと思った</li>
+</ul>
+
+<h2 id="pcについて">PCについて</h2>
+
+<p><a href="https://kter.jp/wp-content/uploads/2017/09/IMG_0168-e1504536753406.jpg"><img class="alignnone size-medium wp-image-499" src="https://kter.jp/wp-content/uploads/2017/09/IMG_0168-e1504536753406-225x300.jpg" alt="" width="225" height="300" srcset="https://kter.jp/wp-content/uploads/2017/09/IMG_0168-e1504536753406-225x300.jpg 225w, https://kter.jp/wp-content/uploads/2017/09/IMG_0168-e1504536753406-768x1024.jpg 768w, https://kter.jp/wp-content/uploads/2017/09/IMG_0168-e1504536753406.jpg 1512w" sizes="(max-width: 225px) 100vw, 225px" /></a></p>
+
+<ul>
+  <li>ThinkPad X220 i5-2520M, 4GB, 300GB</li>
+  <li>オークションで入手</li>
+  <li>送料込みで1.1万円程度</li>
+  <li>英字キーボード</li>
+  <li>Windows10 Pro</li>
+  <li>充放電サイクル82回</li>
+</ul>
+
+<h2 id="やったこと">やったこと</h2>
+
+<h3 id="初期化">初期化</h3>
+
+<p>Windows自体の機能で初期化の機能がついているのでこれを利用する。</p>
+
+<p>設定 -&gt; 更新とセキュリティ -&gt; このPCを初期状態に戻す -&gt; すべて削除する</p>
+
+<h3 id="更新">更新</h3>
+
+<p>Windows Updateを実行</p>
+
+<h3 id="キー配列変更">キー配列変更</h3>
+
+<p>キー配列をJISから英字に変更。</p>
+
+<p>設定 -&gt; 時刻と言語 -&gt; 地域と言語 -&gt; 日本語 -&gt; オプション -&gt; レイアウトを変更する</p>
+
+<p>参考: <a href="http://qiita.com/shimizu14/items/000cceb9e72a492b9176">Windows10日本語版で英語配列キーボードを使用する</a></p>
+
+<h3 id="system-update">System Update</h3>
+
+<p>LenovoからSystem Updateをインストール</p>
+
+<p>Lenovoのサポートサイトから各ドライバをインストール（Windows10向けのものはないため、Windows8を使う)</p>
+
+<h3 id="linux-sybsystem">Linux Sybsystem</h3>
+
+<p>Microsoftの<a href="https://msdn.microsoft.com/ja-jp/commandline/wsl/install_guide">手順</a>に従ってインストールをする</p>
+
+<h3 id="hyper-v">hyper-v</h3>
+
+<p>Microsoftの<a href="https://docs.microsoft.com/ja-jp/virtualization/hyper-v-on-windows/quick-start/enable-hyper-v">手順</a>に従ってインストールをする</p>
+
+<h3 id="cmder">cmder</h3>
+
+<p>cmderというターミナルから直接Ubuntuのbashにアクセスする</p>
+
+<p>http://cmder.net/</p>
+
+<p>http://qiita.com/yutaszk/items/fb77435296b131fd0a3a</p>
+
+<h3 id="ubuntu環境構築">Ubuntu環境構築</h3>
+
+<h4 id="zsh">zsh</h4>
+
+<p>apt-get install zsh</p>
+
+<p>（zshを使うようcmderの起動オプション変更）</p>
+
+<p><a href="http://qiita.com/yutaszk/items/fb77435296b131fd0a3a">参考</a></p>
+
+<h4 id="gcloud">gcloud</h4>
+
+<p>初回curlはなぜかTLSハンドシェイクに失敗した。ネットワークの問題だったかも</p>
+
+<p>sudo apt-get install python2.7</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>curl https://sdk.cloud.google.com</td>
+      <td>bash</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>exec -l $SHELL</p>
+
+<p>gcloud init</p>
+
+<h4 id="kubectl">kubectl</h4>
+
+<p>gcloud components install kubectl</p>
+
+<h4 id="atok">ATOK</h4>
+
+<p>日本語入力切り替えをCtrl+Spaceに変更</p>
+
+<p><a href="http://support.justsystems.com/faq/1032/app/servlet/qadoc?QID=024293">参考</a></p>
+
+<h4 id="virtualbox">VirtualBox</h4>
+
+<p>公式サイトからインストール</p>
+
+<pre class="lang:default decode:true">sudo ln -sf /etc/ssl/openssl.cnf /opt/vagrant/embedded
+PATH=$PATH:/mnt/c/Program Files/Oracle/VirtualBox</pre>
+
+<h4 id="その他">その他</h4>
+
+<pre class="lang:default decode:true ">sudo apt-get install make gcc</pre>
+
+<h3 id="感想">感想</h3>
+
+<p>大抵のことはできるが手間がかかるイメージ。</p>
+
+<p>またググラビティが低く、Windowsというワードが入ると一般向けのページが多数表示され検索が難しい。</p>
+
+<p>結論として、Windowsを開発マシンとして使うのはちょっと躊躇するかな、という感じ。</p>
+
+<p>####</p>
+:ET

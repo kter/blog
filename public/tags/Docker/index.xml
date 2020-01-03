@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on ことえりブログ</title>
+    <link>/tags/Docker/</link>
+    <description>Recent content in Docker on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Jun 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DockerコンテナにホストのAWSアクセスキーを渡す方法</title>
+      <link>/post/2019-06-08-Docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AB%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AEAWS%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%AD%E3%83%BC%E3%82%92%E6%B8%A1%E3%81%99%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 08 Jun 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-06-08-Docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AB%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AEAWS%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%AD%E3%83%BC%E3%82%92%E6%B8%A1%E3%81%99%E6%96%B9%E6%B3%95/</guid>
+      <description>課題 DockerコンテナからAWSのAPIにアクセスしたい場合、ホストがEC2ならIAMロールが使える。 しかしホストがローカルのMacの場合は、アクセスキーとシークレットアクセスキーを、どうにかしてコンテナに渡す必要がある。
+結論 aws cliのconfigure getサブコマンドを使う。 具体的には下記のようにする。
+#!/usr/bin/env sh AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) docker run --rm \  -e AWS_REGION=ap-northeast-1 \  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \  (略) このようにすればコンテナ内のAWC CLI指定の環境変数にアクセスキー等が格納されるので、そのままaws cliコマンドなどが使える。 プロファイルが複数ある場合は下記のようにして切り替えることもできる。
+AWS_ACCESS_KEY_ID=$(aws --profile (プロファイル名) configure get aws_access_key_id) AWS_SECRET_ACCESS_KEY=$(aws --profile (プロファイル名) configure get aws_secret_access_key) 参考 get — AWS CLI 1.16.174 Command Reference
+AWS CLI の設定 - AWS Command Line Interface</description>
+    </item>
+    
+    <item>
+      <title>Laravel入門 -Laradock導入-</title>
+      <link>/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/</link>
+      <pubDate>Sun, 07 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/</guid>
+      <description>はじめに Laradockについて PHPを開発するのに必要なアプリが全部セットになったDocker環境。 今回はMySQL + PHP-FPM + NGINX + Laravelでいきますが、データベースにPostgreSQLを選んだり、WebサーバにApacheを選んだりかなり自由度は高いです。
+ディレクトリ構成 . ├── laradock-dakoku ←Laradockのコード (docker-composeコマンドはここで実行) └── src ←Laravelのコード (コンテナに入らずエディタで編集できる) コンテナを動かすための初期設定 PROJECT=(プロジェクト名) mkdir $PROJECT cd !$ # イメージを他プロジェクトと共用しないよう名前を変える git clone https://github.com/Laradock/laradock.git laradock-$PROJECT cd laradock-$PROJECT cp env-example .env DB_HOST=mysql APP_CODE_PATH_HOST=../src # MySQL8の認証方式caching_sha2_passwordにPHPのMySQLライブラリが対応していないため MYSQL_VERSION=5.7.25 コンテナを動かす docker-compose up -d nginx mysql workspace Laravelをインストール docker-compose exec workspace bash # バージョンは好きなものを指定する。ここでは5.2系 composer create-project laravel/laravel . &amp;#34;5.2.*&amp;#34; DB migrate実行 DB_HOST=mysql DB_PORT=3306 DB_DATABASE=default DB_USERNAME=default DB_PASSWORD=secret php artisan migrate NGINX設定 cp nginx/sites/laravel.</description>
+    </item>
+    
+    <item>
+      <title>Mailuで簡単にWebUI付きのメールサーバを立てる</title>
+      <link>/post/2018-02-06-Mailu%E3%81%A7%E7%B0%A1%E5%8D%98%E3%81%ABWebUI%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B/</link>
+      <pubDate>Tue, 06 Feb 2018 13:15:00 +0000</pubDate>
+      
+      <guid>/post/2018-02-06-Mailu%E3%81%A7%E7%B0%A1%E5%8D%98%E3%81%ABWebUI%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B/</guid>
+      <description>はじめに 自分用のメールサーバを建てようと思った時、セキュリティを気にしながら設定を調べて…となかなか大変ですよね。
+でもMailuを使うと簡単にWebUI付きのメールサーバが構築できます！
+この画像のようにWebUIからもメールの送受信ができるので便利です。
+デモサイトがあるので興味のある方は覗いてみてください。
+Mailuが備えている機能は次の通りです。
+ IMAP, IMAP+, SMTPのメールサーバ WebUIと管理画面 自動返信、自動転送 クォーターなどの管理機能 TLS (Let&#39;s Encrypt対応！), DKIM, アンチウイルスなどのセキュリティ  詳細はプロジェクトのページを見ていただくとして、早速構築してみます。
+構築 構築はDigitalOceanという海外のVPS上のdocker-composeでやってみます。
+ちなみに下記のリンクから登録すると10ドルのクーポンが貰えます。
+一番安いインスタンスであれば2ヶ月間無料で動かせます。是非。
+https://m.do.co/c/dc73cf13e37a
+構築手順 今回は公式推奨のDebian Stretch(9.3)を使います。
+インスタンスが立ち上がったらおもむろに下記コマンドを実行してください。
+準備 apt update # すべてYESと答える apt install -y iptables-persistent apt-get autoremove --purge exim4 exim4-base Dockerのインストール # E: Unable to locate package docker-engineと言われても大丈夫 apt-get remove docker docker-engine docker.io apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo &amp;#34;$ID&amp;#34;)/gpg | sudo apt-key add - apt-key fingerprint 0EBFCD88 add-apt-repository &amp;#34;deb [arch=amd64] https://download.</description>
+    </item>
+    
+    <item>
+      <title>KubernetesでNFSを使う</title>
+      <link>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Wed, 19 Jul 2017 16:50:32 +0000</pubDate>
+      
+      <guid>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>KurbernetesのPod / Node間でファイルを共有するために、NFSを使ってみる。
+ググったり公式のリポジトリを参考にしたけどうまくいかなかったのでメモ。
+ おおまかな手順   Compute Engineでディスクを用意
+  NFSコンテナの用意
+  コンテナからNFSを利用
+   手順  Compute Engineでディスクを用意 コンソールかCLI等から普通に作成。
+  NFSコンテナの用意 下記2ファイルを用意してkubectl createする。</description>
+    </item>
+    
+    <item>
+      <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+      <link>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sun, 09 Jul 2017 13:05:28 +0000</pubDate>
+      
+      <guid>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>kubernetes on GKEでLet’s Encryptを使ったときのメモ
+kubenetesでLet’s Encryptを使うのに、kube-legoを使用します。
+kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。
+ 7月13日追記
+GCEのロードバランサーを使わない手順ができました。
+https://github.com/kter/kube-study/tree/master/ingress/nginx-tls
+kube-legoのダウンロード (メールアドレスを自分のものに編集)
+ IPの払い出し IPを払い出す
+払い出したIPにドメインを紐付けておく。
+ ファイルの作成 kube-legoで使用するnginx-ingress.ymlを作成する。
+SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。
+ kube-legoを作成する 設定が反映されるまで、十数分掛かるので暫く待つ。
+備考 作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は--namespace kube-legoが必要になる。</description>
+    </item>
+    
+  </channel>
+</rss>

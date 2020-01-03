@@ -1,0 +1,29 @@
+I"�	<p>環境変数に設定された値は文字列としてしか取得できません。</p>
+
+<p>なのでos.getenv()で値を取得したあとsplit()で配列化します。
+ついでにstrip()も呼んでスペースも除去します。コードはこんな感じです。</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s">'(環境変数名)'</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">','</span><span class="p">)]</span>
+</code></pre></div></div>
+
+<p>yamlファイルはこんな感じです。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">Resources</span><span class="pi">:</span>
+  <span class="na">Lambda</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s1">'</span><span class="s">AWS::Serverless::Function'</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">Handler</span><span class="pi">:</span> <span class="s">lambda_function.lambda_handler</span>
+      <span class="na">Runtime</span><span class="pi">:</span> <span class="s">python3.6</span>
+      <span class="na">CodeUri</span><span class="pi">:</span> <span class="s">.</span>
+      <span class="na">MemorySize</span><span class="pi">:</span> <span class="m">128</span>
+      <span class="na">Role</span><span class="pi">:</span>
+        <span class="s">Fn::GetAtt:</span>
+        <span class="s">- LambdaRole</span>
+        <span class="s">- Arn</span>
+      <span class="na">Timeout</span><span class="pi">:</span> <span class="m">3</span>
+      <span class="na">Environment</span><span class="pi">:</span>
+        <span class="na">Variables</span><span class="pi">:</span>
+          <span class="s">(環境変数名)</span><span class="pi">:</span> <span class="s1">'</span><span class="s">val1,</span><span class="nv"> </span><span class="s">val2,</span><span class="nv"> </span><span class="s">val3'</span>
+</code></pre></div></div>
+
+:ET

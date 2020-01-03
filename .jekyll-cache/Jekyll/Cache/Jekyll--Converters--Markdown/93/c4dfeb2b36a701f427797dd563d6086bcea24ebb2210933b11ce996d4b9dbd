@@ -1,0 +1,16 @@
+I"<p>Apache 2.4系でもデフォルトでサーバ情報をリクエストヘッダに出力します。</p>
+
+<p>表示を最小限にするには次の行を追加する必要があります</p>
+
+<pre class="lang:default decode:true " title="httpd.conf">ServerTokens Prod</pre>
+
+<p> </p>
+
+<p>また、PHPの情報を出力しないようにするためには次の行をphp.iniに書く必要があります</p>
+
+<pre class="lang:default decode:true " title="php.ini">expose_php = Off</pre>
+
+<p> </p>
+
+<p>Source: New feed</p>
+:ET

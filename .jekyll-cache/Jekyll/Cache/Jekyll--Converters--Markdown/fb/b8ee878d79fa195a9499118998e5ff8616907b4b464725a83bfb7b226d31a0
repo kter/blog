@@ -1,0 +1,10 @@
+I"3<div class="highlight">
+  <pre><code class="language-">% sudo gem install hogehoge_gem
+Successfully installed hogehoge_gem
+1 gem installed
+Installing ri documentation for hogehoge_gem...
+ERROR: While executing gem ... (NoMethodError)
+undefined method `map' for Gem::Specification:Class
+</code></pre>
+</div>
+:ET

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mac on ことえりブログ</title>
+    <link>/tags/Mac/</link>
+    <description>Recent content in Mac on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Jun 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Mac/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>UseKeychainが設定されているMacのssh configをLinuxで使い回す</title>
+      <link>/post/2019-06-08-UseKeychain%E3%81%8C%E8%A8%AD%E5%AE%9A%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8BMac%E3%81%AEssh-config%E3%82%92Linux%E3%81%A7%E4%BD%BF%E3%81%84%E5%9B%9E%E3%81%99/</link>
+      <pubDate>Sat, 08 Jun 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-06-08-UseKeychain%E3%81%8C%E8%A8%AD%E5%AE%9A%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8BMac%E3%81%AEssh-config%E3%82%92Linux%E3%81%A7%E4%BD%BF%E3%81%84%E5%9B%9E%E3%81%99/</guid>
+      <description>課題 Dockerコンテナ内でMacのSSH設定を引き継ごうと思い、ボリュームマウントで対応したものの、Macでしか使えないUseKeychainが邪魔をしてエラーとなってしまう。
+結論 IgnoreUnknownオプションを使う。 具体的には下記のようにする。
+IgnoreUnknown UseKeychain UseKeychain yes 参考 Technical Note TN2449: OpenSSH updates in macOS 10.12.2</description>
+    </item>
+    
+    <item>
+      <title>Macのログイン画面に管理者(Admin)のアカウントしか出てこないとき</title>
+      <link>/post/2019-04-18-Mac%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2%E3%81%AB%E7%AE%A1%E7%90%86%E8%80%85Admin%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%97%E3%81%8B%E5%87%BA%E3%81%A6%E3%81%93%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D/</link>
+      <pubDate>Thu, 18 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-18-Mac%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2%E3%81%AB%E7%AE%A1%E7%90%86%E8%80%85Admin%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%97%E3%81%8B%E5%87%BA%E3%81%A6%E3%81%93%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D/</guid>
+      <description>表題の通り、Macのログイン画面に管理者(Admin)のアカウントしか出てこないときの対応です。
+FileVaultの許可ユーザーを設定 (99%これで解決)  システム環境設定 -&amp;gt; セキュリティ -&amp;gt; FileVaultのタブにアクセス 左下の鍵マークを選択し、管理者パスワードを入力 許可されていないユーザーがあります的なボタンが出てくるので、それを押してそのユーザーのパスワードを入力  IsHidden要素を設定 ユーザーに設定されているIsHidden要素が1だとログイン画面に出てこないらしい。
+  Terminal.appで下記コマンドを実行。
+sudo dscl . create /Users/(ユーザー名) IsHidden 0   （変更確認方法） Terminal.appで下記コマンドを実行
+dscl . -read /Users/_(ユーザー名)   参考 macOS でユーザアカウントを非表示にする - Apple サポート
+適当なユーザーを作って削除 よく分からんが自分の場合はこれで解決
+ 適当なユーザーを作成する 再起動してログイン画面に表示したいユーザーと作成したユーザーが出ることを確認 作成したユーザーを削除  </description>
+    </item>
+    
+    <item>
+      <title>KarabinerでCtrl &#43; [をEscの代わりにする設定</title>
+      <link>/post/2019-04-12-Karabiner%E3%81%A7Ctrl-&#43;-%E3%82%92Esc%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%AB%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A/</link>
+      <pubDate>Fri, 12 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-12-Karabiner%E3%81%A7Ctrl-&#43;-%E3%82%92Esc%E3%81%AE%E4%BB%A3%E3%82%8F%E3%82%8A%E3%81%AB%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A/</guid>
+      <description>表題の通りKarabinerでCtrl + [をEscの代わりにする設定です。
+VSCodeでVimのキーバインドを導入した際、EscがCtrl+]に割り当てられており、キーバインドを変更してみたのですが、効果がなかったのでOSレベルでキーバインドを変更してしまいます。
+{ &amp;#34;title&amp;#34;: &amp;#34;Change ctrl+[ to ESC&amp;#34;, &amp;#34;rules&amp;#34;: [{ &amp;#34;description&amp;#34;: &amp;#34;Change ctrl+[ key to Escape key&amp;#34;, &amp;#34;manipulators&amp;#34;: [{ &amp;#34;type&amp;#34;: &amp;#34;basic&amp;#34;, &amp;#34;from&amp;#34;: { &amp;#34;key_code&amp;#34;: &amp;#34;open_bracket&amp;#34;, &amp;#34;modifiers&amp;#34;: { &amp;#34;mandatory&amp;#34;: [&amp;#34;control&amp;#34;] } }, &amp;#34;to&amp;#34;: [{ &amp;#34;key_code&amp;#34;: &amp;#34;escape&amp;#34; }] }] }] } 上記ファイルを作成すれば自動的にComplex ModificationsのAdd Rule内に項目が出てくるのでEnableをクリックするだけです。
+ちなみに環境はMac (JIS配列) + 外付けUS配列キーボードでした。</description>
+    </item>
+    
+    <item>
+      <title>Sierraにアップデートした後メモアプリが立ち上がらなくなった場合の対処</title>
+      <link>/post/2016-09-24-sierra%E3%81%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E5%BE%8C%E3%83%A1%E3%83%A2%E3%82%A2%E3%83%97%E3%83%AA%E3%81%8C%E7%AB%8B%E3%81%A1%E4%B8%8A%E3%81%8C%E3%82%89/</link>
+      <pubDate>Sat, 24 Sep 2016 11:19:59 +0000</pubDate>
+      
+      <guid>/post/2016-09-24-sierra%E3%81%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%87%E3%83%BC%E3%83%88%E3%81%97%E3%81%9F%E5%BE%8C%E3%83%A1%E3%83%A2%E3%82%A2%E3%83%97%E3%83%AA%E3%81%8C%E7%AB%8B%E3%81%A1%E4%B8%8A%E3%81%8C%E3%82%89/</guid>
+      <description>Sierraにアップデートしてから、メモアプリを立ち上げると直ぐにアプリが強制終了するようになってしまいました。
+これはiCloudにブラウザでログインして、何行か書き込んでからメモアプリを立ち上げると上手くいくようです。
+ 参考
+Notes Crashing in macOS Sierra</description>
+    </item>
+    
+  </channel>
+</rss>

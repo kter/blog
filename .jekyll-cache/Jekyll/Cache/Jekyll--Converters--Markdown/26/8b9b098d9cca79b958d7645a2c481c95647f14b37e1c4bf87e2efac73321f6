@@ -1,0 +1,19 @@
+I"<p>サーバ内で通信をポートフォワードする。例えば3000ポートで動いているWebサーバを、外からは80ポートで通信を受け取りたいという場合。</p>
+
+<p>iptablesを使うと次のようになる。</p>
+
+<p> </p>
+
+<pre class="lang:default decode:true">sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
+sudo iptables -A INPUT -i eth0 -j ACCEPT
+sudo service iptables save
+sudo service iptables restart</pre>
+
+<p>1行目はポートフォワードの設定で、2行目はeth0への他の通信をすべて許可する設定となっている。</p>
+
+<p>これはiptablesをファイアウォールとしてではなく、完全にポートフォワードするためだけの設定を想定している。</p>
+
+<p>もしiptablesをファイアウォールとしてすでに使っている場合は、2行目のコマンドは実行しないようにする。</p>
+
+<p>※ローカルからの通信はポートフォワードされないので注意する。</p>
+:ET

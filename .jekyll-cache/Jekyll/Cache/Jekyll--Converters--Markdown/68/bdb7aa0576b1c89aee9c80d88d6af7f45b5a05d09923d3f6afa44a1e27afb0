@@ -1,0 +1,23 @@
+I"
+<h1 id="まとめ">まとめ</h1>
+
+<p>Glacier状態のS3オブジェクトを取り出す際には、リストア期間を指定した上でrestore-objectを実行する必要があります。</p>
+
+<h1 id="手順">手順</h1>
+
+<h2 id="リストア">リストア</h2>
+<p>recursiveオプションが無いため、list-objectsしてオブジェクトパスを取得してからrestore-objectを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">for </span>key <span class="k">in</span> <span class="sb">`</span>aws s3api list-objects <span class="nt">--bucket</span> <span class="o">(</span>バケット名<span class="o">)</span> <span class="nt">--prefix</span> <span class="o">(</span>ディレクトリ名<span class="o">)</span> <span class="nt">--output</span> json | jq <span class="nt">-r</span> <span class="s1">'.Contents[].Key'</span><span class="sb">`</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="nv">$key</span><span class="p">;</span> aws s3api restore-object <span class="nt">--bucket</span> <span class="o">(</span>バケット名<span class="o">)</span> <span class="nt">--key</span> <span class="nv">$key</span> <span class="nt">--restore-request</span> <span class="s1">'{"Days": 3}'</span><span class="p">;</span><span class="k">done</span>
+</code></pre></div></div>
+
+<h2 id="ダウンロード">ダウンロード</h2>
+
+<p>リストア済みのオブジェクトをダウンロードするときもresursiveが使えないため、list-objectsしてオブジェクトパスを取得してからダウンロードします。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="k">for </span>key <span class="k">in</span> <span class="sb">`</span>aws s3api list-objects <span class="nt">--bucket</span> <span class="o">(</span>バケット名<span class="o">)</span> <span class="nt">--prefix</span> <span class="o">(</span>ディレクトリ名<span class="o">)</span> <span class="nt">--output</span> json | jq <span class="nt">-r</span> <span class="s1">'.Contents[].Key'</span><span class="sb">`</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="nv">$key</span><span class="p">;</span> aws s3 <span class="nb">cp </span>s3://<span class="o">(</span>バケット名<span class="o">)</span>/<span class="nv">$key</span> .<span class="p">;</span><span class="k">done</span>
+</code></pre></div></div>
+
+:ET

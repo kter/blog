@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>aws-cli on ことえりブログ</title>
+    <link>/tags/aws-cli/</link>
+    <description>Recent content in aws-cli on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 13 Nov 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/aws-cli/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS CLIのS3でワイルドカードを使う方法</title>
+      <link>/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Tue, 13 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/</guid>
+      <description>AWS CLIのS3ではワイルドカードが使えないと思っていましたが、実はオプションを駆使することで使えることがわかったのでメモ。
+aws s3 cp --recursive \  --exclude &amp;#39;*&amp;#39; \  --include &amp;#39;ワイルドカード入り検索文字列&amp;#39; \  s3://bucket_name/path/ . S3とかCloudFrontだとログファイルがディレクトリ掘らずに置かれてしまうのでこれでやると便利ですね。</description>
+    </item>
+    
+  </channel>
+</rss>

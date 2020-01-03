@@ -1,0 +1,31 @@
+I"
+<p>EC2のRetirement Notificationが来ていたので対応しました。</p>
+
+<p>メールでの対応方法では次のように来ていて、つまりAMIからインスタンスを作りなおせと書いてありました。</p>
+
+<blockquote>
+  <p>You may still be able to access the instance. We recommend that you replace the instance by creating an AMI of your instance and launch a new instance from the AMI. For more information please see Amazon Machine Images (<a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html" target="_blank" rel="noreferrer" data-saferedirecturl="https://www.google.com/url?hl=ja&amp;q=http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html&amp;source=gmail&amp;ust=1467603295142000&amp;usg=AFQjCNGWK8bb2yxq4LibDJP0zuy4YnfbzA">http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html</a>) in the EC2 User Guide. In case of difficulties stopping your EBS-backed instance, please see the Instance FAQ (<a href="http://aws.amazon.com/instance-help/#ebs-stuck-stopping" target="_blank" rel="noreferrer" data-saferedirecturl="https://www.google.com/url?hl=ja&amp;q=http://aws.amazon.com/instance-help/%23ebs-stuck-stopping&amp;source=gmail&amp;ust=1467603295143000&amp;usg=AFQjCNHK_DApdxBLUp-WgRojronZG8kIiQ">http://aws.amazon.com/instance-help/#ebs-stuck-stopping</a>).</p>
+</blockquote>
+
+<p>実際にはインスタンスを停止してから起動するだけで大丈夫でした。</p>
+
+<p><a href="https://blog.kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif2.jpg"><img class="alignleft wp-image-212 size-full" src="https://blog.kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif2.jpg" alt="ebs_retirement_notif2" width="548" height="218" srcset="https://kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif2.jpg 548w, https://kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif2-300x119.jpg 300w" sizes="(max-width: 548px) 100vw, 548px" /></a></p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p> </p>
+
+<p><a href="https://blog.kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif1.jpg"><img class="alignleft wp-image-211 size-full" src="https://blog.kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif1.jpg" alt="ebs_retirement_notif1" width="985" height="189" srcset="https://kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif1.jpg 985w, https://kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif1-300x58.jpg 300w, https://kter.jp/wp-content/uploads/2016/07/ebs_retirement_notif1-768x147.jpg 768w" sizes="(max-width: 985px) 100vw, 985px" /></a></p>
+:ET

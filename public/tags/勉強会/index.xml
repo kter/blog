@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>勉強会 on ことえりブログ</title>
+    <link>/tags/%E5%8B%89%E5%BC%B7%E4%BC%9A/</link>
+    <description>Recent content in 勉強会 on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 Aug 2018 15:01:02 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E5%8B%89%E5%BC%B7%E4%BC%9A/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>July Tech Festa 2018メモ</title>
+      <link>/post/2018-08-25-July-Tech-Festa-2018%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Sat, 25 Aug 2018 15:01:02 +0000</pubDate>
+      
+      <guid>/post/2018-08-25-July-Tech-Festa-2018%E3%83%A1%E3%83%A2/</guid>
+      <description>自分用のメモですので悪しからず…
+Ansible with AWX ~ Move to the next step of IT automation ~ 斉藤秀喜さん (twitter: saito_hideki)
+ AWX(自動化プラットフォームでAnsible Towerのアップストリーム版)  Ansibleコマンドのラッパーとして動作する ドキュメントはAnsible Towerの物を見れば良い（日本語版もある）   下記機能がある  WebUI / Restful API / Callback URL機能 ユーザ管理機能（Active Directory, Google OAuth2など） ターゲットホストの認証情報を一点管理 AWS / GCP / Azure / OpenStackなどと連携可能 GitHub / Gitlabなどの外部SCM上のPlaybookを取得 複数のジョブ（Playbook)をワークフローとして実行  失敗したらこのジョブを動かすなどといった動作ができる   ジョブやワークフローを指定の日時で実行 ジョブの結果をIRCやSlackなどに送信 ログをlogstashやsplunkなど外部システムに転送 AWXサービスをクラスタ化（HAではなくマルチノード構成）   dockerとpython-docker-pyが必要（Ansible Towerと違ってコンテナ上で動く） AWX自体のインストールもAnsible Playbookで行う  副業で収益化をめざす ~月数百円から始めるWebサービス立ち上げから運営まで~ 高宮安仁さん
+  有給消化中でLingomineという英語学習サービスを開発。</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes Meetup Tokyo #9 レポート</title>
+      <link>/post/2018-01-13-KubernetesMeetupTokyo9/</link>
+      <pubDate>Sat, 13 Jan 2018 13:56:00 +0000</pubDate>
+      
+      <guid>/post/2018-01-13-KubernetesMeetupTokyo9/</guid>
+      <description>内容の正当性は保証できません。こういう雰囲気でした。
+概要 Kubernetes Meetup Tokyo #9
+日時: 2018年1月12日19時から
+URL: https://k8sjp.connpass.com/event/75328
+タイムテーブル 19:00-19:05 - Organizer &amp;amp; CyberAgent, Opening (5min)
+19:05-19:20 - ianlewis, KubeCon Overview(15min)
+19:25-19:40 - riywo, Review Adrian Cockroft’s keynote (15min)
+19:45-20:00 - jyoshise, GPU, Deep Learning or Service mesh (15min)
+20:05-20:20 - tnir, Kubernetes at GitHub (15min)
+20:25-20:45 - CyberAgent Sponsor Session (20min)
+Review Adrian Cockroft’s keynote @riywo
+ AWSはCNCFに対してクレジットを補助したり、自社のサービスに取り入れたりと積極的にコントリビュートしている KubernetesのCNIのプラグインも作った ECSは繁盛している AWS Fargateをリリースした  LambdaのECS版的な   Kuberentesをデプロイしているユーザーの68%はAWSにもデプロイしている HeptioとかがKubernetesをAWSで動かすためのインテグレーションを開発している  IAM連携とか   AWS Fargate + Amazon EKSは2018年  フィードバックもよろしくね    GPU, Deep Learning or Service mesh @jyoshise</description>
+    </item>
+    
+    <item>
+      <title>Google Cloud Next 2日目に行ってきた</title>
+      <link>/post/2017-06-16-google-cloud-next-2%E6%97%A5%E7%9B%AE%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</link>
+      <pubDate>Fri, 16 Jun 2017 11:56:52 +0000</pubDate>
+      
+      <guid>/post/2017-06-16-google-cloud-next-2%E6%97%A5%E7%9B%AE%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</guid>
+      <description>スペースのインデントが消えるのでGistに書いた…
+[gist https://gist.github.com/kter/ae7dc4f598a9ef14838aacf956c67a9d]</description>
+    </item>
+    
+  </channel>
+</rss>

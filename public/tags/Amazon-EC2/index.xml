@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Amazon EC2 on ことえりブログ</title>
+    <link>/tags/Amazon-EC2/</link>
+    <description>Recent content in Amazon EC2 on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 May 2018 00:13:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Amazon-EC2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ Amazon EC2編</title>
+      <link>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Amazon-EC2%E7%B7%A8/</link>
+      <pubDate>Wed, 23 May 2018 00:13:00 +0000</pubDate>
+      
+      <guid>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Amazon-EC2%E7%B7%A8/</guid>
+      <description>AWS クラウドサービス活用資料集メモ サービス別資料 コンピューティング Amazon EC2 情報元: 20180411 AWS Black Belt Online Seminar Amazon EC2 
+ 最新のC5, M5インスタンスはXenベースではなく、KVMベース 最小: 1vCPU, 0.5GBメモリ 最大: 128vCPU, 約4TBメモリ EC2インスタンスファミリー一覧  汎用、コンピューティング最適化、ストレージ最適化、メモリ最適化、GPU・FPGAアクセラレーテッド   T2インスタンスのCPUクレジット動作について  CPUクレジット1につきCPUコアの最大パフォーマンス（バースト性能）を1分間提供 T2 Unlimitedの場合24時間分のCPUクレジットを前借りして利用できる 前借りクレジットを使い切った状態においてはvCPU時間あたりLinuxでは$0.05/h, Windowsで$0.096/hが加算請求される 初期CPUクレジット、一時間あたりに受け取るCPUクレジット、ベースラインパフォーマンス(CPU使用率)、最大獲得CPUクレジットバランスはインスタンスタイプごとに異なる   Dedicated Hostsの場合、AWSまたはMarketplaceで提供されているRHEL, SUSE Linux, Windows　AMIは使えないので注意 Amazon EC2 Bare Metalについて  ハードウェアへのダイレクトアクセスを提供するインスタンス AWS各種サービスとの連携が可能 仮想化環境上からは利用できないエミュレータや、独自のハイパーバイザーを導入するときなどに利用   拡張ネットワーキングについて  Intel 82599VF (ixgbevf)  M4(m4.16xlarge以外), C3, C4, D2, I2, R3で使える   Elastic Network Adapter (ENA)  C5, F1, G3, H1, I3, M5, P2, P3, R4, X1, m4.</description>
+    </item>
+    
+  </channel>
+</rss>

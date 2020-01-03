@@ -1,0 +1,36 @@
+I"V<p>SlackにWebHookを送るときに+記号がスペースに置き換えられる問題の対応です。
+この問題の解決に1,2時間掛かったのでメモしておきます…。</p>
+
+<p>こんな感じでSlackにWebHookを送ろうと思っていたのですが、この例では+の部分がスペースに置き換わってしまいす。</p>
+
+<pre><code class="language-PHP">$params = [
+    'title' =&gt; "タイトル",
+    'text' =&gt; "プラス記号がスペースに置き換わる→+←",
+    'channel' =&gt; $channel,
+    'username' =&gt; $username,
+    'icon_emoji' =&gt; $icon_emoji,
+    'mrkdwn' =&gt; true,
+    'attachments' =&gt; [$attachments]
+];
+$payload = 'payload=' . json_encode($params);
+$ch = curl_init($webhook_url);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$result = curl_exec($ch);
+</code></pre>
+
+<p>バッククォートやダブルクォーテーションで括っても結果は同じ。
+いろいろ試したり検索したりしていくうちにURLエンコードをすれば良いことに気が付きました。</p>
+
+<p>ということでこのようにして解決。</p>
+
+<pre><code class="language-PHP">    'text' =&gt; urlencode("プラス記号がスペースに置き換わる→+←"),
+</code></pre>
+
+<p>後からよくよく調べてみるとドキュメントにちゃんとURLエンコードしろと書いてありました…
+https://api.slack.com/docs/message-formatting</p>
+
+:ET

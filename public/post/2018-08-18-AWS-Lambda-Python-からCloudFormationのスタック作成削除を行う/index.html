@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AWS Lambda (Python) からCloudFormationのスタック作成・削除を行う</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">AWS Lambda (Python) からCloudFormationのスタック作成・削除を行う</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-08-18</small></p> <hr/>
+   <div class="post">
+     <p>業務時間だけ使うAWSリソースがあり、それをCloudFormationを使って管理しているという場合、Lambdaからスタックの作製・削除ができると便利です。</p>
+<p>削除するのは簡単なのですが、作成するときは少し手こずったのでそれを書いておきます。</p>
+<h3 id="heading">作成</h3>
+<p>TemplateURLにS3バケット内のファイルを指定する場合は次のようにします。
+※httpsとスキームが付きますが、Webホスティングの設定は必要ありません。</p>
+<pre><code>https://s3-ap-northeast-1.amazonaws.com/(S3バケット名)/ファイル名
+</code></pre><p>ということで作成するときはこんな感じになります。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">    cf <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>client(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">cloudformation</span><span style="color:#e6db74">&#39;</span>)
+    res <span style="color:#f92672">=</span> cf<span style="color:#f92672">.</span>create_stack(
+        StackName<span style="color:#f92672">=</span>(<span style="color:#960050;background-color:#1e0010">ス</span><span style="color:#960050;background-color:#1e0010">タ</span><span style="color:#960050;background-color:#1e0010">ッ</span><span style="color:#960050;background-color:#1e0010">ク</span><span style="color:#960050;background-color:#1e0010">名</span>),
+        TemplateURL<span style="color:#f92672">=</span><span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://s3-ap-northeast-1.amazonaws.com/(S3バケット名)/ファイル名</span><span style="color:#e6db74">&#39;</span>,
+        Parameters<span style="color:#f92672">=</span>[
+            {
+                <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ParameterKey</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">パラメータ名1</span><span style="color:#e6db74">&#39;</span>,
+                <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ParameterValue</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">設定値1</span><span style="color:#e6db74">&#39;</span>
+            },
+            {
+                <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ParameterKey</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">パラメータ名2</span><span style="color:#e6db74">&#39;</span>,
+                <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">ParameterValue</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">設定値2</span><span style="color:#e6db74">&#39;</span>
+            },
+        ],
+        Capabilities<span style="color:#f92672">=</span>[
+            <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">CAPABILITY_NAMED_IAM</span><span style="color:#e6db74">&#39;</span>,
+        ],
+    )
+</code></pre></div><h3 id="heading-1">削除</h3>
+<p>削除はスタック名を指定するだけなのでとても簡単。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-py" data-lang="py">    cf <span style="color:#f92672">=</span> boto3<span style="color:#f92672">.</span>client(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">cloudformation</span><span style="color:#e6db74">&#39;</span>)
+    res <span style="color:#f92672">=</span> cf<span style="color:#f92672">.</span>delete_stack(
+        StackName<span style="color:#f92672">=</span>(<span style="color:#960050;background-color:#1e0010">ス</span><span style="color:#960050;background-color:#1e0010">タ</span><span style="color:#960050;background-color:#1e0010">ッ</span><span style="color:#960050;background-color:#1e0010">ク</span><span style="color:#960050;background-color:#1e0010">名</span>)
+    )
+</code></pre></div>
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-07-28-AWS-CLI%E3%81%A7MFA%E3%82%92%E4%BD%BF%E3%81%86/"> AWS CLIでMFAを使う</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-08-20-JMeter%E3%81%A7HTTP%E3%83%97%E3%83%AD%E3%82%AD%E3%82%B7%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%82%92%E4%BD%BF%E3%81%84HTTPS%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E3%82%82%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA%E3%81%AE%E8%87%AA%E5%8B%95%E4%BD%9C%E6%88%90%E3%82%92%E8%A1%8C%E3%81%86/"> JMeterでHTTPプロキシサーバーを使いHTTPSサイトでもシナリオの自動作成を行う</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

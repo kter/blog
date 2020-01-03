@@ -1,0 +1,33 @@
+I"<p>Ansible徹底入門を写経していたところ、Dynamic Inventoryのvagrant.py実行で下記エラーが出てしまった。</p>
+
+<pre class="lang:default decode:true">ImportError: No module named paramiko
+</pre>
+
+<p> </p>
+
+<p>元入ってるpythonとこの本に従って入れたpythonがごっちゃになっているようだった。</p>
+
+<p>vagrant.pyの実行だけなら “`python2 ./vagrant.py“` で動くが、ansible-playbookでインベントリにvagrant.pyを使うとなるとエラーとなる。</p>
+
+<p>そこで<a href="https://virtualenv.pypa.io/en/stable/">virtualenv</a>を使って、ディレクトリ単位でpythonを管理する。</p>
+
+<p> </p>
+
+<p>具体的には次のようにする。</p>
+
+<pre class="lang:default decode:true ">sudo pip install virtualenv
+virtualenv .
+source bin/activate
+pip install ansible
+</pre>
+
+<p> </p>
+
+<p>virtualenv環境を終了する場合は次のコマンドを実行する。</p>
+
+<pre class="lang:default decode:true ">deactivate</pre>
+
+<p> </p>
+
+<p> </p>
+:ET

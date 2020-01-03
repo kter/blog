@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>terraform importを試してみたので手順とか個人的ハマりポイントとか</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">terraform importを試してみたので手順とか個人的ハマりポイントとか</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2019-03-24</small></p> <hr/>
+   <div class="post">
+     <h1 id="terraform-import">terraform import手順</h1>
+<p>簡単な例でS3バケットのimportをしてみる。
+先に書いておくと、terraform importは現状のAWSリソースの情報をいい感じにterraformのtfファイルに書き起こしてくれるわけではなく、tfstateファイルにリソース情報を記録してくれるだけ。
+あとはterraformのドキュメントとtfstateファイルを参考にtfファイルを手書きする感じとなる。</p>
+<h2 id="1-importmaintf">1. importしたいリソースをmain.tfに記載</h2>
+<p><code>resource (リソースタイプ) (リソース名)</code> の形式で記載する。
+※リソース名はterraform内の識別名</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-:main.tf" data-lang=":main.tf"><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_s3_bucket&#34; &#34;test&#34;</span> {
+}
+</code></pre></div><h2 id="2-terraform-importterraformtfstate">2. terraform importコマンドでterraform.tfstateファイルに状態を保存</h2>
+<p><code>terraform import (リソースタイプ).(リソース名) (importするリソースID)</code>の形式でコマンドを実行する。
+※S3バケットの場合importするリソースIDはバケット名</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">terraform import aws_s3_bucket.test tomohiko.io
+</code></pre></div><p>※もしエラーが出たら<code>terraform init</code>を実行してAWSプラグインをインストールする</p>
+<h2 id="3-terraformtfstatemaintfmaintf">3. terraform.tfstateファイルからmain.tfファイルに必要なパラメータを抜き出しmain.tfファイルに記載</h2>
+<p>terraform.tfstateファイルにimportしたリソースの状態が記録されるので、その情報とterraformのドキュメントを参考にmain.tfファイルを完成させる。</p>
+<p>※デフォルト設定のS3を作成するだけならbucketの指定だけで大丈夫です。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-:main.tf" data-lang=":main.tf"><span style="color:#66d9ef">resource</span> <span style="color:#e6db74">&#34;aws_s3_bucket&#34; &#34;test&#34;</span> {
+<span style="color:#a6e22e">  bucket</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;tomohiko.io&#34;</span>
+}
+</code></pre></div><h1 id="heading">個人的ハマりポイント</h1>
+<h2 id="iam-role">IAM Role</h2>
+<p>IAM Roleを定義するためには下記3つのresourceと1つのdataを定義する必要がある。</p>
+<p>policy</p>
+<ul>
+<li>aws_iam_role</li>
+<li>aws_iam_policy_document</li>
+<li>aws_iam_role_policy</li>
+</ul>
+<p>data</p>
+<ul>
+<li>aws_iam_policy_document</li>
+</ul>
+<p>自分の書いたコードの一部を抜粋するとこんな感じ。</p>
+<pre><code>resource &quot;aws_iam_role&quot; &quot;IAMロール名&quot; {
+  name               = &quot;IAMロール名&quot;
+  assume_role_policy = &quot;${data.aws_iam_policy_document.IAMロール名.json}&quot;
+}
+
+data &quot;aws_iam_policy_document&quot; &quot;IAMロール名&quot; {
+  statement {
+    actions = [&quot;sts:AssumeRole&quot;]
+
+    principals {
+      type        = &quot;Service&quot;
+      identifiers = [&quot;ecs-tasks.amazonaws.com&quot;]
+    }
+  }
+}
+
+resource &quot;aws_iam_role_policy&quot; &quot;IAMロール名&quot; {
+  name   = &quot;IAMロール名&quot;
+  role   = &quot;${aws_iam_role.IAMロール名.id}&quot;
+  policy = &quot;${data.aws_iam_policy_document.IAMロール名-policy.json}&quot;
+}
+
+data &quot;aws_iam_policy_document&quot; &quot;IAMロール名-policy&quot; {
+  statement {
+    actions = [
+        &quot;s3:*&quot;
+    ]
+    resources = [ &quot;*&quot; ]
+  }
+}
+</code></pre><h2 id="ecs">ECS</h2>
+<p>コンテナ起動時にこんな感じのエラーが出る</p>
+<pre><code>CannotPullContainerError: API error (500): Get https://111122223333.dkr.ecr.us-east-1.amazonaws.com/v2/: net/http: request canceled while waiting for connection&quot;
+</code></pre><p>AWSのドキュメントに全て書いてあるが、パブリックサブネット+パブリックIP自動割当じゃないとインターネットに接続できず、コンテナイメージをプルできないため。
+(もしくはIP自動割当OFF+NATゲートウェイを設置&amp;ルーティング設定)</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/task_cannot_pull_image.html">コンテナイメージをプルできないエラー - Amazon Elastic Container Service</a></p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2019-03-18-%E6%9C%80%E9%80%9F%E3%81%A7Lets-Encrypt%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92GET%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/"> 最速でLet&#39;s Encryptの証明書をGETする方法</a></li>
+      &nbsp;<li class="next"><a href="/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/"> Laravel入門 -Laradock導入-</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

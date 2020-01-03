@@ -1,0 +1,284 @@
+I"�'<p>自分用のメモですので悪しからず…</p>
+
+<h2 id="ansible-with-awx--move-to-the-next-step-of-it-automation-">Ansible with AWX ~ Move to the next step of IT automation ~</h2>
+
+<p>斉藤秀喜さん (twitter: saito_hideki)</p>
+
+<ul>
+  <li>AWX(自動化プラットフォームでAnsible Towerのアップストリーム版)
+    <ul>
+      <li>Ansibleコマンドのラッパーとして動作する</li>
+      <li>ドキュメントはAnsible Towerの物を見れば良い（日本語版もある）</li>
+    </ul>
+  </li>
+  <li>下記機能がある
+    <ul>
+      <li>WebUI / Restful API / Callback URL機能</li>
+      <li>ユーザ管理機能（Active Directory, Google OAuth2など）</li>
+      <li>ターゲットホストの認証情報を一点管理</li>
+      <li>AWS / GCP / Azure / OpenStackなどと連携可能</li>
+      <li>GitHub / Gitlabなどの外部SCM上のPlaybookを取得</li>
+      <li>複数のジョブ（Playbook)をワークフローとして実行
+        <ul>
+          <li>失敗したらこのジョブを動かすなどといった動作ができる</li>
+        </ul>
+      </li>
+      <li>ジョブやワークフローを指定の日時で実行</li>
+      <li>ジョブの結果をIRCやSlackなどに送信</li>
+      <li>ログをlogstashやsplunkなど外部システムに転送</li>
+      <li>AWXサービスをクラスタ化（HAではなくマルチノード構成）</li>
+    </ul>
+  </li>
+  <li>dockerとpython-docker-pyが必要（Ansible Towerと違ってコンテナ上で動く）</li>
+  <li>AWX自体のインストールもAnsible Playbookで行う</li>
+</ul>
+
+<h2 id="副業で収益化をめざす-月数百円から始めるwebサービス立ち上げから運営まで">副業で収益化をめざす ~月数百円から始めるWebサービス立ち上げから運営まで~</h2>
+
+<p>高宮安仁さん</p>
+
+<ul>
+  <li>
+    <p>有給消化中で<a href="https://lingomine.io/">Lingomine</a>という英語学習サービスを開発。</p>
+  </li>
+  <li>新規サービスは儲からない。儲かるまで耐える必要がある
+    <ul>
+      <li>→生き残るために支出を削る</li>
+      <li>翻訳APIの結果をキャッシュ</li>
+    </ul>
+  </li>
+  <li>安易に規模 (他人のリソース、お金等) を大きくしない
+    <ul>
+      <li>収益が遠のく</li>
+    </ul>
+  </li>
+  <li>一人で作る
+    <ul>
+      <li>人的コストを最小に</li>
+      <li>意思疎通ミスがない</li>
+      <li>機能が増えない
+        <ul>
+          <li>→　運用・開発コストが減る</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>シンプルにする</li>
+  <li>趣味を外れない。はじめのうちは趣味っぽくやる。
+    <ul>
+      <li>コストが圧縮される</li>
+    </ul>
+  </li>
+  <li>ほとんどの新規サービスは失敗する
+    <ul>
+      <li>→一度もリリースしないから</li>
+      <li>自分用でいいから小さく進める</li>
+    </ul>
+  </li>
+  <li>　リリースまでの秘訣
+  *　毎日続ける
+  *　小さなリリースを続ける
+      *　次に何をすればいいのかが勝手に分かる
+    <ul>
+      <li>問題を解決せずに避ける
+        <ul>
+          <li>コンテンツの追加をユーザーにやらせようとしたが、違反報告や音声アップロードなど、必要な機能が多くなることがわかったので、代わりにパブリックドメインなどのフリーのコンテンツを使うことにした。</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>他のサービスより少しだけ工夫する
+    <ul>
+      <li>それで十分競争力が持てる</li>
+    </ul>
+  </li>
+  <li>デフォルト至上主義
+    <ul>
+      <li>余計な学習コストをかけない</li>
+    </ul>
+  </li>
+  <li>プログラミングを早く習得するには
+    <ul>
+      <li>Stack Overflowを使う
+        <ul>
+          <li>ほぼ100%答えが見つかる</li>
+        </ul>
+      </li>
+      <li>Lintに教わる
+        <ul>
+          <li>RuboCop, Rails Best Practices, ESLint</li>
+          <li>詳しい解説まで読むと超勉強になる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>すごい人になりきる
+    <ul>
+      <li>プログラミング、デザイン、宣伝、ユーザーサポート、規約作成など大変</li>
+      <li>偉人は大変な時どう乗り切ったか調べてみてなりきる</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="明日から実践できる-運用自動化に必要なテストにまつわる技術">明日から実践できる！ 運用自動化に必要なテストにまつわる技術</h2>
+
+<p>株式会社あくしゅ 山崎さん</p>
+
+<ul>
+  <li>プログラムが本番でどう振る舞うか確認(テスト)しておく必要がある
+    <ul>
+      <li>本番環境と同じ環境は用意できない</li>
+      <li>環境が違う場合、特に運用のプログラムではテストにならない</li>
+    </ul>
+  </li>
+  <li>Terraform, CloudFormation等で本番環境と同じ環境を作成し、そこで動作確認を行う。
+    <ul>
+      <li>PaaSを使うと考えることが減らせる</li>
+      <li>マシンイメージを使う
+        <ul>
+          <li>構築後の結果を担保する</li>
+        </ul>
+      </li>
+      <li>監視システムも環境に含める　</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="最高のitエンジニアリングを支える-守りと攻めの設計技術とsre">最高のITエンジニアリングを支える 守りと攻めの設計技術とSRE</h2>
+
+<p>北野 勝久さん (Twitter: katsuhisa__)</p>
+
+<ul>
+  <li>自己の事例と経験を踏まえてのよりよいサービスを提供するための筋道ややったことの紹介
+    <ul>
+      <li>うまく文章にまとまらず…</li>
+    </ul>
+  </li>
+</ul>
+
+<p><a href="発表スライド">https://speakerdeck.com/katsuhisa91/zui-gao-falseitenziniaringuwozhi-erushou-ritogong-mefalse-she-ji-ji-shu-to-sre</a></p>
+
+<h2 id="ミランティスが1万台のサーバーを監視運用するためにinfrastructure-as-codeを利用している話">ミランティスが1万台のサーバーを監視・運用するためにInfrastructure as Codeを利用している話</h2>
+
+<p>星野 真知さん</p>
+
+<ul>
+  <li>運用している１万台のサーバを監視している
+    <ul>
+      <li>極小数人で運用するためにCodeを使っている</li>
+    </ul>
+  </li>
+  <li>構築時のパラメータはすべてGitを使っている
+    <ul>
+      <li>変更はすべてSaltを使って行っている（自動化）
+        <ul>
+          <li>運用も自動化できる</li>
+          <li>Word, Excelがいらない</li>
+          <li>作業者感での品質差異が出にくい</li>
+          <li>台数の増減に影響を受けない</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>公開できるコードはコミュニティに公開し、開発を委託
+    <ul>
+      <li>各カスタマー固有のコードはカスタマーで管理してもらう</li>
+    </ul>
+  </li>
+  <li>Jenkinsを通じて毎日ビルド、テスト、配布が行われる</li>
+  <li>Prometheusを使っている
+    <ul>
+      <li>設定ファイルが細かい</li>
+      <li>エージェントのプラグインが大量
+        <ul>
+          <li>設定ファイルをインフラコードの内容から自動生成</li>
+          <li>構成から配布するエージェントを自動判別　</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="ソフトウェアで構築する成長し続けるインフラストラクチャとメルカリの挑戦">ソフトウェアで構築する成長し続けるインフラストラクチャとメルカリの挑戦</h2>
+
+<ul>
+  <li>メルカリのインフラの歴史紹介</li>
+  <li>Consul
+    <ul>
+      <li>Service Discovery
+        <ul>
+          <li>DNSベースの内部LBとして利用
+            <ul>
+              <li>Solrによるキーワードサジェストで採用</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Configuration deployment</li>
+      <li>Distributed Lock
+        <ul>
+          <li>キーワードサジェストのINDEXはDockerコンテナ内にある</li>
+          <li>分散ロックで無停止INDEXアップデート</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>OpenResty
+    <ul>
+      <li>NGINXをベースに作られたWeb Platform</li>
+      <li>Luaで機能を拡張</li>
+    </ul>
+  </li>
+  <li>特定の商品への購入処理が集中しDBの負荷上昇
+    <ul>
+      <li>SELECT FOR UPDATEが数百滞留</li>
+      <li>Busy LockによりCPUの使用率が急上昇</li>
+      <li>DBへの問い合わせより前に並列度の調整
+        <ul>
+          <li>PHPでwaitを入れるとApacheのプロセスが枯渇する可能性</li>
+          <li>OpenRestyからMemcachedにadd（ロック）するようにする</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>マイクロサービス化
+    <ul>
+      <li>細かい単位でのスケーリング、障害の分離</li>
+      <li>サービス開発速度を上げる</li>
+      <li>1000名以上のエンジニアでも対応できるようにする</li>
+      <li>API Gatewayを全面に置き、配下のサービスを変えていった</li>
+    </ul>
+  </li>
+  <li>Kubernetes
+    <ul>
+      <li>運用負荷を減らすために使用</li>
+    </ul>
+  </li>
+  <li>Spinnaker
+    <ul>
+      <li>デプロイに使用</li>
+    </ul>
+  </li>
+  <li>Terraform
+    <ul>
+      <li>サービスをすばやく立ち上げるために使用</li>
+    </ul>
+  </li>
+  <li>石狩, 東京間のレスポンス改善
+    <ul>
+      <li>3 way handshakeを避ける。TLSのhandshakeも避ける</li>
+      <li>HTTP/1, HTTP/2のKeepAliveを活用する
+        <ul>
+          <li>PHPではリクエス間のHTTPコネクションの再利用ができない</li>
+          <li>choconというソフトを作成し改善
+            <ul>
+              <li>Consulで冗長化している</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+:ET

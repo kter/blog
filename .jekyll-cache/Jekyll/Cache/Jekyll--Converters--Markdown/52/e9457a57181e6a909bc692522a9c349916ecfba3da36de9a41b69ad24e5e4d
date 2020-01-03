@@ -1,0 +1,14 @@
+I")<p>yum remove phpでphpが削除されない場合</p>
+
+<p>phpのモジュールがインストールされている場合があります</p>
+
+<blockquote>
+  <p>yum remove php*</p>
+</blockquote>
+
+<p>とすればphpのモジュールが削除できます。</p>
+
+<p> </p>
+
+<p>Source: New feed</p>
+:ET

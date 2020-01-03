@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part2 -Ingress編</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part2 -Ingress編</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-03-01</small></p> <hr/>
+   <div class="post">
+     <p>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。</p>
+<p>前回クラスタを作成したので今回はIngressを追加します。</p>
+<p>Ingressを追加することで、クラスタ内のサービスにインターネットからアクセスできるようになります。</p>
+<h1 id="heading">はじめに</h1>
+<p>Ingressは普通にGKEで作成すると、Ingress ControllerがGCPのロードバランサーを作成します。</p>
+<p>しかしこれが高い…。月額18ドルも掛かります。</p>
+<p>そこでGCPのロードバランサーの代わりにnginx-ingressというNGINXを使います。</p>
+<p>こちらを一番小さいf1-microのノードで動かせば4.28ドルで済みます。</p>
+<p>しかもf1-microはAlways Freeの条件であるus-east1, us-west1, us-central1のいずれかで動かせばタダで動かせます。</p>
+<p>なので今回はロードバランサーを使わず、nginx-ingressを使うことにします。</p>
+<h1 id="heading-1">前提作業</h1>
+<p>前回の記事のGKEでなるべく安くKubernetesクラスタを作成してPrometheus + Grafanaを使ってみる Part1 -クラスタ作成編-の手順でクラスタを作成してあることを前提とします。</p>
+<p>また疎通確認にドメインを使用しますので、用意してください。</p>
+<p><del>ドメインを持っていない方はnip.ioとか使うといいと思います。知らんけど。</del></p>
+<h1 id="ingress-controller">Ingress Controller用ノードを作成</h1>
+<p>前回作成したクラスタのノードはプリエンプティブノードのため一定時間で削除されます。</p>
+<p>nginx-ingressでは静的グローバルIPをノードに割り当てる必要があるため、削除されないノードを別途作成します。</p>
+<p>具体的にはIngress Controllerを動かすためのノードプールを作成します。</p>
+<ol>
+<li>クラスタ編集画面を開く</li>
+<li>&ldquo;ノードプールを追加&quot;ボタンを選択</li>
+<li>名前にload-balancerと入力</li>
+<li>マシンタイプにmicro (f1-micro)を選択</li>
+<li>ノードあたりのブートディスク サイズに10GBと入力</li>
+</ol>
+<h1 id="ingress-controller-1">Ingress Controller用ノードの設定</h1>
+<p>下記コマンドを実行します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export CLUSTER_NAME<span style="color:#f92672">=</span>クラスタ名
+export ZONE<span style="color:#f92672">=</span>us-west1-b
+export REGION<span style="color:#f92672">=</span>us-west1
+<span style="color:#75715e"># kubectlを使えるようにする</span>
+gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE
+<span style="color:#75715e"># 静的グローバルIPアドレスを確保</span>
+gcloud compute addresses create $CLUSTER_NAME-ip --region $REGION
+<span style="color:#75715e"># 静的グローバルIPアドレスを取得</span>
+export LB_ADDRESS_IP<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gcloud compute addresses list | grep $CLUSTER_NAME-ip | awk <span style="color:#e6db74">&#39;{print $3}&#39;</span><span style="color:#66d9ef">)</span>
+<span style="color:#75715e"># nginx-ingressで使うノード名を取得</span>
+export LB_INSTANCE_NAME<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl describe nodes | grep Name: | tail -n1 | awk <span style="color:#e6db74">&#39;{print $2}&#39;</span><span style="color:#66d9ef">)</span>
+<span style="color:#75715e"># nginx-ingressしか動かないようにする (リソースの確保のため)</span>
+kubectl taint nodes $LB_INSTANCE_NAME role<span style="color:#f92672">=</span>nginx-ingress-controller:NoSchedule
+<span style="color:#75715e"># 静的グローバルIPアドレスをノードに紐付ける</span>
+export LB_INSTANCE_NAT<span style="color:#f92672">=</span>external-nat
+gcloud compute instances delete-access-config $LB_INSTANCE_NAME --access-config-name <span style="color:#e6db74">&#34;</span>$LB_INSTANCE_NAT<span style="color:#e6db74">&#34;</span> --zone $ZONE
+gcloud compute instances add-access-config $LB_INSTANCE_NAME --access-config-name <span style="color:#e6db74">&#34;</span>$LB_INSTANCE_NAT<span style="color:#e6db74">&#34;</span> --address $LB_ADDRESS_IP --zone $ZONE
+<span style="color:#75715e"># ラベルの設定</span>
+kubectl label nodes $LB_INSTANCE_NAME role<span style="color:#f92672">=</span>load-balancer
+<span style="color:#75715e"># タグの設定 (これで80と443に外部からアクセスできるようになる)</span>
+gcloud compute instances add-tags $LB_INSTANCE_NAME --tags http-server,https-server --zone $ZONE
+</code></pre></div><h1 id="helm">helmの導入</h1>
+<p>helmとはKubernetesのパッケージマネージャーです。</p>
+<p>nginx-ingressはhelmでも提供されているので、nginx-ingressの導入の前にhelmをまず導入します。</p>
+<h2 id="helm-1">helmをインストール</h2>
+<p>下記コマンドを実行します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ダウンロード先: https://github.com/kubernetes/helm/releases</span>
+curl -O https://storage.googleapis.com/kubernetes-helm/helm-v2.8.1-linux-amd64.tar.gz
+tar -zxvf helm-v2.8.1-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
+</code></pre></div><h2 id="helm-2">クラスタにhelmを導入</h2>
+<p>下記コマンドを実行します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">helm init --service-account tiller
+echo <span style="color:#e6db74">&#34;apiVersion: v1
+</span><span style="color:#e6db74">kind: ServiceAccount
+</span><span style="color:#e6db74">metadata:
+</span><span style="color:#e6db74">  name: tiller
+</span><span style="color:#e6db74">  namespace: kube-system
+</span><span style="color:#e6db74">---
+</span><span style="color:#e6db74">apiVersion: rbac.authorization.k8s.io/v1beta1
+</span><span style="color:#e6db74">kind: ClusterRoleBinding
+</span><span style="color:#e6db74">metadata:
+</span><span style="color:#e6db74">  name: tiller
+</span><span style="color:#e6db74">roleRef:
+</span><span style="color:#e6db74">  apiGroup: rbac.authorization.k8s.io
+</span><span style="color:#e6db74">  kind: ClusterRole
+</span><span style="color:#e6db74">  name: cluster-admin
+</span><span style="color:#e6db74">subjects:
+</span><span style="color:#e6db74">  - kind: ServiceAccount
+</span><span style="color:#e6db74">    name: tiller
+</span><span style="color:#e6db74">    namespace: kube-system
+</span><span style="color:#e6db74">&#34;</span> | kubectl apply -f -
+</code></pre></div><h1 id="nginx-ingress">nginx-ingressの導入</h1>
+<p>一応ドメインとそれに紐づくサービスは下記の通りということで話を進めます。適宜読み替えてください。</p>
+<p>※AレコードとしてLB_ADDRESS_IPのIPを登録しておいてください。</p>
+<table>
+<thead>
+<tr>
+<th>ドメイン</th>
+<th>サービス名</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(ドメイン1)</td>
+<td>nginx</td>
+<td>サンプルアプリケーション</td>
+</tr>
+<tr>
+<td>(ドメイン2)</td>
+<td>prometheus-prometheus</td>
+<td>Prometheus用　</td>
+</tr>
+<tr>
+<td>(ドメイン3)</td>
+<td>grafana-grafana</td>
+<td>Grafana用</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nginx-ingress-1">nginx-ingressの導入</h2>
+<p>helmでnginx-ingressを導入します。</p>
+<p>設定をvalues.yamlという名前で保存してからnginx-ingressをインストールします。</p>
+<p>下記コマンドを実行してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir nginx-ingress <span style="color:#f92672">&amp;&amp;</span> cd $_
+curl -O https://raw.githubusercontent.com/kter/personal-project/1.1/nginx-ingress/values.yaml
+helm install stable/nginx-ingress --name nginx-ingress -f values.yaml
+</code></pre></div><h2 id="ingress">Ingressの設定作成</h2>
+<p>Ingressの設定をyamlで記載します。</p>
+<p>nginx-ingress.ymlという名前で保存してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+    kubernetes.io/ingress.class: <span style="color:#e6db74">&#34;nginx&#34;</span>
+    kubernetes.io/tls-acme: <span style="color:#e6db74">&#34;true&#34;</span>
+spec:
+  tls:
+  - secretName: kubernetes-ingress-tls
+    hosts:
+      - (ドメイン1)
+      - (ドメイン2)
+      - (ドメイン3)
+  rules:
+  - host: (ドメイン1)
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nginx
+          servicePort: <span style="color:#ae81ff">80</span>
+      - path: /*
+        backend:
+          serviceName: nginx
+          servicePort: <span style="color:#ae81ff">80</span>
+  - host: (ドメイン2)
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: prometheus-prometheus-server
+          servicePort: <span style="color:#ae81ff">80</span>
+      - path: /*
+        backend:
+          serviceName: prometheus-prometheus-server
+          servicePort: <span style="color:#ae81ff">80</span>
+  - host: (ドメイン3)
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: grafana-grafana
+          servicePort: <span style="color:#ae81ff">80</span>
+      - path: /*
+        backend:
+          serviceName: grafana-grafana
+          servicePort: <span style="color:#ae81ff">80</span>
+</code></pre></div><h2 id="ingress-1">Ingressの設定反映</h2>
+<p>下記コマンドを実行します。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f nginx-ingress.yml
+</code></pre></div><h1 id="heading-2">サンプルアプリケーションをデプロイ</h1>
+<p>下記yamlをnginx-deployment.ymlとして保存してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    name: nginx
+spec:
+  replicas: <span style="color:#ae81ff">1</span>
+  template:
+    metadata:
+      labels:
+        name: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: <span style="color:#ae81ff">80</span>
+          resources:
+            requests:
+              cpu: 10m
+</code></pre></div><p>下記yamlをnginx-service.ymlとして保存してください。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    name: nginx
+spec:
+  ports:
+    - port: <span style="color:#ae81ff">80</span>
+      targetPort: <span style="color:#ae81ff">80</span>
+      protocol: TCP
+      name: nginx
+  type: NodePort
+  selector:
+    name: nginx
+</code></pre></div><p>下記コマンドを実行してnginxをデプロイします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">kubectl apply -f blog-deployment.yml
+kubectl apply -f blog-service.yml
+</code></pre></div><h1 id="heading-3">疎通確認</h1>
+<p>(ドメイン1)にアクセスし、NGINXの画面が表示されれば成功です。</p>
+<p>他のドメインについては、まだデプロイを行っていないのでdefault-backendの表示がされるはずです。</p>
+<h1 id="heading-4">終わりに</h1>
+<p>今回は作成したクラスタのサービスにアクセスするためのIngressを作成しました。</p>
+<p>次回はLet's Encryptによるhttpsが使えるように設定を行う予定です。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-02-11-GKE%E3%81%A7Kubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part1/"> GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part1 -クラスタ作成編-</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-03-02-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part3-SSL%E7%B7%A8-/"> GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part3 -SSL編-</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

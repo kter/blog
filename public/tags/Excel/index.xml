@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Excel on ことえりブログ</title>
+    <link>/tags/Excel/</link>
+    <description>Recent content in Excel on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 14 Jul 2017 14:59:24 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Excel/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>[Excel] PDF出力時シート毎にPDFファイルが分割される場合の対応</title>
+      <link>/post/2017-07-14-excel-pdf%E5%87%BA%E5%8A%9B%E6%99%82%E3%82%B7%E3%83%BC%E3%83%88%E6%AF%8E%E3%81%ABpdf%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E5%88%86%E5%89%B2%E3%81%95%E3%82%8C%E3%82%8B%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Fri, 14 Jul 2017 14:59:24 +0000</pubDate>
+      
+      <guid>/post/2017-07-14-excel-pdf%E5%87%BA%E5%8A%9B%E6%99%82%E3%82%B7%E3%83%BC%E3%83%88%E6%AF%8E%E3%81%ABpdf%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%8C%E5%88%86%E5%89%B2%E3%81%95%E3%82%8C%E3%82%8B%E5%A0%B4%E5%90%88/</guid>
+      <description>PDF出力時シート毎にPDFファイルが分割される場合の対応
+レイアウトタブから印刷セクションの倍率を、全シートで同じ値に設定します。
+※同じ値に設定されているように見えても、設定されていない場合があるため、一旦値を選択状態にしてEnterキーを押し、設定します。
+それでも直らない場合、用紙サイズがシート毎に異なるかもしれません。
+用紙サイズはシート毎に変更できるため、全シートで同じ物を設定してみてください。</description>
+    </item>
+    
+  </channel>
+</rss>

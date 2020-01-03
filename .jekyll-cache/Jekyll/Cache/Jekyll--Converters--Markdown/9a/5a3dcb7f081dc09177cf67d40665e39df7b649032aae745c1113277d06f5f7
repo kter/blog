@@ -1,0 +1,141 @@
+I"0<p>OpsJAWSの Meetup#12 ~ Systems Manager祭り ~に参加してきたので内容をメモ。</p>
+
+<h4 id="amazon-ec2-systems-manager">Amazon EC2 Systems Manager</h4>
+
+<p>OS内部の構成を管理</p>
+
+<p>下記の自動化</p>
+
+<ul>
+  <li>
+    <p>ソフトウェアインベントリの収集</p>
+  </li>
+  <li>
+    <p>OSパッチの適用</p>
+  </li>
+  <li>
+    <p>システムイメージの作成</p>
+  </li>
+  <li>
+    <p>OS設定</p>
+  </li>
+</ul>
+
+<p>Systems Managerは複数サービスで構成されている</p>
+
+<h5 id="run-command">Run Command</h5>
+
+<p>リモートから任意の実行が可能</p>
+
+<p>JSONベースでコマンド・タスクを定義</p>
+
+<p>SSHポートを開ける必要がない</p>
+
+<h5 id="ステートマネージャー">ステートマネージャー</h5>
+
+<p>OSとアプリケーションの設定を定義、状態を維持する</p>
+
+<p>JSONベースでポリシーを定義</p>
+
+<p>EC2だけではなくオンプレも管理できる</p>
+
+<h5 id="インベントリ">インベントリ</h5>
+
+<p>ソフトウェアインベントリの情報収集</p>
+
+<p>オンプレも対応</p>
+
+<p>JSONベースで取得するデータを定義</p>
+
+<p>ステートマネージャから定期的に呼び出せる</p>
+
+<h5 id="メンテナンスウィンドウ">メンテナンスウィンドウ</h5>
+
+<p>事前に設定した時間でメンテナンスを実施</p>
+
+<p>組み込み済みのコマンド、Run Commandの実行が可能</p>
+
+<p>可用性と信頼性の向上</p>
+
+<p>時間と繰り返し間隔を設定 -&gt; メンテナンス対象のターゲットを指定 -&gt; 実行するタスクを設定</p>
+
+<h5 id="パッチマネージャ">パッチマネージャ</h5>
+
+<p>ベースラインを定義してWindows/Linuxのパッチを適用</p>
+
+<p>Patch Baselineを使ってカスタムパッチポリシーを定義</p>
+
+<h5 id="オートメーション">オートメーション</h5>
+
+<p>シンプルなワークフローをつかって一般的なタスクを自動化</p>
+
+<h5 id="パラメータストア">パラメータストア</h5>
+
+<p>IT資産の集中管理</p>
+
+<p>ログイン、DB接続情報などを一元管理</p>
+
+<p>Run Command, State Manager, Automationやコンソールから参照、更新可能</p>
+
+<p>細かく権限管理して必要な人に必要な情報を提供</p>
+
+<p>KMSで暗号化</p>
+
+<p>IAMで制限できるため、パラメータ名の命名規則によって、環境ごとにアクセス可能なユーザを定義することができる</p>
+
+<p>定義済みドキュメントが豊富</p>
+
+<h4 id="ssm-agent">SSM Agent</h4>
+
+<p>Systems Managerの利用にはエージェントが必要</p>
+
+<p>64bitだとAmazon AMI, CentOS, RHEL</p>
+
+<p>Linuxではrootユーザでコマンドの実行が行われる</p>
+
+<p>LinuxではS3からダウンロードしてインストールする</p>
+
+<p>オンプレで使う場合、アクティベーションが必要。下記設定が必要</p>
+
+<ol>
+  <li>
+    <p>名前</p>
+  </li>
+  <li>
+    <p>許可するサーバ数</p>
+  </li>
+  <li>
+    <p>使用するIAMロール</p>
+  </li>
+  <li>
+    <p>アクティベーションの有効期間</p>
+  </li>
+  <li>
+    <p>サーバに付与する名前</p>
+  </li>
+</ol>
+
+<h4 id="利用例">利用例</h4>
+
+<p>AMI更新の自動化</p>
+
+<p>AMIから自動的にインスタンスを作成、アップデート適用後AMIを作成し、インスタンスを削除</p>
+
+<p>公式ドキュメントに手順が載っている</p>
+
+<p>入門編スライド</p>
+
+<div style="margin-bottom:5px">
+  <strong> <a href="https://www.slideshare.net/qryuu/systems-manager-ops-jaws" title="Systems manager 入門 ops jaws" target="_blank">Systems manager 入門 ops jaws</a> </strong> from <strong><a target="_blank" href="https://www.slideshare.net/qryuu">覚宏 伊藤</a></strong>
+</div>
+
+<p>ハンズオンスライド</p>
+
+<div style="margin-bottom:5px">
+  <strong> <a href="https://www.slideshare.net/qryuu/systems-manager-ops-jaw" title="Systems manager ハンズオン ops jaw " target="_blank">Systems manager ハンズオン ops jaw </a> </strong> from <strong><a target="_blank" href="https://www.slideshare.net/qryuu">覚宏 伊藤</a></strong>
+</div>
+
+<h4 id="ライトニングトーク">ライトニングトーク</h4>
+
+<p>Systems Managerのインベントリ情報をExcelに出力するツールを作った。</p>
+:ET

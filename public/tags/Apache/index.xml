@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Apache on ことえりブログ</title>
+    <link>/tags/Apache/</link>
+    <description>Recent content in Apache on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Jul 2017 22:40:43 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Apache/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Apacheでユーザエージェントでアクセス拒否する</title>
+      <link>/post/2017-07-23-apache%E3%81%A7%E3%83%A6%E3%83%BC%E3%82%B6%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%A7%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E6%8B%92%E5%90%A6%E3%81%99%E3%82%8B/</link>
+      <pubDate>Sun, 23 Jul 2017 22:40:43 +0000</pubDate>
+      
+      <guid>/post/2017-07-23-apache%E3%81%A7%E3%83%A6%E3%83%BC%E3%82%B6%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%A7%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E6%8B%92%E5%90%A6%E3%81%99%E3%82%8B/</guid>
+      <description>こんな感じで拒否できる (Apache 2.2系以前の場合)。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,6 @@
+I"<p>VPC削除時、We could not delete the following VPCと表示され削除できない場合</p>
+
+<p>VPCにエンドポイントがあるとだめらしいので、VPCエンドポイントを手動で削除してからVPCを削除する。</p>
+
+<p>Source: New feed</p>
+:ET

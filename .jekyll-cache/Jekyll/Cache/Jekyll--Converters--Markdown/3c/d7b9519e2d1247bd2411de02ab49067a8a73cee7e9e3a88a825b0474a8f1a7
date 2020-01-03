@@ -1,0 +1,12 @@
+I"7<p>AWS CLIのS3ではワイルドカードが使えないと思っていましたが、実はオプションを駆使することで使えることがわかったのでメモ。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+aws s3 <span class="nb">cp</span> <span class="nt">--recursive</span> <span class="se">\</span>
+  <span class="nt">--exclude</span> <span class="s1">'*'</span> <span class="se">\</span>
+  <span class="nt">--include</span> <span class="s1">'ワイルドカード入り検索文字列'</span> <span class="se">\</span>
+  s3://bucket_name/path/ <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>S3とかCloudFrontだとログファイルがディレクトリ掘らずに置かれてしまうのでこれでやると便利ですね。</p>
+
+:ET

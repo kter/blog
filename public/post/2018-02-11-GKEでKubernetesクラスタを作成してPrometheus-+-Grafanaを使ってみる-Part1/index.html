@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part1 -クラスタ作成編-</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part1 -クラスタ作成編-</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-02-11</small></p> <hr/>
+   <div class="post">
+     <p>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。</p>
+<p>まずはGKEでKubernetesクラスタを作成してみます。</p>
+<h1 id="heading">はじめに</h1>
+<p>GCP(Google Cloud Platform)アカウントの登録とプロジェクトの作成が終わってる前提でお話します。</p>
+<p>適当に作っておいてください。</p>
+<h1 id="heading-1">クラスタの作成</h1>
+<p>左上のハンバーガーメニューからKubernetes Engineを選択</p>
+<p>※初回アクセス時には準備に数分かかります。</p>
+<p>クラスタの作成ボタンを押下します。</p>
+<p><img src="/assets/img/20180211/2018-02-11-01.png" alt=""></p>
+<h2 id="heading-2">設定</h2>
+<p>今回のように可用性 (ダウンタイム)に目をつぶるならノードにプリエンプティブを使うことで、<a href="https://cloud.google.com/compute/pricing?hl=ja#machinetype">インスタンスの費用</a>を7割程度抑えることが出来ます (オレゴン、g1-smallの場合)。</p>
+<p>※<a href="https://cloud.google.com/preemptible-vms/?hl=ja">プリエンプティブ</a>にした場合、２４時間以内に勝手に落とされてしまうので気をつけてください。</p>
+<p>ノードは価格の安い海外のリージョンを使い、マシンタイプはsmallを使います。</p>
+<p>またデフォルトでは、ノードのディスクサイズが100GBという罠があるので、忘れずに減らしておきましょう。</p>
+<ol>
+<li>ゾーン: us-west1-b</li>
+<li>マシンタイプ: small（g1-small)</li>
+<li>自動スケーリング: オン</li>
+<li>最大サイズ: 6</li>
+<li>プリエンプティブ ノード: 有効</li>
+<li>ノードあたりのブートディスク サイズ: 10GB</li>
+<li>HTTP 負荷分散: 無効</li>
+</ol>
+<h2 id="heading-3">接続</h2>
+<p>クラスタの作成が終わったらkubectlコマンドでクラスタに接続してみます。</p>
+<p>接続ボタンを押下し、&ldquo;Cloud Shellで実行&quot;を押下します。</p>
+<p><img src="/assets/img/20180211/2018-02-11-02.png" alt=""></p>
+<p>ウインドウ下部に、コマンドが入力済みの状態でコンソールが表示されます。
+Enterキーを押してコマンドを実行します。</p>
+<p>これでkubectlでアクセスできるようになりました。</p>
+<p><code>kubectl get nodes</code>を実行して作成したノードが表示されるかどうか確認します。</p>
+<p>以上</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-02-06-Mailu%E3%81%A7%E7%B0%A1%E5%8D%98%E3%81%ABWebUI%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B/"> Mailuで簡単にWebUI付きのメールサーバを立てる</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-03-01-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part2-Ingress%E7%B7%A8-/"> GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part2 -Ingress編</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

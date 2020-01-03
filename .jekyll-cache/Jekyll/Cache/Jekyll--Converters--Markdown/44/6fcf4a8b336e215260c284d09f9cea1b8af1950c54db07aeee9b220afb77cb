@@ -1,0 +1,8 @@
+I"<p>AmazonLinuxでDockerが使いたくて、<code class="highlighter-rouge">yum install docker</code>でDockerをインストールしたものの、docker-composeが使えなかった。</p>
+
+<p>調べたところ、docker-composeのインストールは、バイナリをダウンロードするだけのようだった。</p>
+
+<p>具体的にはGitHubの<a href="https://github.com/docker/compose/releases">リリースページ</a>からダウンロードする。</p>
+
+<p>実際に実行したコマンドは次の通り。</p>
+:ET

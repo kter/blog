@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>最速でLet&#39;s Encryptの証明書をGETする方法</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">最速でLet&#39;s Encryptの証明書をGETする方法</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2019-03-18</small></p> <hr/>
+   <div class="post">
+     <h1 id="heading">前提</h1>
+<ol>
+<li>更新したいドメインがRoute53で管理されている</li>
+<li>Route53の操作権を持つIAMロールを割り当てたEC2で作業する</li>
+<li>EC2でDockerが使える</li>
+</ol>
+<h1 id="heading-1">手順</h1>
+<p>下記コマンドを実行するだけ。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo docker run -it --rm -e AWS_HOSTED_ZONE_ID<span style="color:#f92672">=</span><span style="color:#f92672">(</span>対象ドメインのHosted Zone ID<span style="color:#f92672">)</span>  -v $PWD:/app xenolf/lego --path<span style="color:#f92672">=</span>/app --email<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(メールアドレス)&#34;</span> --domains<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;(対象のドメイン)&#34;</span> --dns route53 run
+</code></pre></div><p>証明書がカレントディレクトリのcertificatesディレクトリ以下に保存される。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2019-03-14-New-Relic-FUTURE-STACK-%E3%82%B9%E3%83%BC%E3%83%91%E3%83%BC%E6%9B%B8%E3%81%8D%E6%AE%B4%E3%82%8A%E3%83%A1%E3%83%A2/"> New Relic {FUTURE} STACK スーパー書き殴りメモ</a></li>
+      &nbsp;<li class="next"><a href="/post/2019-03-24-terraform-import%E3%82%92%E8%A9%A6%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%81%AE%E3%81%A7%E6%89%8B%E9%A0%86%E3%81%A8%E3%81%8B%E5%80%8B%E4%BA%BA%E7%9A%84%E3%83%8F%E3%83%9E%E3%82%8A%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%81%A8%E3%81%8B/"> terraform importを試してみたので手順とか個人的ハマりポイントとか</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

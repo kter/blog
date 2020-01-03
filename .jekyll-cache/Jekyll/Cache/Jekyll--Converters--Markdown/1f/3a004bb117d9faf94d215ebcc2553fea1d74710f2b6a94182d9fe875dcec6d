@@ -1,0 +1,10 @@
+I"�<p>バーチャルホストを使用するときapachectl -tなどで、[warn] _default_ VirtualHost overlap on port 80, the first has precedenceと表示される時の対処</p>
+
+<p>httpd.confに次の行を書きましょう。デフォルトではコメントアウトになっているはずです。</p>
+
+<blockquote>
+  <p>NameVirtualHost *:80</p>
+</blockquote>
+
+<p>Source: New feed</p>
+:ET

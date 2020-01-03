@@ -1,0 +1,26 @@
+I"<p>Kubernetesのsecretsはbase64でエンコードした値を入力します。</p>
+
+<pre class="lang:default decode:true">$ echo 'secrets value' | base64
+c2VjcmV0cyB2YWx1ZQo=</pre>
+
+<p> </p>
+
+<p>この時エンコードする文字列が長いとエンコード結果が2行になってしまうときがあります。</p>
+
+<pre class="lang:default decode:true">$ echo 'long long long long long long long long long long secrets value' | base64
+bG9uZyBsb25nIGxvbmcgbG9uZyBsb25nIGxvbmcgbG9uZyBsb25nIGxvbmcgbG9uZyBzZWNyZXRz
+IHZhbHVlCg==</pre>
+
+<p> </p>
+
+<p>2行の文字列をどうやってsecretsのymlファイルに書こうか少し迷いましたが、2行を単純に連結するだけで問題ありませんでした (知らなかった…)。</p>
+
+<pre class="lang:default decode:true">$ echo 'bG9uZyBsb25nIGxvbmcgbG9uZyBsb25nIGxvbmcgbG9uZyBsb25nIGxvbmcgbG9uZyBzZWNyZXRzIHZhbHVlCg==' | base64 -d
+long long long long long long long long long long secrets value</pre>
+
+<p> </p>
+
+<p>ちなみに<span class="lang:default decode:true crayon-inline">echo ‘hoge’ | base64</span>してもいいですが、<span class="lang:default decode:true crayon-inline">base64 &lt;&lt;&lt; ‘hoge’</span> とした方が短くてスマートですね (こちらも知らなかった…)。</p>
+
+<p> </p>
+:ET

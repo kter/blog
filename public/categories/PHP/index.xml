@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PHP on ことえりブログ</title>
+    <link>/categories/PHP/</link>
+    <description>Recent content in PHP on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Oct 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/PHP/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SlackにWebHookを送るときに&#43;記号がスペースに置き換えられる問題の対応</title>
+      <link>/post/2018-10-24-Slack%E3%81%ABWebHook%E3%82%92%E9%80%81%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AB&#43;%E8%A8%98%E5%8F%B7%E3%81%8C%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%89%E3%82%8C%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AE%E5%AF%BE%E5%BF%9C/</link>
+      <pubDate>Wed, 24 Oct 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-10-24-Slack%E3%81%ABWebHook%E3%82%92%E9%80%81%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AB&#43;%E8%A8%98%E5%8F%B7%E3%81%8C%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%89%E3%82%8C%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AE%E5%AF%BE%E5%BF%9C/</guid>
+      <description>SlackにWebHookを送るときに+記号がスペースに置き換えられる問題の対応です。 この問題の解決に1,2時間掛かったのでメモしておきます…。
+こんな感じでSlackにWebHookを送ろうと思っていたのですが、この例では+の部分がスペースに置き換わってしまいす。
+$params = [ &amp;#39;title&amp;#39; =&amp;gt; &amp;#34;タイトル&amp;#34;, &amp;#39;text&amp;#39; =&amp;gt; &amp;#34;プラス記号がスペースに置き換わる→+←&amp;#34;, &amp;#39;channel&amp;#39; =&amp;gt; $channel, &amp;#39;username&amp;#39; =&amp;gt; $username, &amp;#39;icon_emoji&amp;#39; =&amp;gt; $icon_emoji, &amp;#39;mrkdwn&amp;#39; =&amp;gt; true, &amp;#39;attachments&amp;#39; =&amp;gt; [$attachments] ]; $payload = &amp;#39;payload=&amp;#39; . json_encode($params); $ch = curl_init($webhook_url); curl_setopt($ch, CURLOPT_POST, true); curl_setopt($ch, CURLOPT_POSTFIELDS, $payload); curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true); curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); $result = curl_exec($ch); バッククォートやダブルクォーテーションで括っても結果は同じ。 いろいろ試したり検索したりしていくうちにURLエンコードをすれば良いことに気が付きました。
+ということでこのようにして解決。
+&amp;#39;text&amp;#39; =&amp;gt; urlencode(&amp;#34;プラス記号がスペースに置き換わる→+←&amp;#34;), 後からよくよく調べてみるとドキュメントにちゃんとURLエンコードしろと書いてありました… https://api.slack.com/docs/message-formatting</description>
+    </item>
+    
+  </channel>
+</rss>

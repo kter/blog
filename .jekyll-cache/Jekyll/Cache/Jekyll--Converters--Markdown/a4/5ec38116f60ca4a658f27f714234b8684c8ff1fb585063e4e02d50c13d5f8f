@@ -1,0 +1,27 @@
+I"�<p>JenkinsでGitHubのWebhookを受けるのに手こずったので、手順を軽くメモ。</p>
+
+<p>要点だけ軽くまとめます。</p>
+
+<p>ポイントは認証トークンとAPIトークンをそれぞれ必要だということでした。</p>
+
+<ol>
+  <li>
+    <p>GitHub側の設定</p>
+
+    <p>WebHookURLとして下記URLを指定する。</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> https://ユーザ名:APIトークン（認証トークンではない)@JenkinsのURL/job/Job名/build?token=(認証トークン)
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Jenkins側の設定</p>
+
+    <p>認証トークンとAPIトークンを払い出す。</p>
+
+    <p>認証トークンはプロジェクトの設定ページの”ビルド・トリガ”から任意の値を設定。</p>
+
+    <p>APIトークンはユーザ情報の設定ページ(https://JenkinsのURL/user/(ユーザ名)/configure)から払い出す。</p>
+  </li>
+</ol>
+
+:ET

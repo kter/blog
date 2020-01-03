@@ -1,0 +1,11 @@
+I"<p>改行コードはtrコマンドで変更できる。
+標準入力で入力を与えると、標準出力で出力が返ってくる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tr</span> <span class="o">(</span>置き換え前の改行コード<span class="o">)</span> <span class="o">(</span>置き換え後の改行コード<span class="o">)</span>
+</code></pre></div></div>
+
+<p>例えば、CRをLFに変更したい場合は次の通り。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tr</span> <span class="se">\\</span>r <span class="se">\\</span>n &lt; cr.txt <span class="o">&gt;</span> lf.txt
+</code></pre></div></div>
+:ET

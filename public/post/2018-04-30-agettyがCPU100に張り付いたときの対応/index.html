@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>agettyがCPU100%に張り付いたときの対応</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">agettyがCPU100%に張り付いたときの対応</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-04-30</small></p> <hr/>
+   <div class="post">
+     <p>特に起動スクリプトがあるわけではないので、下記コマンドを使って再起動しました。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo initctl list
+rc stop/waiting
+tty <span style="color:#f92672">(</span>/dev/tty3<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2914</span>
+tty <span style="color:#f92672">(</span>/dev/tty2<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2911</span>
+tty <span style="color:#f92672">(</span>/dev/tty1<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2907</span>
+tty <span style="color:#f92672">(</span>/dev/tty6<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2921</span>
+tty <span style="color:#f92672">(</span>/dev/tty5<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2918</span>
+tty <span style="color:#f92672">(</span>/dev/tty4<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2916</span>
+update-motd stop/waiting
+plymouth-shutdown stop/waiting
+control-alt-delete stop/waiting
+rcS-emergency stop/waiting
+kexec-disable stop/waiting
+quit-plymouth stop/waiting
+rcS stop/waiting
+prefdm stop/waiting
+init-system-dbus stop/waiting
+print-image-id stop/waiting
+elastic-network-interfaces stop/waiting
+splash-manager stop/waiting
+start-ttys stop/waiting
+amazon-ssm-agent start/running, process <span style="color:#ae81ff">17313</span>
+rcS-sulogin stop/waiting
+serial <span style="color:#f92672">(</span>ttyS0<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2906</span>
+
+$ sudo initctl status serial DEV<span style="color:#f92672">=</span>ttyS0 serial <span style="color:#f92672">(</span>ttyS0<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">2906</span>
+
+$ sudo initctl restart serial DEV<span style="color:#f92672">=</span>ttyS0 serial <span style="color:#f92672">(</span>ttyS0<span style="color:#f92672">)</span> start/running, process <span style="color:#ae81ff">5688</span>
+</code></pre></div>
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-03-21-CodeBuild%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F%E3%83%A1%E3%83%A2/"> CodeBuildを使ってみたメモ</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-04-30-mktmp-popd-pushd%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9/"> mktmp, pushd, popdの使い方</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

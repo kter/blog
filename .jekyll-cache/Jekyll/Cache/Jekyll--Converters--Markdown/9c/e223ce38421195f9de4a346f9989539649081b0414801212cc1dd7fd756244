@@ -1,0 +1,10 @@
+I"�<p>vagrant plugin install vagrant-awsdでインストールに失敗するとき</p>
+
+<p>-vvvオプションを付けるとnokogiriのインストールで失敗しているのが分かった。</p>
+
+<p>nokogiri単体でのインストールは上手く行っていた。</p>
+
+<p>最終的にはNOKOGIRI_USE_SYSTEM_LIBRARIES=1をつけてvagrant installすることで上手く行った。</p>
+
+<p>Source: New feed</p>
+:ET

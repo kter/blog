@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lets Encrypt on ことえりブログ</title>
+    <link>/categories/Lets-Encrypt/</link>
+    <description>Recent content in Lets Encrypt on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Lets-Encrypt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>最速でLet&#39;s Encryptの証明書をGETする方法</title>
+      <link>/post/2019-03-18-%E6%9C%80%E9%80%9F%E3%81%A7Lets-Encrypt%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92GET%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Mon, 18 Mar 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-03-18-%E6%9C%80%E9%80%9F%E3%81%A7Lets-Encrypt%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92GET%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</guid>
+      <description>前提  更新したいドメインがRoute53で管理されている Route53の操作権を持つIAMロールを割り当てたEC2で作業する EC2でDockerが使える  手順 下記コマンドを実行するだけ。
+sudo docker run -it --rm -e AWS_HOSTED_ZONE_ID=(対象ドメインのHosted Zone ID) -v $PWD:/app xenolf/lego --path=/app --email=&amp;#34;(メールアドレス)&amp;#34; --domains=&amp;#34;(対象のドメイン)&amp;#34; --dns route53 run 証明書がカレントディレクトリのcertificatesディレクトリ以下に保存される。</description>
+    </item>
+    
+  </channel>
+</rss>

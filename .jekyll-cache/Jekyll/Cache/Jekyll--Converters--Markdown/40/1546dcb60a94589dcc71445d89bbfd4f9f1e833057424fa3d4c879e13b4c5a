@@ -1,0 +1,19 @@
+I";<p>Zabbix 1.8をソースからインストールした時次のエラーが発生。</p>
+
+<div class="highlight">
+  <pre><code class="language-">checking for iksemel support… no
+configure: error: Jabber library not found
+</code></pre>
+</div>
+
+<p>iksemeはEPELリポジトリからインストールします。</p>
+
+<p>AmazonAMIならば次のコマンドでiksemelインストールできるでしょう</p>
+
+<div class="highlight">
+  <pre><code class="language-">sudo yum --enablerepo=epel install iksemel iksemel-devel
+</code></pre>
+</div>
+
+<p>Source: New feed</p>
+:ET

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LaraDock on ことえりブログ</title>
+    <link>/tags/LaraDock/</link>
+    <description>Recent content in LaraDock on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Apr 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/LaraDock/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Laravel入門 -Laradock導入-</title>
+      <link>/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/</link>
+      <pubDate>Sun, 07 Apr 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-04-07-Laravel%E5%85%A5%E9%96%80-Laradock%E5%B0%8E%E5%85%A5-/</guid>
+      <description>はじめに Laradockについて PHPを開発するのに必要なアプリが全部セットになったDocker環境。 今回はMySQL + PHP-FPM + NGINX + Laravelでいきますが、データベースにPostgreSQLを選んだり、WebサーバにApacheを選んだりかなり自由度は高いです。
+ディレクトリ構成 . ├── laradock-dakoku ←Laradockのコード (docker-composeコマンドはここで実行) └── src ←Laravelのコード (コンテナに入らずエディタで編集できる) コンテナを動かすための初期設定 PROJECT=(プロジェクト名) mkdir $PROJECT cd !$ # イメージを他プロジェクトと共用しないよう名前を変える git clone https://github.com/Laradock/laradock.git laradock-$PROJECT cd laradock-$PROJECT cp env-example .env DB_HOST=mysql APP_CODE_PATH_HOST=../src # MySQL8の認証方式caching_sha2_passwordにPHPのMySQLライブラリが対応していないため MYSQL_VERSION=5.7.25 コンテナを動かす docker-compose up -d nginx mysql workspace Laravelをインストール docker-compose exec workspace bash # バージョンは好きなものを指定する。ここでは5.2系 composer create-project laravel/laravel . &amp;#34;5.2.*&amp;#34; DB migrate実行 DB_HOST=mysql DB_PORT=3306 DB_DATABASE=default DB_USERNAME=default DB_PASSWORD=secret php artisan migrate NGINX設定 cp nginx/sites/laravel.</description>
+    </item>
+    
+  </channel>
+</rss>

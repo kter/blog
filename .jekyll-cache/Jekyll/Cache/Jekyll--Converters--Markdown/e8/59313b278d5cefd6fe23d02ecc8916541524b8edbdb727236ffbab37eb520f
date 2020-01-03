@@ -1,0 +1,31 @@
+I"�<p>とあるRPMパッケージでインストールしたソフトのデフォルトの設定ファイルが欲しい時があって調べたので手順をメモしておく。</p>
+
+<ol>
+  <li> RPMファイルをダウンロードする
+    <ol>
+      <li>yumリポジトリからRPMをダウンロードする場合は<span class="lang:default decode:true  crayon-inline ">yumdownloader [パッケージ名]</span> を使うと良い。yumにない場合は適当にググってダウンロードする。
+&lt;/ol&gt;</li>
+    </ol>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;/li&gt; 
+
+  * rpm2cpioコマンドを使って取り出す 
+    &amp;#8220;\`
+
+    rpm2cpio ファイル名.rpm | cpio -id
+
+    &amp;#8220;\` 
+    
+    &lt;/li&gt; 
+    
+    &lt;/ol&gt; 
+    
+    以上のコマンドによりRPMファイルからファイルを取り出すことができる。
+    
+    ファイルとディレクトリはカレントディレクトリをルートにして作成されるので、適当なディレクトリを作成してその中でやるといいかもしれない。
+    
+    Source: New feed
+</code></pre></div></div>
+:ET

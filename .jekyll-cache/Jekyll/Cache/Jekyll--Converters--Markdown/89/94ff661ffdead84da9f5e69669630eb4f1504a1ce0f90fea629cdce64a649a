@@ -1,0 +1,26 @@
+I"/<p>VirtualBoxにWindows8をインストールしようとしたら次のようなエラーが表示されました。</p>
+
+<p>Your PC needs to restart.</p>
+
+<p>Please hold down the power button.</p>
+
+<p>Error code: 0x000000C4</p>
+
+<p>…</p>
+
+<p>対処ですが、まず下記コマンドを実行してVMの名前を調べます。</p>
+
+<pre class="lang:default decode:true ">VBoxManage list vms</pre>
+<p>&lt;/p&gt;</p>
+
+<p>次に下記コマンドを実行してからVMを起動し直すと、起動できるようになります。</p>
+
+<pre class="lang:default decode:true ">VBoxManage setextradata 調べた名前 VBoxInternal&#047;CPUM&#047;CMPXCHG16B 1</pre>
+<p>&lt;/p&gt;</p>
+
+<p>参考URL:</p>
+
+<p><a href="https:&#047;&#047;4sysops.com&#047;forums&#047;topic&#047;windows-server-2012-r2-on-virtual-box-error-0x000000c4&#047;" title="https:&#047;&#047;4sysops.com&#047;forums&#047;topic&#047;windows-server-2012-r2-on-virtual-box-error-0x000000c4&#047;" target="_blank">Windows Server 2012 R2 on VirtualBox – Error 0x000000C4</a></p>
+
+<p>Source: New feed</p>
+:ET

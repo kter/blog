@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OmniAUth on ことえりブログ</title>
+    <link>/tags/OmniAUth/</link>
+    <description>Recent content in OmniAUth on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 29 Dec 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/OmniAUth/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>gem omniauth-google-oauth2を使ってGoogle認証を使う (Rails5版)</title>
+      <link>/post/2018-12-29-gem-omniauth-google-oauth2%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6Google%E8%AA%8D%E8%A8%BC%E3%82%92%E4%BD%BF%E3%81%86-Rails5%E7%89%88/</link>
+      <pubDate>Sat, 29 Dec 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-12-29-gem-omniauth-google-oauth2%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6Google%E8%AA%8D%E8%A8%BC%E3%82%92%E4%BD%BF%E3%81%86-Rails5%E7%89%88/</guid>
+      <description>先日こちらの記事を参考に、omniauth-google-oauth2を使ってGoogle認証を試しました。
+大体はそのままで動いたものの、記事が書かれてから２年以上立っており、動かない部分もあったため、備忘録として構築手順を残したいと思います。
+リポジトリはこちら。 https://github.com/kter/qiita-omniauth-google-oauth2-test
+Google側の設定 Google側の設定は参考にさせていただいた記事通りにやればほぼほぼ大丈夫です。
+準備 ファイルの設置 RailsとDB(MySQL)はdocker-composeで動かすので、その設定を行います。
+Dockerfile
+FROM ruby:2.5.1 RUN apt-get update -qq &amp;amp;&amp;amp; apt-get install -y build-essential libpq-dev nodejs RUN mkdir /myapp WORKDIR /myapp COPY Gemfile /myapp/Gemfile COPY Gemfile.lock /myapp/Gemfile.lock RUN bundle install COPY . /myapp docker-compose.yml
+version: &amp;#39;3&amp;#39; services: db: image: mysql:5.7.23 env_file: .env volumes: - ./mysql-data:/var/lib/mysql web: build: . command: bundle exec rails s -p 80 -b &amp;#39;0.0.0.0&amp;#39; volumes: - .:/myapp ports: - &amp;#34;80:80&amp;#34; depends_on: - db env_file: .</description>
+    </item>
+    
+  </channel>
+</rss>

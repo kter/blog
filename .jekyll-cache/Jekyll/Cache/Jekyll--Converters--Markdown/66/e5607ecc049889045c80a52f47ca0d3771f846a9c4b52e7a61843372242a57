@@ -1,0 +1,21 @@
+I"q<p>SSHでサーバにログインする時、踏み台を経由する場合があります。</p>
+
+<p>そんな時の.ssh/configの設定です。</p>
+
+<p>下記設定であれば、</p>
+
+<p><code class="highlighter-rouge">ssh (SSH先識別名)</code></p>
+
+<p>で踏み台サーバを経由して目的のサーバにログインできます。</p>
+
+<p>`<br /></p>
+<h1 id="ssh先">SSH先<br /></h1>
+<p>Host (SSH先識別名)<br />
+  Hostname IPアドレス<br />
+  ProxyCommand ssh -W %h:%p SSH踏み台識別名&lt;/p&gt;</p>
+<p># SSH踏み台<br />
+Host (SSH踏み台識別名)<br />
+  HostName IPアドレス<br />
+`
+</p>
+:ET

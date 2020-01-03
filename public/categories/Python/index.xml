@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on ことえりブログ</title>
+    <link>/categories/Python/</link>
+    <description>Recent content in Python on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 20 Aug 2017 15:38:54 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ImportError: No module named paramiko</title>
+      <link>/post/2017-08-20-importerror-no-module-named-paramiko/</link>
+      <pubDate>Sun, 20 Aug 2017 15:38:54 +0000</pubDate>
+      
+      <guid>/post/2017-08-20-importerror-no-module-named-paramiko/</guid>
+      <description>Ansible徹底入門を写経していたところ、Dynamic Inventoryのvagrant.py実行で下記エラーが出てしまった。
+ 元入ってるpythonとこの本に従って入れたpythonがごっちゃになっているようだった。
+vagrant.pyの実行だけなら “`python2 ./vagrant.py“` で動くが、ansible-playbookでインベントリにvagrant.pyを使うとなるとエラーとなる。
+そこでvirtualenvを使って、ディレクトリ単位でpythonを管理する。
+ 具体的には次のようにする。
+ virtualenv環境を終了する場合は次のコマンドを実行する。
+  </description>
+    </item>
+    
+  </channel>
+</rss>

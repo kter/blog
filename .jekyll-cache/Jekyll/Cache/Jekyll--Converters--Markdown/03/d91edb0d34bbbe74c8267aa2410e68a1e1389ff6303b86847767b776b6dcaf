@@ -1,0 +1,16 @@
+I"<p>kubectl cluster-infoが下記エラーで表示できない場合の対応</p>
+
+<p> </p>
+
+<p class="p1">
+  error: google: could not find default credentials. See <a href="https://developers.google.com/accounts/docs/application-default-credentials"><span class="s1">https://developers.google.com/accounts/docs/application-default-credentials</span></a> for more information.
+</p>
+
+<p> </p>
+
+<p>下記コマンドを実行してみる。</p>
+
+<pre class="lang:default decode:true ">gcloud auth application-default login</pre>
+
+<p> </p>
+:ET

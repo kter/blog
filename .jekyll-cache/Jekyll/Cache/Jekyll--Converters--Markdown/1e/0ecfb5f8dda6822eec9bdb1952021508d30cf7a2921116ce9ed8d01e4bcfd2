@@ -1,0 +1,29 @@
+I"�<p>Postgresqlを使用している時、データベースの削除などをした時下記のようなエラーが表示された時の対処</p>
+
+<pre class="lang:default decode:true ">PG::ObjectInUse: ERROR: データベース"database_name"は他のユーザからアクセスされています<br />
+DETAIL: 他にこのデータベースを使っている 1 個のセッションがあります。</pre>
+
+<p>エラー文の通り操作しようとしているデータベースにアクセスしているユーザがいるためなので、このユーザを強制的に追い出します。</p>
+
+<p>まずアクセスしているユーザを調べます。</p>
+
+<p>“`</p>
+
+<p>SELECT * FROM pg_stat_activity;</p>
+
+<p>“`</p>
+
+<p>該当ユーザのprocidとusernameをメモし、追い出します</p>
+
+<p>“`</p>
+
+<p>SELECT pg_terminate_backend(procpid) FROM pg_stat_activity WHERE usename = ‘usename’;</p>
+
+<p>“`</p>
+
+<p> </p>
+
+<p>以上</p>
+
+<p>Source: New feed</p>
+:ET

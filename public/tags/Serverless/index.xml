@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Serverless on ことえりブログ</title>
+    <link>/tags/Serverless/</link>
+    <description>Recent content in Serverless on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Oct 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Serverless/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Analytics Architecture Night - Tokyo 201810自分用メモ</title>
+      <link>/post/2018-10-05-Analytics-Architecture-Night-Tokyo-201810%E8%87%AA%E5%88%86%E7%94%A8%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Fri, 05 Oct 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-10-05-Analytics-Architecture-Night-Tokyo-201810%E8%87%AA%E5%88%86%E7%94%A8%E3%83%A1%E3%83%A2/</guid>
+      <description>Serverless Analytics on AWS アマゾン ウェブ サービス ジャパン株式会社 Analytics Specialist SA 志村 誠
+サーバレスはセキュアでもある  パッチが適用されていないサーバーは存在しない SSHもできない  サーバーレスな分析 下回りを気にせず、やりたいことに集中
+ データ収集: 設定だけで後は自動でデータを収集 データ管理: データのスキーマを自動で登録・更新 ETL: 処理を記述したスクリプトだけで前処理を実行 クエリ: SQLだけで自由に分析 可視化: ブラウザから簡単にGUIで可視化  AWSの分析サービス 複数あるが、最近のサービスであればサーバーレスに近い
+Amazon Kinesis Data フルマネージド型リアルタイム大規模ストリーミング処理 KDS: ストリームデータを収集し、公団で各種分析やデータ保存を実施 KDF: ストリームを収集し、S3/Redshift/ES/Splunkに簡単に配信 KDA: 上記2つからストリームを取得しSQLを実施
+AWS Glue 完全マネージド型ETLサービス Spark/PythonジョブによるETLを実行
+Amazon Athena インタラクティブなクエリサービス クエリエンジンとしてPrestoを用いS3上のデータに直接クエリを実行 実行した分だけ課金
+Amazon QuickSight 高速なSPICEエンジンと直感的な操作、専門家不要のBI 最大5ドル 1セッション30分で$0.3
+GlueベースのS3データレイク 各種データソースのカタログをGlueで一元的に管理 S3上のデータをAthena/Redshift Spectrum/EMRで分析
+CSV/TSV/JSONをParquetに変換すると効率が良い。 -&amp;gt; S3ファイル追加のイベントトリガーでLambdaを起動してGlueジョブを実行するとよい -&amp;gt; Kinesis FirehoseはParquetで出力できる
+ ジョブワークフローの構築はStep Functionsで  使い分けのポイント Glue/Athenaはあえて選択肢を絞ったり、チューニングの要素を絞ったりすることで、運用の負荷を下げ、本来の目的(ETL/分析)に集中できるようにしている。 まずはサーバーレス分析サービスでやりたいことが実現可能かどうか？ それでもだめならRedshift等使う</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,18 @@
+I"h<p>Nginxで特定のヘッダ (リクエストヘッダ) の有無や内容によってアクセスを制限する方法</p>
+
+<pre class="lang:default decode:true ">if ($http_ACCESS_RESTRICTION = 'hoge hoge') { return 403; }</pre>
+
+<p>こんな感じにすればOK。</p>
+
+<p>$http_ACCESS_RESTRICTIONのACCESS_RESTRICTION部分は制限させたいヘッダを書きます。</p>
+
+<p>ただし<a href="http:&#047;&#047;wiki.nginx.org&#047;HttpCoreModule#.24http_HEADER" target="_blank">小文字は大文字に、ハイフンはアンダースコアにしてください</a>。</p>
+
+<pre class="lang:default decode:true ">= 'hoge hoge'</pre>
+
+<p>の部分はヘッダの内容を書きます。=なので完全一致です。</p>
+
+<p>もし内容ではなくヘッダの有無だけ確認したい場合はこの部分は必要ないです。</p>
+
+<p>Source: New feed</p>
+:ET

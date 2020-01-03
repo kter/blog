@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQueryのajaxデバッグ方法</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">jQueryのajaxデバッグ方法</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2019-04-23</small></p> <hr/>
+   <div class="post">
+     <p>表題の通り、jQueryのajaxをデバッグするには、コールバックを登録すればいいらしい。
+ついでにキャッシュも無効化しよう。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js:before.js" data-lang="js:before.js"><span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+    <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;GET&#39;</span>,
+    <span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/api.php&#39;</span>,
+    <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;json&#39;</span>,
+    <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+        <span style="color:#a6e22e">hoge</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;hage&#39;</span>
+    },
+    <span style="color:#a6e22e">async</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>
+})
+.<span style="color:#a6e22e">done</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">response</span>) {
+    <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>;
+})
+.<span style="color:#a6e22e">fail</span>(<span style="color:#66d9ef">function</span> () {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;error&#39;</span>);
+});
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js:after.js" data-lang="js:after.js"><span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+    <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;GET&#39;</span>,
+    <span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;/api.php&#39;</span>,
+    <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;json&#39;</span>,
+    <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+        <span style="color:#a6e22e">hoge</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;hage&#39;</span>
+    },
+    <span style="color:#a6e22e">async</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+    <span style="color:#a6e22e">cache</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>,
+    <span style="color:#a6e22e">success</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">result</span>){
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#e6db74">&#34;result&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">result</span>);
+    },
+    <span style="color:#a6e22e">error</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">jqxhr</span>, <span style="color:#a6e22e">status</span>, <span style="color:#a6e22e">exception</span>) {
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#e6db74">&#39;jqxhr&#39;</span>, <span style="color:#a6e22e">jqxhr</span>);
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#e6db74">&#39;status&#39;</span>, <span style="color:#a6e22e">status</span>);
+      <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">debug</span>(<span style="color:#e6db74">&#39;exception&#39;</span>, <span style="color:#a6e22e">exception</span>);
+    }
+})
+.<span style="color:#a6e22e">done</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">response</span>) {
+    <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">response</span>;
+})
+.<span style="color:#a6e22e">fail</span>(<span style="color:#66d9ef">function</span> () {
+    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;error&#39;</span>);
+});
+</code></pre></div>
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2019-04-18-Mac%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%A4%E3%83%B3%E7%94%BB%E9%9D%A2%E3%81%AB%E7%AE%A1%E7%90%86%E8%80%85Admin%E3%81%AE%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E3%81%97%E3%81%8B%E5%87%BA%E3%81%A6%E3%81%93%E3%81%AA%E3%81%84%E3%81%A8%E3%81%8D/"> Macのログイン画面に管理者(Admin)のアカウントしか出てこないとき</a></li>
+      &nbsp;<li class="next"><a href="/post/2019-06-08-UseKeychain%E3%81%8C%E8%A8%AD%E5%AE%9A%E3%81%95%E3%82%8C%E3%81%A6%E3%81%84%E3%82%8BMac%E3%81%AEssh-config%E3%82%92Linux%E3%81%A7%E4%BD%BF%E3%81%84%E5%9B%9E%E3%81%99/"> UseKeychainが設定されているMacのssh configをLinuxで使い回す</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>JMeterでHTTPプロキシサーバーを使いHTTPSサイトでもシナリオの自動作成を行う</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">JMeterでHTTPプロキシサーバーを使いHTTPSサイトでもシナリオの自動作成を行う</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-08-20</small></p> <hr/>
+   <div class="post">
+     <p>JMeterにはプロキシを使ったシナリオの自動作成機能があります。</p>
+<p>プロキシの使い方を紹介しているサイトによってはHTTPSはJMeter単体ではできないと書いてあるのですが、単体でできたので手順をメモします。</p>
+<h2 id="heading">手順</h2>
+<h3 id="1-https">1. 記録するHTTPSリクエストを置く空のスレッドグループを作成</h3>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-01.png" alt=""></p>
+<h3 id="2-">2. 記録用のプロキシサーバを作成</h3>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-02.png" alt=""></p>
+<h3 id="3-">3. プロキシサーバの設定</h3>
+<p>&ldquo;対象となるコントローラ&quot;に、先の手順で作成したスレッドグループを指定します。</p>
+<p>その後&quot;開始&quot;ボタンを押下します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-03.png" alt=""></p>
+<p>プロキシ用のダミー証明書についての説明が書かれています。OKボタンを押下します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-04.png" alt=""></p>
+<h3 id="4-">4. ダミー証明書をインストール</h3>
+<p>JMeterのbinディレクトリ内に生成されたApacheJMeterTemporaryRootCA.crtファイルをダブルクリックで開きます。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-05.png" alt=""></p>
+<p>キーチェーンが開きますので、選択されている<code>_ DO NOT INSTALL</code>で始まる証明書ファイルを右クリックして&quot;情報を見る&quot;を押下します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-06.png" alt=""></p>
+<h3 id="5-">5. 証明書を信頼</h3>
+<p>開いたウインドウの&quot;信頼&quot;タブの&quot;この証明書を使用する時&quot;のプルダウンで&quot;常に信頼&quot;を選択します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-07.png" alt=""></p>
+<p>ウインドウを閉じるときにパスワードが求められるので入力します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-08.png" alt=""></p>
+<h3 id="6-">6. プロキシ設定</h3>
+<p>システム環境設定のネットワークを押下します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-09.png" alt=""></p>
+<p>詳細ボタンを押下します。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-10.png" alt=""></p>
+<p>&ldquo;プロキシ&quot;タブを開き、&ldquo;保護されたWebプロキシ (HTTPS)&ldquo;を選択し、&ldquo;保護されたWebプロキシサーバ&quot;に<code>localhost</code>を入力し、OKを押下する。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-11.png" alt=""></p>
+<h3 id="7-">7. プロキシを通じてページにアクセスする</h3>
+<p>プロキシの設定ができたのでWebページにアクセスします。</p>
+<p>するとスレッドグループの配下にHTTPリクエストが追加されます。</p>
+<p><img src="%7B%7Bsite.baseurl%7D%7D/assets/img/20180820/2018-08-20-12.png" alt=""></p>
+<h3 id="8-">8. 最後に</h3>
+<p>プロキシの利用が終わったら環境設定の&quot;保護されたWebプロキシ (HTTPS)&ldquo;のチェックを外します。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-08-18-AWS-Lambda-Python-%E3%81%8B%E3%82%89CloudFormation%E3%81%AE%E3%82%B9%E3%82%BF%E3%83%83%E3%82%AF%E4%BD%9C%E6%88%90%E5%89%8A%E9%99%A4%E3%82%92%E8%A1%8C%E3%81%86/"> AWS Lambda (Python) からCloudFormationのスタック作成・削除を行う</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-08-25-July-Tech-Festa-2018%E3%83%A1%E3%83%A2/"> July Tech Festa 2018メモ</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

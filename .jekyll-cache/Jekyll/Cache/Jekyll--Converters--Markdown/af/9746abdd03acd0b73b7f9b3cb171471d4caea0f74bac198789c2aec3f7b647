@@ -1,0 +1,32 @@
+I"�<p>特に起動スクリプトがあるわけではないので、下記コマンドを使って再起動しました。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>initctl list
+rc stop/waiting
+<span class="nb">tty</span> <span class="o">(</span>/dev/tty3<span class="o">)</span> start/running, process 2914
+<span class="nb">tty</span> <span class="o">(</span>/dev/tty2<span class="o">)</span> start/running, process 2911
+<span class="nb">tty</span> <span class="o">(</span>/dev/tty1<span class="o">)</span> start/running, process 2907
+<span class="nb">tty</span> <span class="o">(</span>/dev/tty6<span class="o">)</span> start/running, process 2921
+<span class="nb">tty</span> <span class="o">(</span>/dev/tty5<span class="o">)</span> start/running, process 2918
+<span class="nb">tty</span> <span class="o">(</span>/dev/tty4<span class="o">)</span> start/running, process 2916
+update-motd stop/waiting
+plymouth-shutdown stop/waiting
+control-alt-delete stop/waiting
+rcS-emergency stop/waiting
+kexec-disable stop/waiting
+quit-plymouth stop/waiting
+rcS stop/waiting
+prefdm stop/waiting
+init-system-dbus stop/waiting
+print-image-id stop/waiting
+elastic-network-interfaces stop/waiting
+splash-manager stop/waiting
+start-ttys stop/waiting
+amazon-ssm-agent start/running, process 17313
+rcS-sulogin stop/waiting
+serial <span class="o">(</span>ttyS0<span class="o">)</span> start/running, process 2906
+
+<span class="nv">$ </span><span class="nb">sudo </span>initctl status serial <span class="nv">DEV</span><span class="o">=</span>ttyS0 serial <span class="o">(</span>ttyS0<span class="o">)</span> start/running, process 2906
+
+<span class="nv">$ </span><span class="nb">sudo </span>initctl restart serial <span class="nv">DEV</span><span class="o">=</span>ttyS0 serial <span class="o">(</span>ttyS0<span class="o">)</span> start/running, process 5688
+</code></pre></div></div>
+:ET

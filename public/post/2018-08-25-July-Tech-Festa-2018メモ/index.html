@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>July Tech Festa 2018メモ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">July Tech Festa 2018メモ</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-08-25</small></p> <hr/>
+   <div class="post">
+     <p>自分用のメモですので悪しからず…</p>
+<h2 id="ansible-with-awx--move-to-the-next-step-of-it-automation-">Ansible with AWX ~ Move to the next step of IT automation ~</h2>
+<p>斉藤秀喜さん (twitter: saito_hideki)</p>
+<ul>
+<li>AWX(自動化プラットフォームでAnsible Towerのアップストリーム版)
+<ul>
+<li>Ansibleコマンドのラッパーとして動作する</li>
+<li>ドキュメントはAnsible Towerの物を見れば良い（日本語版もある）</li>
+</ul>
+</li>
+<li>下記機能がある
+<ul>
+<li>WebUI / Restful API / Callback URL機能</li>
+<li>ユーザ管理機能（Active Directory, Google OAuth2など）</li>
+<li>ターゲットホストの認証情報を一点管理</li>
+<li>AWS / GCP / Azure / OpenStackなどと連携可能</li>
+<li>GitHub / Gitlabなどの外部SCM上のPlaybookを取得</li>
+<li>複数のジョブ（Playbook)をワークフローとして実行
+<ul>
+<li>失敗したらこのジョブを動かすなどといった動作ができる</li>
+</ul>
+</li>
+<li>ジョブやワークフローを指定の日時で実行</li>
+<li>ジョブの結果をIRCやSlackなどに送信</li>
+<li>ログをlogstashやsplunkなど外部システムに転送</li>
+<li>AWXサービスをクラスタ化（HAではなくマルチノード構成）</li>
+</ul>
+</li>
+<li>dockerとpython-docker-pyが必要（Ansible Towerと違ってコンテナ上で動く）</li>
+<li>AWX自体のインストールもAnsible Playbookで行う</li>
+</ul>
+<h2 id="-web">副業で収益化をめざす ~月数百円から始めるWebサービス立ち上げから運営まで~</h2>
+<p>高宮安仁さん</p>
+<ul>
+<li>
+<p>有給消化中で<a href="https://lingomine.io/">Lingomine</a>という英語学習サービスを開発。</p>
+</li>
+<li>
+<p>新規サービスは儲からない。儲かるまで耐える必要がある</p>
+<ul>
+<li>→生き残るために支出を削る</li>
+<li>翻訳APIの結果をキャッシュ</li>
+</ul>
+</li>
+<li>
+<p>安易に規模 (他人のリソース、お金等) を大きくしない</p>
+<ul>
+<li>収益が遠のく</li>
+</ul>
+</li>
+<li>
+<p>一人で作る</p>
+<ul>
+<li>人的コストを最小に</li>
+<li>意思疎通ミスがない</li>
+<li>機能が増えない
+<ul>
+<li>→　運用・開発コストが減る</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>シンプルにする</p>
+</li>
+<li>
+<p>趣味を外れない。はじめのうちは趣味っぽくやる。</p>
+<ul>
+<li>コストが圧縮される</li>
+</ul>
+</li>
+<li>
+<p>ほとんどの新規サービスは失敗する</p>
+<ul>
+<li>→一度もリリースしないから</li>
+<li>自分用でいいから小さく進める</li>
+</ul>
+</li>
+<li>
+<p>　リリースまでの秘訣
+*　毎日続ける
+*　小さなリリースを続ける
+*　次に何をすればいいのかが勝手に分かる</p>
+<ul>
+<li>問題を解決せずに避ける
+<ul>
+<li>コンテンツの追加をユーザーにやらせようとしたが、違反報告や音声アップロードなど、必要な機能が多くなることがわかったので、代わりにパブリックドメインなどのフリーのコンテンツを使うことにした。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>他のサービスより少しだけ工夫する</p>
+<ul>
+<li>それで十分競争力が持てる</li>
+</ul>
+</li>
+<li>
+<p>デフォルト至上主義</p>
+<ul>
+<li>余計な学習コストをかけない</li>
+</ul>
+</li>
+<li>
+<p>プログラミングを早く習得するには</p>
+<ul>
+<li>Stack Overflowを使う
+<ul>
+<li>ほぼ100%答えが見つかる</li>
+</ul>
+</li>
+<li>Lintに教わる
+<ul>
+<li>RuboCop, Rails Best Practices, ESLint</li>
+<li>詳しい解説まで読むと超勉強になる</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>すごい人になりきる</p>
+<ul>
+<li>プログラミング、デザイン、宣伝、ユーザーサポート、規約作成など大変</li>
+<li>偉人は大変な時どう乗り切ったか調べてみてなりきる</li>
+</ul>
+</li>
+</ul>
+<h2 id="-">明日から実践できる！ 運用自動化に必要なテストにまつわる技術</h2>
+<p>株式会社あくしゅ 山崎さん</p>
+<ul>
+<li>プログラムが本番でどう振る舞うか確認(テスト)しておく必要がある
+<ul>
+<li>本番環境と同じ環境は用意できない</li>
+<li>環境が違う場合、特に運用のプログラムではテストにならない</li>
+</ul>
+</li>
+<li>Terraform, CloudFormation等で本番環境と同じ環境を作成し、そこで動作確認を行う。
+<ul>
+<li>PaaSを使うと考えることが減らせる</li>
+<li>マシンイメージを使う
+<ul>
+<li>構築後の結果を担保する</li>
+</ul>
+</li>
+<li>監視システムも環境に含める　</li>
+</ul>
+</li>
+</ul>
+<h2 id="it-sre">最高のITエンジニアリングを支える 守りと攻めの設計技術とSRE</h2>
+<p>北野 勝久さん (Twitter: katsuhisa__)</p>
+<ul>
+<li>自己の事例と経験を踏まえてのよりよいサービスを提供するための筋道ややったことの紹介
+<ul>
+<li>うまく文章にまとまらず…</li>
+</ul>
+</li>
+</ul>
+<p><a href="%E7%99%BA%E8%A1%A8%E3%82%B9%E3%83%A9%E3%82%A4%E3%83%89">https://speakerdeck.com/katsuhisa91/zui-gao-falseitenziniaringuwozhi-erushou-ritogong-mefalse-she-ji-ji-shu-to-sre</a></p>
+<h2 id="1infrastructure-as-code">ミランティスが1万台のサーバーを監視・運用するためにInfrastructure as Codeを利用している話</h2>
+<p>星野 真知さん</p>
+<ul>
+<li>運用している１万台のサーバを監視している
+<ul>
+<li>極小数人で運用するためにCodeを使っている</li>
+</ul>
+</li>
+<li>構築時のパラメータはすべてGitを使っている
+<ul>
+<li>変更はすべてSaltを使って行っている（自動化）
+<ul>
+<li>運用も自動化できる</li>
+<li>Word, Excelがいらない</li>
+<li>作業者感での品質差異が出にくい</li>
+<li>台数の増減に影響を受けない</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>公開できるコードはコミュニティに公開し、開発を委託
+<ul>
+<li>各カスタマー固有のコードはカスタマーで管理してもらう</li>
+</ul>
+</li>
+<li>Jenkinsを通じて毎日ビルド、テスト、配布が行われる</li>
+<li>Prometheusを使っている
+<ul>
+<li>設定ファイルが細かい</li>
+<li>エージェントのプラグインが大量
+<ul>
+<li>設定ファイルをインフラコードの内容から自動生成</li>
+<li>構成から配布するエージェントを自動判別　</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="heading">ソフトウェアで構築する成長し続けるインフラストラクチャとメルカリの挑戦</h2>
+<ul>
+<li>メルカリのインフラの歴史紹介</li>
+<li>Consul
+<ul>
+<li>Service Discovery
+<ul>
+<li>DNSベースの内部LBとして利用
+<ul>
+<li>Solrによるキーワードサジェストで採用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Configuration deployment</li>
+<li>Distributed Lock
+<ul>
+<li>キーワードサジェストのINDEXはDockerコンテナ内にある</li>
+<li>分散ロックで無停止INDEXアップデート</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>OpenResty
+<ul>
+<li>NGINXをベースに作られたWeb Platform</li>
+<li>Luaで機能を拡張</li>
+</ul>
+</li>
+<li>特定の商品への購入処理が集中しDBの負荷上昇
+<ul>
+<li>SELECT FOR UPDATEが数百滞留</li>
+<li>Busy LockによりCPUの使用率が急上昇</li>
+<li>DBへの問い合わせより前に並列度の調整
+<ul>
+<li>PHPでwaitを入れるとApacheのプロセスが枯渇する可能性</li>
+<li>OpenRestyからMemcachedにadd（ロック）するようにする</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>マイクロサービス化
+<ul>
+<li>細かい単位でのスケーリング、障害の分離</li>
+<li>サービス開発速度を上げる</li>
+<li>1000名以上のエンジニアでも対応できるようにする</li>
+<li>API Gatewayを全面に置き、配下のサービスを変えていった</li>
+</ul>
+</li>
+<li>Kubernetes
+<ul>
+<li>運用負荷を減らすために使用</li>
+</ul>
+</li>
+<li>Spinnaker
+<ul>
+<li>デプロイに使用</li>
+</ul>
+</li>
+<li>Terraform
+<ul>
+<li>サービスをすばやく立ち上げるために使用</li>
+</ul>
+</li>
+<li>石狩, 東京間のレスポンス改善
+<ul>
+<li>3 way handshakeを避ける。TLSのhandshakeも避ける</li>
+<li>HTTP/1, HTTP/2のKeepAliveを活用する
+<ul>
+<li>PHPではリクエス間のHTTPコネクションの再利用ができない</li>
+<li>choconというソフトを作成し改善
+<ul>
+<li>Consulで冗長化している</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-08-20-JMeter%E3%81%A7HTTP%E3%83%97%E3%83%AD%E3%82%AD%E3%82%B7%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%82%92%E4%BD%BF%E3%81%84HTTPS%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E3%82%82%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA%E3%81%AE%E8%87%AA%E5%8B%95%E4%BD%9C%E6%88%90%E3%82%92%E8%A1%8C%E3%81%86/"> JMeterでHTTPプロキシサーバーを使いHTTPSサイトでもシナリオの自動作成を行う</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-09-06-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-AWS-Lamda%E7%B7%A8/"> 自分用AWS クラウドサービス活用資料集メモ AWS Lambda編</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

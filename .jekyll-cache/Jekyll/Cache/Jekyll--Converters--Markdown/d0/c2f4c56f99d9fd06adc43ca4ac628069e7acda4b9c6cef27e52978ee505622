@@ -1,0 +1,39 @@
+I"�<p>Route53のレコード管理は困難を極める。</p>
+
+<p>いつの間にかレコードが増えてきて、後から消そうと思っても用途などが思い出せず消すに消せない…そんなレコードが増える経験をした。</p>
+
+<p>Route53をGitで管理するようにすればPRによる第三者のレビューがやりやすいし、何より誰がいつどんな用途でレコードを追加・変更・削除したのかが丸分かりである。</p>
+
+<p>ここではroadworkerというナイスなRuby製のGemを使った。</p>
+
+<p>https://github.com/codenize-tools/roadworker</p>
+
+<p>使い方は上記リポジトリもあるが、基本的には次の通り。</p>
+
+<ol>
+  <li>
+    <p>現在のRoute53登録情報をファイルにする (初回のみ) &lt;pre class="lang:default decode:true"&gt;roadwork -e -o Routefile&lt;/pre&gt;</p>
+  </li>
+  <li>ファイルを編集する</li>
+  <li>
+    <p>確認のためにdry-runする &lt;pre class="lang:default decode:true"&gt;roadwork -a –dry-run&lt;/pre&gt;</p>
+  </li>
+  <li>
+    <p>Route53に反映 &lt;pre class="lang:default decode:true "&gt;roadwork -a&lt;/pre&gt;</p>
+  </li>
+  <li>反映確認 &lt;pre class="lang:default decode:true"&gt;roadwork -t</li>
+</ol>
+<p>&lt;/pre&gt;</p>
+
+<p> </p>
+
+<p>これでRoute53の管理が楽になった。</p>
+
+<p>次はGitHubにファイルをプッシュするとCIツールによってRoute53に自動的に反映させるようにしたい。</p>
+
+<p>8/20追記</p>
+
+<p>Jenkinsで自動反映するようにした。</p>
+
+<p>GitHubのWebHookをJenkinsで受けて、roadworkを実行。進捗はJenkinsの<a href="http://qiita.com/unsoluble_sugar/items/a42795d108624fcd02d4">Slackプラグイン</a>を使った。</p>
+:ET

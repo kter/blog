@@ -1,0 +1,7 @@
+I"<p>Ansibleで配列を定義するには、角括弧で配列の中身をくくり、カンマで区切れば良い。</p>
+
+<p>例:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array=["data1","data2"]
+</code></pre></div></div>
+:ET

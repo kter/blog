@@ -1,0 +1,27 @@
+I"X<p>Postfixでメールを送信しようとしたところ、rcptでRelay access deniedと言われてしまいました。</p>
+
+<pre class="lang:default decode:true">$ telnet localhost 25<br />
+Trying ::1...<br />
+Connected to localhost.<br />
+Escape character is '^]'.<br />
+220 domain.tld ESMTP Postfix<br />
+helo localhost<br />
+250&nbsp;domain.tld<br />
+mail from:<br />
+250 2.1.0 Ok<br />
+rcpt to:<br />
+554 5.7.1 : Relay access denied</pre>
+
+<p>このとき/var/log/maillogを見ると次のようにありました。</p>
+
+<pre class="lang:default decode:true">NOQUEUE: reject: RCPT from localhost[::1]: 554 5.7.1 : Relay access denied; from= to= proto=SMTP helo=</pre>
+
+<p>よくみると、RCPT from localhost[::1]と、IPv6のアドレスでアクセスしていることが分かります。 main.cfのinet_protocolsを次のようにしてIPv4を使うようにすればOKです</p>
+
+<pre class="lang:default decode:true ">inet_protocols = ipv4<br />
+</pre>
+
+<p><span style="line-height: 1.714285714;font-size: 1rem">腑に落ちませんがこれで解消です</span></p>
+
+<p>Source: New feed</p>
+:ET

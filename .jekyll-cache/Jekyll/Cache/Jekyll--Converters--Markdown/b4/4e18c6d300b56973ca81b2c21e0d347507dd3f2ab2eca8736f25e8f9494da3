@@ -1,0 +1,2 @@
+I"�<p>本当に今更だけどCodeBuildを使って、GitHubリポジトリのDockerfileをビルド&amp;イメージプッシュ &amp; Kubernetesにデプロイする設定を入れたので知見をメモする。</p>
+:ET

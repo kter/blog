@@ -1,0 +1,76 @@
+I"c<p>EC2 IAMロールの作成と適用をCLIから行う</p>
+
+<p>AWSコンソールからであれば簡単なんですが、CLIからだとインスタンスプロファイル（EC2 IAMロール)を作るのにロールの作成から必要なので若干面倒です。</p>
+
+<p>ここでは前提として、複数のインスタンスに対してそれぞれ違うロール(ポリシーは同一)を適用します。</p>
+
+<p>表にすると次のような感じです。</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>インスタンスID</td>
+      <td>ロール名 / インスタンスプロファイル名</td>
+      <td>ポリシーARN</td>
+    </tr>
+    <tr>
+      <td>instanceid1</td>
+      <td>rolename1</td>
+      <td>arn:aws:iam::aws:policy/service-role/servicerole</td>
+    </tr>
+    <tr>
+      <td>instanceid2</td>
+      <td>rolename2</td>
+      <td>arn:aws:iam::aws:policy/service-role/servicerole</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="手順">手順</h2>
+
+<h3 id="assume-roleを準備">Assume-roleを準備</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cat</span> <span class="o">&lt;&lt;</span> <span class="no">_EOF</span><span class="sh"> &gt; Trust-Policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+_EOF</span></code></pre></figure>
+
+<h3 id="インスタンスロール作成とロールのアタッチ">インスタンスロール作成とロールのアタッチ</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">INSTANCE_ROLE_NAMES</span><span class="o">=(</span>
+  rolename1
+  rolename2
+<span class="o">)</span>
+<span class="k">for </span>INSTANCE_ROLE_NAME <span class="k">in</span> <span class="k">${</span><span class="nv">INSTANCE_ROLE_NAMES</span><span class="p">[@]</span><span class="k">}</span><span class="p">;</span>
+<span class="k">do</span>
+  <span class="c"># ロール作成</span>
+  aws iam create-role <span class="nt">--role-name</span> <span class="nv">$INSTANCE_ROLE_NAME</span> <span class="nt">--assume-role-policy-document</span> file://Trust-Policy.json
+  <span class="c"># ロールにポリシーをアタッチ</span>
+  aws iam attach-role-policy <span class="nt">--role-name</span> <span class="nv">$INSTANCE_ROLE_NAME</span> <span class="nt">--policy-arn</span> arn:aws:iam::aws:policy/service-role/servicerole
+  <span class="c"># インスタンスプロファイル作成</span>
+  aws iam create-instance-profile <span class="nt">--instance-profile-name</span> <span class="nv">$INSTANCE_ROLE_NAME</span>
+  <span class="c"># インスタンスプロファイルにロールをアタッチ</span>
+  aws iam add-role-to-instance-profile <span class="nt">--role-name</span> <span class="nv">$INSTANCE_ROLE_NAME</span> <span class="nt">--instance-profile-name</span> <span class="nv">$INSTANCE_ROLE_NAME</span>
+<span class="k">done</span></code></pre></figure>
+
+<h3 id="インスタンスにインスタンスロールのアタッチ">インスタンスにインスタンスロールのアタッチ</h3>
+
+<p>※停止中インスタンスの場合、起動しないと表示上反映されない</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">aws ec2 associate-iam-instance-profile <span class="nt">--instance-id</span> instanceid1 <span class="nt">--iam-instance-profile</span> <span class="nv">Name</span><span class="o">=</span>rolename1
+aws ec2 associate-iam-instance-profile <span class="nt">--instance-id</span> instanceid2 <span class="nt">--iam-instance-profile</span> <span class="nv">Name</span><span class="o">=</span>rolename2</code></pre></figure>
+
+<p>参考:
+https://aws.amazon.com/jp/blogs/news/new-attach-an-aws-iam-role-to-an-existing-amazon-ec2-instance-by-using-the-aws-cli/</p>
+
+:ET

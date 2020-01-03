@@ -1,0 +1,158 @@
+# Run in the us-west-1 (for ACM)
+AWSTemplateFormatVersion: 2010-09-09
+Description: Static contents distribution using S3 and CloudFront.
+Parameters:
+  StgDomain:
+    Default: tomohiko.io
+    Type: String
+  PrdDomain:
+    Default: tomohiko.io
+    Type: String
+  PrdHostname:
+    Default: blog.tomohiko.io
+    Type: String
+  StgHostname:
+    Default: stg-blog.tomohiko.io
+    Type: String
+Resources:
+  StgBlogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedMethods:
+              - "GET"
+              - "HEAD"
+  PrdBlogBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - "*"
+            AllowedMethods:
+              - "GET"
+              - "HEAD"
+
+  StgBlogBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref StgBlogBucket
+      PolicyDocument:
+        Statement:
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub arn:aws:s3:::${StgBlogBucket}/*
+            Principal:
+              AWS: !Sub arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}
+  PrdBlogAssetsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref PrdBlogBucket
+      PolicyDocument:
+        Statement:
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub arn:aws:s3:::${PrdBlogBucket}/*
+            Principal:
+              AWS: !Sub arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}
+ 
+  StgBlogDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        ViewerCertificate:
+          AcmCertificateArn: !Ref StgCertificate
+          SslSupportMethod: sni-only
+        Aliases:
+          - !Ref StgHostname
+        Origins:
+        - Id: S3Origin
+          DomainName: !GetAtt StgBlogBucket.DomainName
+          S3OriginConfig:
+            OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
+        Enabled: true
+        DefaultRootObject: index.html
+        Comment: !Sub ${AWS::StackName} distribution
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ForwardedValues:
+            QueryString: false
+            Headers:
+              - "Origin"
+          ViewerProtocolPolicy: redirect-to-https
+  PrdBlogDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        ViewerCertificate:
+          AcmCertificateArn: !Ref PrdCertificate
+          SslSupportMethod: sni-only
+        Aliases:
+          - !Ref PrdHostname
+        Origins:
+        - Id: S3Origin
+          DomainName: !GetAtt PrdBlogBucket.DomainName
+          S3OriginConfig:
+            OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}
+        Enabled: true
+        DefaultRootObject: index.html
+        Comment: !Sub ${AWS::StackName} distribution
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ForwardedValues:
+            QueryString: false
+            Headers:
+              - "Origin"
+          ViewerProtocolPolicy: redirect-to-https
+
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: !Ref AWS::StackName
+
+  StgDNS:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Join
+        - ''
+        - - !Ref StgDomain
+          - '.'
+      Name: !Ref StgHostname
+      Type: A
+      AliasTarget:
+        DNSName: !GetAtt StgBlogDistribution.DomainName
+        # CloudFormation縺ｯ豎ｺ繧∵遠縺｡
+        HostedZoneId: Z2FDTNDATAQYW2
+  PrdDNS:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: !Join
+        - ''
+        - - !Ref PrdDomain
+          - '.'
+      Name: !Ref PrdHostname
+      AliasTarget:
+        DNSName: !GetAtt PrdBlogDistribution.DomainName
+        # CloudFormation縺ｯ豎ｺ繧∵遠縺｡
+        HostedZoneId: Z2FDTNDATAQYW2
+      Type: A
+  StgCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName: !Ref StgHostname
+      DomainValidationOptions:
+        - DomainName: !Ref StgHostname
+          ValidationDomain: !Ref StgDomain
+      ValidationMethod: DNS
+  PrdCertificate:
+    Type: "AWS::CertificateManager::Certificate"
+    Properties:
+      DomainName: !Ref PrdHostname
+      DomainValidationOptions:
+        - DomainName: !Ref PrdHostname
+          ValidationDomain: !Ref PrdDomain
+      ValidationMethod: DNS

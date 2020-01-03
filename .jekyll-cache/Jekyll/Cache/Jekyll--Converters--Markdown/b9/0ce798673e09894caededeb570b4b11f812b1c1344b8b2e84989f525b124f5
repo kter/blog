@@ -1,0 +1,47 @@
+I"�<p>表題の通り、jQueryのajaxをデバッグするには、コールバックを登録すればいいらしい。
+ついでにキャッシュも無効化しよう。</p>
+
+<pre><code class="language-js:before.js">$.ajax({
+    type: 'GET',
+    url: '/api.php',
+    dataType: 'json',
+    data: {
+        hoge: 'hage'
+    },
+    async: false
+})
+.done(function(response) {
+    result = response;
+})
+.fail(function () {
+    console.log('error');
+});
+</code></pre>
+
+<pre><code class="language-js:after.js">$.ajax({
+    type: 'GET',
+    url: '/api.php',
+    dataType: 'json',
+    data: {
+        hoge: 'hage'
+    },
+    async: false,
+    cache: false,
+    success: function(result){
+      console.debug("result" + result);
+    },
+    error: function(jqxhr, status, exception) {
+      console.debug('jqxhr', jqxhr);
+      console.debug('status', status);
+      console.debug('exception', exception);
+    }
+})
+.done(function(response) {
+    result = response;
+})
+.fail(function () {
+    console.log('error');
+});
+</code></pre>
+
+:ET

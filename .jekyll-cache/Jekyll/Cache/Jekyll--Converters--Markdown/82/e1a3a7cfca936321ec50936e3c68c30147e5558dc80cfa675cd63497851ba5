@@ -1,0 +1,12 @@
+I"�<p>CentOSのPostfixで</p>
+
+<p>Host or domain name not found. Name service error for name=hostname type=A: Host not found</p>
+
+<p>などというエラーが出て上手くいかない時</p>
+
+<p>設定が合っている場合でもOS側でsendmailが選択されている場合があります。</p>
+
+<p>sudo alternatives –config mtaコマンドでpostfixを選択してみてください。</p>
+
+<p>Source: New feed</p>
+:ET

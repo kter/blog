@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ImageMagic on ことえりブログ</title>
+    <link>/tags/ImageMagic/</link>
+    <description>Recent content in ImageMagic on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Jul 2017 15:33:16 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ImageMagic/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ImageMagicのコマンドで画像サイズを調べる方法</title>
+      <link>/post/2017-07-24-imagemagic%E3%81%AE%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E7%94%BB%E5%83%8F%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Mon, 24 Jul 2017 15:33:16 +0000</pubDate>
+      
+      <guid>/post/2017-07-24-imagemagic%E3%81%AE%E3%82%B3%E3%83%9E%E3%83%B3%E3%83%89%E3%81%A7%E7%94%BB%E5%83%8F%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B%E6%96%B9%E6%B3%95/</guid>
+      <description>identifyコマンドを使う。具体的には次の通り。
+formatオプションで表示内容を制御できる。</description>
+    </item>
+    
+  </channel>
+</rss>

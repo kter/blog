@@ -1,0 +1,43 @@
+I"<p>表題の通り、Macのログイン画面に管理者(Admin)のアカウントしか出てこないときの対応です。</p>
+
+<h2 id="filevaultの許可ユーザーを設定-99これで解決">FileVaultの許可ユーザーを設定 (99%これで解決)</h2>
+
+<ol>
+  <li>システム環境設定 -&gt; セキュリティ -&gt; FileVaultのタブにアクセス</li>
+  <li>左下の鍵マークを選択し、管理者パスワードを入力</li>
+  <li>許可されていないユーザーがあります的なボタンが出てくるので、それを押してそのユーザーのパスワードを入力</li>
+</ol>
+
+<h2 id="ishidden要素を設定">IsHidden要素を設定</h2>
+
+<p>ユーザーに設定されているIsHidden要素が1だとログイン画面に出てこないらしい。</p>
+
+<ol>
+  <li>
+    <p>Terminal.appで下記コマンドを実行。</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nb">sudo </span>dscl <span class="nb">.</span> create /Users/<span class="o">(</span>ユーザー名<span class="o">)</span> IsHidden 0
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>（変更確認方法） Terminal.appで下記コマンドを実行</p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> dscl <span class="nb">.</span> <span class="nt">-read</span> /Users/_<span class="o">(</span>ユーザー名<span class="o">)</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>参考
+<a href="https://support.apple.com/ja-jp/HT203998">macOS でユーザアカウントを非表示にする - Apple サポート</a></p>
+
+<h2 id="適当なユーザーを作って削除">適当なユーザーを作って削除</h2>
+
+<p>よく分からんが自分の場合はこれで解決</p>
+
+<ol>
+  <li>適当なユーザーを作成する</li>
+  <li>再起動してログイン画面に表示したいユーザーと作成したユーザーが出ることを確認</li>
+  <li>作成したユーザーを削除</li>
+</ol>
+
+:ET

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lambda on ことえりブログ</title>
+    <link>/tags/lambda/</link>
+    <description>Recent content in lambda on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Sep 2018 16:28:02 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS SAMのLambda (Python)で環境変数で設定した値を配列で受け取る</title>
+      <link>/post/2018-09-08-AWS-SAM%E3%81%AELambda-Python%E3%81%A7%E7%92%B0%E5%A2%83%E5%A4%89%E6%95%B0%E3%81%A7%E8%A8%AD%E5%AE%9A%E3%81%97%E3%81%9F%E5%80%A4%E3%82%92%E9%85%8D%E5%88%97%E3%81%A7%E5%8F%97%E3%81%91%E5%8F%96%E3%82%8B/</link>
+      <pubDate>Sat, 08 Sep 2018 16:28:02 +0000</pubDate>
+      
+      <guid>/post/2018-09-08-AWS-SAM%E3%81%AELambda-Python%E3%81%A7%E7%92%B0%E5%A2%83%E5%A4%89%E6%95%B0%E3%81%A7%E8%A8%AD%E5%AE%9A%E3%81%97%E3%81%9F%E5%80%A4%E3%82%92%E9%85%8D%E5%88%97%E3%81%A7%E5%8F%97%E3%81%91%E5%8F%96%E3%82%8B/</guid>
+      <description>環境変数に設定された値は文字列としてしか取得できません。
+なのでos.getenv()で値を取得したあとsplit()で配列化します。 ついでにstrip()も呼んでスペースも除去します。コードはこんな感じです。
+array = [x.strip() for x in str(os.getenv(&amp;#39;(環境変数名)&amp;#39;)).split(&amp;#39;,&amp;#39;)] yamlファイルはこんな感じです。
+Resources: Lambda: Type: &amp;#39;AWS::Serverless::Function&amp;#39; Properties: Handler: lambda_function.lambda_handler Runtime: python3.6 CodeUri: . MemorySize: 128 Role: Fn::GetAtt: - LambdaRole - Arn Timeout: 3 Environment: Variables: (環境変数名): &amp;#39;val1, val2, val3&amp;#39; </description>
+    </item>
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ AWS Lambda編</title>
+      <link>/post/2018-09-06-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-AWS-Lamda%E7%B7%A8/</link>
+      <pubDate>Thu, 06 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-06-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-AWS-Lamda%E7%B7%A8/</guid>
+      <description>AWS Lambdaとは  インフラを一切期にすることなくアプリケーションコードを実行できるコンピュートサービス  実行基盤はすべてAWSが管理 AWSサービスと連携し、イベントドリブンなアプリケーションを作れる コード実行時間に対して課金    →やりたいことだけに集中できる
+ユースケース  S3のバケットに画像が保存されたらサムネイルイメージを用意 DynamoDBに保存されるアドレスが全て正しい形式化チェックしたい  詳細  対応言語  JavaScript Java Python Go   メモリ容量に応じてCPU能力が変動 隔離されたコンテナ内で実行される 対応起動トリガー  API Gateway AWS IoT Alexa Skills Kit Alexa Smarat Home CloudFront CloudWatch Events CloudWatch Logs CodeCommit Cognito Sync Trigger DynamoDB Kinesis S3 SNS SQS   モバイル・WebアプリからSDKを利用して呼び出すこともできる  モバイルSDK経由の実行だとデバイス、アプリ、アイデンティティ情報にアクセス可能   同期実行と非同期実行が選べる  非同期実行の場合レスポンスはリクエストが正常に受け付けられたかどうかのみ   DynamoDBとKinesisのイベントはLambdaが自動的に取得しに行く（PULLモデル)  Lambdaが取得しに行くのでその権限が必要    </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>レポート on ことえりブログ</title>
+    <link>/tags/%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</link>
+    <description>Recent content in レポート on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 21 Mar 2018 11:34:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JAWS DAYS 2018 レポート</title>
+      <link>/post/2018-03-21-JAWS-DAYS-2018-%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</link>
+      <pubDate>Wed, 21 Mar 2018 11:34:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-21-JAWS-DAYS-2018-%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</guid>
+      <description>JAWS DAYS 2018 内容の正当性は保証できません。こういう雰囲気でした。
+スライドとか公開されたら更新します。
+概要 JAWS DAYS 2018レポート
+日時: 2018年3月10日10時から
+URL: https://jawsdays2018.jaws-ug.jp/
+以下敬称略
+コンテナでウェイウェイ (仮) by @keisuke69　西谷圭介
+なぜコンテナなのか？  パッケージング 配布 イミュータブルインフラストラクチャー  ユースケース  マイクロサービスアーキテクチャ 非同期ジョブ実行（バッチコンピューティング）  柔軟にスケール   継続的インテグレーション、デプロイ  開発テスト本番まで一貫したイメージを利用    Amazon Container Service  レジストリ  Amazon ECR   コントロールプレーン  Amazon ECS  年間アクティブユーザ+450% 毎週数百万ものインスタンスで数億コンテナが起動 2015年のGA以来50以上の機能がリリース Task: コンテナ群の実行単位 Service: Taskの数を指定 IAM Role：　Taskごとに割当可能 TaskごとにENIを自動割当 Task内はlocalhostを共有   AWS Fargate  ECSと一緒に使う ECSのTaskでコンテナイメージを指定して実行 インスタンス管理不要 タスクに割り当てたリソース分の料金が掛かる CPUとメモリを秒単位で課金 Fargateで難しいもの  WindowsContainer GPU docker execのようなインタラクティブなデバッグ SpotやRIベースの価格モデルの適用 Taskレベルのメトリクス   Lambdaの方がいい場合  イベントドリブン ミリ秒単位のコンピュート ランタイムの管理をしたくない 分散バッチコンピューティング     EKS  Masterの管理運用をEKSでサポート (マネージド、Multi-AZ) EC2の管理は必要になるが、Fargateでのサポートも予定      Our ECS Journey by @calvinfo Calvin French-Owen</description>
+    </item>
+    
+  </channel>
+</rss>

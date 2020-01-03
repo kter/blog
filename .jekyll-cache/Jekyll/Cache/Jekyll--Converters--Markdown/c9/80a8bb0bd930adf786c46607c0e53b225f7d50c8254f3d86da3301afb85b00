@@ -1,0 +1,25 @@
+I"�<p>Linuxコマンドで添付ファイル付きのメールを送りたい場合の手順です。</p>
+
+<p>下記内容を<code class="highlighter-rouge">sendmail -i -t</code>にパイプで渡します。</p>
+
+<p>`<br />
+From: (送信元メールアドレス)<br />
+To: (送信先メールアドレス)<br />
+Subject: (件名)<br />
+Content-Type: multipart/mixed; boundary=”BOUNDARY”&lt;/p&gt;</p>
+<p>--BOUNDARY</p>
+<p>(メール本文)</p>
+<p>--BOUNDARY</p>
+<p>--BOUNDARY<br />
+Content-Transfer-Encoding: base64<br />
+Content-Type: (コンテンツタイプ); name="(添付ファイル名)"<br />
+Content-Disposition: attachment; filename="(添付ファイル名)"</p>
+<p>base64した添付ファイルの文字列<br />
+--BOUNDARY--<br />
+` 
+
+・コンテンツタイプには`application/pdf`等添付ファイルに応じたものを入力します。
+  
+・`boundary="BOUNDARY"`の`BOUNDARY`は任意の文字列で大丈夫です。
+</p>
+:ET

@@ -1,0 +1,17 @@
+I"�<p>Debian Jessie以降で下記コマンドを順に実行するとDockerがインストールできます。</p>
+
+<p>詳細はこちらの<a href="https://docs.docker.com/install/linux/docker-ce/debian/#install-docker-ce-1">公式サイト</a>を参照してください。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get update
+sudo apt-get install      apt-transport-https      ca-certificates      curl      gnupg2      software-properties-common
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+# 9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88で終わることを確認
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository    "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+sudo apt-get update
+sudo apt-get install docker-ce
+# 動作確認
+sudo docker run hello-world
+</code></pre></div></div>
+
+:ET

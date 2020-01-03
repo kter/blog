@@ -1,0 +1,6 @@
+I"l<p>zabbix-serverはDBに繋がるのにweb frontはDBがタイムアウトになる場合</p>
+
+<p>RPMでインストールした場合、フロントエンドのDB設定は/usr/share/zabbix/conf/zabbix.conf.phpではなく/etc/zabbix/web/zabbix.conf.phpを参照するため、このファイルを変更する必要があります。</p>
+
+<p>Source: New feed</p>
+:ET

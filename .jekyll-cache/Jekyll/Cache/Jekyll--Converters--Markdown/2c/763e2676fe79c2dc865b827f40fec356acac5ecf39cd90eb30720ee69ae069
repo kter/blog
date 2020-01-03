@@ -1,0 +1,29 @@
+I"w<p>表題の通りKarabinerでCtrl + [をEscの代わりにする設定です。</p>
+
+<p>VSCodeでVimのキーバインドを導入した際、EscがCtrl+]に割り当てられており、キーバインドを変更してみたのですが、効果がなかったのでOSレベルでキーバインドを変更してしまいます。</p>
+
+<pre><code class="language-json:~/.config/karabiner/assets/complex_modifications/vim-esc.json">{
+    "title": "Change ctrl+[ to ESC",
+    "rules": [{
+        "description": "Change ctrl+[ key to Escape key",
+        "manipulators": [{
+            "type": "basic",
+            "from": {
+                "key_code": "open_bracket",
+                "modifiers": {
+                    "mandatory": ["control"]
+                }
+            },
+            "to": [{
+                "key_code": "escape"
+            }]
+        }]
+    }]
+}
+</code></pre>
+
+<p>上記ファイルを作成すれば自動的にComplex ModificationsのAdd Rule内に項目が出てくるのでEnableをクリックするだけです。</p>
+
+<p>ちなみに環境はMac (JIS配列) + 外付けUS配列キーボードでした。</p>
+
+:ET

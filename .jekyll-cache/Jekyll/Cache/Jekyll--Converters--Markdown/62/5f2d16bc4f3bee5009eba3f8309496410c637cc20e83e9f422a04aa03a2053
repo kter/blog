@@ -1,0 +1,5 @@
+I"~<div class="highlight">
+  <pre><code class="language-">ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
+</code></pre>
+</div>
+:ET

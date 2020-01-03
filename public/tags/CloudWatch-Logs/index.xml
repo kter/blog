@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CloudWatch Logs on ことえりブログ</title>
+    <link>/tags/CloudWatch-Logs/</link>
+    <description>Recent content in CloudWatch Logs on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Jul 2018 22:48:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/CloudWatch-Logs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Lambda (Python) から特定のログストリームにログを書こうとして苦戦した2つのポイント</title>
+      <link>/post/2018-07-17-Lambda-Python-%E3%81%8B%E3%82%89%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%92%E6%9B%B8%E3%81%93%E3%81%86%E3%81%A8%E3%81%97%E3%81%A6%E8%8B%A6%E6%88%A6%E3%81%97%E3%81%9F2%E3%81%A4%E3%81%AE%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88/</link>
+      <pubDate>Tue, 17 Jul 2018 22:48:00 +0000</pubDate>
+      
+      <guid>/post/2018-07-17-Lambda-Python-%E3%81%8B%E3%82%89%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%92%E6%9B%B8%E3%81%93%E3%81%86%E3%81%A8%E3%81%97%E3%81%A6%E8%8B%A6%E6%88%A6%E3%81%97%E3%81%9F2%E3%81%A4%E3%81%AE%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88/</guid>
+      <description>Lambda (Python) から指定のログストリームにログを書こうとして苦戦したのでメモ。
+今日使い始めたばかりなので間違ってる点があるかもしれません。もし間違っていたら教えてくださいm(_ _)m
+苦戦ポイント1 -put_log_events()の使い方- 結論から言って次のようにする必要があります。
+logs_client = boto3.client(&amp;#39;logs&amp;#39;) res = logs_client.describe_log_streams( logGroupName=&amp;#39;(ロググループ名)&amp;#39;, logStreamNamePrefix=&amp;#39;(ログストリーム名)&amp;#39;, ) seq_token = res[&amp;#39;logStreams&amp;#39;][0][&amp;#39;uploadSequenceToken&amp;#39;] res = logs_client.put_log_events( logGroupName=&amp;#39;(ロググループ名)&amp;#39;, logStreamName=&amp;#39;(ログストリーム名)&amp;#39;, logEvents=[ { &amp;#39;timestamp&amp;#39;: int(time.time()) * 1000, &amp;#39;message&amp;#39;: &amp;#39;%sbacked up successfully&amp;#39; % (message) }, ], sequenceToken=seq_token ) 注意する点が2点ほどあります。
+timestampの指定 まず1点目、timestampはUNIX時間に1000を掛けたものを整数で指定しましょう。つまり単位がミリ秒です。
+sequenceToken 2点目、ログを書き出すput_log_events()にはsequenceTokenというパラメータが必要になります。 ログストリームへの初回の書き込みなら（多分）いらないのですが、2回目以降は必要になります。
+上記コードではsequenceTokenをdescribe_log_streams()から取得していますが、put_log_events()のレスポンスの中にもありますのでそれを使ってもいいです。
+苦戦ポイント2 -IAM ポリシー- 結論から言って次のようにする必要があります。
+{ &amp;#34;Version&amp;#34;: &amp;#34;2012-10-17&amp;#34;, &amp;#34;Statement&amp;#34;: [ { &amp;#34;Action&amp;#34;: [ &amp;#34;logs:CreateLogGroup&amp;#34;, &amp;#34;logs:CreateLogStream&amp;#34;, &amp;#34;logs:PutLogEvents&amp;#34;, ], &amp;#34;Resource&amp;#34;: [ &amp;#34;arn:aws:logs:*:*:/aws/lambda/(Lambda関数名☆ワイルドカード可☆)&amp;#34;, &amp;#34;arn:aws:logs:*:*:log-group:(ロググループ名):log-stream:(ログストリーム名)&amp;#34; ], &amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34; }, { &amp;#34;Action&amp;#34;: [ &amp;#34;logs:DescribeLogStreams&amp;#34; ], &amp;#34;Resource&amp;#34;: [ &amp;#34;arn:aws:logs:*:*:*&amp;#34; ], &amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34; } ] } ポリシーについて先に説明させていただきますと、最初のCreateLogGroup, CreateLogStream, PutLogEventsはCloudWatch Logsにログを書き出す（ログストリームの作成も）時に必要です。</description>
+    </item>
+    
+  </channel>
+</rss>

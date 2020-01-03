@@ -1,0 +1,25 @@
+I"C<p>Raspberry PiでWiFiに繋ぐ方法</p>
+
+<p>Xが立ち上がっていない場合のWiFiの設定方法が分からなかったのでメモ。</p>
+
+<p>次のファイルに下記内容を追記すれば良い。</p>
+
+<p>繋げたいWiFiが複数ある場合は、そのままnetworkの項目を増やせばいい。</p>
+
+<p>/etc/wpa_supplicant/wpa_supplicant.conf</p>
+
+<div class="highlight">
+  <pre><code class="language-">
+network={
+  ssid="SSID"
+  psk="PASSWORD"
+  proto=RSN
+  key_mgmt=WPA-PSK
+  pairwise=CCMP
+  auth_alg=OPEN
+}
+</code></pre>
+</div>
+
+<p>Source: New feed</p>
+:ET

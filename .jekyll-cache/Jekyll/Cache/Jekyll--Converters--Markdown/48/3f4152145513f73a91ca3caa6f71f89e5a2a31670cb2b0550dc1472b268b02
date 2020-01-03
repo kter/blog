@@ -1,0 +1,14 @@
+I"�<p>NginxでSSLを使用とした時、次のようなエラーが発生した。</p>
+
+<pre class="wrap:true lang:default decode:true "># nginx -t<br />
+nginx: [emerg] SSL_CTX_use_PrivateKey_file("秘密鍵") failed (SSL: error:0B080074:x509 certificate routines:X509_check_private_key:key values mismatch)<br />
+nginx: configuration file &#047;etc&#047;nginx&#047;nginx.conf test failed</pre>
+
+<p> </p>
+
+<p>検索すると証明書が間違っているとか出てきますが、私は中間証明書のインストール位置を間違えていました。</p>
+
+<p>中間証明書は証明書の末尾に追記しましょう。</p>
+
+<p>Source: New feed</p>
+:ET

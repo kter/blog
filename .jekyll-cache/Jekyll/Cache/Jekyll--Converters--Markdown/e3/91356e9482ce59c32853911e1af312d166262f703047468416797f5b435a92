@@ -1,0 +1,12 @@
+I"�<p>でっかいtarファイルがあってこの中のあるディレクトリだけ取り出したいというときは次のようにすれば良い</p>
+
+<pre class="lang:default decode:true">tar -tf でっかい.tar | grep 探すキーワード</pre>
+
+<p> </p>
+
+<pre class="lang:default decode:true">tar xf でっかい.tar 調べたディレクトリパス</pre>
+
+<p> </p>
+
+<p>Source: New feed</p>
+:ET

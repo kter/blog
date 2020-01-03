@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Let&#39;s Encrypt on ことえりブログ</title>
+    <link>/tags/Lets-Encrypt/</link>
+    <description>Recent content in Let&#39;s Encrypt on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Mar 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Lets-Encrypt/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>最速でLet&#39;s Encryptの証明書をGETする方法</title>
+      <link>/post/2019-03-18-%E6%9C%80%E9%80%9F%E3%81%A7Lets-Encrypt%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92GET%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Mon, 18 Mar 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-03-18-%E6%9C%80%E9%80%9F%E3%81%A7Lets-Encrypt%E3%81%AE%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%82%92GET%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95/</guid>
+      <description>前提  更新したいドメインがRoute53で管理されている Route53の操作権を持つIAMロールを割り当てたEC2で作業する EC2でDockerが使える  手順 下記コマンドを実行するだけ。
+sudo docker run -it --rm -e AWS_HOSTED_ZONE_ID=(対象ドメインのHosted Zone ID) -v $PWD:/app xenolf/lego --path=/app --email=&amp;#34;(メールアドレス)&amp;#34; --domains=&amp;#34;(対象のドメイン)&amp;#34; --dns route53 run 証明書がカレントディレクトリのcertificatesディレクトリ以下に保存される。</description>
+    </item>
+    
+    <item>
+      <title>GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part3 -SSL編-</title>
+      <link>/post/2018-03-02-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part3-SSL%E7%B7%A8-/</link>
+      <pubDate>Fri, 02 Mar 2018 22:26:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-02-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part3-SSL%E7%B7%A8-/</guid>
+      <description>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。
+前回クラスタとそこにIngressを追加したので、今回はIngressでSSLを使えるようにします。
+はじめに cert-managerを使ってLet&#39;s Encryptから証明書を取得・設定していきます。
+cert-managerで証明書を取得するためにはDNS認証かHTTP認証のいずれかを行う必要があります。
+DNS認証はRoute53ではうまく動かなかったので、HTTP認証で行います。
+cert-managerのインストール helmを使ってインストールします。
+下記コマンドを実行してください。
+git clone https://github.com/jetstack/cert-manager cd cert-manager helm install \  --name cert-manager \  --namespace=kube-system \  contrib/charts/cert-manager \  --set ingressShim.extraArgs=&amp;#39;{--default-issuer-name=letsencrypt-prod,--default-issuer-kind=ClusterIssuer}&amp;#39; 設定 下記yamlをClusterIssuer.ymlとして保存してください。
+※メールアドレスは自分のものを設定してください。
+apiVersion: certmanager.k8s.io/v1alpha1 kind: ClusterIssuer metadata: name: letsencrypt-prod namespace: default spec: acme: # The ACME server URL server: https://acme-v01.api.letsencrypt.org/directory # Email address used for ACME registration email: (メールアドレス) # Name of a secret used to store the ACME account private key privateKeySecretRef: name: letsencrypt-prod # Enable the HTTP-01 challenge provider http01: {} 下記yamlをcertificate.</description>
+    </item>
+    
+    <item>
+      <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+      <link>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sun, 09 Jul 2017 13:05:28 +0000</pubDate>
+      
+      <guid>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>kubernetes on GKEでLet’s Encryptを使ったときのメモ
+kubenetesでLet’s Encryptを使うのに、kube-legoを使用します。
+kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。
+ 7月13日追記
+GCEのロードバランサーを使わない手順ができました。
+https://github.com/kter/kube-study/tree/master/ingress/nginx-tls
+kube-legoのダウンロード (メールアドレスを自分のものに編集)
+ IPの払い出し IPを払い出す
+払い出したIPにドメインを紐付けておく。
+ ファイルの作成 kube-legoで使用するnginx-ingress.ymlを作成する。
+SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。
+ kube-legoを作成する 設定が反映されるまで、十数分掛かるので暫く待つ。
+備考 作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は--namespace kube-legoが必要になる。</description>
+    </item>
+    
+  </channel>
+</rss>

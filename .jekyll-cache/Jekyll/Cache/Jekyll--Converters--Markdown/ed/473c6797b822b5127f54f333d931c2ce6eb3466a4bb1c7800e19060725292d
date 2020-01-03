@@ -1,0 +1,12 @@
+I"<p>Jekyllでテーブルを表示できるように設定する。</p>
+
+<p>_config.ymlに次の行を追加する。</p>
+
+<div class="highlight">
+  <pre><code class="language-">redcarpet:
+   extensions: ["tables"]
+</code></pre>
+</div>
+
+<p>Source: New feed</p>
+:ET

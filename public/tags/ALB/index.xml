@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ALB on ことえりブログ</title>
+    <link>/tags/ALB/</link>
+    <description>Recent content in ALB on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Nov 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ALB/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWSマネージドサービスのみでリダイレクトさせる</title>
+      <link>/post/2018-11-27-AWS%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E3%81%BF%E3%81%A7%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B/</link>
+      <pubDate>Tue, 27 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-27-AWS%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E3%81%BF%E3%81%A7%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B/</guid>
+      <description>http通信をhttpsにリダイレクトしたり、またゾーンアペックスからサブドメインへのリダイレクト (google.com -&amp;gt; www.google.com のような)は一般だとNGINXやApacheで設定…となりますが、AWSのサービスを駆使すれば必要ありません。 それぞれ説明します。
+http通信をhttpsにリダイレクト ALBを使います。 80番のターゲットグループでリダイレクトの設定を行えばOK.
+ゾーンアペックスからサブドメインへのリダイレクト Route53とS3を使います。もしhttpsもリダイレクトしたい場合はCloudFrontも使います。
+S3 ゾーンアペックス名でバケットを作った後、Static website hostingでリダイレクトの設定を行います。 ※バケットポリシー等の設定は不要です。
+CloudFront (httpsも使う場合） S3をオリジンとしたCloudFrontを用意します。わざわざCloudFrontを利用する理由は、S3だとカスタムのhttps証明書が入らないからです。 なのでCloudFrontではhttps証明書も設定します。 ※オリジンの設定にはリストで出てくるS3ではなく、Static website hostingで出てくるエンドポイントのドメイン部分をコピペして設定します。
+Route53 ゾーンアペックスのAレコードのエイリアスとしてCloudFront　(CloudFrontを使用しない場合はS3)　を指定します。</description>
+    </item>
+    
+  </channel>
+</rss>

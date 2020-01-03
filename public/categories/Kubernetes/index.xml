@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kubernetes on ことえりブログ</title>
+    <link>/categories/Kubernetes/</link>
+    <description>Recent content in Kubernetes on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 10 Mar 2018 13:09:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/Kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kubernetes Meetup Tokyo #10レポート</title>
+      <link>/post/2018-03-10-Kubernetes-Meetup-Tokyo-#10%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</link>
+      <pubDate>Sat, 10 Mar 2018 13:09:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-10-Kubernetes-Meetup-Tokyo-#10%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</guid>
+      <description>内容の正当性は保証できません。こういう雰囲気でした。
+スライドとか公開されたら更新します。
+概要 Kubernetes Meetup Tokyo #10 日時: 2018年3月8日19時から URL: https://k8sjp.connpass.com/event/76816/
+Open Service Broker APIとKubernetes Service Catalog by Toshiaki Maki (@making) (Pivotal)
+データベースをどこにだれが作成していますか？
+よくある例: 開発者がDBが必要な時にDBAに依頼 (DB作成、ユーザ作成)。
+Service Brokerを使えば、DBの作成・構築・設定まで自動で行える。
+Service Brokerを使うにはOpen Service Broker APIを使う。 これはもともとはCloud Foundryのサービスだった。
+KubernetesではService Catalogを経由してService Brokerを使う。
+Service Brokerによって作成される機密情報はSecretに入れてくれる・
+helmでインストールできる。
+ブローカーが構築済みであれば、開発者は下記手順を踏むことでリソース(DB等)を用意できる。
+ ServiceInstance作成 -&amp;gt; リソース（DB等）が作成される ServiceBinding作成 -&amp;gt; パスワード等がシークレットにセットされる  Kubernetesセキュリティベストプラクティス by Ian Lewis (Google)
+Guestbookアプリを例にベストプラクティスを紹介。
+ フロントはHTML/CSS/JS メッセージが保存・閲覧できる NGワード検出機能がある よくあるマイクロサービス  Kubernetes API Serverについて シナリオ: フロントエンドPodからトークン取得、APIサーバを攻撃、シークレットを取得しさらに攻撃 Podにはトークンがマウントされているので、Podに侵入されるとトークンが抜かれるおそれがある。 トークンを使ってAPIサーバにアクセスすればシークレット（パスワード等)が抜かれる。
+改善策1: RBACを使おう 例えばWebサーバはAPIサーバにアクセスする必要が無いので、アクセス出来ないようRBACを設定する。 GKEだとIAMと連携でき、管理が楽。</description>
+    </item>
+    
+    <item>
+      <title>GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part3 -SSL編-</title>
+      <link>/post/2018-03-02-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part3-SSL%E7%B7%A8-/</link>
+      <pubDate>Fri, 02 Mar 2018 22:26:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-02-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part3-SSL%E7%B7%A8-/</guid>
+      <description>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。
+前回クラスタとそこにIngressを追加したので、今回はIngressでSSLを使えるようにします。
+はじめに cert-managerを使ってLet&#39;s Encryptから証明書を取得・設定していきます。
+cert-managerで証明書を取得するためにはDNS認証かHTTP認証のいずれかを行う必要があります。
+DNS認証はRoute53ではうまく動かなかったので、HTTP認証で行います。
+cert-managerのインストール helmを使ってインストールします。
+下記コマンドを実行してください。
+git clone https://github.com/jetstack/cert-manager cd cert-manager helm install \  --name cert-manager \  --namespace=kube-system \  contrib/charts/cert-manager \  --set ingressShim.extraArgs=&amp;#39;{--default-issuer-name=letsencrypt-prod,--default-issuer-kind=ClusterIssuer}&amp;#39; 設定 下記yamlをClusterIssuer.ymlとして保存してください。
+※メールアドレスは自分のものを設定してください。
+apiVersion: certmanager.k8s.io/v1alpha1 kind: ClusterIssuer metadata: name: letsencrypt-prod namespace: default spec: acme: # The ACME server URL server: https://acme-v01.api.letsencrypt.org/directory # Email address used for ACME registration email: (メールアドレス) # Name of a secret used to store the ACME account private key privateKeySecretRef: name: letsencrypt-prod # Enable the HTTP-01 challenge provider http01: {} 下記yamlをcertificate.</description>
+    </item>
+    
+    <item>
+      <title>GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part2 -Ingress編</title>
+      <link>/post/2018-03-01-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part2-Ingress%E7%B7%A8-/</link>
+      <pubDate>Thu, 01 Mar 2018 23:50:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-01-GKE%E3%81%A7%E3%81%AA%E3%82%8B%E3%81%B9%E3%81%8F%E5%AE%89%E3%81%8FKubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part2-Ingress%E7%B7%A8-/</guid>
+      <description>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。
+前回クラスタを作成したので今回はIngressを追加します。
+Ingressを追加することで、クラスタ内のサービスにインターネットからアクセスできるようになります。
+はじめに Ingressは普通にGKEで作成すると、Ingress ControllerがGCPのロードバランサーを作成します。
+しかしこれが高い…。月額18ドルも掛かります。
+そこでGCPのロードバランサーの代わりにnginx-ingressというNGINXを使います。
+こちらを一番小さいf1-microのノードで動かせば4.28ドルで済みます。
+しかもf1-microはAlways Freeの条件であるus-east1, us-west1, us-central1のいずれかで動かせばタダで動かせます。
+なので今回はロードバランサーを使わず、nginx-ingressを使うことにします。
+前提作業 前回の記事のGKEでなるべく安くKubernetesクラスタを作成してPrometheus + Grafanaを使ってみる Part1 -クラスタ作成編-の手順でクラスタを作成してあることを前提とします。
+また疎通確認にドメインを使用しますので、用意してください。
+ドメインを持っていない方はnip.ioとか使うといいと思います。知らんけど。
+Ingress Controller用ノードを作成 前回作成したクラスタのノードはプリエンプティブノードのため一定時間で削除されます。
+nginx-ingressでは静的グローバルIPをノードに割り当てる必要があるため、削除されないノードを別途作成します。
+具体的にはIngress Controllerを動かすためのノードプールを作成します。
+ クラスタ編集画面を開く &amp;ldquo;ノードプールを追加&amp;quot;ボタンを選択 名前にload-balancerと入力 マシンタイプにmicro (f1-micro)を選択 ノードあたりのブートディスク サイズに10GBと入力  Ingress Controller用ノードの設定 下記コマンドを実行します。
+export CLUSTER_NAME=クラスタ名 export ZONE=us-west1-b export REGION=us-west1 # kubectlを使えるようにする gcloud container clusters get-credentials $CLUSTER_NAME --zone $ZONE # 静的グローバルIPアドレスを確保 gcloud compute addresses create $CLUSTER_NAME-ip --region $REGION # 静的グローバルIPアドレスを取得 export LB_ADDRESS_IP=$(gcloud compute addresses list | grep $CLUSTER_NAME-ip | awk &amp;#39;{print $3}&amp;#39;) # nginx-ingressで使うノード名を取得 export LB_INSTANCE_NAME=$(kubectl describe nodes | grep Name: | tail -n1 | awk &amp;#39;{print $2}&amp;#39;) # nginx-ingressしか動かないようにする (リソースの確保のため) kubectl taint nodes $LB_INSTANCE_NAME role=nginx-ingress-controller:NoSchedule # 静的グローバルIPアドレスをノードに紐付ける export LB_INSTANCE_NAT=external-nat gcloud compute instances delete-access-config $LB_INSTANCE_NAME --access-config-name &amp;#34;$LB_INSTANCE_NAT&amp;#34; --zone $ZONE gcloud compute instances add-access-config $LB_INSTANCE_NAME --access-config-name &amp;#34;$LB_INSTANCE_NAT&amp;#34; --address $LB_ADDRESS_IP --zone $ZONE # ラベルの設定 kubectl label nodes $LB_INSTANCE_NAME role=load-balancer # タグの設定 (これで80と443に外部からアクセスできるようになる) gcloud compute instances add-tags $LB_INSTANCE_NAME --tags http-server,https-server --zone $ZONE helmの導入 helmとはKubernetesのパッケージマネージャーです。</description>
+    </item>
+    
+    <item>
+      <title>GKEでなるべく安くKubernetesクラスタを作成してPrometheus &#43; Grafanaを使ってみる Part1 -クラスタ作成編-</title>
+      <link>/post/2018-02-11-GKE%E3%81%A7Kubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part1/</link>
+      <pubDate>Sun, 11 Feb 2018 11:38:00 +0000</pubDate>
+      
+      <guid>/post/2018-02-11-GKE%E3%81%A7Kubernetes%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%97%E3%81%A6Prometheus-&#43;-Grafana%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B-Part1/</guid>
+      <description>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。
+まずはGKEでKubernetesクラスタを作成してみます。
+はじめに GCP(Google Cloud Platform)アカウントの登録とプロジェクトの作成が終わってる前提でお話します。
+適当に作っておいてください。
+クラスタの作成 左上のハンバーガーメニューからKubernetes Engineを選択
+※初回アクセス時には準備に数分かかります。
+クラスタの作成ボタンを押下します。
+設定 今回のように可用性 (ダウンタイム)に目をつぶるならノードにプリエンプティブを使うことで、インスタンスの費用を7割程度抑えることが出来ます (オレゴン、g1-smallの場合)。
+※プリエンプティブにした場合、２４時間以内に勝手に落とされてしまうので気をつけてください。
+ノードは価格の安い海外のリージョンを使い、マシンタイプはsmallを使います。
+またデフォルトでは、ノードのディスクサイズが100GBという罠があるので、忘れずに減らしておきましょう。
+ ゾーン: us-west1-b マシンタイプ: small（g1-small) 自動スケーリング: オン 最大サイズ: 6 プリエンプティブ ノード: 有効 ノードあたりのブートディスク サイズ: 10GB HTTP 負荷分散: 無効  接続 クラスタの作成が終わったらkubectlコマンドでクラスタに接続してみます。
+接続ボタンを押下し、&amp;ldquo;Cloud Shellで実行&amp;quot;を押下します。
+ウインドウ下部に、コマンドが入力済みの状態でコンソールが表示されます。 Enterキーを押してコマンドを実行します。
+これでkubectlでアクセスできるようになりました。
+kubectl get nodesを実行して作成したノードが表示されるかどうか確認します。
+以上</description>
+    </item>
+    
+    <item>
+      <title>Kubernetesのsecrets用のbase64の結果が2行になってしまうとき</title>
+      <link>/post/2017-11-12-kubernetes%E3%81%AEsecrets%E7%94%A8%E3%81%AEbase64%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%8C2%E8%A1%8C%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E3%81%A8%E3%81%8D/</link>
+      <pubDate>Sun, 12 Nov 2017 16:29:47 +0000</pubDate>
+      
+      <guid>/post/2017-11-12-kubernetes%E3%81%AEsecrets%E7%94%A8%E3%81%AEbase64%E3%81%AE%E7%B5%90%E6%9E%9C%E3%81%8C2%E8%A1%8C%E3%81%AB%E3%81%AA%E3%81%A3%E3%81%A6%E3%81%97%E3%81%BE%E3%81%86%E3%81%A8%E3%81%8D/</guid>
+      <description>Kubernetesのsecretsはbase64でエンコードした値を入力します。
+ この時エンコードする文字列が長いとエンコード結果が2行になってしまうときがあります。
+ 2行の文字列をどうやってsecretsのymlファイルに書こうか少し迷いましたが、2行を単純に連結するだけで問題ありませんでした (知らなかった…)。
+ ちなみにecho ‘hoge’ | base64してもいいですが、base64 &amp;lt;&amp;lt;&amp;lt; ‘hoge’とした方が短くてスマートですね (こちらも知らなかった…)。
+ </description>
+    </item>
+    
+    <item>
+      <title>GKEからminikubeに移行した</title>
+      <link>/post/2017-11-01-gke%E3%81%8B%E3%82%89minikube%E3%81%AB%E7%A7%BB%E8%A1%8C%E3%81%97%E3%81%9F/</link>
+      <pubDate>Wed, 01 Nov 2017 01:08:47 +0000</pubDate>
+      
+      <guid>/post/2017-11-01-gke%E3%81%8B%E3%82%89minikube%E3%81%AB%E7%A7%BB%E8%A1%8C%E3%81%97%E3%81%9F/</guid>
+      <description>GKEがとにかく高い。
+ロードバランサーとn1-standard-1 (だったかな？)2つで月5, 6千円はかかっていた。
+いままでは3万円分くらいのクレジットを使って実質無料で運用できていたけど、それも尽きそうだったので月1000円 メモリ2GBのVPSでminikubeを使って運用することにした。
+移行はそこまで大変ではなく、NFSのデータとMySQLのダンプデータを載せ替えることと、GKE特有の設定の修正だけだった。
+具体的には
+ nodeSelectorの削除 gcePersistentDiskをhostPathに変更 ingressの静的IPアドレス設定を削除 ingressタイプをgceからnginxに変更 (annotationのingress.classをgceからnginxに変更) ingressのpathsで、既存の/*だけではなく/も追加 (GCEでは/*だけでも動いた） readinessProbeとlivenessProbeの秒数を長めに (スペックが落ちるので)  これでクレジット切れでサーバ運用費が極端に高くなることはなくなった。
+この調子で他のメールサーバやjenkinsもkubenetesに集約して節約したい。
+今回は調べた限りで一番安かったVultrというVPSサービスを利用した。
+メモリ512MBで2.5ドル、1GBでは5ドルで、さくらVPSと比べるとほぼ半額ほど。
+海外のサービスだけど東京リージョンもあるので、何ら不自由なく使えている。
+ちなみに登録は下記バナーからしていただけると私にデポジットが入るので是非。</description>
+    </item>
+    
+    <item>
+      <title>minikubeが次のエラーで動かない時の対応  x509: certificate signed by unknown authority (possibly because of &amp;#8220;crypto/rsa: verification error&amp;#8221;</title>
+      <link>/post/2017-10-27-543/</link>
+      <pubDate>Fri, 27 Oct 2017 01:10:26 +0000</pubDate>
+      
+      <guid>/post/2017-10-27-543/</guid>
+      <description>を実行した上で
+を実行すると次のエラーが発生した。
+ 代わりに、下記コマンドを実行したところうまく行った。
+ </description>
+    </item>
+    
+    <item>
+      <title>kubectlのオプションメモ</title>
+      <link>/post/2017-10-26-kubectl%E3%81%AE%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Thu, 26 Oct 2017 00:41:12 +0000</pubDate>
+      
+      <guid>/post/2017-10-26-kubectl%E3%81%AE%E3%82%AA%E3%83%97%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%A1%E3%83%A2/</guid>
+      <description>tips  getやdescribeサブコマンドはカンマ区切りで複数指定できる  * -w で結果をリアルタイムに出力できる（表示がおかしくなることが多々ある）
+  -o wideで情報をより多く出すことができる # 例 $ kubectl get pods -o wide NAME READY STATUS RESTARTS AGE IP NODE nfs-server-1786322612-p0pw3 1/1 Running 0 1d 172.17.0.6 minikube  -o jsonや-o yamlでそれぞれの形式で出力することができる (情報もより多く出る) 例 $ kubectl get pods -o json { &amp;ldquo;apiVersion&amp;rdquo;: &amp;ldquo;v1&amp;rdquo;, &amp;ldquo;items&amp;rdquo;: [ { &amp;ldquo;apiVersion&amp;rdquo;: &amp;ldquo;v1&amp;rdquo;, &amp;ldquo;kind&amp;rdquo;: &amp;ldquo;Pod&amp;rdquo;, &amp;ldquo;metadata&amp;rdquo;: { &amp;ldquo;annotations&amp;rdquo;: { &amp;ldquo;kubernetes.io/created-by&amp;rdquo;: &amp;ldquo;{&amp;quot;kind&amp;quot;:&amp;quot;SerializedReference&amp;quot;,&amp;quot;apiVersion&amp;quot;:&amp;quot;v1&amp;quot;,&amp;quot;reference&amp;quot;:{&amp;quot;kind&amp;quot;:&amp;quot;ReplicaSet&amp;quot;,&amp;quot;namespace&amp;quot;:&amp;quot;default&amp;quot;,&amp;quot;name&amp;quot;:&amp;quot;nfs-server-1786322612&amp;quot;,&amp;quot;uid&amp;quot;:&amp;quot;e8cf196e-b80f-11e7-87c4-080027159c1b&amp;quot;,&amp;quot;apiVersion&amp;quot;:&amp;quot;extensions&amp;quot;,&amp;quot;resourceVersion&amp;quot;:&amp;quot;13198&amp;quot;}}\n&amp;rdquo; }, &amp;ldquo;creationTimestamp&amp;rdquo;: &amp;ldquo;2017-10-23T16:33:32Z&amp;rdquo;, &amp;ldquo;generateName&amp;rdquo;: &amp;ldquo;nfs-server-1786322612-&amp;quot;, &amp;ldquo;labels&amp;rdquo;: { &amp;ldquo;pod-template-hash&amp;rdquo;: &amp;ldquo;1786322612&amp;rdquo;, &amp;ldquo;role&amp;rdquo;: &amp;ldquo;nfs-server&amp;rdquo; }, &amp;ldquo;name&amp;rdquo;: &amp;ldquo;nfs-server-1786322612-p0pw3&amp;rdquo;, &amp;ldquo;namespace&amp;rdquo;: &amp;ldquo;default&amp;rdquo;, 略  --no-headersでヘッダーを取り除くことができる (パイプを使うときに便利） # 例 $ kubectl get pods &amp;ndash;no-headers nfs-server-1786322612-p0pw3 1/1 Running 0 1d  -o jsonpath --template={(フィールド)}で指定のフィールドのみを出力することができる # 例 $ kubectl get pods -o jsonpath &amp;ndash;template {.</description>
+    </item>
+    
+    <item>
+      <title>kubectl cluster-infoがエラーで表示できない場合</title>
+      <link>/post/2017-07-23-kubectl-cluster-info%E3%81%8C%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%A7%E8%A1%A8%E7%A4%BA%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Sun, 23 Jul 2017 22:47:50 +0000</pubDate>
+      
+      <guid>/post/2017-07-23-kubectl-cluster-info%E3%81%8C%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%A7%E8%A1%A8%E7%A4%BA%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>kubectl cluster-infoが下記エラーで表示できない場合の対応
+  下記コマンドを実行してみる。
+ </description>
+    </item>
+    
+    <item>
+      <title>KubernetesでNFSを使う</title>
+      <link>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Wed, 19 Jul 2017 16:50:32 +0000</pubDate>
+      
+      <guid>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>KurbernetesのPod / Node間でファイルを共有するために、NFSを使ってみる。
+ググったり公式のリポジトリを参考にしたけどうまくいかなかったのでメモ。
+ おおまかな手順   Compute Engineでディスクを用意
+  NFSコンテナの用意
+  コンテナからNFSを利用
+   手順  Compute Engineでディスクを用意 コンソールかCLI等から普通に作成。
+  NFSコンテナの用意 下記2ファイルを用意してkubectl createする。</description>
+    </item>
+    
+    <item>
+      <title>minikubeを使った後にGKEを使いたい場合</title>
+      <link>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Fri, 14 Jul 2017 13:04:59 +0000</pubDate>
+      
+      <guid>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>minikubeを使ったあとにGKEを使おうと(kubectlコマンドを実行)すると、次のエラーが発生して接続できない。
+対応としてはgcloud container clustersコマンドでクラスタ名を指定すればよい。
+  </description>
+    </item>
+    
+    <item>
+      <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+      <link>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sun, 09 Jul 2017 13:05:28 +0000</pubDate>
+      
+      <guid>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>kubernetes on GKEでLet’s Encryptを使ったときのメモ
+kubenetesでLet’s Encryptを使うのに、kube-legoを使用します。
+kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。
+ 7月13日追記
+GCEのロードバランサーを使わない手順ができました。
+https://github.com/kter/kube-study/tree/master/ingress/nginx-tls
+kube-legoのダウンロード (メールアドレスを自分のものに編集)
+ IPの払い出し IPを払い出す
+払い出したIPにドメインを紐付けておく。
+ ファイルの作成 kube-legoで使用するnginx-ingress.ymlを作成する。
+SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。
+ kube-legoを作成する 設定が反映されるまで、十数分掛かるので暫く待つ。
+備考 作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は--namespace kube-legoが必要になる。</description>
+    </item>
+    
+  </channel>
+</rss>

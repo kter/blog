@@ -1,0 +1,13 @@
+I"�<div class="highlight">
+  <pre><code class="language-">ssh-keygen -lf /etc/ssh/ssh_host_rsa_key.pub
+</code></pre>
+</div>
+
+<p>OS再インストールした時、remote host identification has changedとか言われるのはこの公開鍵が変わるからなのね。</p>
+
+<p>参考</p>
+
+<p><a href="http://d.hatena.ne.jp/Artisan/20130325/1364222117">http://d.hatena.ne.jp/Artisan/20130325/1364222117</a></p>
+
+<p>Source: New feed</p>
+:ET

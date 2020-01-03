@@ -1,0 +1,383 @@
+I"M<h1 id="はじめに">はじめに</h1>
+
+<p>自分用のメールサーバを建てようと思った時、セキュリティを気にしながら設定を調べて…となかなか大変ですよね。</p>
+
+<p>でも<a href="https://github.com/Mailu/Mailu">Mailu</a>を使うと簡単にWebUI付きのメールサーバが構築できます！</p>
+
+<p><img src="/assets/img/20180206/2018-02-06-01.png" alt="" /></p>
+
+<p>この画像のようにWebUIからもメールの送受信ができるので便利です。</p>
+
+<p><a href="https://mailu.io/demo.html">デモサイト</a>があるので興味のある方は覗いてみてください。</p>
+
+<p>Mailuが備えている機能は次の通りです。</p>
+
+<ul>
+  <li>IMAP, IMAP+, SMTPのメールサーバ</li>
+  <li>WebUIと管理画面</li>
+  <li>自動返信、自動転送</li>
+  <li>クォーターなどの管理機能</li>
+  <li>TLS (Let’s Encrypt対応！), DKIM, アンチウイルスなどのセキュリティ</li>
+</ul>
+
+<p>詳細は<a href="https://mailu.io">プロジェクトのページ</a>を見ていただくとして、早速構築してみます。</p>
+
+<h1 id="構築">構築</h1>
+
+<p>構築はDigitalOceanという海外のVPS上のdocker-composeでやってみます。</p>
+
+<p><img src="/assets/img/20180206/2018-02-06-02.png" alt="" /></p>
+
+<p>ちなみに下記のリンクから登録すると10ドルのクーポンが貰えます。</p>
+
+<p>一番安いインスタンスであれば2ヶ月間無料で動かせます。是非。</p>
+
+<p>https://m.do.co/c/dc73cf13e37a</p>
+
+<h2 id="構築手順">構築手順</h2>
+
+<p>今回は公式推奨のDebian Stretch(9.3)を使います。</p>
+
+<p>インスタンスが立ち上がったらおもむろに下記コマンドを実行してください。</p>
+
+<h3 id="準備">準備</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">apt update
+<span class="c"># すべてYESと答える</span>
+apt <span class="nb">install</span> <span class="nt">-y</span> iptables-persistent
+apt-get autoremove <span class="nt">--purge</span> exim4 exim4-base</code></pre></figure>
+
+<h3 id="dockerのインストール">Dockerのインストール</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># E: Unable to locate package docker-engineと言われても大丈夫</span>
+apt-get remove docker docker-engine docker.io
+apt-get <span class="nb">install</span> <span class="nt">-y</span> apt-transport-https ca-certificates curl gnupg2 software-properties-common
+curl <span class="nt">-fsSL</span> https://download.docker.com/linux/<span class="si">$(</span><span class="nb">.</span> /etc/os-release<span class="p">;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$ID</span><span class="s2">"</span><span class="si">)</span>/gpg | <span class="nb">sudo </span>apt-key add -
+apt-key fingerprint 0EBFCD88
+add-apt-repository    <span class="s2">"deb [arch=amd64] https://download.docker.com/linux/</span><span class="si">$(</span><span class="nb">.</span> /etc/os-release<span class="p">;</span> <span class="nb">echo</span> <span class="s2">"</span><span class="nv">$ID</span><span class="s2">"</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+   </span><span class="si">$(</span>lsb_release <span class="nt">-cs</span><span class="si">)</span><span class="s2"> </span><span class="se">\</span><span class="s2">
+   stable"</span>
+apt-get update
+apt-get <span class="nb">install</span> <span class="nt">-y</span> docker-ce
+curl <span class="nt">-L</span> https://github.com/docker/compose/releases/download/1.18.0/docker-compose-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-s</span><span class="sb">`</span>-<span class="sb">`</span><span class="nb">uname</span> <span class="nt">-m</span><span class="sb">`</span> <span class="nt">-o</span> /usr/local/bin/docker-compose
+<span class="nb">chmod</span> +x /usr/local/bin/docker-compose</code></pre></figure>
+
+<h3 id="mailu設定">Mailu設定</h3>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">mkdir</span> /mailu
+<span class="nb">cd</span> /mailu</code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">cat &lt;&lt; '_EOF' &gt; docker-compose.yml</span>
+<span class="na">version</span><span class="pi">:</span> <span class="s1">'</span><span class="s">2'</span>
+
+<span class="na">services</span><span class="pi">:</span>
+
+  <span class="na">front</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/nginx:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">ports</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:80:80"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:443:443"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:110:110"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:143:143"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:993:993"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:995:995"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:25:25"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:465:465"</span>
+    <span class="pi">-</span> <span class="s2">"</span><span class="s">$BIND_ADDRESS4:587:587"</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/certs:/certs"</span>
+
+  <span class="na">redis</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">redis:alpine</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/redis:/data"</span>
+
+  <span class="na">imap</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/dovecot:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/data:/data"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/mail:/mail"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/overrides:/overrides"</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">front</span>
+
+  <span class="na">smtp</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/postfix:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/data:/data"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/overrides:/overrides"</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">front</span>
+
+  <span class="na">antispam</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/rspamd:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/filter:/var/lib/rspamd"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/dkim:/dkim"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/overrides/rspamd:/etc/rspamd/override.d"</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">front</span>
+
+  <span class="na">antivirus</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/$ANTIVIRUS:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/filter:/data"</span>
+
+  <span class="na">webdav</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/$WEBDAV:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/dav:/data"</span>
+
+  <span class="na">admin</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/admin:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/data:/data"</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/dkim:/dkim"</span>
+      <span class="pi">-</span> <span class="s">/var/run/docker.sock:/var/run/docker.sock:ro</span>
+    <span class="na">depends_on</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">redis</span>
+
+  <span class="na">webmail</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s2">"</span><span class="s">mailu/$WEBMAIL:$VERSION"</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/webmail:/data"</span>
+
+  <span class="na">fetchmail</span><span class="pi">:</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">mailu/fetchmail:$VERSION</span>
+    <span class="na">restart</span><span class="pi">:</span> <span class="s">always</span>
+    <span class="na">env_file</span><span class="pi">:</span> <span class="s">.env</span>
+    <span class="na">volumes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s2">"</span><span class="s">$ROOT/data:/data"</span>
+<span class="s">_EOF</span>
+
+<span class="s">cat &lt;&lt; '_EOF' &gt; .env</span>
+<span class="c1"># Mailu main configuration file</span>
+<span class="c1">#</span>
+<span class="c1"># Most configuration variables can be modified through the Web interface,</span>
+<span class="c1"># these few settings must however be configured before starting the mail</span>
+<span class="c1"># server and require a restart upon change.</span>
+
+<span class="c1">###################################</span>
+<span class="c1"># Common configuration variables</span>
+<span class="c1">###################################</span>
+
+<span class="c1"># Set this to the path where Mailu data and configuration is stored</span>
+<span class="s">ROOT=/mailu</span>
+
+<span class="c1"># Mailu version to run (1.0, 1.1, etc. or master)</span>
+<span class="s">VERSION=1.5.1</span>
+
+<span class="c1"># Set to a randomly generated 16 bytes string</span>
+<span class="s">SECRET_KEY=</span>
+
+<span class="c1"># Address where listening ports should bind</span>
+<span class="s">BIND_ADDRESS4=0.0.0.0</span>
+<span class="s">BIND_ADDRESS6=::1</span>
+
+<span class="c1"># Main mail domain</span>
+<span class="s">DOMAIN=</span>
+
+<span class="c1"># Hostnames for this server, separated with comas</span>
+<span class="s">HOSTNAMES=</span>
+
+<span class="c1"># Postmaster local part (will append the main mail domain)</span>
+<span class="s">POSTMASTER=admin</span>
+
+<span class="c1"># Choose how secure connections will behave (value: letsencrypt, cert, notls, mail)</span>
+<span class="s">TLS_FLAVOR=letsencrypt</span>
+
+<span class="c1"># Authentication rate limit (per source IP address)</span>
+<span class="s">AUTH_RATELIMIT=10/minute;1000/hour</span>
+
+<span class="c1"># Opt-out of statistics, replace with "True" to opt out</span>
+<span class="s">DISABLE_STATISTICS=False</span>
+
+<span class="c1">###################################</span>
+<span class="c1"># Optional features</span>
+<span class="c1">###################################</span>
+
+<span class="c1"># Expose the admin interface (value: true, false)</span>
+<span class="s">ADMIN=true</span>
+
+<span class="c1"># Choose which webmail to run if any (values: roundcube, rainloop, none)</span>
+<span class="s">WEBMAIL=rainloop</span>
+
+<span class="c1"># Dav server implementation (value: radicale, none)</span>
+<span class="s">WEBDAV=radicale</span>
+
+<span class="c1"># Antivirus solution (value: clamav, none)</span>
+<span class="s">ANTIVIRUS=none</span>
+
+<span class="c1">###################################</span>
+<span class="c1"># Mail settings</span>
+<span class="c1">###################################</span>
+
+<span class="c1"># Message size limit in bytes</span>
+<span class="c1"># Default: accept messages up to 50MB</span>
+<span class="s">MESSAGE_SIZE_LIMIT=50000000</span>
+
+<span class="c1"># Networks granted relay permissions, make sure that you include your Docker</span>
+<span class="c1"># internal network (default to 172.17.0.0/16)</span>
+<span class="s">RELAYNETS=172.16.0.0/12</span>
+
+<span class="c1"># Will relay all outgoing mails if configured</span>
+<span class="s">RELAYHOST=</span>
+
+<span class="c1"># Fetchmail delay</span>
+<span class="s">FETCHMAIL_DELAY=600</span>
+
+<span class="c1"># Recipient delimiter, character used to delimiter localpart from custom address part</span>
+<span class="c1"># e.g. localpart+custom@domain;tld</span>
+<span class="s">RECIPIENT_DELIMITER=+</span>
+
+<span class="c1"># DMARC rua and ruf email</span>
+<span class="s">DMARC_RUA=admin</span>
+<span class="s">DMARC_RUF=admin</span>
+
+<span class="c1"># Weclome email, enable and set a topic and body if you wish to send welcome</span>
+<span class="c1"># emails to all users.</span>
+<span class="s">WELCOME=false</span>
+<span class="s">WELCOME_SUBJECT=Welcome to your new email account</span>
+<span class="s">WELCOME_BODY=Welcome to your new email account, if you can read this, then it is configured properly!</span>
+
+<span class="c1">###################################</span>
+<span class="c1"># Web settings</span>
+<span class="c1">###################################</span>
+
+<span class="c1"># Path to the admin interface if enabled</span>
+<span class="s">WEB_ADMIN=/admin</span>
+
+<span class="c1"># Path to the webmail if enabled</span>
+<span class="s">WEB_WEBMAIL=/webmail</span>
+
+<span class="c1"># Website name</span>
+<span class="s">SITENAME=Mailu</span>
+
+<span class="c1"># Linked Website URL</span>
+<span class="s">WEBSITE=</span>
+
+<span class="c1">###################################</span>
+<span class="c1"># Advanced settings</span>
+<span class="c1">###################################</span>
+
+<span class="c1"># Docker-compose project name, this will prepended to containers names.</span>
+<span class="s">COMPOSE_PROJECT_NAME=mailu</span>
+
+<span class="c1"># Default password scheme used for newly created accounts and changed passwords</span>
+<span class="c1"># (value: SHA512-CRYPT, SHA256-CRYPT, MD5-CRYPT, CRYPT)</span>
+<span class="s">PASSWORD_SCHEME=SHA512-CRYPT</span>
+<span class="s">_EOF</span></code></pre></figure>
+
+<h2 id="設定">設定</h2>
+
+<p>設定ファイルの記載とドメインの設定を行います。</p>
+
+<h3 id="設定ファイル編集">設定ファイル編集</h3>
+
+<p>.envファイルをエディタで開き、下記設定を変更します。</p>
+
+<p>他の設定項目については<a href="https://mailu.io/configuration.html">ドキュメント</a>を参照してください。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>設定</th>
+      <th>設定値</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SECRET_KEY</td>
+      <td>16文字の英数文字</td>
+    </tr>
+    <tr>
+      <td>DOMAIN</td>
+      <td>メールで使うドメイン</td>
+    </tr>
+    <tr>
+      <td>HOSTNAMES</td>
+      <td>mail.(メールで使うドメイン)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="dnsレコードの編集">DNSレコードの編集</h3>
+
+<p>次のように編集してください。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>レコード名</th>
+      <th>レコードタイプ</th>
+      <th>設定値</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>(ドメイン)</td>
+      <td>A</td>
+      <td>(サーバーIPアドレス)</td>
+    </tr>
+    <tr>
+      <td>(ドメイン)</td>
+      <td>MX</td>
+      <td>10 mail.(メールで使うドメイン)</td>
+    </tr>
+    <tr>
+      <td>mail.(ドメイン)</td>
+      <td>A</td>
+      <td>(サーバーIPアドレス)</td>
+    </tr>
+    <tr>
+      <td>(ドメイン)</td>
+      <td>SPF</td>
+      <td>“v=spf1 ip4:(サーバーIPアドレス) ~all”</td>
+    </tr>
+    <tr>
+      <td>(ドメイン)</td>
+      <td>TXT</td>
+      <td>“v=spf1 ip4:(サーバーIPアドレス) ~all”</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="使ってみる">使ってみる</h1>
+
+<p>下記コマンドを実行してしばらく待ってください (自分は25分掛かりました)。</p>
+
+<p><code class="highlighter-rouge">docker-compose logs -f</code> で進捗を確認してもいいと思います。
+DHパラメータの生成やLet’s Encryptによる証明書自動取得が終わると、https://mail.(メールで使うドメイン)/ でアクセスできるようになります。</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">docker-compose up -d</span></code></pre></figure>
+
+<h2 id="アカウントの設定">アカウントの設定</h2>
+
+<p>アカウントの設定を行います。</p>
+
+<p>下記コマンドを実行してください。</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">docker-compose run --rm admin python manage.py admin (ユーザ名) (ドメイン) (パスワード)</span></code></pre></figure>
+
+<p>ブラウザでhttp://mail.(ドメイン)/ にアクセスし、”(ユーザ名)@(ドメイン名)”と設定したパスワードでログインします。</p>
+
+<p>以上。</p>
+
+:ET

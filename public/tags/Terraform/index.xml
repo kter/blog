@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Terraform on ことえりブログ</title>
+    <link>/tags/Terraform/</link>
+    <description>Recent content in Terraform on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 24 Mar 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Terraform/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>terraform importを試してみたので手順とか個人的ハマりポイントとか</title>
+      <link>/post/2019-03-24-terraform-import%E3%82%92%E8%A9%A6%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%81%AE%E3%81%A7%E6%89%8B%E9%A0%86%E3%81%A8%E3%81%8B%E5%80%8B%E4%BA%BA%E7%9A%84%E3%83%8F%E3%83%9E%E3%82%8A%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%81%A8%E3%81%8B/</link>
+      <pubDate>Sun, 24 Mar 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-03-24-terraform-import%E3%82%92%E8%A9%A6%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F%E3%81%AE%E3%81%A7%E6%89%8B%E9%A0%86%E3%81%A8%E3%81%8B%E5%80%8B%E4%BA%BA%E7%9A%84%E3%83%8F%E3%83%9E%E3%82%8A%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88%E3%81%A8%E3%81%8B/</guid>
+      <description>terraform import手順 簡単な例でS3バケットのimportをしてみる。 先に書いておくと、terraform importは現状のAWSリソースの情報をいい感じにterraformのtfファイルに書き起こしてくれるわけではなく、tfstateファイルにリソース情報を記録してくれるだけ。 あとはterraformのドキュメントとtfstateファイルを参考にtfファイルを手書きする感じとなる。
+1. importしたいリソースをmain.tfに記載 resource (リソースタイプ) (リソース名) の形式で記載する。 ※リソース名はterraform内の識別名
+resource &amp;#34;aws_s3_bucket&amp;#34; &amp;#34;test&amp;#34; { } 2. terraform importコマンドでterraform.tfstateファイルに状態を保存 terraform import (リソースタイプ).(リソース名) (importするリソースID)の形式でコマンドを実行する。 ※S3バケットの場合importするリソースIDはバケット名
+terraform import aws_s3_bucket.test tomohiko.io ※もしエラーが出たらterraform initを実行してAWSプラグインをインストールする
+3. terraform.tfstateファイルからmain.tfファイルに必要なパラメータを抜き出しmain.tfファイルに記載 terraform.tfstateファイルにimportしたリソースの状態が記録されるので、その情報とterraformのドキュメントを参考にmain.tfファイルを完成させる。
+※デフォルト設定のS3を作成するだけならbucketの指定だけで大丈夫です。
+resource &amp;#34;aws_s3_bucket&amp;#34; &amp;#34;test&amp;#34; { bucket = &amp;#34;tomohiko.io&amp;#34; } 個人的ハマりポイント IAM Role IAM Roleを定義するためには下記3つのresourceと1つのdataを定義する必要がある。
+policy
+ aws_iam_role aws_iam_policy_document aws_iam_role_policy  data
+ aws_iam_policy_document  自分の書いたコードの一部を抜粋するとこんな感じ。
+resource &amp;quot;aws_iam_role&amp;quot; &amp;quot;IAMロール名&amp;quot; { name = &amp;quot;IAMロール名&amp;quot; assume_role_policy = &amp;quot;${data.aws_iam_policy_document.IAMロール名.json}&amp;quot; } data &amp;quot;aws_iam_policy_document&amp;quot; &amp;quot;IAMロール名&amp;quot; { statement { actions = [&amp;quot;sts:AssumeRole&amp;quot;] principals { type = &amp;quot;Service&amp;quot; identifiers = [&amp;quot;ecs-tasks.</description>
+    </item>
+    
+  </channel>
+</rss>

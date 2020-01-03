@@ -1,0 +1,87 @@
+I"�<p>Lambda (Python) から指定のログストリームにログを書こうとして苦戦したのでメモ。</p>
+
+<p>今日使い始めたばかりなので間違ってる点があるかもしれません。もし間違っていたら教えてくださいm(_ _)m</p>
+
+<h1 id="苦戦ポイント1--put_log_eventsの使い方-">苦戦ポイント1 -put_log_events()の使い方-</h1>
+
+<p>結論から言って次のようにする必要があります。</p>
+
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+      <span class="n">logs_client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s">'logs'</span><span class="p">)</span>
+
+      <span class="n">res</span> <span class="o">=</span> <span class="n">logs_client</span><span class="o">.</span><span class="n">describe_log_streams</span><span class="p">(</span>
+          <span class="n">logGroupName</span><span class="o">=</span><span class="s">'(ロググループ名)'</span><span class="p">,</span>
+          <span class="n">logStreamNamePrefix</span><span class="o">=</span><span class="s">'(ログストリーム名)'</span><span class="p">,</span>
+      <span class="p">)</span>
+      <span class="n">seq_token</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s">'logStreams'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'uploadSequenceToken'</span><span class="p">]</span>
+
+      <span class="n">res</span> <span class="o">=</span> <span class="n">logs_client</span><span class="o">.</span><span class="n">put_log_events</span><span class="p">(</span>
+          <span class="n">logGroupName</span><span class="o">=</span><span class="s">'(ロググループ名)'</span><span class="p">,</span>
+          <span class="n">logStreamName</span><span class="o">=</span><span class="s">'(ログストリーム名)'</span><span class="p">,</span>
+          <span class="n">logEvents</span><span class="o">=</span><span class="p">[</span>
+              <span class="p">{</span>
+                  <span class="s">'timestamp'</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+                  <span class="s">'message'</span><span class="p">:</span> <span class="s">'</span><span class="si">%</span><span class="s">s backed up successfully'</span> <span class="o">%</span> <span class="p">(</span><span class="n">message</span><span class="p">)</span>
+              <span class="p">},</span>
+          <span class="p">],</span>
+          <span class="n">sequenceToken</span><span class="o">=</span><span class="n">seq_token</span>
+      <span class="p">)</span>
+</code></pre></div></div>
+
+<p>注意する点が2点ほどあります。</p>
+
+<h3 id="timestampの指定">timestampの指定</h3>
+<p>まず1点目、timestampはUNIX時間に1000を掛けたものを<strong>整数</strong>で指定しましょう。つまり単位が<strong>ミリ秒</strong>です。</p>
+
+<h3 id="sequencetoken">sequenceToken</h3>
+<p>2点目、ログを書き出すput_log_events()にはsequenceTokenというパラメータが必要になります。
+ログストリームへの初回の書き込みなら（多分）いらないのですが、2回目以降は必要になります。</p>
+
+<p>上記コードではsequenceTokenをdescribe_log_streams()から取得していますが、put_log_events()のレスポンスの中にもありますのでそれを使ってもいいです。</p>
+
+<h1 id="苦戦ポイント2--iam-ポリシー-">苦戦ポイント2 -IAM ポリシー-</h1>
+
+<p>結論から言って次のようにする必要があります。</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"Version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2012-10-17"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Statement"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"logs:CreateLogGroup"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"logs:CreateLogStream"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"logs:PutLogEvents"</span><span class="p">,</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"arn:aws:logs:*:*:/aws/lambda/(Lambda関数名☆ワイルドカード可☆)"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"arn:aws:logs:*:*:log-group:(ロググループ名):log-stream:(ログストリーム名)"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"Action"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"logs:DescribeLogStreams"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"Resource"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="s2">"arn:aws:logs:*:*:*"</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="nl">"Effect"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Allow"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>ポリシーについて先に説明させていただきますと、最初のCreateLogGroup, CreateLogStream, PutLogEventsはCloudWatch Logsにログを書き出す（ログストリームの作成も）時に必要です。</p>
+
+<p>最初のResource内の1つ目　（<code class="highlighter-rouge">"arn:aws:logs:*:*:/aws/lambda/(Lambda関数名☆ワイルドカード可☆)"</code>）は、Lambdaからprint()やloggerを使った時、自動でCloudWatch Logsに送られるのでその時用です。</p>
+
+<p>その上での注意する点はResourceの指定です。</p>
+
+<h3 id="resource指定">Resource指定</h3>
+
+<p>最初のResource内の2つ目（<code class="highlighter-rouge">arn:aws:logs:*:*:log-group:(ロググループ名):log-stream:(ログストリーム名)</code>）は今回の問題である特定のログストリームに書くときのArn指定です。
+自分は最初間違えて<code class="highlighter-rouge">arn:aws:logs:*:*:(ロググループ名)/(ログストリーム名)</code>とかやってました。</p>
+
+<p>前述のdescribe_log_streamsのためにlogs:DescribeLogStreamsをarn:aws:logs:<em>:</em>:*に対して設定するのも忘れないでください。</p>
+
+:ET

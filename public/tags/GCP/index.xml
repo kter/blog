@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GCP on ことえりブログ</title>
+    <link>/tags/GCP/</link>
+    <description>Recent content in GCP on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 23 Jul 2017 22:47:50 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/GCP/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>kubectl cluster-infoがエラーで表示できない場合</title>
+      <link>/post/2017-07-23-kubectl-cluster-info%E3%81%8C%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%A7%E8%A1%A8%E7%A4%BA%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Sun, 23 Jul 2017 22:47:50 +0000</pubDate>
+      
+      <guid>/post/2017-07-23-kubectl-cluster-info%E3%81%8C%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%A7%E8%A1%A8%E7%A4%BA%E3%81%A7%E3%81%8D%E3%81%AA%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>kubectl cluster-infoが下記エラーで表示できない場合の対応
+  下記コマンドを実行してみる。
+ </description>
+    </item>
+    
+    <item>
+      <title>KubernetesでNFSを使う</title>
+      <link>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Wed, 19 Jul 2017 16:50:32 +0000</pubDate>
+      
+      <guid>/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>KurbernetesのPod / Node間でファイルを共有するために、NFSを使ってみる。
+ググったり公式のリポジトリを参考にしたけどうまくいかなかったのでメモ。
+ おおまかな手順   Compute Engineでディスクを用意
+  NFSコンテナの用意
+  コンテナからNFSを利用
+   手順  Compute Engineでディスクを用意 コンソールかCLI等から普通に作成。
+  NFSコンテナの用意 下記2ファイルを用意してkubectl createする。</description>
+    </item>
+    
+    <item>
+      <title>minikubeを使った後にGKEを使いたい場合</title>
+      <link>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</link>
+      <pubDate>Fri, 14 Jul 2017 13:04:59 +0000</pubDate>
+      
+      <guid>/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/</guid>
+      <description>minikubeを使ったあとにGKEを使おうと(kubectlコマンドを実行)すると、次のエラーが発生して接続できない。
+対応としてはgcloud container clustersコマンドでクラスタ名を指定すればよい。
+  </description>
+    </item>
+    
+    <item>
+      <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+      <link>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sun, 09 Jul 2017 13:05:28 +0000</pubDate>
+      
+      <guid>/post/2017-07-09-kubernetes-on-gke%E3%81%A7lets-encrypt%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>kubernetes on GKEでLet’s Encryptを使ったときのメモ
+kubenetesでLet’s Encryptを使うのに、kube-legoを使用します。
+kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。
+ 7月13日追記
+GCEのロードバランサーを使わない手順ができました。
+https://github.com/kter/kube-study/tree/master/ingress/nginx-tls
+kube-legoのダウンロード (メールアドレスを自分のものに編集)
+ IPの払い出し IPを払い出す
+払い出したIPにドメインを紐付けておく。
+ ファイルの作成 kube-legoで使用するnginx-ingress.ymlを作成する。
+SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。
+ kube-legoを作成する 設定が反映されるまで、十数分掛かるので暫く待つ。
+備考 作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は--namespace kube-legoが必要になる。</description>
+    </item>
+    
+    <item>
+      <title>Google Cloud Next 2日目に行ってきた</title>
+      <link>/post/2017-06-16-google-cloud-next-2%E6%97%A5%E7%9B%AE%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</link>
+      <pubDate>Fri, 16 Jun 2017 11:56:52 +0000</pubDate>
+      
+      <guid>/post/2017-06-16-google-cloud-next-2%E6%97%A5%E7%9B%AE%E3%81%AB%E8%A1%8C%E3%81%A3%E3%81%A6%E3%81%8D%E3%81%9F/</guid>
+      <description>スペースのインデントが消えるのでGistに書いた…
+[gist https://gist.github.com/kter/ae7dc4f598a9ef14838aacf956c67a9d]</description>
+    </item>
+    
+  </channel>
+</rss>

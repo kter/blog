@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Thunderbird on ことえりブログ</title>
+    <link>/tags/Thunderbird/</link>
+    <description>Recent content in Thunderbird on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 Dec 2017 01:01:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Thunderbird/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Macから別のMacへのThunderbirdの移行をしたら簡単だった</title>
+      <link>/post/2017-12-27-Mac%E3%81%8B%E3%82%89Mac%E3%81%B8%E3%81%AEThunderbird%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%82%92%E3%81%97%E3%81%9F%E3%82%89%E7%B0%A1%E5%8D%98%E3%81%A0%E3%81%A3%E3%81%9F/</link>
+      <pubDate>Wed, 27 Dec 2017 01:01:00 +0000</pubDate>
+      
+      <guid>/post/2017-12-27-Mac%E3%81%8B%E3%82%89Mac%E3%81%B8%E3%81%AEThunderbird%E3%81%AE%E7%A7%BB%E8%A1%8C%E3%82%92%E3%81%97%E3%81%9F%E3%82%89%E7%B0%A1%E5%8D%98%E3%81%A0%E3%81%A3%E3%81%9F/</guid>
+      <description>職場で使っているMacを別のMacに移行をする必要があり、使っていたThunderbirdをどうやって移行するか調べた。
+自分で試した限り、~/Library/Thunderbird/以下のディレクトリをそのまま古いMacから新しいMacにコピーすれば大丈夫だった。
+Thunderbirdの設定やメールも保持された。
+なお新旧Mac間のファイルコピーはAirDropを使うのがおすすめ。</description>
+    </item>
+    
+  </channel>
+</rss>

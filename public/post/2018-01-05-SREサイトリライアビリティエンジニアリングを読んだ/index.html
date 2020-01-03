@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SREサイトリライアビリティエンジニアリングを読んだ (随時更新)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">SREサイトリライアビリティエンジニアリングを読んだ (随時更新)</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-01-05</small></p> <hr/>
+   <div class="post">
+     <p>SREサイトリライアビリティエンジニアリングを読んだので、要点をメモ。</p>
+<h2 id="heading">現行のシステム管理の問題点</h2>
+<ul>
+<li>サービスが成長すると運用コストも増加する</li>
+<li>開発チームと運用チームでの対立が発生する</li>
+</ul>
+<h2 id="google">Googleのシステム管理について</h2>
+<ul>
+<li>SRE (サイトリライアビリティエンジニアリング) というアプローチを取る</li>
+<li>SREとは(Google的には)ソフトウェアエンジニアに運用チームの設計を依頼したときにできるもの</li>
+<li>UNIXシステム内部とネットワーキングに関する専門知識と、複雑な問題を解決するソフトウェアシステムの開発に対する信念と適正が必要</li>
+<li>運用チームで行ってきたことをソフトウェアで自動化する
+<ul>
+<li>こうしたことをしない場合、サービス成長とともに運用負荷が増大し続け、多くの人員が必要となる</li>
+</ul>
+</li>
+<li>Googleの場合、運用の業務は全体の50%の時間以内に収めるようにしている
+<ul>
+<li>残りの時間はサービスを安定して運用できるようにするための開発作業に当てる</li>
+</ul>
+</li>
+</ul>
+<h2 id="heading-1">エラーバジェットについて</h2>
+<ul>
+<li>開発チームとSREチームの対立を解決するための仕組み</li>
+<li>100%を信頼性の目標とすることは、基本的にいかなる場合にも間違っているとする
+<ul>
+<li>99.999%と100%の可用性は、他の要素（PC/SP, Wi-Fi, ISP, 電力網等)のノイズに紛れてしまう上に、0.001%を埋める労力はユーザーにメリットがない (リリースも遅く、少なくなってしまう）</li>
+</ul>
+</li>
+<li>次の3点を考慮に入れた上で可用性のターゲットを決める。1からそれを引いたものがエラーバジェットとなる (可用性が99.9%の場合は0.1%がエラーバジェット)
+<ul>
+<li>ユーザーが満足する可用性のレベル</li>
+<li>満足できなかったユーザーにとっての大対策はどのようなものがあるか</li>
+<li>可用性のレベルを変更したとしてユーザーのプロダクトの利用の仕方にに何が起こるか</li>
+</ul>
+</li>
+<li>エラーバジェットは超過しない限り自由に使うことができる
+<ul>
+<li>機能のローンチに関わるリスク (段階的ロールアウトや1% experiment)のために使うことができる</li>
+<li>SREの目的をサービス障害をゼロにすることではなく機能のリリース速度を最大化するためにエラーバジェットを使うことになる</li>
+<li>サービス障害を予測済みのものにすることができ、これが悪いことではなくなる。コントロールすることができるようになる。</li>
+<li>必要以上に信頼性をあげない</li>
+<li>SREと開発者との間でリリース速度と可用性の利害を一致させることができ、リスクについて揉めることなく共通の結論にすることができる</li>
+</ul>
+</li>
+</ul>
+<h2 id="heading-2">モニタリングについて</h2>
+<ul>
+<li>人間がメールを読み、何らかの対応アクションの必要性を判断しなければならないシステムは根本的に問題がある
+<ul>
+<li>アラートはソフトウェアが解釈を行い、人間はアクションを行わなければならないときのみ通知を受けるようになっているべき</li>
+</ul>
+</li>
+<li>MTTF (平均故障時間)とMTTR (平均修復時間)を考える</li>
+<li>たとえ障害が多くとも、手作業での介入を必要としないシステムは、介入を必要とする障害が少ないシステムより高い可用性を持つ</li>
+<li>人間の作業は手順書に記録していくことで、MTTRに3倍の改善が見られた (Google談)</li>
+<li>およそ70%のサービス障害は動作中のシステム変更によって生じるもの (Googleの場合)</li>
+<li>ベストプラクティスは自動化によって下記3点を実現すること。
+<ul>
+<li>漸進的なロールアウトの実装</li>
+<li>高速かつ正確な問題の検出</li>
+<li>安全なロールバック</li>
+</ul>
+</li>
+<li>需要予測とキャパシティプランニングは次の2点を考慮に入れる必要がある。
+<ul>
+<li>自然な成長 (プロダクトの利用が進むなど)</li>
+<li>突発的な成長 (機能のリリースやマーケティングキャンペーン等)</li>
+</ul>
+</li>
+</ul>
+<h2 id="heading-3">リスクについて</h2>
+<ul>
+<li>信頼性と機能追加等のリリースはトレードオフの関係にある
+<ul>
+<li>そのため必要以上に信頼性をあげない</li>
+</ul>
+</li>
+<li>可用性はリクエスト数を集計(成功したリクエスト数/総リクエスト数)すると、バッチやストレージ等にも当てはめることができる</li>
+<li>可用性のターゲットレベルは下記のことを考慮するべき
+<ul>
+<li>期待されているサービスのレベル</li>
+<li>サービスが直接的に収入(顧客と自身の)につながっているか</li>
+<li>サービスの有償・無償</li>
+<li>競合サービスのレベル</li>
+<li>コンシューマー向け・企業向け</li>
+</ul>
+</li>
+<li>可用性のレベルを変更してどれだけのコストに影響があるかも考える必要がある
+<ul>
+<li>サービスの収益がXXX円だから、可用性0.1%の改善はYYYの収益改善になる。これはコストに見合うかどうか等</li>
+<li>上記の計算が難しいならISPのエラー率を参考にする(ISPのエラー率より低いならこのノイズに紛れるため)
+<ul>
+<li>Googleの計測では0.01%から1%の間</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>処理の重要度によって可用性のレベルを変更しコストを抑えるのもあり
+<ul>
+<li>重要なデータとそうでないデータを、それぞれ冗長で高速なストレージと結果整合性の安価なストレージに格納する。など</li>
+</ul>
+</li>
+</ul>
+<h2 id="heading-4">サービスレベル目標</h2>
+<p>用語の定義から</p>
+<h3 id="sla-service-level-agreements">SLA (service level agreements)</h3>
+<ul>
+<li>ビジネスサイドが決めるもので、SLOが満たす/満たされなかった場合の規定
+<ul>
+<li>裁判や金銭的ペナルティのことを指す</li>
+<li>上記以外の規定はSLOのことを指す</li>
+</ul>
+</li>
+</ul>
+<h3 id="sli-service-level-indicators">SLI (service level indicators)</h3>
+<ul>
+<li>サービスレベルの計測量
+<ul>
+<li>リクエストのレイテンシ、システムスループット、エラー率等が挙げられる</li>
+</ul>
+</li>
+</ul>
+<h3 id="slo-service-level-objectives">SLO (service level objectives)</h3>
+<ul>
+<li>
+<p>SLIで計測されるサービスレベルのターゲット値の範囲
+*  SLOを公開するとユーザーの不満を減らすことができる
+* SLOが明示されていない場合、ユーザーは希望するパフォーマンスについて、過剰な信頼もしくは損失をもってしまう</p>
+</li>
+<li>
+<p>SLIはユーザーがシステムに求めていることを考慮し、少数の指標に抑える。</p>
+<ul>
+<li>多ければ大切な指標に適切なレベルで注意が払えなくなる</li>
+</ul>
+</li>
+<li>
+<p>サーバサイドでメトリクスを収集するのが一般的だが、クライアントサイドのメトリクスも重要 (ユーザの実体験にそっている）</p>
+</li>
+<li>
+<p>メトリクスは平均ではなく分布(パーセンタイル)で考えると良い</p>
+<ul>
+<li>1分平均のメトリクスでは、数秒の間のバーストが検知できない</li>
+</ul>
+</li>
+<li>
+<p>SLIは定義をテンプレート化すると良い。例えば</p>
+<ul>
+<li>集計インターバル: 1分</li>
+<li>対象領域: クラスタ内すべてのタスク</li>
+<li>収集頻度: 10秒</li>
+<li>対象リクエスト: ブラックボックスモニタリングジョブからのHTTP GET</li>
+<li>取得方法: モニタリングシステムを通じて、サーバで計測</li>
+<li>データアクセスのレイテンシ: 最期のバイトまでの時間</li>
+</ul>
+</li>
+<li>
+<p>SLOでは計測方法と適切であるかの条件を指定するべき</p>
+<ul>
+<li>SLOを常に満たし続けることを求めるのは望ましくない
+<ul>
+<li>リリースのペースを落とし、コストが上がってしまう</li>
+<li>SLOを満たせない比率のエラーバジェットを設定し、定期的に追跡する方が良い</li>
+</ul>
+</li>
+<li>現実的なターゲットを設定する</li>
+<li>できるだけシンプルな集計を心がける</li>
+<li>安全マージンを取る(内部的なSLOを大概的なSLOより厳しくする)</li>
+<li>過剰設定を避ける (スロットリングやシステムをオフラインにする)
+<ul>
+<li>過度な期待を避けるため</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="heading-5">モニタリングについて</h2>
+<p>特に重要なシグナルは次の4つ</p>
+<ul>
+<li>レイテンシ
+<ul>
+<li>成功処理のレイテンシと失敗処理のレイテンシは必ず分けて計測</li>
+</ul>
+</li>
+<li>トラフィック
+<ul>
+<li>リクエスト数や同時セッション数等</li>
+</ul>
+</li>
+<li>エラー
+<ul>
+<li>処理に失敗したリクエストのレート</li>
+<li>HTTPの500や200でありつつも内容に間違いがある、SLO違反のリクエスト等</li>
+</ul>
+</li>
+<li>サチュレーション
+<ul>
+<li>最も制約のあるリソースに重点を置いたシステムの利用率</li>
+<li>もうすぐ発生しそうなサチュレーション (ディスク空き容量の低下等）</li>
+</ul>
+</li>
+</ul>
+<p>適切な粒度について</p>
+<ul>
+<li>
+<p>1分毎のメトリクスからでは長時間に渡る変化がわかりづらい</p>
+</li>
+<li>
+<p>ディスク空き容量は1,2分に1回以上にする必要はない</p>
+</li>
+<li>
+<p>粒度が細かすぎると収集・保存・分析のコストが高くなる</p>
+<ul>
+<li>サーバでサンプリングしてから収集・保存・分析すると良い</li>
+</ul>
+</li>
+<li>
+<p>複雑なモニタリングシステムは変更が難しく、脆く、メンテのコストが高くなる</p>
+<ul>
+<li>できるだけシンプルにする
+<ul>
+<li>ほとんど実施されない収集・集計・アラートの設定は削除されるべき</li>
+<li>収集されるがダッシュボードにもアラートにも作られないものは削除を検討</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-01-01-1%E6%9C%881%E6%97%A5%E3%81%AE%E3%83%8F%E3%82%A4%E3%83%A9%E3%82%A4%E3%83%88/"> 1月1日のハイライト</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-01-10-EC2IAM%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E9%81%A9%E7%94%A8%E3%82%92CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/"> EC2 IAMロールの作成と適用をCLIから行う</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

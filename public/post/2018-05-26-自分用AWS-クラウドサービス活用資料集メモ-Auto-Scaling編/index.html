@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>自分用AWS クラウドサービス活用資料集メモ Auto Scaling編</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">自分用AWS クラウドサービス活用資料集メモ Auto Scaling編</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-05-26</small></p> <hr/>
+   <div class="post">
+     <h4 id="auto-scalinghttpsawsamazoncomjpautoscaling"><a href="https://aws.amazon.com/jp/autoscaling/">Auto Scaling</a></h4>
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2017-auto-scaling">AWS Black Belt Online Seminar 2017 Auto Scaling</a></p>
+<ul>
+<li>動的スケーリング3種
+<ul>
+<li>ChangeInCapacity
+<ul>
+<li>指定したインスタンス数だけ容量を増減</li>
+<li>ex. アラームが起きたら2台増やす</li>
+</ul>
+</li>
+<li>ExactCapacity
+<ul>
+<li>指定したインスタンス数に容量を変更</li>
+<li>アラームが起きたら2台にする</li>
+</ul>
+</li>
+<li>PercentChangeInCapacity
+<ul>
+<li>指定したインスタンス数に容量を変更</li>
+<li>現在のサイズから20%増やす</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>負荷が予想できるなら: スケジュールベース</li>
+<li>予定された負荷の対策: 手動スケーリング</li>
+<li>予測できない緩やかな負荷: 動的スケーリング</li>
+<li>ヘルスチェック
+<ul>
+<li>EC2: ステータスがrunning以外の状態を以上と判断</li>
+<li>ELB: ELBのヘルスチェックを利用</li>
+</ul>
+</li>
+<li>クールダウン: スケーリングアクション実行後、指定した時間ないは次のスケーリングアクションを実行しない仕組み
+<ul>
+<li>シンプルスケーリングポリシーのみ対応</li>
+</ul>
+</li>
+<li>ターミネーションポリシー: スケールイン時どのインスタンスから終了するか定義
+<ul>
+<li>OldestInstance / NewestInstance</li>
+<li>OldestLaunchConfiguration</li>
+<li>ClosestToNextInstanceHour (次の課金が始まるタイミングが最も近いインスタンス)</li>
+<li>Default (OldestLaunchConfigurationとClosestToNextInstanceHourを順に適用し、複数インスタンスが残ればランダム)</li>
+<li>インスタンス保護対象は除外</li>
+</ul>
+</li>
+<li>インスタンスのアタッチ・デタッチ
+<ul>
+<li>インスタンスのアタッチ: Auto Scaling Groupに追加できる。Desired Capacityが自動で追加される</li>
+<li>インスタンスのデタッチ: Auto Scaling Groupから取り除ける。Desired Capacityは変更されないため、新規インスタンスが追加される</li>
+<li>どちらもELBとは連動する。</li>
+</ul>
+</li>
+<li>スタンバイ: ELBからデタッチされ、トラフィックが流れないようになる
+<ul>
+<li>Desired Capasityも自動で変更される</li>
+</ul>
+</li>
+<li>ライフサイクルフック: Auto Scalingによるインスタンス起動・終了を待機させ、起動時または終了時にカスタムアクションを実行できる仕組み
+<ul>
+<li>インスタンス起動・終了処理を待機させ、メッセージを通知。SNS、SQS、CloudWatchイベントに送られる</li>
+<li>待機時間にカスタムアクションを(初期化・終了処理）を実行</li>
+<li>ライフサイクルの終了または待機時間延長コマンドを実行</li>
+</ul>
+</li>
+<li>突発的なスパイクには向いていない
+<ul>
+<li>CloudFrontにオフロード</li>
+<li>API Gatewayでスロットリング</li>
+<li>サイトを静的ページに切り替える</li>
+</ul>
+</li>
+<li>アーキテクチャとしてはSQSやECS、Blue Green(ASGをCloudFormationで自動作成)等が挙げられる。</li>
+<li>Application Auto Scaling: Auto Scalingと似たUXでAWSリソースの自動スケールを実現
+<ul>
+<li>ECS</li>
+<li>Spot Fleet</li>
+<li>EMR</li>
+</ul>
+</li>
+</ul>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Elastic-Load-Balancing%E7%B7%A8/"> 自分用AWS クラウドサービス活用資料集メモ Elastic Load Balancing編</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-06-27-%E8%87%AA%E8%BA%AB%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%90%8D%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E3%83%AF%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC/"> 自身のインスタンス名を取得するワンライナー</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,35 @@
+I"�
+<h2 id="課題">課題</h2>
+
+<p>DockerコンテナからAWSのAPIにアクセスしたい場合、ホストがEC2ならIAMロールが使える。
+しかしホストがローカルのMacの場合は、アクセスキーとシークレットアクセスキーを、どうにかしてコンテナに渡す必要がある。</p>
+
+<h2 id="結論">結論</h2>
+
+<p>aws cliのconfigure getサブコマンドを使う。
+具体的には下記のようにする。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env sh</span>
+<span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="si">$(</span>aws configure get aws_access_key_id<span class="si">)</span>
+<span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="si">$(</span>aws configure get aws_secret_access_key<span class="si">)</span>
+
+docker run <span class="nt">--rm</span> <span class="se">\</span>
+ <span class="nt">-e</span> <span class="nv">AWS_REGION</span><span class="o">=</span>ap-northeast-1 <span class="se">\</span>
+ <span class="nt">-e</span> <span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="nv">$AWS_ACCESS_KEY_ID</span> <span class="se">\</span>
+ <span class="nt">-e</span> <span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="nv">$AWS_SECRET_ACCESS_KEY</span> <span class="se">\</span>
+ <span class="o">(</span>略<span class="o">)</span>
+</code></pre></div></div>
+
+<p>このようにすればコンテナ内のAWC CLI指定の環境変数にアクセスキー等が格納されるので、そのままaws cliコマンドなどが使える。
+プロファイルが複数ある場合は下記のようにして切り替えることもできる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">AWS_ACCESS_KEY_ID</span><span class="o">=</span><span class="si">$(</span>aws <span class="nt">--profile</span> <span class="o">(</span>プロファイル名<span class="o">)</span> configure get aws_access_key_id<span class="si">)</span>
+<span class="nv">AWS_SECRET_ACCESS_KEY</span><span class="o">=</span><span class="si">$(</span>aws <span class="nt">--profile</span> <span class="o">(</span>プロファイル名<span class="o">)</span> configure get aws_secret_access_key<span class="si">)</span>
+</code></pre></div></div>
+
+<p>参考
+<a href="https://docs.aws.amazon.com/cli/latest/reference/configure/get.html">get — AWS CLI 1.16.174 Command Reference</a></p>
+
+<p><a href="https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/cli-chap-configure.html#config-settings-and-precedence">AWS CLI の設定 - AWS Command Line Interface</a></p>
+
+:ET

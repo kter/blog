@@ -1,0 +1,55 @@
+I"<p>kubernetes on GKEでLet’s Encryptを使ったときのメモ</p>
+
+<p>kubenetesでLet’s Encryptを使うのに、<a href="https://github.com/jetstack/kube-lego">kube-lego</a>を使用します。</p>
+
+<p>kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。</p>
+
+<p> </p>
+
+<p>7月13日追記</p>
+
+<p>GCEのロードバランサーを使わない手順ができました。</p>
+
+<p>https://github.com/kter/kube-study/tree/master/ingress/nginx-tls</p>
+
+<h3 id="kube-legoのダウンロード">kube-legoのダウンロード</h3>
+
+<pre class="lang:default decode:true ">git clone https://github.com/jetstack/kube-lego.git
+vim kube-lego/examples/gce/lego/configmap.yaml</pre>
+
+<p>(メールアドレスを自分のものに編集)</p>
+
+<p> </p>
+
+<h3 id="ipの払い出し">IPの払い出し</h3>
+
+<p>IPを払い出す</p>
+
+<pre class="lang:default decode:true ">gcloud compute addresses create "IPの識別名" --global</pre>
+
+<p>払い出したIPにドメインを紐付けておく。</p>
+
+<p> </p>
+
+<h3 id="ファイルの作成">ファイルの作成</h3>
+
+<p>kube-legoで使用するnginx-ingress.ymlを作成する。</p>
+
+<p>SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。</p>
+
+<p> </p>
+
+<h3 id="kube-legoを作成する">kube-legoを作成する</h3>
+
+<pre class="lang:default decode:true ">cd kube-lego/examples/gce
+kubectl apply -f lego/00-namespace.yaml
+kubectl apply -f lego/configmap.yaml
+kubectl apply -f lego/deployment.yaml
+kubectl create -f /path/to/nginx-ingress.yml</pre>
+
+<p>設定が反映されるまで、十数分掛かるので暫く待つ。</p>
+
+<h3 id="備考">備考</h3>
+
+<p>作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は<code class="highlighter-rouge">--namespace kube-lego</code>が必要になる。</p>
+:ET

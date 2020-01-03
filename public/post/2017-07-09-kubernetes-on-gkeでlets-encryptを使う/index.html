@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>kubernetes on GKEでLet&amp;#8217;s Encryptを使う</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">kubernetes on GKEでLet&amp;#8217;s Encryptを使う</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2017-07-09</small></p> <hr/>
+   <div class="post">
+     <p>kubernetes on GKEでLet’s Encryptを使ったときのメモ</p>
+<p>kubenetesでLet’s Encryptを使うのに、<a href="https://github.com/jetstack/kube-lego">kube-lego</a>を使用します。</p>
+<p>kube-legoではGCEのロードバランサーとNginx Ingress Controllerが使えるようですが、今回はロードバランサーを使う手順でやります（このあたりよく分かっていない…)。</p>
+<p> </p>
+<p>7月13日追記</p>
+<p>GCEのロードバランサーを使わない手順ができました。</p>
+<p><a href="https://github.com/kter/kube-study/tree/master/ingress/nginx-tls">https://github.com/kter/kube-study/tree/master/ingress/nginx-tls</a></p>
+<h3 id="kube-lego">kube-legoのダウンロード</h3>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>(メールアドレスを自分のものに編集)</p>
+<p> </p>
+<h3 id="ip">IPの払い出し</h3>
+<p>IPを払い出す</p>
+<!-- raw HTML omitted -->
+<p>払い出したIPにドメインを紐付けておく。</p>
+<p> </p>
+<h3 id="heading">ファイルの作成</h3>
+<p>kube-legoで使用するnginx-ingress.ymlを作成する。</p>
+<p>SSL化したいサービスを下記web-service.ymlとした場合、nginx-ingress.ymlは次のようになるので適当な場所に作成しておく。</p>
+<p> </p>
+<h3 id="kube-lego-1">kube-legoを作成する</h3>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>設定が反映されるまで、十数分掛かるので暫く待つ。</p>
+<h3 id="heading-1">備考</h3>
+<p>作成されるものはkube-legoというnamespaceとなっているため、kubectlを実行する際は<code>--namespace kube-lego</code>が必要になる。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2017-06-29-fuji-wifi%E3%82%92%E5%A5%91%E7%B4%84%E3%81%97%E3%81%A61%E3%83%B6%E6%9C%88%E3%81%8C%E7%B5%8C%E3%81%A3%E3%81%9F/"> FUJI Wifiを契約して1ヶ月が経った</a></li>
+      &nbsp;<li class="next"><a href="/post/2017-07-14-minikube%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%9F%E5%BE%8C%E3%81%ABgke%E3%82%92%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E5%A0%B4%E5%90%88/"> minikubeを使った後にGKEを使いたい場合</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

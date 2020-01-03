@@ -1,0 +1,23 @@
+I"*<p>EC2のインスタンスのEBS容量を増やして作成したのにdfコマンドで確認しても8GBしかない…</p>
+
+<p>resize2fsコマンドを使うと本来のサイズに増やせる。</p>
+
+<div class="highlight">
+  <pre><code class="language-">$ df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/xvda1 7.9G 973M 6.9G 13% /
+tmpfs 839M 0 839M 0% /dev/shm
+</code></pre>
+</div>
+
+<p>なら</p>
+
+<div class="highlight">
+  <pre><code class="language-">$ sudo resize2fs /dev/xvda1
+</code></pre>
+</div>
+
+<p>でOK</p>
+
+<p>Source: New feed</p>
+:ET

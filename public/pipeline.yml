@@ -1,0 +1,287 @@
+Parameters:
+  PipelineName:
+    Default: "blog2"
+    Description: "Name of Codepipeline"
+    Type: String
+  RepoOwner:
+    Default: "kter"
+    Description: "Name of Codepipeline"
+    Type: String
+  Repo:
+    Default: "blog"
+    Description: "Name of Codepipeline"
+    Type: String
+  GitHubTokenCodePipeline:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "github_token_codepipeline"
+  EmailAddress:
+    Description: Email Address
+    Type: String
+    Default: "me@kter.jp"
+  StgBucket:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "STG_BUCKET"
+  PrdBucket:
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: "PRD_BUCKET"
+Resources:
+  MySNSTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      Subscription:
+        - Endpoint: !Ref EmailAddress
+          Protocol: email
+  ArtifactStoreS3:
+    Type: 'AWS::S3::Bucket'
+  CodePipelineRole: 
+    Type: "AWS::IAM::Role"
+    Properties: 
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "codepipeline.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies: 
+        - 
+          PolicyName: "forcodepipeline"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - 
+                Effect: "Allow"
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3', '/*']]
+                Action:
+                  - "s3:*"
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "codedeploy:CreateDeployment"
+                  - "codedeploy:GetApplicationRevision"
+                  - "codedeploy:GetDeployment"
+                  - "codedeploy:GetDeploymentConfig"
+                  - "codedeploy:RegisterApplicationRevision"
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "cloudformation:GetTemplate"
+                  - "cloudformation:DescribeStackResource"
+                  - "cloudformation:DescribeStackResources"
+                  - "cloudformation:DescribeStackEvents"
+                  - "cloudformation:DescribeStacks"
+                  - "cloudformation:UpdateStack"
+                  - "iam:PassRole"
+              - Sid: SNSPublishAccess
+                Effect: Allow
+                Action: sns:Publish
+                Resource: !Ref MySNSTopic
+              - Sid: CodeBuildAccess
+                Effect: Allow
+                Action:
+                  - codebuild:BatchGetBuilds
+                  - codebuild:StartBuild
+                Resource:
+                  - !GetAtt BuildProject.Arn
+                  - !GetAtt BuildProjectDeploy.Arn
+  CodeBuildRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action: ['sts:AssumeRole']
+          Effect: Allow
+          Principal:
+            Service: [codebuild.amazonaws.com]
+        Version: '2012-10-17'
+      Path: /
+      Policies:
+        - PolicyName: CodeBuildAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "s3:GetObject"
+                  - "s3:GetObjectVersion"
+                  - "s3:GetBucketVersioning"
+              - 
+                Effect: "Allow"
+                Resource: !Join ['', ['arn:aws:s3:::', !Ref 'ArtifactStoreS3']]
+                Action:
+                  - "s3:PutObject"
+              - 
+                Effect: "Allow"
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'StgBucket', '/*']]
+                Action:
+                  - "s3:*"
+              - 
+                Effect: "Allow"
+                Resource:
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket']]
+                  - !Join ['', ['arn:aws:s3:::', !Ref 'PrdBucket', '/*']]
+                Action:
+                  - "s3:*"
+              - 
+                Effect: "Allow"
+                Resource: "*"
+                Action:
+                  - "codedeploy:CreateDeployment"
+                  - "codedeploy:GetApplicationRevision"
+                  - "codedeploy:GetDeployment"
+                  - "codedeploy:GetDeploymentConfig"
+                  - "codedeploy:RegisterApplicationRevision"
+              - Sid: CloudWatchLogsAccess
+                Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/*
+              - Sid: KMSParameter
+                Effect: Allow
+                Action:
+                  - ssm:GetParameters
+                Resource:
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/STG_BUCKET
+                  - !Sub arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/PRD_BUCKET
+              - Sid: CloudFront
+                Effect: Allow
+                Action:
+                  - cloudfront:CreateInvalidation
+                Resource:
+                  - "*"
+  BuildProject:
+    Description: Creating AWS CodeBuild project
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Cache:
+        Type: S3
+        Location: !Join [ "/", [ !Ref ArtifactStoreS3, buildcache ]]
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        EnvironmentVariables:
+          - Name: Branch
+            Value: master
+        Image: "aws/codebuild/docker:17.09.0"
+        PrivilegedMode: true
+        Type: LINUX_CONTAINER
+      Name: BuildProject
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Source:
+        Type: CODEPIPELINE
+      TimeoutInMinutes: 5
+  BuildProjectDeploy:
+    Description: Creating AWS CodeBuild project
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Artifacts:
+        Type: CODEPIPELINE
+      Cache:
+        Type: S3
+        Location: !Join [ "/", [ !Ref ArtifactStoreS3, buildcache ]]
+      Environment:
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: "aws/codebuild/docker:17.09.0"
+        PrivilegedMode: true
+        Type: LINUX_CONTAINER
+      Name: BuildProjectDeploy
+      ServiceRole: !GetAtt CodeBuildRole.Arn
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: "buildspec_prd.yml"
+      TimeoutInMinutes: 5
+  AppPipeline: 
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties: 
+      Name: !Ref PipelineName
+      RoleArn: !GetAtt CodePipelineRole.Arn
+      Stages: 
+        - 
+          Name: Source
+          Actions: 
+            - 
+              Name: SourceAction
+              ActionTypeId: 
+                Category: Source
+                Owner: ThirdParty
+                Version: 1
+                Provider: GitHub
+              OutputArtifacts: 
+                - 
+                  Name: SourceOutput
+              Configuration: 
+                Owner: !Ref RepoOwner
+                Repo: !Ref Repo
+                Branch: master
+                OAuthToken: !Ref GitHubTokenCodePipeline
+              RunOrder: 1
+        -
+          Name: Beta
+          Actions: 
+            - 
+              Name: BetaAction
+              InputArtifacts: 
+                - 
+                  Name: SourceOutput
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration: 
+                ProjectName: !Ref BuildProject
+              RunOrder: 1
+        -
+          Name: ExploratoryTesting
+          Actions:
+            - InputArtifacts: []
+              Name: QA
+              ActionTypeId:
+                Category: Approval
+                Owner: AWS
+                Version: '1'
+                Provider: Manual
+              OutputArtifacts: []
+              Configuration:
+                NotificationArn: !Ref MySNSTopic
+                CustomData: Approval or Reject this change after running Exploratory Tests
+              RunOrder: 1
+        - 
+          Name: Release
+          Actions: 
+            - 
+              Name: ReleaseAction
+              InputArtifacts: 
+                - 
+                  Name: SourceOutput
+              ActionTypeId: 
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration: 
+                ProjectName: !Ref BuildProjectDeploy
+              RunOrder: 1
+      ArtifactStore: 
+        Type: S3
+        Location: !Ref ArtifactStoreS3
+      DisableInboundStageTransitions: 
+        - 
+          StageName: Release
+          Reason: "Disabling the transition until integration tests are completed"

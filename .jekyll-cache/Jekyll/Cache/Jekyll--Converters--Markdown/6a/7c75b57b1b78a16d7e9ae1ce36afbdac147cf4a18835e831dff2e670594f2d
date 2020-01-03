@@ -1,0 +1,9 @@
+I" <p>s3cmd putで下記エラーが出たことがある</p>
+
+<pre class="lang:default decode:true">ERROR: Parameter problem: Nothing to upload.</pre>
+<p>&lt;/p&gt;</p>
+
+<p>原因は簡単で宛先のS3のパスの最後に/が抜けているだけだった。</p>
+
+<p>Source: New feed</p>
+:ET

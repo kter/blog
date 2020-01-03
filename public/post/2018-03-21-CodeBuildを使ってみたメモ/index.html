@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CodeBuildを使ってみたメモ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">CodeBuildを使ってみたメモ</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-03-21</small></p> <hr/>
+   <div class="post">
+     <p>本当に今更だけどCodeBuildを使って、GitHubリポジトリのDockerfileをビルド&amp;イメージプッシュ &amp; Kubernetesにデプロイする設定を入れたので知見をメモする。</p>
+<h3 id="github">GitHubと連携できる</h3>
+<p>てっきりリポジトリにコミットされたらCodeBuildを実行〜みたいな時、CodeCommitじゃないとできないのかなと思っていたのですが、GitHubでもできました。</p>
+<h3 id="codebuilddockerdockercodebuilddocker">CodeBuildでDockerイメージをビルド(dockerコマンドの実行)する際には、CodeBuildオリジナルのDockerイメージを使わなければならない</h3>
+<p>&ldquo;特権付与&quot;にチェックを入れても、CodeBuild用のaws/codebuild/dockerイメージでなければdockerコマンドは使えません。</p>
+<h3 id="codebuildruby">CodeBuildコンテナでのRubyインストール方法</h3>
+<p>前述の理由によりRubyを使いたい時、Rubyイメージが使えずコンテナにRubyをインストールするしかないのですが、普通にapt-get install rubyだと1.9が入ってしまいます。</p>
+<p>2.4等新しいものをインストールする場合は次のようにします。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">apt-get install -y software-properties-common
+apt-add-repository -y ppa:brightbox/ruby-ng
+apt-get update -y
+apt-get -y install ruby2.4 ruby2.4-dev
+</code></pre></div><h3 id="gitid">イメージのタグなどに使う用のGitコミットID取得方法</h3>
+<p>下記変数が自動的にセットされているので、これが使えます。</p>
+<p>※CodeBuild上のファイルは.gitがないようです。</p>
+<pre><code>CODEBUILD_RESOLVED_SOURCE_VERSION
+</code></pre><h3 id="heading">シークレットの取り扱い</h3>
+<p>CodeBuildで環境変数を設定できるが、パスワード等のシークレットはAWS Systems Managerのパラメータストアを使います。</p>
+<p>下記例は、パラメータストアにvalという名前で登録した値を、CodeBuild内でkeyという環境変数名前で使用できます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">env:
+  parameter-store:
+    key: <span style="color:#e6db74">&#34;val&#34;</span>
+</code></pre></div>
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-03-21-JAWS-DAYS-2018-%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/"> JAWS DAYS 2018 レポート</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-04-30-agetty%E3%81%8CCPU100%E3%81%AB%E5%BC%B5%E3%82%8A%E4%BB%98%E3%81%84%E3%81%9F%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%BF%9C/"> agettyがCPU100%に張り付いたときの対応</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

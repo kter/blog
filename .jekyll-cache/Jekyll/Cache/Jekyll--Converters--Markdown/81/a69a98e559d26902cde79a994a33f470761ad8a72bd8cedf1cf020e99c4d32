@@ -1,0 +1,30 @@
+I"R<p>タイムゾーンって/usr/share/zoneinfo/Asia/Tokyoを/etc/localtimeにコピーするなりシンボリックリンクを貼るなりすると思うんですけど、EC2の場合はyum updateのタイミングでUTCに戻ってしまう場合があります。ありました</p>
+
+<p>ということで、/etc/sysconfig/clockを書き換えましょう。</p>
+
+<p>/etc/sysconfig/clockは、ハードウェアクロックから読み込んだ値を制御するそうです。</p>
+
+<p><a href="http://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-rg-ja-4/ch-sysconfig.html">http://web.mit.edu/rhel-doc/4/RH-DOCS/rhel-rg-ja-4/ch-sysconfig.html</a></p>
+
+<p>/etc/sysconfig/clockの内容は</p>
+
+<div class="highlight">
+  <pre><code class="language-">ZONE="UTC"
+UTC=true
+</code></pre>
+</div>
+
+<p>となってると思います。それを</p>
+
+<div class="highlight">
+  <pre><code class="language-">ZONE="Asia/Tokyo"
+UTC=false
+</code></pre>
+</div>
+
+<p>と書き換えましょう。</p>
+
+<p>私の場合は今のところこれでタイムゾーンがJSTで設定できています。</p>
+
+<p>Source: New feed</p>
+:ET

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ruby2.1系をソースからインストールしたときのOpenSSLのインストール</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">Ruby2.1系をソースからインストールしたときのOpenSSLのインストール</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2014-04-12</small></p> <hr/>
+   <div class="post">
+     <p>Ruby2.1系をソースインストールした時、Railsなどをインストールしようとすると、OpenSSLのインストールを促されますが、OpenSSLパッケージをインストールするだけではいけません。</p>
+<p>ソースのext'opensslでextconf.rbを実行し、生成されたMakefileでmake installする必要がありますが、Makefileが間違えているので修正する必要があります。修正しないと次のエラーが出ます</p>
+<blockquote>
+<p>make: *** `ossl.o’ に必要なターゲット `'thread_native.h’ を make するルールがありません.  中止.</p>
+</blockquote>
+<p>よってRuby2.1.0でOpenSSLをインストールする際は次のようにする必要があります。</p>
+<p>cd 'usr'local'src'ruby2.1.0'ext'openssl</p>
+<p>'usr'local'bin'ruby extconf.rb</p>
+<p>cp -iv Makefile .__Makefile.bak</p>
+<p>vim Makefile</p>
+<p>diff Makefile .__Makefile.20140407-01</p>
+<p>17d16</p>
+<p>&lt; top_srcdir = $(srcdir)'..'..</p>
+<p>sudo make</p>
+<p>sudo make install</p>
+<p>Source: New feed</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2014-04-12-zabbix-server2-2%E3%82%92rpm%E3%81%A0%E3%81%91%E3%81%A7%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB%E3%81%99%E3%82%8B/"> Zabbix-Server2.2をRPMだけでインストールする</a></li>
+      &nbsp;<li class="next"><a href="/post/2014-05-01-%E6%B5%9C%E9%A2%A8%E3%81%A7%E3%81%BE%E3%81%97%E3%81%9F/"> 浜風でました</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

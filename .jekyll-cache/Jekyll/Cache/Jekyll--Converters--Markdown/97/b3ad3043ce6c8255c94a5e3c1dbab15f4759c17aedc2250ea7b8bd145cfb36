@@ -1,0 +1,59 @@
+I"a
+<p>タイトルの通りGKE (Google Kubernetes Engine)でKubernetesクラスタを作成して、その上でPrometheusとGrafanaを動かしてみます。</p>
+
+<p>まずはGKEでKubernetesクラスタを作成してみます。</p>
+
+<h1 id="はじめに">はじめに</h1>
+
+<p>GCP(Google Cloud Platform)アカウントの登録とプロジェクトの作成が終わってる前提でお話します。</p>
+
+<p>適当に作っておいてください。</p>
+
+<h1 id="クラスタの作成">クラスタの作成</h1>
+
+<p>左上のハンバーガーメニューからKubernetes Engineを選択</p>
+
+<p>※初回アクセス時には準備に数分かかります。</p>
+
+<p>クラスタの作成ボタンを押下します。</p>
+
+<p><img src="/assets/img/20180211/2018-02-11-01.png" alt="" /></p>
+
+<h2 id="設定">設定</h2>
+
+<p>今回のように可用性 (ダウンタイム)に目をつぶるならノードにプリエンプティブを使うことで、<a href="https://cloud.google.com/compute/pricing?hl=ja#machinetype">インスタンスの費用</a>を7割程度抑えることが出来ます (オレゴン、g1-smallの場合)。</p>
+
+<p>※<a href="https://cloud.google.com/preemptible-vms/?hl=ja">プリエンプティブ</a>にした場合、２４時間以内に勝手に落とされてしまうので気をつけてください。</p>
+
+<p>ノードは価格の安い海外のリージョンを使い、マシンタイプはsmallを使います。</p>
+
+<p>またデフォルトでは、ノードのディスクサイズが100GBという罠があるので、忘れずに減らしておきましょう。</p>
+
+<ol>
+  <li>ゾーン: us-west1-b</li>
+  <li>マシンタイプ: small（g1-small)</li>
+  <li>自動スケーリング: オン</li>
+  <li>最大サイズ: 6</li>
+  <li>プリエンプティブ ノード: 有効</li>
+  <li>ノードあたりのブートディスク サイズ: 10GB</li>
+  <li>HTTP 負荷分散: 無効</li>
+</ol>
+
+<h2 id="接続">接続</h2>
+
+<p>クラスタの作成が終わったらkubectlコマンドでクラスタに接続してみます。</p>
+
+<p>接続ボタンを押下し、”Cloud Shellで実行”を押下します。</p>
+
+<p><img src="/assets/img/20180211/2018-02-11-02.png" alt="" /></p>
+
+<p>ウインドウ下部に、コマンドが入力済みの状態でコンソールが表示されます。
+Enterキーを押してコマンドを実行します。</p>
+
+<p>これでkubectlでアクセスできるようになりました。</p>
+
+<p><code class="highlighter-rouge">kubectl get nodes</code>を実行して作成したノードが表示されるかどうか確認します。</p>
+
+<p>以上</p>
+
+:ET

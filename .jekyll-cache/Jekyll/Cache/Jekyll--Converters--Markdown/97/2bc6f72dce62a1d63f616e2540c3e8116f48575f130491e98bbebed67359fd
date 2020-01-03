@@ -1,0 +1,44 @@
+I"]<p>PythonからwebiopiのGPIOを使おうとした時、</p>
+
+<p>AttributeError: ‘module’ object has no attribute ‘GPIO’</p>
+
+<p>と表示される場合の対処。</p>
+
+<h3 id="webiopi-071をraspberry-pi2に対応させます">WebIOPi-0.7.1をRaspberry Pi2に対応させます</h3>
+
+<p><a href="http://www.knight-of-pi.org/webiopi-a-simple-but-great-web-api-for-the-raspberry-pi/">こちら</a>を参考に<code class="highlighter-rouge">python/native/cpuinfo.c</code>と<code class="highlighter-rouge">python/native/gpio.c</code>を修正します。</p>
+
+<ul>
+  <li>
+    <p>cpuinfo.c</p>
+
+    <p>BCM2708をBCM2709に変更</p>
+  </li>
+  <li>
+    <p>gpio.c</p>
+
+    <p><code class="highlighter-rouge">define BCM2708_PERI_BASE 0x20000000</code>を<code class="highlighter-rouge">define BCM2708_PERI_BASE 0x3f000000</code>に変更</p>
+  </li>
+</ul>
+
+<p>その後<code class="highlighter-rouge">setup.sh</code>を実行し直します。</p>
+
+<h3 id="wiringpi2-pythonをpython3で動くようにします">WiringPi2-PythonをPython3で動くようにします</h3>
+
+<p>Python3をインストール</p>
+
+<p><code class="highlighter-rouge">sudo aptitude install python3</code></p>
+
+<p>Python3をデフォルトにする</p>
+
+<p><code class="highlighter-rouge">&lt;br /&gt;
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1&lt;br /&gt;
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.4 2&lt;br /&gt;
+</code></p>
+
+<p>WiringPi2-Pythonをインストールしなおす</p>
+
+<p><code class="highlighter-rouge">sudo ./setup.py install</code></p>
+
+<p>Source: New feed</p>
+:ET

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>July Tech Festa on ことえりブログ</title>
+    <link>/tags/July-Tech-Festa/</link>
+    <description>Recent content in July Tech Festa on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 Aug 2018 15:01:02 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/July-Tech-Festa/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>July Tech Festa 2018メモ</title>
+      <link>/post/2018-08-25-July-Tech-Festa-2018%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Sat, 25 Aug 2018 15:01:02 +0000</pubDate>
+      
+      <guid>/post/2018-08-25-July-Tech-Festa-2018%E3%83%A1%E3%83%A2/</guid>
+      <description>自分用のメモですので悪しからず…
+Ansible with AWX ~ Move to the next step of IT automation ~ 斉藤秀喜さん (twitter: saito_hideki)
+ AWX(自動化プラットフォームでAnsible Towerのアップストリーム版)  Ansibleコマンドのラッパーとして動作する ドキュメントはAnsible Towerの物を見れば良い（日本語版もある）   下記機能がある  WebUI / Restful API / Callback URL機能 ユーザ管理機能（Active Directory, Google OAuth2など） ターゲットホストの認証情報を一点管理 AWS / GCP / Azure / OpenStackなどと連携可能 GitHub / Gitlabなどの外部SCM上のPlaybookを取得 複数のジョブ（Playbook)をワークフローとして実行  失敗したらこのジョブを動かすなどといった動作ができる   ジョブやワークフローを指定の日時で実行 ジョブの結果をIRCやSlackなどに送信 ログをlogstashやsplunkなど外部システムに転送 AWXサービスをクラスタ化（HAではなくマルチノード構成）   dockerとpython-docker-pyが必要（Ansible Towerと違ってコンテナ上で動く） AWX自体のインストールもAnsible Playbookで行う  副業で収益化をめざす ~月数百円から始めるWebサービス立ち上げから運営まで~ 高宮安仁さん
+  有給消化中でLingomineという英語学習サービスを開発。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,2 @@
+I"<p>タイムゾーンって/usr/share/zoneinfo/Asia/Tokyoを/etc/localtimeにコピーするなりシンボリックリンクを貼るなりすると思うんですけど、EC2の場合はyum updateのタイミングでUTCに戻ってしまう場合があります。ありました</p>
+:ET

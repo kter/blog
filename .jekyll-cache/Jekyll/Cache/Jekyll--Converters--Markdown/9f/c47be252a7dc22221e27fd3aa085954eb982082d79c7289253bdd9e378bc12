@@ -1,0 +1,152 @@
+I"#<h3 id="tips">tips</h3>
+
+<ul>
+  <li>getやdescribeサブコマンドはカンマ区切りで複数指定できる</li>
+</ul>
+
+<pre class="lang:default decode:true"># 例
+$ kubectl get pods,svc
+NAME READY STATUS RESTARTS AGE
+po/nfs-server-1786322612-p0pw3 1/1 Running 0 1d
+
+NAME CLUSTER-IP EXTERNAL-IP PORT(S) AGE
+svc/kubernetes 10.0.0.1 &lt;none&gt; 443/TCP 3d</pre>
+
+<p>* <code class="highlighter-rouge">-w</code> で結果をリアルタイムに出力できる（表示がおかしくなることが多々ある）</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">-o wide</code>で情報をより多く出すことができる &lt;pre class="lang:default decode:true"&gt;# 例
+$ kubectl get  pods -o wide
+NAME                          READY     STATUS    RESTARTS   AGE       IP           NODE
+nfs-server-1786322612-p0pw3   1/1       Running   0          1d        172.17.0.6   minikube&lt;/pre&gt;</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-o json</code>や<code class="highlighter-rouge">-o yaml</code>でそれぞれの形式で出力することができる (情報もより多く出る) &lt;pre class="lang:default decode:true"&gt;例
+$ kubectl get  pods -o json
+{
+“apiVersion”: “v1”,
+“items”: [
+{
+    “apiVersion”: “v1”,
+    “kind”: “Pod”,
+    “metadata”: {
+        “annotations”: {
+            “kubernetes.io/created-by”: “{"kind":"SerializedReference","apiVersion":"v1","reference":{"kind":"ReplicaSet","namespace":"default","name":"nfs-server-1786322612","uid":"e8cf196e-b80f-11e7-87c4-080027159c1b","apiVersion":"extensions","resourceVersion":"13198"}}\n”
+        },
+        “creationTimestamp”: “2017-10-23T16:33:32Z”,
+        “generateName”: “nfs-server-1786322612-“,
+        “labels”: {
+            “pod-template-hash”: “1786322612”,
+            “role”: “nfs-server”
+        },
+        “name”: “nfs-server-1786322612-p0pw3”,
+        “namespace”: “default”,
+        略&lt;/pre&gt;</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">--no-headers</code>でヘッダーを取り除くことができる (パイプを使うときに便利） &lt;pre class="lang:default decode:true "&gt;# 例
+$ kubectl get  pods –no-headers
+nfs-server-1786322612-p0pw3   1/1       Running   0         1d&lt;/pre&gt;</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">-o jsonpath --template={(フィールド)}</code>で指定のフィールドのみを出力することができる &lt;pre class="lang:default decode:true "&gt;# 例
+$ kubectl get  pods -o jsonpath –template {.items[].metadata.name}
+nfs-server-1786322612-p0pw3&lt;/pre&gt;</p>
+
+    <h3 id="getサブコマンド一覧">getサブコマンド一覧</h3>
+  </li>
+  <li>all</li>
+  <li>certificatesigningrequests (aka ‘csr’)</li>
+  <li>clusterrolebindings</li>
+  <li>clusterroles</li>
+  <li>clusters (valid only for federation apiservers)</li>
+  <li>componentstatuses (aka ‘cs’)</li>
+  <li>configmaps (aka ‘cm’)</li>
+  <li>controllerrevisions</li>
+  <li>cronjobs</li>
+  <li>daemonsets (aka ‘ds’)</li>
+  <li>deployments (aka ‘deploy’)</li>
+  <li>endpoints (aka ‘ep’)</li>
+  <li>events (aka ‘ev’)</li>
+  <li>horizontalpodautoscalers (aka ‘hpa’)</li>
+  <li>ingresses (aka ‘ing’)</li>
+  <li>jobs</li>
+  <li>limitranges (aka ‘limits’)</li>
+  <li>namespaces (aka ‘ns’)</li>
+  <li>networkpolicies (aka ‘netpol’)</li>
+  <li>nodes (aka ‘no’)</li>
+  <li>persistentvolumeclaims (aka ‘pvc’)</li>
+  <li>persistentvolumes (aka ‘pv’)</li>
+  <li>poddisruptionbudgets (aka ‘pdb’)</li>
+  <li>podpreset</li>
+  <li>pods (aka ‘po’)</li>
+  <li>podsecuritypolicies (aka ‘psp’)</li>
+  <li>podtemplates</li>
+  <li>replicasets (aka ‘rs’)</li>
+  <li>replicationcontrollers (aka ‘rc’)</li>
+  <li>resourcequotas (aka ‘quota’)</li>
+  <li>rolebindings</li>
+  <li>roles</li>
+  <li>secrets</li>
+  <li>serviceaccounts (aka ‘sa’)</li>
+  <li>services (aka ‘svc’)</li>
+  <li>statefulsets</li>
+  <li>storageclasses</li>
+  <li>
+    <p>thirdpartyresources</p>
+
+    <h3 id="describeサブコマンド一覧">describeサブコマンド一覧</h3>
+  </li>
+  <li>all</li>
+  <li>certificatesigningrequests (aka ‘csr’)</li>
+  <li>clusterrolebindings</li>
+  <li>clusterroles</li>
+  <li>clusters (valid only for federation apiservers)</li>
+  <li>componentstatuses (aka ‘cs’)</li>
+  <li>configmaps (aka ‘cm’)</li>
+  <li>controllerrevisions</li>
+  <li>cronjobs</li>
+  <li>daemonsets (aka ‘ds’)</li>
+  <li>deployments (aka ‘deploy’)</li>
+  <li>endpoints (aka ‘ep’)</li>
+  <li>events (aka ‘ev’)</li>
+  <li>horizontalpodautoscalers (aka ‘hpa’)</li>
+  <li>ingresses (aka ‘ing’)</li>
+  <li>jobs</li>
+  <li>limitranges (aka ‘limits’)</li>
+  <li>namespaces (aka ‘ns’)</li>
+  <li>networkpolicies (aka ‘netpol’)</li>
+  <li>nodes (aka ‘no’)</li>
+  <li>persistentvolumeclaims (aka ‘pvc’)</li>
+  <li>persistentvolumes (aka ‘pv’)</li>
+  <li>poddisruptionbudgets (aka ‘pdb’)</li>
+  <li>podpreset</li>
+  <li>pods (aka ‘po’)</li>
+  <li>podsecuritypolicies (aka ‘psp’)</li>
+  <li>podtemplates</li>
+  <li>replicasets (aka ‘rs’)</li>
+  <li>replicationcontrollers (aka ‘rc’)</li>
+  <li>resourcequotas (aka ‘quota’)</li>
+  <li>rolebindings</li>
+  <li>roles</li>
+  <li>secrets</li>
+  <li>serviceaccounts (aka ‘sa’)</li>
+  <li>services (aka ‘svc’)</li>
+  <li>statefulsets</li>
+  <li>storageclasses</li>
+  <li>thirdpartyresources</li>
+</ul>
+
+<h3 id="クラスタの状態">クラスタの状態</h3>
+
+<p><code class="highlighter-rouge">kubectl get componentstatuses</code></p>
+
+<p>出力例</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NAME STATUS MESSAGE ERROR
+etcd-0 Healthy {"health": "true"}
+scheduler Healthy ok
+controller-manager Healthy ok
+</code></pre></div></div>
+:ET

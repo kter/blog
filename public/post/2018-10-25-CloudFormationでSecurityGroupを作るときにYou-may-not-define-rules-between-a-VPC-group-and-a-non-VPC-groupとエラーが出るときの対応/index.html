@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CloudFormationでSecurityGroupを作るときにYou may not define rules between a VPC group and a non-VPC groupとエラーが出るときの対応</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">CloudFormationでSecurityGroupを作るときにYou may not define rules between a VPC group and a non-VPC groupとエラーが出るときの対応</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2018-10-25</small></p> <hr/>
+   <div class="post">
+     <p>CloudFormationでSecurityGroupを作るときにYou may not define rules between a VPC group and a non-VPC groupとエラーが出るときの対応</p>
+<p>解決まで地味に30分程度掛かったのでメモ。</p>
+<p>CloudFormationで次のような感じでSecurityGroupを作ろうとすると、<code>You may not define rules between a VPC group and a non-VPC group</code>とエラーが出てSecurityGroupが作れない。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  DBEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: <span style="color:#e6db74">&#34;Allow access from specific SecurityGroup&#34;</span>
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: <span style="color:#e6db74">&#39;3306&#39;</span>
+        ToPort: <span style="color:#e6db74">&#39;3306&#39;</span>
+        SourceSecurityGroupId: !Ref <span style="color:#e6db74">&#39;EC2SecurityGroup&#39;</span>
+</code></pre></div><p>これはSourceSecurityGroupにVPCのSecurityGroupが指定されているのに、（VpcIdが指定されていないため）EC2 Classic環境にSecurityGroupが作られようとしているため出たエラーである（言葉にするとややこしい）。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-security-group.html#cfn-ec2-securitygroup-vpcid">ドキュメント</a>にもあるが正しくはこんな感じ。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  DBEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      VpcId: !Ref VPC
+      GroupDescription: <span style="color:#e6db74">&#34;Allow access from specific SecurityGroup&#34;</span>
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: <span style="color:#e6db74">&#39;3306&#39;</span>
+        ToPort: <span style="color:#e6db74">&#39;3306&#39;</span>
+        SourceSecurityGroupId: !Ref <span style="color:#e6db74">&#39;EC2SecurityGroup&#39;</span>
+</code></pre></div><p>ドキュメントは見ていたけど眠かったのとエラーメッセージに惑わされて解決まで時間掛かってしまった…。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2018-10-24-Slack%E3%81%ABWebHook%E3%82%92%E9%80%81%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AB&#43;%E8%A8%98%E5%8F%B7%E3%81%8C%E3%82%B9%E3%83%9A%E3%83%BC%E3%82%B9%E3%81%AB%E7%BD%AE%E3%81%8D%E6%8F%9B%E3%81%88%E3%82%89%E3%82%8C%E3%82%8B%E5%95%8F%E9%A1%8C%E3%81%AE%E5%AF%BE%E5%BF%9C/"> SlackにWebHookを送るときに&#43;記号がスペースに置き換えられる問題の対応</a></li>
+      &nbsp;<li class="next"><a href="/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/"> AWS CLIのS3でワイルドカードを使う方法</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

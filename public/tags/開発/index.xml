@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>開発 on ことえりブログ</title>
+    <link>/tags/%E9%96%8B%E7%99%BA/</link>
+    <description>Recent content in 開発 on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Sep 2017 23:52:51 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/%E9%96%8B%E7%99%BA/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ThinkPad X220を買った</title>
+      <link>/post/2017-09-04-thinkpad-x220%E3%82%92%E8%B2%B7%E3%81%A3%E3%81%9F/</link>
+      <pubDate>Mon, 04 Sep 2017 23:52:51 +0000</pubDate>
+      
+      <guid>/post/2017-09-04-thinkpad-x220%E3%82%92%E8%B2%B7%E3%81%A3%E3%81%9F/</guid>
+      <description>目的   Windowsで遊びたかった ThinkPadにあこがれていた Microsoftがデベロッパー寄りになっているし、Linux SubsystemでWindowsも開発に使えるのではないかと思った  PCについて 
+ ThinkPad X220 i5-2520M, 4GB, 300GB オークションで入手 送料込みで1.1万円程度 英字キーボード Windows10 Pro 充放電サイクル82回  やったこと 初期化 Windows自体の機能で初期化の機能がついているのでこれを利用する。
+設定 -&amp;gt; 更新とセキュリティ -&amp;gt; このPCを初期状態に戻す -&amp;gt; すべて削除する
+更新 Windows Updateを実行
+キー配列変更 キー配列をJISから英字に変更。
+設定 -&amp;gt; 時刻と言語 -&amp;gt; 地域と言語 -&amp;gt; 日本語 -&amp;gt; オプション -&amp;gt; レイアウトを変更する
+参考: Windows10日本語版で英語配列キーボードを使用する
+System Update LenovoからSystem Updateをインストール
+Lenovoのサポートサイトから各ドライバをインストール（Windows10向けのものはないため、Windows8を使う)
+Linux Sybsystem Microsoftの手順に従ってインストールをする
+hyper-v Microsoftの手順に従ってインストールをする
+cmder cmderというターミナルから直接Ubuntuのbashにアクセスする
+http://cmder.net/
+http://qiita.com/yutaszk/items/fb77435296b131fd0a3a
+Ubuntu環境構築 zsh apt-get install zsh</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,12 @@
+I"X<p>yumプラグインのfastestmirrorが有効にもかかわらずダウンロードが遅い場合の対処法</p>
+
+<p>Ctrl+cを押しましょう。次のミラーサイトへの接続で続行されます</p>
+
+<p> </p>
+
+<p>/var/cache/yum以下にあるtimedhosts.txtに各ミラーサイトの応答速度が書いてるので、これを削除してリセット。という手もありますが、大抵の場合は遅かったらもう次のミラーサイトで接続というようにやっちゃった方がいいんじゃないかなーっと思います</p>
+
+<p>それでも駄目ならネットワークインターフェースが怪しいので<a title="Cannot set new settings: Invalid argument" href="http:&#047;&#047;img.kter.jp&#047;?p=96" target="_blank">以前書いた記事</a>を参考に、どうぞ！</p>
+
+<p>Source: New feed</p>
+:ET

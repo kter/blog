@@ -1,0 +1,33 @@
+I"2<p>GKEがとにかく高い。</p>
+
+<p>ロードバランサーとn1-standard-1 (だったかな？)2つで月5, 6千円はかかっていた。</p>
+
+<p>いままでは3万円分くらいのクレジットを使って実質無料で運用できていたけど、それも尽きそうだったので月1000円 メモリ2GBのVPSでminikubeを使って運用することにした。</p>
+
+<p>移行はそこまで大変ではなく、NFSのデータとMySQLのダンプデータを載せ替えることと、GKE特有の設定の修正だけだった。</p>
+
+<p>具体的には</p>
+
+<ul>
+  <li>nodeSelectorの削除</li>
+  <li>gcePersistentDiskをhostPathに変更</li>
+  <li>ingressの静的IPアドレス設定を削除</li>
+  <li>ingressタイプをgceからnginxに変更 (annotationのingress.classをgceからnginxに変更)</li>
+  <li>ingressのpathsで、既存の/*だけではなく/も追加 (GCEでは/*だけでも動いた）</li>
+  <li>readinessProbeとlivenessProbeの秒数を長めに (スペックが落ちるので)</li>
+</ul>
+
+<p>これでクレジット切れでサーバ運用費が極端に高くなることはなくなった。</p>
+
+<p>この調子で他のメールサーバやjenkinsもkubenetesに集約して節約したい。</p>
+
+<p>今回は調べた限りで一番安かったVultrというVPSサービスを利用した。</p>
+
+<p>メモリ512MBで2.5ドル、1GBでは5ドルで、さくらVPSと比べるとほぼ半額ほど。</p>
+
+<p>海外のサービスだけど東京リージョンもあるので、何ら不自由なく使えている。</p>
+
+<p>ちなみに登録は下記バナーからしていただけると私にデポジットが入るので是非。</p>
+
+<p><a href="https://www.vultr.com/?ref=7168447"><img src="https://www.vultr.com/media/banner_3.png" width="300" height="250" /></a></p>
+:ET

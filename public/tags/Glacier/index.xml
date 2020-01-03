@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Glacier on ことえりブログ</title>
+    <link>/tags/Glacier/</link>
+    <description>Recent content in Glacier on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 06 Sep 2018 22:31:02 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/Glacier/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS S3 Glacierからリストアしてファイルをダウンロードする</title>
+      <link>/post/2018-09-06-AWS-S3-Glacier%E3%81%8B%E3%82%89%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2%E3%81%97%E3%81%A6%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B/</link>
+      <pubDate>Thu, 06 Sep 2018 22:31:02 +0000</pubDate>
+      
+      <guid>/post/2018-09-06-AWS-S3-Glacier%E3%81%8B%E3%82%89%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2%E3%81%97%E3%81%A6%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B/</guid>
+      <description>まとめ Glacier状態のS3オブジェクトを取り出す際には、リストア期間を指定した上でrestore-objectを実行する必要があります。
+手順 リストア recursiveオプションが無いため、list-objectsしてオブジェクトパスを取得してからrestore-objectを実行します。
+for key in `aws s3api list-objects --bucket (バケット名) --prefix (ディレクトリ名) --output json | jq -r &amp;#39;.Contents[].Key&amp;#39;`; do echo $key; aws s3api restore-object --bucket (バケット名) --key $key --restore-request &amp;#39;{&amp;#34;Days&amp;#34;: 3}&amp;#39;;done ダウンロード リストア済みのオブジェクトをダウンロードするときもresursiveが使えないため、list-objectsしてオブジェクトパスを取得してからダウンロードします。
+for key in `aws s3api list-objects --bucket (バケット名) --prefix (ディレクトリ名) --output json | jq -r &amp;#39;.Contents[].Key&amp;#39;`; do echo $key; aws s3 cp s3://(バケット名)/$key .;done </description>
+    </item>
+    
+  </channel>
+</rss>

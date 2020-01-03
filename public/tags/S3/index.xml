@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>S3 on ことえりブログ</title>
+    <link>/tags/S3/</link>
+    <description>Recent content in S3 on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 27 Nov 2018 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/S3/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWSマネージドサービスのみでリダイレクトさせる</title>
+      <link>/post/2018-11-27-AWS%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E3%81%BF%E3%81%A7%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B/</link>
+      <pubDate>Tue, 27 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-27-AWS%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E3%81%BF%E3%81%A7%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B/</guid>
+      <description>http通信をhttpsにリダイレクトしたり、またゾーンアペックスからサブドメインへのリダイレクト (google.com -&amp;gt; www.google.com のような)は一般だとNGINXやApacheで設定…となりますが、AWSのサービスを駆使すれば必要ありません。 それぞれ説明します。
+http通信をhttpsにリダイレクト ALBを使います。 80番のターゲットグループでリダイレクトの設定を行えばOK.
+ゾーンアペックスからサブドメインへのリダイレクト Route53とS3を使います。もしhttpsもリダイレクトしたい場合はCloudFrontも使います。
+S3 ゾーンアペックス名でバケットを作った後、Static website hostingでリダイレクトの設定を行います。 ※バケットポリシー等の設定は不要です。
+CloudFront (httpsも使う場合） S3をオリジンとしたCloudFrontを用意します。わざわざCloudFrontを利用する理由は、S3だとカスタムのhttps証明書が入らないからです。 なのでCloudFrontではhttps証明書も設定します。 ※オリジンの設定にはリストで出てくるS3ではなく、Static website hostingで出てくるエンドポイントのドメイン部分をコピペして設定します。
+Route53 ゾーンアペックスのAレコードのエイリアスとしてCloudFront　(CloudFrontを使用しない場合はS3)　を指定します。</description>
+    </item>
+    
+    <item>
+      <title>AWS CLIのS3でワイルドカードを使う方法</title>
+      <link>/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Tue, 13 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/</guid>
+      <description>AWS CLIのS3ではワイルドカードが使えないと思っていましたが、実はオプションを駆使することで使えることがわかったのでメモ。
+aws s3 cp --recursive \  --exclude &amp;#39;*&amp;#39; \  --include &amp;#39;ワイルドカード入り検索文字列&amp;#39; \  s3://bucket_name/path/ . S3とかCloudFrontだとログファイルがディレクトリ掘らずに置かれてしまうのでこれでやると便利ですね。</description>
+    </item>
+    
+    <item>
+      <title>AWS S3 Glacierからリストアしてファイルをダウンロードする</title>
+      <link>/post/2018-09-06-AWS-S3-Glacier%E3%81%8B%E3%82%89%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2%E3%81%97%E3%81%A6%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B/</link>
+      <pubDate>Thu, 06 Sep 2018 22:31:02 +0000</pubDate>
+      
+      <guid>/post/2018-09-06-AWS-S3-Glacier%E3%81%8B%E3%82%89%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2%E3%81%97%E3%81%A6%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B/</guid>
+      <description>まとめ Glacier状態のS3オブジェクトを取り出す際には、リストア期間を指定した上でrestore-objectを実行する必要があります。
+手順 リストア recursiveオプションが無いため、list-objectsしてオブジェクトパスを取得してからrestore-objectを実行します。
+for key in `aws s3api list-objects --bucket (バケット名) --prefix (ディレクトリ名) --output json | jq -r &amp;#39;.Contents[].Key&amp;#39;`; do echo $key; aws s3api restore-object --bucket (バケット名) --key $key --restore-request &amp;#39;{&amp;#34;Days&amp;#34;: 3}&amp;#39;;done ダウンロード リストア済みのオブジェクトをダウンロードするときもresursiveが使えないため、list-objectsしてオブジェクトパスを取得してからダウンロードします。
+for key in `aws s3api list-objects --bucket (バケット名) --prefix (ディレクトリ名) --output json | jq -r &amp;#39;.Contents[].Key&amp;#39;`; do echo $key; aws s3 cp s3://(バケット名)/$key .;done </description>
+    </item>
+    
+  </channel>
+</rss>

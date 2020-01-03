@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mail on ことえりブログ</title>
+    <link>/tags/mail/</link>
+    <description>Recent content in mail on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 06 Feb 2018 13:15:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/mail/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mailuで簡単にWebUI付きのメールサーバを立てる</title>
+      <link>/post/2018-02-06-Mailu%E3%81%A7%E7%B0%A1%E5%8D%98%E3%81%ABWebUI%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B/</link>
+      <pubDate>Tue, 06 Feb 2018 13:15:00 +0000</pubDate>
+      
+      <guid>/post/2018-02-06-Mailu%E3%81%A7%E7%B0%A1%E5%8D%98%E3%81%ABWebUI%E4%BB%98%E3%81%8D%E3%81%AE%E3%83%A1%E3%83%BC%E3%83%AB%E3%82%B5%E3%83%BC%E3%83%90%E3%82%92%E7%AB%8B%E3%81%A6%E3%82%8B/</guid>
+      <description>はじめに 自分用のメールサーバを建てようと思った時、セキュリティを気にしながら設定を調べて…となかなか大変ですよね。
+でもMailuを使うと簡単にWebUI付きのメールサーバが構築できます！
+この画像のようにWebUIからもメールの送受信ができるので便利です。
+デモサイトがあるので興味のある方は覗いてみてください。
+Mailuが備えている機能は次の通りです。
+ IMAP, IMAP+, SMTPのメールサーバ WebUIと管理画面 自動返信、自動転送 クォーターなどの管理機能 TLS (Let&#39;s Encrypt対応！), DKIM, アンチウイルスなどのセキュリティ  詳細はプロジェクトのページを見ていただくとして、早速構築してみます。
+構築 構築はDigitalOceanという海外のVPS上のdocker-composeでやってみます。
+ちなみに下記のリンクから登録すると10ドルのクーポンが貰えます。
+一番安いインスタンスであれば2ヶ月間無料で動かせます。是非。
+https://m.do.co/c/dc73cf13e37a
+構築手順 今回は公式推奨のDebian Stretch(9.3)を使います。
+インスタンスが立ち上がったらおもむろに下記コマンドを実行してください。
+準備 apt update # すべてYESと答える apt install -y iptables-persistent apt-get autoremove --purge exim4 exim4-base Dockerのインストール # E: Unable to locate package docker-engineと言われても大丈夫 apt-get remove docker docker-engine docker.io apt-get install -y apt-transport-https ca-certificates curl gnupg2 software-properties-common curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo &amp;#34;$ID&amp;#34;)/gpg | sudo apt-key add - apt-key fingerprint 0EBFCD88 add-apt-repository &amp;#34;deb [arch=amd64] https://download.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,50 @@
+I"s<p>証明書を作成するためにはドメインを登録しないといけませんが、下記Taskで自動作成できます。</p>
+
+<p>登録するIPアドレスはipify.orgで取得しています。</p>
+
+<p>注意点としてはfullchain-pathで指定したディレクトリ配下にdomain1の名前でディレクトリが作成され、そのディレクトリ内に証明書と秘密鍵が生成されることです。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">外部アドレスを取得"</span>
+  <span class="na">uri</span><span class="pi">:</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s">https://api.ipify.org/</span>
+    <span class="na">return_content</span><span class="pi">:</span> <span class="s">yes</span>
+  <span class="na">register</span><span class="pi">:</span> <span class="s">external_address</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">レコード登録</span><span class="nv"> </span><span class="s">(反映を待つので少し時間がかかります)"</span>
+  <span class="na">route53</span><span class="pi">:</span>
+    <span class="na">aws_access_key</span><span class="pi">:</span> <span class="s">(アクセスキー)</span>
+    <span class="na">aws_secret_key</span><span class="pi">:</span> <span class="s">(シークレットアクセスキー)</span>
+    <span class="na">command</span><span class="pi">:</span> <span class="s">create</span>
+    <span class="na">zone</span><span class="pi">:</span> <span class="s">(Route53ゾーン名)</span>
+    <span class="na">record</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}"</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">A</span>
+    <span class="na">ttl</span><span class="pi">:</span> <span class="m">300</span>
+    <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">{{</span><span class="nv"> </span><span class="s">external_address.content</span><span class="nv"> </span><span class="s">}}"</span>
+    <span class="na">wait</span><span class="pi">:</span> <span class="s">yes</span>
+  <span class="na">with_items</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">(ドメイン1)</span>
+    <span class="pi">-</span> <span class="s">(ドメイン2)</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">certbot</span><span class="nv"> </span><span class="s">インストールディレクトリの作成"</span>
+  <span class="na">file</span><span class="pi">:</span> <span class="s">path=/opt/certbot state=directory owner=root group=root mode=0755</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">certbot</span><span class="nv"> </span><span class="s">のダウンロード"</span>
+  <span class="na">get_url</span><span class="pi">:</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s">https://dl.eff.org/certbot-auto</span>
+    <span class="na">dest</span><span class="pi">:</span> <span class="s">/opt/certbot/certbot-auto</span>
+    <span class="na">mode</span><span class="pi">:</span> <span class="m">755</span>
+
+<span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">certbot</span><span class="nv"> </span><span class="s">を実行してSSL証明書を取得"</span>
+  <span class="na">shell</span><span class="pi">:</span> <span class="pi">|</span>
+    <span class="s">/opt/certbot/certbot-auto certonly \</span>
+      <span class="s">--debug \</span>
+      <span class="s">--text \</span>
+      <span class="s">--non-interactive \</span>
+      <span class="s">--agree-tos \</span>
+      <span class="s">--standalone \</span>
+      <span class="s">--fullchain-path=(設置場所) \</span>
+      <span class="s">--email (メールアドレス) \</span>
+      <span class="s">-d (ドメイン1) \</span>
+      <span class="s">-d (ドメイン2)</span>
+</code></pre></div></div>
+:ET

@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AWS on ことえりブログ</title>
+    <link>/categories/AWS/</link>
+    <description>Recent content in AWS on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 08 Jun 2019 12:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/AWS/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DockerコンテナにホストのAWSアクセスキーを渡す方法</title>
+      <link>/post/2019-06-08-Docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AB%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AEAWS%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%AD%E3%83%BC%E3%82%92%E6%B8%A1%E3%81%99%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Sat, 08 Jun 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-06-08-Docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AB%E3%83%9B%E3%82%B9%E3%83%88%E3%81%AEAWS%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E3%82%AD%E3%83%BC%E3%82%92%E6%B8%A1%E3%81%99%E6%96%B9%E6%B3%95/</guid>
+      <description>課題 DockerコンテナからAWSのAPIにアクセスしたい場合、ホストがEC2ならIAMロールが使える。 しかしホストがローカルのMacの場合は、アクセスキーとシークレットアクセスキーを、どうにかしてコンテナに渡す必要がある。
+結論 aws cliのconfigure getサブコマンドを使う。 具体的には下記のようにする。
+#!/usr/bin/env sh AWS_ACCESS_KEY_ID=$(aws configure get aws_access_key_id) AWS_SECRET_ACCESS_KEY=$(aws configure get aws_secret_access_key) docker run --rm \  -e AWS_REGION=ap-northeast-1 \  -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \  -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \  (略) このようにすればコンテナ内のAWC CLI指定の環境変数にアクセスキー等が格納されるので、そのままaws cliコマンドなどが使える。 プロファイルが複数ある場合は下記のようにして切り替えることもできる。
+AWS_ACCESS_KEY_ID=$(aws --profile (プロファイル名) configure get aws_access_key_id) AWS_SECRET_ACCESS_KEY=$(aws --profile (プロファイル名) configure get aws_secret_access_key) 参考 get — AWS CLI 1.16.174 Command Reference
+AWS CLI の設定 - AWS Command Line Interface</description>
+    </item>
+    
+    <item>
+      <title>DynamoDBのオートスケールしきい値設定をAWS CLIから行う</title>
+      <link>/post/2019-02-14-DynamoDB%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%88%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%97%E3%81%8D%E3%81%84%E5%80%A4%E8%A8%AD%E5%AE%9A%E3%82%92AWS-CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/</link>
+      <pubDate>Thu, 14 Feb 2019 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2019-02-14-DynamoDB%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%88%E3%82%B9%E3%82%B1%E3%83%BC%E3%83%AB%E3%81%97%E3%81%8D%E3%81%84%E5%80%A4%E8%A8%AD%E5%AE%9A%E3%82%92AWS-CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/</guid>
+      <description>DynamoDBのオートスケール設定をAWS CLIから行う
+今までブラウザのAWSコンソールからポチポチやっていましたが、必要になったので調べました。 オートスケール設定はDynamoDBではなくapplication-autoscaling経由で行うようです。
+DynamoDBテーブルの確認
+aws application-autoscaling describe-scaling-policies --service-namespace dynamodb --resource-id &amp;#34;table/テーブル名&amp;#34; オートスケールしきい値設定
+aws application-autoscaling put-scaling-policy --service-namespace dynamodb --policy-name &amp;#34;DynamoDBReadCapacityUtilization:table/テーブル名&amp;#34; --resource-id &amp;#34;table/テーブル名&amp;#34; --scalable-dimension dynamodb:table:ReadCapacityUnits --policy-type TargetTrackingScaling --target-tracking-scaling-policy-configuration &amp;#39;{ &amp;#34;TargetValue&amp;#34;: リードの値, &amp;#34;PredefinedMetricSpecification&amp;#34;: { &amp;#34;PredefinedMetricType&amp;#34;: &amp;#34;DynamoDBReadCapacityUtilization&amp;#34; } }&amp;#39; aws application-autoscaling put-scaling-policy --service-namespace dynamodb --policy-name &amp;#34;DynamoDBWriteCapacityUtilization:table/テーブル名&amp;#34; --resource-id &amp;#34;table/テーブル名&amp;#34; --scalable-dimension dynamodb:table:WriteCapacityUnits --policy-type TargetTrackingScaling --target-tracking-scaling-policy-configuration &amp;#39;{ &amp;#34;TargetValue&amp;#34;: ライトの値, &amp;#34;PredefinedMetricSpecification&amp;#34;: { &amp;#34;PredefinedMetricType&amp;#34;: &amp;#34;DynamoDBWriteCapacityUtilization&amp;#34; } }&amp;#39; </description>
+    </item>
+    
+    <item>
+      <title>AWSマネージドサービスのみでリダイレクトさせる</title>
+      <link>/post/2018-11-27-AWS%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E3%81%BF%E3%81%A7%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B/</link>
+      <pubDate>Tue, 27 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-27-AWS%E3%83%9E%E3%83%8D%E3%83%BC%E3%82%B8%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E3%81%AE%E3%81%BF%E3%81%A7%E3%83%AA%E3%83%80%E3%82%A4%E3%83%AC%E3%82%AF%E3%83%88%E3%81%95%E3%81%9B%E3%82%8B/</guid>
+      <description>http通信をhttpsにリダイレクトしたり、またゾーンアペックスからサブドメインへのリダイレクト (google.com -&amp;gt; www.google.com のような)は一般だとNGINXやApacheで設定…となりますが、AWSのサービスを駆使すれば必要ありません。 それぞれ説明します。
+http通信をhttpsにリダイレクト ALBを使います。 80番のターゲットグループでリダイレクトの設定を行えばOK.
+ゾーンアペックスからサブドメインへのリダイレクト Route53とS3を使います。もしhttpsもリダイレクトしたい場合はCloudFrontも使います。
+S3 ゾーンアペックス名でバケットを作った後、Static website hostingでリダイレクトの設定を行います。 ※バケットポリシー等の設定は不要です。
+CloudFront (httpsも使う場合） S3をオリジンとしたCloudFrontを用意します。わざわざCloudFrontを利用する理由は、S3だとカスタムのhttps証明書が入らないからです。 なのでCloudFrontではhttps証明書も設定します。 ※オリジンの設定にはリストで出てくるS3ではなく、Static website hostingで出てくるエンドポイントのドメイン部分をコピペして設定します。
+Route53 ゾーンアペックスのAレコードのエイリアスとしてCloudFront　(CloudFrontを使用しない場合はS3)　を指定します。</description>
+    </item>
+    
+    <item>
+      <title>Amazon Redshiftのカラム属性を変更する場合の手順</title>
+      <link>/post/2018-11-21-Amazon-Redshift%E3%81%AE%E3%82%AB%E3%83%A9%E3%83%A0%E5%B1%9E%E6%80%A7%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E6%89%8B%E9%A0%86/</link>
+      <pubDate>Wed, 21 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-21-Amazon-Redshift%E3%81%AE%E3%82%AB%E3%83%A9%E3%83%A0%E5%B1%9E%E6%80%A7%E3%82%92%E5%A4%89%E6%9B%B4%E3%81%99%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AE%E6%89%8B%E9%A0%86/</guid>
+      <description>Redshiftでカラムの属性を変更する場合、一旦別名で変更後の属性でカラムを作った後、リネームして既存カラムと置き換える必要があります。
+下記の例ではtable_nameというテーブルに対して、column_nameというカラムのデフォルト値を変更していますが、デフォルト値以外の変更も基本同じような対応で可能です。
+column_name_tmpというカラム名で新しいカラムデフォルト値を設定する。 ALTER TABLE table_name ADD COLUMN column_name_tmp VARCHAR(20) DEFAULT &amp;#39;new_default_value&amp;#39;; 既存カラム (column_name) の値を先ほど作成したcolumn_name_tmpにコピーする。 UPDATE table_name SET column_name_tmp = column_name; 既存カラムを削除する。 ALTER TABLE table_name DROP COLUMN column_name CASCADE; 新しく作成したカラムを既存カラム名にリネームする。 ALTER TABLE table_name RENAME COLUMN column_name_tmp TO column_name; 旧のデフォルト値で入っていたデータの更新 UPDATE table_name SET column_name = &amp;#39;new_default_value&amp;#39; WHERE column_name = &amp;#39;old_default_value&amp;#39;; 権限がリセットされてしまった場合はつけ直す -- user_nameに対してtable_nameテーブルの全操作を許可 grant all privileges on table_name TO user_name; -- 確認 \z </description>
+    </item>
+    
+    <item>
+      <title>AWS CLIのS3でワイルドカードを使う方法</title>
+      <link>/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Tue, 13 Nov 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-11-13-AWS-CLI%E3%81%AES3%E3%81%A7%E3%83%AF%E3%82%A4%E3%83%AB%E3%83%89%E3%82%AB%E3%83%BC%E3%83%89%E3%82%92%E4%BD%BF%E3%81%86%E6%96%B9%E6%B3%95/</guid>
+      <description>AWS CLIのS3ではワイルドカードが使えないと思っていましたが、実はオプションを駆使することで使えることがわかったのでメモ。
+aws s3 cp --recursive \  --exclude &amp;#39;*&amp;#39; \  --include &amp;#39;ワイルドカード入り検索文字列&amp;#39; \  s3://bucket_name/path/ . S3とかCloudFrontだとログファイルがディレクトリ掘らずに置かれてしまうのでこれでやると便利ですね。</description>
+    </item>
+    
+    <item>
+      <title>CloudFormationでSecurityGroupを作るときにYou may not define rules between a VPC group and a non-VPC groupとエラーが出るときの対応</title>
+      <link>/post/2018-10-25-CloudFormation%E3%81%A7SecurityGroup%E3%82%92%E4%BD%9C%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%ABYou-may-not-define-rules-between-a-VPC-group-and-a-non-VPC-group%E3%81%A8%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%BF%9C/</link>
+      <pubDate>Thu, 25 Oct 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-10-25-CloudFormation%E3%81%A7SecurityGroup%E3%82%92%E4%BD%9C%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%ABYou-may-not-define-rules-between-a-VPC-group-and-a-non-VPC-group%E3%81%A8%E3%82%A8%E3%83%A9%E3%83%BC%E3%81%8C%E5%87%BA%E3%82%8B%E3%81%A8%E3%81%8D%E3%81%AE%E5%AF%BE%E5%BF%9C/</guid>
+      <description>CloudFormationでSecurityGroupを作るときにYou may not define rules between a VPC group and a non-VPC groupとエラーが出るときの対応
+解決まで地味に30分程度掛かったのでメモ。
+CloudFormationで次のような感じでSecurityGroupを作ろうとすると、You may not define rules between a VPC group and a non-VPC groupとエラーが出てSecurityGroupが作れない。
+DBEC2SecurityGroup: Type: AWS::EC2::SecurityGroup Properties: GroupDescription: &amp;#34;Allow access from specific SecurityGroup&amp;#34; SecurityGroupIngress: - IpProtocol: tcp FromPort: &amp;#39;3306&amp;#39; ToPort: &amp;#39;3306&amp;#39; SourceSecurityGroupId: !Ref &amp;#39;EC2SecurityGroup&amp;#39; これはSourceSecurityGroupにVPCのSecurityGroupが指定されているのに、（VpcIdが指定されていないため）EC2 Classic環境にSecurityGroupが作られようとしているため出たエラーである（言葉にするとややこしい）。
+ドキュメントにもあるが正しくはこんな感じ。
+DBEC2SecurityGroup: Type: AWS::EC2::SecurityGroup Properties: VpcId: !Ref VPC GroupDescription: &amp;#34;Allow access from specific SecurityGroup&amp;#34; SecurityGroupIngress: - IpProtocol: tcp FromPort: &amp;#39;3306&amp;#39; ToPort: &amp;#39;3306&amp;#39; SourceSecurityGroupId: !</description>
+    </item>
+    
+    <item>
+      <title>Analytics Architecture Night - Tokyo 201810自分用メモ</title>
+      <link>/post/2018-10-05-Analytics-Architecture-Night-Tokyo-201810%E8%87%AA%E5%88%86%E7%94%A8%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Fri, 05 Oct 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-10-05-Analytics-Architecture-Night-Tokyo-201810%E8%87%AA%E5%88%86%E7%94%A8%E3%83%A1%E3%83%A2/</guid>
+      <description>Serverless Analytics on AWS アマゾン ウェブ サービス ジャパン株式会社 Analytics Specialist SA 志村 誠
+サーバレスはセキュアでもある  パッチが適用されていないサーバーは存在しない SSHもできない  サーバーレスな分析 下回りを気にせず、やりたいことに集中
+ データ収集: 設定だけで後は自動でデータを収集 データ管理: データのスキーマを自動で登録・更新 ETL: 処理を記述したスクリプトだけで前処理を実行 クエリ: SQLだけで自由に分析 可視化: ブラウザから簡単にGUIで可視化  AWSの分析サービス 複数あるが、最近のサービスであればサーバーレスに近い
+Amazon Kinesis Data フルマネージド型リアルタイム大規模ストリーミング処理 KDS: ストリームデータを収集し、公団で各種分析やデータ保存を実施 KDF: ストリームを収集し、S3/Redshift/ES/Splunkに簡単に配信 KDA: 上記2つからストリームを取得しSQLを実施
+AWS Glue 完全マネージド型ETLサービス Spark/PythonジョブによるETLを実行
+Amazon Athena インタラクティブなクエリサービス クエリエンジンとしてPrestoを用いS3上のデータに直接クエリを実行 実行した分だけ課金
+Amazon QuickSight 高速なSPICEエンジンと直感的な操作、専門家不要のBI 最大5ドル 1セッション30分で$0.3
+GlueベースのS3データレイク 各種データソースのカタログをGlueで一元的に管理 S3上のデータをAthena/Redshift Spectrum/EMRで分析
+CSV/TSV/JSONをParquetに変換すると効率が良い。 -&amp;gt; S3ファイル追加のイベントトリガーでLambdaを起動してGlueジョブを実行するとよい -&amp;gt; Kinesis FirehoseはParquetで出力できる
+ ジョブワークフローの構築はStep Functionsで  使い分けのポイント Glue/Athenaはあえて選択肢を絞ったり、チューニングの要素を絞ったりすることで、運用の負荷を下げ、本来の目的(ETL/分析)に集中できるようにしている。 まずはサーバーレス分析サービスでやりたいことが実現可能かどうか？ それでもだめならRedshift等使う</description>
+    </item>
+    
+    <item>
+      <title>CloudFormationで作るCodePipelineで継続的デリバリされるECSクラスタを考えてみた</title>
+      <link>/post/2018-09-30-CloudFormation%E3%81%A7%E4%BD%9C%E3%82%8BCodePipeline%E3%81%A7%E7%B6%99%E7%B6%9A%E7%9A%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%81%95%E3%82%8C%E3%82%8BECS%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E8%80%83%E3%81%88%E3%81%A6%E3%81%BF%E3%81%9F/</link>
+      <pubDate>Sun, 30 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-30-CloudFormation%E3%81%A7%E4%BD%9C%E3%82%8BCodePipeline%E3%81%A7%E7%B6%99%E7%B6%9A%E7%9A%84%E3%83%87%E3%83%AA%E3%83%90%E3%83%AA%E3%81%95%E3%82%8C%E3%82%8BECS%E3%82%AF%E3%83%A9%E3%82%B9%E3%82%BF%E3%82%92%E8%80%83%E3%81%88%E3%81%A6%E3%81%BF%E3%81%9F/</guid>
+      <description>CloudFormationで作るCodePipelineで継続的デリバリされるECSクラスタを考えてみました。
+前提  リポジトリにはGitHubを使う CloudFormationで環境一式が作成される ECSは単一タスク定義にコンテナ2つ  WebとAppコンテナ   CodepipelineはWeb, Appコンテナ用それぞれ用意  コンポーネント GitHub リポジトリを分けます。分ける理由はファイル更新時のデリバリー範囲を狭めるためです (Webコンテナの設定変更だけならAppコンテナは反映しない)。
+ learning_of_codepipeline_ecs  CloudFormation設定ファイル   learning_of_codepipeline_ecs_app  Appコンテナ用 Dockerfile Appコンテナ用 Codebuild設定ファイル   learning_of_codepipeline_ecs_web  Webコンテナ用 Dockerfile Webコンテナ用 Codebuild設定ファイル    CloudFormation 下記リソースの作成を行います。
+ CodePipeline CodeBuild  App, WebコンテナイメージをビルドしてECRにPush   ECSクラスタ  App, Webコンテナを動かす    CodePipeline 単一PipelineでApp, WebコンテナのビルドとECSへのデプロイをやろうと思ったのですが、下記問題があったのでWebとAppで別のPipelineにしました。
+ Web, Appどちらかの更新で両方のビルドが始まってしまう ECSへのデプロイ時に片方が常に失敗する  成果物 CodePipeline https://github.com/kter/learning_of_codepipeline_ecs Webコンテナ用 https://github.com/kter/learning_of_codepipeline_ecs_web Appコンテナ用 https://github.</description>
+    </item>
+    
+    <item>
+      <title>AWS SAMのLambda (Python)で環境変数で設定した値を配列で受け取る</title>
+      <link>/post/2018-09-08-AWS-SAM%E3%81%AELambda-Python%E3%81%A7%E7%92%B0%E5%A2%83%E5%A4%89%E6%95%B0%E3%81%A7%E8%A8%AD%E5%AE%9A%E3%81%97%E3%81%9F%E5%80%A4%E3%82%92%E9%85%8D%E5%88%97%E3%81%A7%E5%8F%97%E3%81%91%E5%8F%96%E3%82%8B/</link>
+      <pubDate>Sat, 08 Sep 2018 16:28:02 +0000</pubDate>
+      
+      <guid>/post/2018-09-08-AWS-SAM%E3%81%AELambda-Python%E3%81%A7%E7%92%B0%E5%A2%83%E5%A4%89%E6%95%B0%E3%81%A7%E8%A8%AD%E5%AE%9A%E3%81%97%E3%81%9F%E5%80%A4%E3%82%92%E9%85%8D%E5%88%97%E3%81%A7%E5%8F%97%E3%81%91%E5%8F%96%E3%82%8B/</guid>
+      <description>環境変数に設定された値は文字列としてしか取得できません。
+なのでos.getenv()で値を取得したあとsplit()で配列化します。 ついでにstrip()も呼んでスペースも除去します。コードはこんな感じです。
+array = [x.strip() for x in str(os.getenv(&amp;#39;(環境変数名)&amp;#39;)).split(&amp;#39;,&amp;#39;)] yamlファイルはこんな感じです。
+Resources: Lambda: Type: &amp;#39;AWS::Serverless::Function&amp;#39; Properties: Handler: lambda_function.lambda_handler Runtime: python3.6 CodeUri: . MemorySize: 128 Role: Fn::GetAtt: - LambdaRole - Arn Timeout: 3 Environment: Variables: (環境変数名): &amp;#39;val1, val2, val3&amp;#39; </description>
+    </item>
+    
+    <item>
+      <title>AWS S3 Glacierからリストアしてファイルをダウンロードする</title>
+      <link>/post/2018-09-06-AWS-S3-Glacier%E3%81%8B%E3%82%89%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2%E3%81%97%E3%81%A6%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B/</link>
+      <pubDate>Thu, 06 Sep 2018 22:31:02 +0000</pubDate>
+      
+      <guid>/post/2018-09-06-AWS-S3-Glacier%E3%81%8B%E3%82%89%E3%83%AA%E3%82%B9%E3%83%88%E3%82%A2%E3%81%97%E3%81%A6%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89%E3%81%99%E3%82%8B/</guid>
+      <description>まとめ Glacier状態のS3オブジェクトを取り出す際には、リストア期間を指定した上でrestore-objectを実行する必要があります。
+手順 リストア recursiveオプションが無いため、list-objectsしてオブジェクトパスを取得してからrestore-objectを実行します。
+for key in `aws s3api list-objects --bucket (バケット名) --prefix (ディレクトリ名) --output json | jq -r &amp;#39;.Contents[].Key&amp;#39;`; do echo $key; aws s3api restore-object --bucket (バケット名) --key $key --restore-request &amp;#39;{&amp;#34;Days&amp;#34;: 3}&amp;#39;;done ダウンロード リストア済みのオブジェクトをダウンロードするときもresursiveが使えないため、list-objectsしてオブジェクトパスを取得してからダウンロードします。
+for key in `aws s3api list-objects --bucket (バケット名) --prefix (ディレクトリ名) --output json | jq -r &amp;#39;.Contents[].Key&amp;#39;`; do echo $key; aws s3 cp s3://(バケット名)/$key .;done </description>
+    </item>
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ AWS Lambda編</title>
+      <link>/post/2018-09-06-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-AWS-Lamda%E7%B7%A8/</link>
+      <pubDate>Thu, 06 Sep 2018 12:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-09-06-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-AWS-Lamda%E7%B7%A8/</guid>
+      <description>AWS Lambdaとは  インフラを一切期にすることなくアプリケーションコードを実行できるコンピュートサービス  実行基盤はすべてAWSが管理 AWSサービスと連携し、イベントドリブンなアプリケーションを作れる コード実行時間に対して課金    →やりたいことだけに集中できる
+ユースケース  S3のバケットに画像が保存されたらサムネイルイメージを用意 DynamoDBに保存されるアドレスが全て正しい形式化チェックしたい  詳細  対応言語  JavaScript Java Python Go   メモリ容量に応じてCPU能力が変動 隔離されたコンテナ内で実行される 対応起動トリガー  API Gateway AWS IoT Alexa Skills Kit Alexa Smarat Home CloudFront CloudWatch Events CloudWatch Logs CodeCommit Cognito Sync Trigger DynamoDB Kinesis S3 SNS SQS   モバイル・WebアプリからSDKを利用して呼び出すこともできる  モバイルSDK経由の実行だとデバイス、アプリ、アイデンティティ情報にアクセス可能   同期実行と非同期実行が選べる  非同期実行の場合レスポンスはリクエストが正常に受け付けられたかどうかのみ   DynamoDBとKinesisのイベントはLambdaが自動的に取得しに行く（PULLモデル)  Lambdaが取得しに行くのでその権限が必要    </description>
+    </item>
+    
+    <item>
+      <title>AWS Lambda (Python) からCloudFormationのスタック作成・削除を行う</title>
+      <link>/post/2018-08-18-AWS-Lambda-Python-%E3%81%8B%E3%82%89CloudFormation%E3%81%AE%E3%82%B9%E3%82%BF%E3%83%83%E3%82%AF%E4%BD%9C%E6%88%90%E5%89%8A%E9%99%A4%E3%82%92%E8%A1%8C%E3%81%86/</link>
+      <pubDate>Sat, 18 Aug 2018 15:08:02 +0000</pubDate>
+      
+      <guid>/post/2018-08-18-AWS-Lambda-Python-%E3%81%8B%E3%82%89CloudFormation%E3%81%AE%E3%82%B9%E3%82%BF%E3%83%83%E3%82%AF%E4%BD%9C%E6%88%90%E5%89%8A%E9%99%A4%E3%82%92%E8%A1%8C%E3%81%86/</guid>
+      <description>業務時間だけ使うAWSリソースがあり、それをCloudFormationを使って管理しているという場合、Lambdaからスタックの作製・削除ができると便利です。
+削除するのは簡単なのですが、作成するときは少し手こずったのでそれを書いておきます。
+作成 TemplateURLにS3バケット内のファイルを指定する場合は次のようにします。 ※httpsとスキームが付きますが、Webホスティングの設定は必要ありません。
+https://s3-ap-northeast-1.amazonaws.com/(S3バケット名)/ファイル名 ということで作成するときはこんな感じになります。
+cf = boto3.client(&amp;#39;cloudformation&amp;#39;) res = cf.create_stack( StackName=(スタック名), TemplateURL=&amp;#39;https://s3-ap-northeast-1.amazonaws.com/(S3バケット名)/ファイル名&amp;#39;, Parameters=[ { &amp;#39;ParameterKey&amp;#39;: &amp;#39;パラメータ名1&amp;#39;, &amp;#39;ParameterValue&amp;#39;: &amp;#39;設定値1&amp;#39; }, { &amp;#39;ParameterKey&amp;#39;: &amp;#39;パラメータ名2&amp;#39;, &amp;#39;ParameterValue&amp;#39;: &amp;#39;設定値2&amp;#39; }, ], Capabilities=[ &amp;#39;CAPABILITY_NAMED_IAM&amp;#39;, ], ) 削除 削除はスタック名を指定するだけなのでとても簡単。
+cf = boto3.client(&amp;#39;cloudformation&amp;#39;) res = cf.delete_stack( StackName=(スタック名) ) </description>
+    </item>
+    
+    <item>
+      <title>AWS CLIでMFAを使う</title>
+      <link>/post/2018-07-28-AWS-CLI%E3%81%A7MFA%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Sat, 28 Jul 2018 15:15:00 +0000</pubDate>
+      
+      <guid>/post/2018-07-28-AWS-CLI%E3%81%A7MFA%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>MFA設定後、AWS CLIからMFAを使うためには一時的なクレデンシャルを発行する必要があります。
+前提 IAMポリシーにこんな感じでConditionを設定するとMFAが有効になっていない時の設定を行うことができます。
+ここで例えばEffectをDenyに、Actionをiam:DeleteUserとすると、MFA認証なしではDeleteUserができなくなります。
+&amp;#34;Condition&amp;#34;: { &amp;#34;Bool&amp;#34;: { &amp;#34;aws:MultiFactorAuthPresent&amp;#34;: &amp;#34;false&amp;#34; } } MFAを設定しておけば、AWSマネジメントコンソールにログインしようとするとMFAのコード入力画面が勝手に出てきますが、AWS CLIの場合は出てきません。
+本題 どうするのかというと次のコマンドを実行し、一時的なクレデンシャルを発行します。
+aws sts get-session-token --serial-number (登録MFAのARN 例：arn:aws:iam::500000000:mfa/kter) --token-code (MFAコード) 環境変数にクレデンシャルを突っ込むワンライナーはこちら。
+eval `aws sts get-session-token --serial-number (登録MFAのARN) --token-code (MFAコード) | awk &amp;#39; $1 == &amp;#34;\&amp;#34;AccessKeyId\&amp;#34;:&amp;#34; { gsub(/\&amp;#34;/,&amp;#34;&amp;#34;); gsub(/,/,&amp;#34;&amp;#34;); print &amp;#34;export AWS_ACCESS_KEY_ID=&amp;#34;$2 } $1 == &amp;#34;\&amp;#34;SecretAccessKey\&amp;#34;:&amp;#34; { gsub(/\&amp;#34;/,&amp;#34;&amp;#34;); gsub(/,/,&amp;#34;&amp;#34;); print &amp;#34;export AWS_SECRET_ACCESS_KEY=&amp;#34;$2 } $1 == &amp;#34;\&amp;#34;SessionToken\&amp;#34;:&amp;#34; { gsub(/\&amp;#34;/,&amp;#34;&amp;#34;); gsub(/,/,&amp;#34;&amp;#34;); print &amp;#34;export AWS_SESSION_TOKEN=&amp;#34;$2 } &amp;#39;` 参考にさせていただいたページ https://www.slideshare.net/tetsunorinishizawa/aws-cliassume-role</description>
+    </item>
+    
+    <item>
+      <title>機密情報をLambdaで使いたいとき</title>
+      <link>/post/2018-07-26-%E6%A9%9F%E5%AF%86%E6%83%85%E5%A0%B1%E3%82%92Lambda%E3%81%A7%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E3%81%A8%E3%81%8D/</link>
+      <pubDate>Thu, 26 Jul 2018 00:48:00 +0000</pubDate>
+      
+      <guid>/post/2018-07-26-%E6%A9%9F%E5%AF%86%E6%83%85%E5%A0%B1%E3%82%92Lambda%E3%81%A7%E4%BD%BF%E3%81%84%E3%81%9F%E3%81%84%E3%81%A8%E3%81%8D/</guid>
+      <description>AWS Systems Manager パラメータストアを使いましょう。
+ソースコードに書きたくない、環境変数にも残したくない。そういったときにパラメータストアが役に立ちます。
+パラメータストアでは暗号化もサポートしているので、機密情報はこれを使って保存します。
+パラメータストア自体の使い方はGUIからできるので省略しますが、Lambda(Python)では次のような感じでサクッと利用することができます。
+ssm = boto3.client(&#39;ssm&#39;) ssm_response = ssm.get_parameters( Names = [ (パラメータストアキー名), ], WithDecryption=True ) print(ssm_response[&#39;Parameters&#39;][0][&#39;Value&#39;]) IAMポリシーはこんな感じです。
+{ &amp;quot;Version&amp;quot;: &amp;quot;2012-10-17&amp;quot;, &amp;quot;Statement&amp;quot;: [ { &amp;quot;Action&amp;quot;: [ &amp;quot;ssm:GetParameters&amp;quot; ], &amp;quot;Resource&amp;quot;: [ &amp;quot;arn:aws:ssm:*:*:parameter/(パラメータストアキー名)&amp;quot; ], &amp;quot;Effect&amp;quot;: &amp;quot;Allow&amp;quot; } ] } </description>
+    </item>
+    
+    <item>
+      <title>Lambda (Python) から特定のログストリームにログを書こうとして苦戦した2つのポイント</title>
+      <link>/post/2018-07-17-Lambda-Python-%E3%81%8B%E3%82%89%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%92%E6%9B%B8%E3%81%93%E3%81%86%E3%81%A8%E3%81%97%E3%81%A6%E8%8B%A6%E6%88%A6%E3%81%97%E3%81%9F2%E3%81%A4%E3%81%AE%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88/</link>
+      <pubDate>Tue, 17 Jul 2018 22:48:00 +0000</pubDate>
+      
+      <guid>/post/2018-07-17-Lambda-Python-%E3%81%8B%E3%82%89%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%AD%E3%82%B0%E3%82%B9%E3%83%88%E3%83%AA%E3%83%BC%E3%83%A0%E3%81%AB%E3%83%AD%E3%82%B0%E3%82%92%E6%9B%B8%E3%81%93%E3%81%86%E3%81%A8%E3%81%97%E3%81%A6%E8%8B%A6%E6%88%A6%E3%81%97%E3%81%9F2%E3%81%A4%E3%81%AE%E3%83%9D%E3%82%A4%E3%83%B3%E3%83%88/</guid>
+      <description>Lambda (Python) から指定のログストリームにログを書こうとして苦戦したのでメモ。
+今日使い始めたばかりなので間違ってる点があるかもしれません。もし間違っていたら教えてくださいm(_ _)m
+苦戦ポイント1 -put_log_events()の使い方- 結論から言って次のようにする必要があります。
+logs_client = boto3.client(&amp;#39;logs&amp;#39;) res = logs_client.describe_log_streams( logGroupName=&amp;#39;(ロググループ名)&amp;#39;, logStreamNamePrefix=&amp;#39;(ログストリーム名)&amp;#39;, ) seq_token = res[&amp;#39;logStreams&amp;#39;][0][&amp;#39;uploadSequenceToken&amp;#39;] res = logs_client.put_log_events( logGroupName=&amp;#39;(ロググループ名)&amp;#39;, logStreamName=&amp;#39;(ログストリーム名)&amp;#39;, logEvents=[ { &amp;#39;timestamp&amp;#39;: int(time.time()) * 1000, &amp;#39;message&amp;#39;: &amp;#39;%sbacked up successfully&amp;#39; % (message) }, ], sequenceToken=seq_token ) 注意する点が2点ほどあります。
+timestampの指定 まず1点目、timestampはUNIX時間に1000を掛けたものを整数で指定しましょう。つまり単位がミリ秒です。
+sequenceToken 2点目、ログを書き出すput_log_events()にはsequenceTokenというパラメータが必要になります。 ログストリームへの初回の書き込みなら（多分）いらないのですが、2回目以降は必要になります。
+上記コードではsequenceTokenをdescribe_log_streams()から取得していますが、put_log_events()のレスポンスの中にもありますのでそれを使ってもいいです。
+苦戦ポイント2 -IAM ポリシー- 結論から言って次のようにする必要があります。
+{ &amp;#34;Version&amp;#34;: &amp;#34;2012-10-17&amp;#34;, &amp;#34;Statement&amp;#34;: [ { &amp;#34;Action&amp;#34;: [ &amp;#34;logs:CreateLogGroup&amp;#34;, &amp;#34;logs:CreateLogStream&amp;#34;, &amp;#34;logs:PutLogEvents&amp;#34;, ], &amp;#34;Resource&amp;#34;: [ &amp;#34;arn:aws:logs:*:*:/aws/lambda/(Lambda関数名☆ワイルドカード可☆)&amp;#34;, &amp;#34;arn:aws:logs:*:*:log-group:(ロググループ名):log-stream:(ログストリーム名)&amp;#34; ], &amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34; }, { &amp;#34;Action&amp;#34;: [ &amp;#34;logs:DescribeLogStreams&amp;#34; ], &amp;#34;Resource&amp;#34;: [ &amp;#34;arn:aws:logs:*:*:*&amp;#34; ], &amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34; } ] } ポリシーについて先に説明させていただきますと、最初のCreateLogGroup, CreateLogStream, PutLogEventsはCloudWatch Logsにログを書き出す（ログストリームの作成も）時に必要です。</description>
+    </item>
+    
+    <item>
+      <title>自身のインスタンス名を取得するワンライナー</title>
+      <link>/post/2018-06-27-%E8%87%AA%E8%BA%AB%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%90%8D%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E3%83%AF%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC/</link>
+      <pubDate>Wed, 27 Jun 2018 01:13:00 +0000</pubDate>
+      
+      <guid>/post/2018-06-27-%E8%87%AA%E8%BA%AB%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%82%BF%E3%83%B3%E3%82%B9%E5%90%8D%E3%82%92%E5%8F%96%E5%BE%97%E3%81%99%E3%82%8B%E3%83%AF%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC/</guid>
+      <description>急にインスタンス名を取得したくなった時などにどうぞ。 ※EC2のDescribeInstances権限が必要です。
+aws ec2 describe-instances \  --instance-ids `/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id` \  --query &amp;#39;Reservations[].Instances[].[Tags[?Key==`Name`].Value]&amp;#39; \  --output text 変数に入れる時はこんな感じで
+INSTANCE_NAME=$(aws ec2 describe-instances \  --instance-ids `/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id` \  --query &amp;#39;Reservations[].Instances[].[Tags[?Key==`Name`].Value]&amp;#39; \  --output text) コピペ用
+aws ec2 describe-instances --instance-ids `/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id` --query &amp;#39;Reservations[].Instances[].[Tags[?Key==`Name`].Value]&amp;#39; --output text </description>
+    </item>
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ Auto Scaling編</title>
+      <link>/post/2018-05-26-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Auto-Scaling%E7%B7%A8/</link>
+      <pubDate>Sat, 26 May 2018 11:34:00 +0000</pubDate>
+      
+      <guid>/post/2018-05-26-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Auto-Scaling%E7%B7%A8/</guid>
+      <description>Auto Scaling 情報元: AWS Black Belt Online Seminar 2017 Auto Scaling
+ 動的スケーリング3種  ChangeInCapacity  指定したインスタンス数だけ容量を増減 ex. アラームが起きたら2台増やす   ExactCapacity  指定したインスタンス数に容量を変更 アラームが起きたら2台にする   PercentChangeInCapacity  指定したインスタンス数に容量を変更 現在のサイズから20%増やす     負荷が予想できるなら: スケジュールベース 予定された負荷の対策: 手動スケーリング 予測できない緩やかな負荷: 動的スケーリング ヘルスチェック  EC2: ステータスがrunning以外の状態を以上と判断 ELB: ELBのヘルスチェックを利用   クールダウン: スケーリングアクション実行後、指定した時間ないは次のスケーリングアクションを実行しない仕組み  シンプルスケーリングポリシーのみ対応   ターミネーションポリシー: スケールイン時どのインスタンスから終了するか定義  OldestInstance / NewestInstance OldestLaunchConfiguration ClosestToNextInstanceHour (次の課金が始まるタイミングが最も近いインスタンス) Default (OldestLaunchConfigurationとClosestToNextInstanceHourを順に適用し、複数インスタンスが残ればランダム) インスタンス保護対象は除外   インスタンスのアタッチ・デタッチ  インスタンスのアタッチ: Auto Scaling Groupに追加できる。Desired Capacityが自動で追加される インスタンスのデタッチ: Auto Scaling Groupから取り除ける。Desired Capacityは変更されないため、新規インスタンスが追加される どちらもELBとは連動する。   スタンバイ: ELBからデタッチされ、トラフィックが流れないようになる  Desired Capasityも自動で変更される   ライフサイクルフック: Auto Scalingによるインスタンス起動・終了を待機させ、起動時または終了時にカスタムアクションを実行できる仕組み  インスタンス起動・終了処理を待機させ、メッセージを通知。SNS、SQS、CloudWatchイベントに送られる 待機時間にカスタムアクションを(初期化・終了処理）を実行 ライフサイクルの終了または待機時間延長コマンドを実行   突発的なスパイクには向いていない  CloudFrontにオフロード API Gatewayでスロットリング サイトを静的ページに切り替える   アーキテクチャとしてはSQSやECS、Blue Green(ASGをCloudFormationで自動作成)等が挙げられる。 Application Auto Scaling: Auto Scalingと似たUXでAWSリソースの自動スケールを実現  ECS Spot Fleet EMR    </description>
+    </item>
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ Elastic Load Balancing編</title>
+      <link>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Elastic-Load-Balancing%E7%B7%A8/</link>
+      <pubDate>Wed, 23 May 2018 21:48:00 +0000</pubDate>
+      
+      <guid>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Elastic-Load-Balancing%E7%B7%A8/</guid>
+      <description>AWS クラウドサービス活用資料集メモ サービス別資料 コンピューティング Elastic Load Balancing (ELB) 情報元: AWS Black Belt Online Seminar 2016 Elastic Load Balancing
+ Application Load Balancer  L7のコンテントベースのロードバランサー ターゲットグループに対してルーティング コンテナベースのアプリケーションのサポート WebSocketとHTTP/2のサポート 複数のAZで耐障害性が高い 価格はALBの起動時間とLoad Balancer Capacity Units(LCU)の使用量で決まる   Elastic Load Balancing (ELB)  Application Load BalancerとClassic Load Balancerの二種類がある。  Application Load BalancerはL7のコンテントベースのロードバランサー Classic Load BalancerはL4および一部L7機能を提供するロードバランサー     ELBは複数AZに設定できる。DNSラウンドロビンで各AZのELBにアクセスが分散される。その後負荷が均等になるようバックエンドのEC2に振り分けられる クロスゾーン負荷分散を使うことで、AZ間のキャパシティ（インスタンス数、サイズ）が異なる場合やクライアントがDNSをキャッシュする環境でも負荷を均等にできる。 無通信状態が続くとそのコネクションを自動で切断する。デフォルトでは60秒、最低1秒最高3600秒 ELBは自動でスケールするが、瞬間的に急増すると503を返す。  Pre-Warming（暖機運転）の申請を行うあ負荷を段階的にかける ただしPre-WarmingはBusiness/Enterpriseサポートが必要   サブネットは最小/27、空きIPは8以上 ICMP Echo Request/Replyを許可すれば、ELBがpingにも応答する Perfect Forward Secrecyのサポート Server Order Preference対応 スティッキーセッション  同じユーザから来たリクエストをすべて同じEC2インスタンスに送信 ELBで生成するCookieかアプリケーションで生成するCookieか選べる   Connection Draining  ELBから登録解除したりヘルスチェックが失敗したときに、新規割り振りは中止して処理中のリクエストが終わるまで一定期間末   CLBはTCP/SSLによる負荷分散が可能 CLBはバックエンドインスタンスのサーバ証明書認証ができる CLBのコンテントベースルーティングはサブドメインかNGINXで行う。 Load Balancer Capacity Unitsは新規接続数、アクティブ接続数、帯域幅のうち、最も使用量が高いディメンションのみ請求  新規接続数: 1秒あたりの新規接続数 アクティブ接続数: 1分あたりのアクティブ接続数 トラフィック量（Mbps)   1 LCUには1秒あたり最大25の新規接続数 (4KB証明書の場合は最大5), 1分あたり最大3000個のアクティブ接続, 最大2.</description>
+    </item>
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ Amazon EC2編</title>
+      <link>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Amazon-EC2%E7%B7%A8/</link>
+      <pubDate>Wed, 23 May 2018 00:13:00 +0000</pubDate>
+      
+      <guid>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Amazon-EC2%E7%B7%A8/</guid>
+      <description>AWS クラウドサービス活用資料集メモ サービス別資料 コンピューティング Amazon EC2 情報元: 20180411 AWS Black Belt Online Seminar Amazon EC2 
+ 最新のC5, M5インスタンスはXenベースではなく、KVMベース 最小: 1vCPU, 0.5GBメモリ 最大: 128vCPU, 約4TBメモリ EC2インスタンスファミリー一覧  汎用、コンピューティング最適化、ストレージ最適化、メモリ最適化、GPU・FPGAアクセラレーテッド   T2インスタンスのCPUクレジット動作について  CPUクレジット1につきCPUコアの最大パフォーマンス（バースト性能）を1分間提供 T2 Unlimitedの場合24時間分のCPUクレジットを前借りして利用できる 前借りクレジットを使い切った状態においてはvCPU時間あたりLinuxでは$0.05/h, Windowsで$0.096/hが加算請求される 初期CPUクレジット、一時間あたりに受け取るCPUクレジット、ベースラインパフォーマンス(CPU使用率)、最大獲得CPUクレジットバランスはインスタンスタイプごとに異なる   Dedicated Hostsの場合、AWSまたはMarketplaceで提供されているRHEL, SUSE Linux, Windows　AMIは使えないので注意 Amazon EC2 Bare Metalについて  ハードウェアへのダイレクトアクセスを提供するインスタンス AWS各種サービスとの連携が可能 仮想化環境上からは利用できないエミュレータや、独自のハイパーバイザーを導入するときなどに利用   拡張ネットワーキングについて  Intel 82599VF (ixgbevf)  M4(m4.16xlarge以外), C3, C4, D2, I2, R3で使える   Elastic Network Adapter (ENA)  C5, F1, G3, H1, I3, M5, P2, P3, R4, X1, m4.</description>
+    </item>
+    
+    <item>
+      <title>CodeBuildを使ってみたメモ</title>
+      <link>/post/2018-03-21-CodeBuild%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Wed, 21 Mar 2018 11:56:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-21-CodeBuild%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%81%9F%E3%83%A1%E3%83%A2/</guid>
+      <description>本当に今更だけどCodeBuildを使って、GitHubリポジトリのDockerfileをビルド&amp;amp;イメージプッシュ &amp;amp; Kubernetesにデプロイする設定を入れたので知見をメモする。
+GitHubと連携できる てっきりリポジトリにコミットされたらCodeBuildを実行〜みたいな時、CodeCommitじゃないとできないのかなと思っていたのですが、GitHubでもできました。
+CodeBuildでDockerイメージをビルド(dockerコマンドの実行)する際には、CodeBuildオリジナルのDockerイメージを使わなければならない &amp;ldquo;特権付与&amp;quot;にチェックを入れても、CodeBuild用のaws/codebuild/dockerイメージでなければdockerコマンドは使えません。
+CodeBuildコンテナでのRubyインストール方法 前述の理由によりRubyを使いたい時、Rubyイメージが使えずコンテナにRubyをインストールするしかないのですが、普通にapt-get install rubyだと1.9が入ってしまいます。
+2.4等新しいものをインストールする場合は次のようにします。
+apt-get install -y software-properties-common apt-add-repository -y ppa:brightbox/ruby-ng apt-get update -y apt-get -y install ruby2.4 ruby2.4-dev イメージのタグなどに使う用のGitコミットID取得方法 下記変数が自動的にセットされているので、これが使えます。
+※CodeBuild上のファイルは.gitがないようです。
+CODEBUILD_RESOLVED_SOURCE_VERSION シークレットの取り扱い CodeBuildで環境変数を設定できるが、パスワード等のシークレットはAWS Systems Managerのパラメータストアを使います。
+下記例は、パラメータストアにvalという名前で登録した値を、CodeBuild内でkeyという環境変数名前で使用できます。
+env: parameter-store: key: &amp;#34;val&amp;#34; </description>
+    </item>
+    
+    <item>
+      <title>JAWS DAYS 2018 レポート</title>
+      <link>/post/2018-03-21-JAWS-DAYS-2018-%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</link>
+      <pubDate>Wed, 21 Mar 2018 11:34:00 +0000</pubDate>
+      
+      <guid>/post/2018-03-21-JAWS-DAYS-2018-%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88/</guid>
+      <description>JAWS DAYS 2018 内容の正当性は保証できません。こういう雰囲気でした。
+スライドとか公開されたら更新します。
+概要 JAWS DAYS 2018レポート
+日時: 2018年3月10日10時から
+URL: https://jawsdays2018.jaws-ug.jp/
+以下敬称略
+コンテナでウェイウェイ (仮) by @keisuke69　西谷圭介
+なぜコンテナなのか？  パッケージング 配布 イミュータブルインフラストラクチャー  ユースケース  マイクロサービスアーキテクチャ 非同期ジョブ実行（バッチコンピューティング）  柔軟にスケール   継続的インテグレーション、デプロイ  開発テスト本番まで一貫したイメージを利用    Amazon Container Service  レジストリ  Amazon ECR   コントロールプレーン  Amazon ECS  年間アクティブユーザ+450% 毎週数百万ものインスタンスで数億コンテナが起動 2015年のGA以来50以上の機能がリリース Task: コンテナ群の実行単位 Service: Taskの数を指定 IAM Role：　Taskごとに割当可能 TaskごとにENIを自動割当 Task内はlocalhostを共有   AWS Fargate  ECSと一緒に使う ECSのTaskでコンテナイメージを指定して実行 インスタンス管理不要 タスクに割り当てたリソース分の料金が掛かる CPUとメモリを秒単位で課金 Fargateで難しいもの  WindowsContainer GPU docker execのようなインタラクティブなデバッグ SpotやRIベースの価格モデルの適用 Taskレベルのメトリクス   Lambdaの方がいい場合  イベントドリブン ミリ秒単位のコンピュート ランタイムの管理をしたくない 分散バッチコンピューティング     EKS  Masterの管理運用をEKSでサポート (マネージド、Multi-AZ) EC2の管理は必要になるが、Fargateでのサポートも予定      Our ECS Journey by @calvinfo Calvin French-Owen</description>
+    </item>
+    
+    <item>
+      <title>AWS VPCでRoute53のプライベートホストゾーンを使う</title>
+      <link>/post/2018-01-25-AWS-VPC%E3%81%A7Route53%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%9B%E3%82%B9%E3%83%88%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%86/</link>
+      <pubDate>Thu, 25 Jan 2018 11:50:00 +0000</pubDate>
+      
+      <guid>/post/2018-01-25-AWS-VPC%E3%81%A7Route53%E3%81%AE%E3%83%97%E3%83%A9%E3%82%A4%E3%83%99%E3%83%BC%E3%83%88%E3%83%9B%E3%82%B9%E3%83%88%E3%82%BE%E3%83%BC%E3%83%B3%E3%82%92%E4%BD%BF%E3%81%86/</guid>
+      <description>はじめに VPCでのプライベートホストゾーンについて説明します。
+これはroute53.testのような実在しないドメインをRoute53に登録&amp;amp;設定すれば、設定したVPC限定でそのドメインが使えるというものです。
+これを使って例えば次のようなことができます。
+インスタンスAにweb.route53.testというレコードセットをRoute53に登録
+↓
+設定したVPCのインスタンスからはwebという名前でインスタンスAにアクセスできる（どちらかと言うとリゾルバの機能ですが）
+踏み台からのSSHやリレー、プロキシ先の指定などに便利ですよね。
+料金について こちらをご覧ください。月0.5ドルかかります。日割り計算はありません。
+ただし作成から12時間は料金は発生しないようなので、テスト目的ならば12時間以内に削除しましょう。
+設定 ドキュメントにいろいろ書かれていますが、大抵の場合次の手順でいけるはずです。
+ Route53でプライベートホストゾーンを登録 VPCのDNS, DHCP設定を変更  VPCのDHCPの設定を変更すれば/etc/resolv.confの設定は自動で行われます。便利ですね。
+1. Route53でプライベートホストゾーンを登録 Route53のページに行ってホストゾーンを作成します。
+特に迷うことはないと思いますがこんな感じで
+次にレコードを登録しましょう。
+登録するIPはもちろんプライベートIPアドレスで。
+Route53での作業は以上です。
+2. VPCのDHCP設定を変更 VPC一覧のページに移動し、DNSホスト名をはいに設定します。
+次にVPCのDHCP オプションセットというページに移動します。
+ここで予めオプションの値をメモしておいてください。
+※多分こんな感じで設定がされていると思います。
+domain-name = ap-northeast-1.compute.internal;domain-name-servers = AmazonProvidedDNS;
+ドメイン名にメモしたdomain-nameで指定されている値とスペースを開けて今回設定するプライベートホストゾーンの値を入力します。
+ドメインネームサーバーにはAmazonProvidedDNSと入力してください。
+最後にVCPの一覧画面に移動し、DHCPオプションセットの編集から、先ほど作成したオプションセットを指定します。
+5分程度待つと、設定したVPC内のインスタンスの/etc/resolv.confが自動で変更され、instance01とinstance02でIPが引けるようになります。
+※テストで作った場合は忘れずにホストゾーンを削除しましょう！
+注意点 自分は試していないのですが、ドキュメントに記載がある通り、名前空間が重複するパブリックゾーンとプライベートホストゾーンだと注意が必要です。
+たとえばdevドメインのような実在するパブリックなドメインをプライベートホストゾーンに登録してしまうと、パブリックな方のDNSサーバには問い合わせてくれないということです。 気をつけましょう。</description>
+    </item>
+    
+    <item>
+      <title>EC2 IAMロールの作成と適用をCLIから行う</title>
+      <link>/post/2018-01-10-EC2IAM%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E9%81%A9%E7%94%A8%E3%82%92CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/</link>
+      <pubDate>Wed, 10 Jan 2018 18:22:00 +0000</pubDate>
+      
+      <guid>/post/2018-01-10-EC2IAM%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E9%81%A9%E7%94%A8%E3%82%92CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/</guid>
+      <description>EC2 IAMロールの作成と適用をCLIから行う
+AWSコンソールからであれば簡単なんですが、CLIからだとインスタンスプロファイル（EC2 IAMロール)を作るのにロールの作成から必要なので若干面倒です。
+ここでは前提として、複数のインスタンスに対してそれぞれ違うロール(ポリシーは同一)を適用します。
+表にすると次のような感じです。
+| インスタンスID | ロール名 / インスタンスプロファイル名 | ポリシーARN | | instanceid1 | rolename1 | arn:aws:iam::aws:policy/service-role/servicerole | | instanceid2 | rolename2 | arn:aws:iam::aws:policy/service-role/servicerole |
+手順 Assume-roleを準備 cat &amp;lt;&amp;lt; _EOF &amp;gt; Trust-Policy.json { &amp;#34;Version&amp;#34;: &amp;#34;2012-10-17&amp;#34;, &amp;#34;Statement&amp;#34;: [ { &amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;, &amp;#34;Principal&amp;#34;: { &amp;#34;Service&amp;#34;: &amp;#34;ec2.amazonaws.com&amp;#34; }, &amp;#34;Action&amp;#34;: &amp;#34;sts:AssumeRole&amp;#34; } ] } _EOF インスタンスロール作成とロールのアタッチ INSTANCE_ROLE_NAMES=( rolename1 rolename2 ) for INSTANCE_ROLE_NAME in ${INSTANCE_ROLE_NAMES[@]}; do # ロール作成 aws iam create-role --role-name $INSTANCE_ROLE_NAME --assume-role-policy-document file://Trust-Policy.</description>
+    </item>
+    
+    <item>
+      <title>T2 Unlimitedを有効にしてみた</title>
+      <link>/post/2017-12-30-t2-unlimited%E3%82%92%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F/</link>
+      <pubDate>Sat, 30 Dec 2017 01:16:00 +0000</pubDate>
+      
+      <guid>/post/2017-12-30-t2-unlimited%E3%82%92%E6%9C%89%E5%8A%B9%E3%81%AB%E3%81%97%E3%81%A6%E3%81%BF%E3%81%9F/</guid>
+      <description>T2インスタンスに対してT2 Unlimited機能を有効にしてみた。
+T2 Unlimited機能について T2インスタンスはCPUクレジットを消費してCPU能力を上げるバーストという機能が使用できる。
+このバーストはCPUクレジットを消費し尽くした場合は使えなくなってしまうが、消費し尽くした場合でもバーストし続けることができる機能をT2 Unlimitedと呼ぶ。
+CPUクレジットの消費量は1vCPU毎1分間に1クレジットで、CPUクレジットの回復量と回復上限はインスタンスタイプごとに違う。具体的には下記ページの表にまとまっている。http://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/t2-instances.html
+バースト / T2 Unlimited詳細 CPUクレジットを消費し尽くした後T2 Unlimitedによりバーストが発生してもすぐには課金されない。
+この場合CPUクレジットの回復上限の値までCPUクレジットを使って、初めて課金 (vCPU時間あたり0.05ドル)が発生する。
+これらはそれぞれCPUSurplusCreditBalanceとCPUSurplusCreditsChargedというメトリクスで追跡できる。
+つまり、バースト発生 → クレジットを使い切る → CPUSurplusCreditBalanceも上限 (CPUクレジットの回復上限の値) まで使い切る → 課金が発生という流れになる。
+なおCPUSurplusCreditBalanceを使った場合では、CPUクレジットの回復にはまずCPUSurplusCreditBalanceの返済が必要で、返済が終わった段階からCPUクレジットの回復が始まる。
+監視 (アラート) 何らかの問題によりバーストが発生し続けて、T2 Unlimitedの課金が気が付かれずに発生し続けることを避けるため、監視とアラートを設定する。
+CloudWatchで設定を行い、アラートは課金が始まった時、つまりCPUSurplusCreditsChargedが0より大きくなった場合にアラートを送信するよう設定する。
+設定 下記設定でT2 Unlimitedの設定と監視（アラート）の設定を行った。
+アラート条件: CPUSurplusCreditsChargedが0より大きくなった時 (5分間隔1回連続)
+アラート送信先: (既存SNSトピックを使用)
+#!/bin/bash set -euo pipefail RET=$(aws ec2 describe-instances --query \  &amp;#39;Reservations[].Instances[].{HostName:Tags[?Key==`Name`].Value|[0],InstanceId:InstanceId}&amp;#39; \  --filters &amp;#34;Name=instance-type,Values=t2.*&amp;#34; --output text | awk &amp;#39;{ print $1&amp;#34;,&amp;#34;$2}&amp;#39; | sort | grep -v stg ) for LINES in $RET; do INSTANCE_NAME=$(echo $LINES | awk -F, &amp;#39;{ print $1 }&amp;#39;) INSTANCE_ID=$(echo $LINES | awk -F, &amp;#39;{ print $2 }&amp;#39;) echo $INSTANCE_NAME aws ec2 modify-instance-credit-specification \  --instance-credit-specification &amp;#34;[{\&amp;#34;InstanceId\&amp;#34;: \&amp;#34;${INSTANCE_ID}\&amp;#34;,\&amp;#34;CpuCredits\&amp;#34;: \&amp;#34;unlimited\&amp;#34;}]&amp;#34; aws cloudwatch put-metric-alarm \  --alarm-name &amp;#34;$INSTANCE_NAMEでのT2 Unlimited課金発生&amp;#34; \  --namespace AWS/EC2 \  --metric-name CPUSurplusCreditsCharged \  --dimensions &amp;#34;Name=InstanceId,Value=$INSTANCE_ID&amp;#34; \  --period 300 \  --statistic Average \  --threshold 0 \  --comparison-operator GreaterThanThreshold \  --evaluation-periods 1 \  --alarm-actions (既存SNSトピックを使用) \  --ok-actions (既存SNSトピックを使用) echo &amp;#34;-----------&amp;#34; done 参考 https://aws.</description>
+    </item>
+    
+    <item>
+      <title>Route53をGitで管理するようにした</title>
+      <link>/post/2017-08-11-roadworker%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6route53%E3%82%92git%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%97%E3%81%9F/</link>
+      <pubDate>Fri, 11 Aug 2017 09:03:57 +0000</pubDate>
+      
+      <guid>/post/2017-08-11-roadworker%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6route53%E3%82%92git%E3%81%A7%E7%AE%A1%E7%90%86%E3%81%99%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%97%E3%81%9F/</guid>
+      <description>Route53のレコード管理は困難を極める。
+いつの間にかレコードが増えてきて、後から消そうと思っても用途などが思い出せず消すに消せない…そんなレコードが増える経験をした。
+Route53をGitで管理するようにすればPRによる第三者のレビューがやりやすいし、何より誰がいつどんな用途でレコードを追加・変更・削除したのかが丸分かりである。
+ここではroadworkerというナイスなRuby製のGemを使った。
+https://github.com/codenize-tools/roadworker
+使い方は上記リポジトリもあるが、基本的には次の通り。
+  現在のRoute53登録情報をファイルにする (初回のみ) roadwork -e -o Routefile  ファイルを編集する
+  確認のためにdry-runする roadwork -a &amp;ndash;dry-run  Route53に反映 roadwork -a  反映確認 roadwork -t    これでRoute53の管理が楽になった。
+次はGitHubにファイルをプッシュするとCIツールによってRoute53に自動的に反映させるようにしたい。
+8/20追記
+Jenkinsで自動反映するようにした。
+GitHubのWebHookをJenkinsで受けて、roadworkを実行。進捗はJenkinsのSlackプラグインを使った。</description>
+    </item>
+    
+    <item>
+      <title>OpsJAWS Systems Manager勉強会メモ</title>
+      <link>/post/2017-07-19-opsjaws-systems-manager%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%83%A1%E3%83%A2/</link>
+      <pubDate>Wed, 19 Jul 2017 21:47:14 +0000</pubDate>
+      
+      <guid>/post/2017-07-19-opsjaws-systems-manager%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%83%A1%E3%83%A2/</guid>
+      <description>OpsJAWSの Meetup#12 ~ Systems Manager祭り ~に参加してきたので内容をメモ。
+Amazon EC2 Systems Manager OS内部の構成を管理
+下記の自動化
+  ソフトウェアインベントリの収集
+  OSパッチの適用
+  システムイメージの作成
+  OS設定
+  Systems Managerは複数サービスで構成されている
+Run Command リモートから任意の実行が可能
+JSONベースでコマンド・タスクを定義
+SSHポートを開ける必要がない
+ステートマネージャー OSとアプリケーションの設定を定義、状態を維持する
+JSONベースでポリシーを定義
+EC2だけではなくオンプレも管理できる
+インベントリ ソフトウェアインベントリの情報収集
+オンプレも対応
+JSONベースで取得するデータを定義
+ステートマネージャから定期的に呼び出せる
+メンテナンスウィンドウ 事前に設定した時間でメンテナンスを実施
+組み込み済みのコマンド、Run Commandの実行が可能
+可用性と信頼性の向上
+時間と繰り返し間隔を設定 -&amp;gt; メンテナンス対象のターゲットを指定 -&amp;gt; 実行するタスクを設定
+パッチマネージャ ベースラインを定義してWindows/Linuxのパッチを適用
+Patch Baselineを使ってカスタムパッチポリシーを定義
+オートメーション シンプルなワークフローをつかって一般的なタスクを自動化
+パラメータストア IT資産の集中管理
+ログイン、DB接続情報などを一元管理
+Run Command, State Manager, Automationやコンソールから参照、更新可能
+細かく権限管理して必要な人に必要な情報を提供
+KMSで暗号化
+IAMで制限できるため、パラメータ名の命名規則によって、環境ごとにアクセス可能なユーザを定義することができる
+定義済みドキュメントが豊富</description>
+    </item>
+    
+    <item>
+      <title>docker-composeのインストール</title>
+      <link>/post/2017-06-03-docker-compose%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/</link>
+      <pubDate>Sat, 03 Jun 2017 08:13:23 +0000</pubDate>
+      
+      <guid>/post/2017-06-03-docker-compose%E3%81%AE%E3%82%A4%E3%83%B3%E3%82%B9%E3%83%88%E3%83%BC%E3%83%AB/</guid>
+      <description>AmazonLinuxでDockerが使いたくて、yum install dockerでDockerをインストールしたものの、docker-composeが使えなかった。
+調べたところ、docker-composeのインストールは、バイナリをダウンロードするだけのようだった。
+具体的にはGitHubのリリースページからダウンロードする。
+実際に実行したコマンドは次の通り。</description>
+    </item>
+    
+    <item>
+      <title>EC2のRetirement Notificationに対応した</title>
+      <link>/post/2016-07-03-ec2%E3%81%AEretirement-notification%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%9F/</link>
+      <pubDate>Sun, 03 Jul 2016 13:10:55 +0000</pubDate>
+      
+      <guid>/post/2016-07-03-ec2%E3%81%AEretirement-notification%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%9F/</guid>
+      <description>EC2のRetirement Notificationが来ていたので対応しました。
+メールでの対応方法では次のように来ていて、つまりAMIからインスタンスを作りなおせと書いてありました。
+ You may still be able to access the instance. We recommend that you replace the instance by creating an AMI of your instance and launch a new instance from the AMI. For more information please see Amazon Machine Images (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html&amp;lt;/a&amp;gt;) in the EC2 User Guide. In case of difficulties stopping your EBS-backed instance, please see the Instance FAQ (http://aws.amazon.com/instance-help/#ebs-stuck-stopping&amp;lt;/a&amp;gt;).
+ 実際にはインスタンスを停止してから起動するだけで大丈夫でした。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ELB on ことえりブログ</title>
+    <link>/tags/ELB/</link>
+    <description>Recent content in ELB on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 23 May 2018 21:48:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/ELB/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>自分用AWS クラウドサービス活用資料集メモ Elastic Load Balancing編</title>
+      <link>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Elastic-Load-Balancing%E7%B7%A8/</link>
+      <pubDate>Wed, 23 May 2018 21:48:00 +0000</pubDate>
+      
+      <guid>/post/2018-05-23-%E8%87%AA%E5%88%86%E7%94%A8AWS-%E3%82%AF%E3%83%A9%E3%82%A6%E3%83%89%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9%E6%B4%BB%E7%94%A8%E8%B3%87%E6%96%99%E9%9B%86%E3%83%A1%E3%83%A2-Elastic-Load-Balancing%E7%B7%A8/</guid>
+      <description>AWS クラウドサービス活用資料集メモ サービス別資料 コンピューティング Elastic Load Balancing (ELB) 情報元: AWS Black Belt Online Seminar 2016 Elastic Load Balancing
+ Application Load Balancer  L7のコンテントベースのロードバランサー ターゲットグループに対してルーティング コンテナベースのアプリケーションのサポート WebSocketとHTTP/2のサポート 複数のAZで耐障害性が高い 価格はALBの起動時間とLoad Balancer Capacity Units(LCU)の使用量で決まる   Elastic Load Balancing (ELB)  Application Load BalancerとClassic Load Balancerの二種類がある。  Application Load BalancerはL7のコンテントベースのロードバランサー Classic Load BalancerはL4および一部L7機能を提供するロードバランサー     ELBは複数AZに設定できる。DNSラウンドロビンで各AZのELBにアクセスが分散される。その後負荷が均等になるようバックエンドのEC2に振り分けられる クロスゾーン負荷分散を使うことで、AZ間のキャパシティ（インスタンス数、サイズ）が異なる場合やクライアントがDNSをキャッシュする環境でも負荷を均等にできる。 無通信状態が続くとそのコネクションを自動で切断する。デフォルトでは60秒、最低1秒最高3600秒 ELBは自動でスケールするが、瞬間的に急増すると503を返す。  Pre-Warming（暖機運転）の申請を行うあ負荷を段階的にかける ただしPre-WarmingはBusiness/Enterpriseサポートが必要   サブネットは最小/27、空きIPは8以上 ICMP Echo Request/Replyを許可すれば、ELBがpingにも応答する Perfect Forward Secrecyのサポート Server Order Preference対応 スティッキーセッション  同じユーザから来たリクエストをすべて同じEC2インスタンスに送信 ELBで生成するCookieかアプリケーションで生成するCookieか選べる   Connection Draining  ELBから登録解除したりヘルスチェックが失敗したときに、新規割り振りは中止して処理中のリクエストが終わるまで一定期間末   CLBはTCP/SSLによる負荷分散が可能 CLBはバックエンドインスタンスのサーバ証明書認証ができる CLBのコンテントベースルーティングはサブドメインかNGINXで行う。 Load Balancer Capacity Unitsは新規接続数、アクティブ接続数、帯域幅のうち、最も使用量が高いディメンションのみ請求  新規接続数: 1秒あたりの新規接続数 アクティブ接続数: 1分あたりのアクティブ接続数 トラフィック量（Mbps)   1 LCUには1秒あたり最大25の新規接続数 (4KB証明書の場合は最大5), 1分あたり最大3000個のアクティブ接続, 最大2.</description>
+    </item>
+    
+  </channel>
+</rss>

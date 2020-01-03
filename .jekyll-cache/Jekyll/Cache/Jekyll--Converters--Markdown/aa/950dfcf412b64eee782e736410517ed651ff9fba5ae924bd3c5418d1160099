@@ -1,0 +1,20 @@
+I"�<p>Macの空きディスク容量が1割を切ったので、原因となっているファイルを調べてみた。</p>
+
+<p>フリーのツールもいくつかあるのだが、今回は<a href="https://daisydiskapp.com/">DaisyDisk</a>という有償のアプリを使って調べてみた。</p>
+
+<p>256GBのSSDの調査に数十秒かかり、後はディレクトリをたどりながら、今いるディレクトリの使用容量を円グラフで表示できる。</p>
+
+<p>これで調べてみるとどうやらEvernoteで約20GB使っているようだった。</p>
+
+<p><img src="http://img.kter.jp/2016/0211/evernote.png" alt="Evernote使用ディスク容量" /></p>
+
+<p>Evernoteは今後デスクトップアプリ版ではなく、Webアプリ版を使用することにして、アプリはAppCleanerで削除しました。</p>
+
+<p><img src="http://img.kter.jp/2016/0211/evernote-used-size.png" alt="Evernoteアプリ削除" /></p>
+
+<p>というような作業を繰り返し、最終的にホームディレクトリの使用量を142GBまでに広げることができました。</p>
+
+<p><img src="http://img.kter.jp/2016/0211/deleted.png" alt="deleted" /></p>
+
+<p>Source: New feed</p>
+:ET

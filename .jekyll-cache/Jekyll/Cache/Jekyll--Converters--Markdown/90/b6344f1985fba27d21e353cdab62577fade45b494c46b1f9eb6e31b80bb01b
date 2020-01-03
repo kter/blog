@@ -1,0 +1,8 @@
+I"�<p>identifyコマンドを使う。具体的には次の通り。</p>
+
+<pre class="lang:default decode:true ">% identify -format "%w x %h" 画像ファイル名
+550 x 850
+</pre>
+
+<p>formatオプションで表示内容を制御できる。</p>
+:ET

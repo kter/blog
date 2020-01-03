@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>yum updateが異常に遅い</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">yum updateが異常に遅い</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2014-01-10</small></p> <hr/>
+   <div class="post">
+     <p>yum updateが異常に遅い(10kbpsほどの)マシンがあり、その解決に手間取ったので解決策をここに書き記しておきます。</p>
+<p>まず、yumでfastestmirrorプラグインが有効になっているかどうか確認します。</p>
+<p>確認方法は、yum updateの実行の際、Loaded plugins: fastestmirrorと表示されれば有効になっています。</p>
+<p>有効になっている場合はキャッシュファイルを削除してみます。キャッシュファイルは、/etc/yum/pluginconf.d/fastestmirror.confのhostfilepathという項目に場所が書いてあります。</p>
+<p>私の場合は/var/cache/yum/timedhosts.txtでした。これをリネームして読み込まないようにしてみます。</p>
+<p>これでも解決しませんでしたので、/sbin/ifconfigでインターフェースの状態を確認してみます。</p>
+<p>すると、errorパケットがかなりあり、現在進行形で増えているようでした。</p>
+<p>/sbin/ethtool eth0でさらに詳しく状態を見てみると、Speedが100Mb/sに設定されていました。</p>
+<p>他のマシンは1000Mbpsで設定されていたので設定を合わせます。</p>
+<p>/etc/sysconfig/network-scripts/ifcfg-eth0を確認してみると、ETHTOOL_OPTS=&quot;autoneg off speed 100 duplex full&quot;とあったので、Speedを1000に設定して/etc/init.d/network restartで再起動して有効にしようとしました。</p>
+<p>しかし、Bringing up interface eth0: Cannot set new settings: Invalid argumentというエラーが表示されて変更できないようでした。</p>
+<p>/sbin/ethtool -s eth0 speed 1000 duplex full autoneg offを実行しても下記のような同様の結果でした。</p>
+<p>Cannot set new settings: Invalid argument</p>
+<p>not setting speed</p>
+<p>not setting duplex</p>
+<p>not setting autoneg</p>
+<p>おかしいなーと思いつつググると、Speedが1000の時はautonegがonになっている必要があるとの情報を発見しました。</p>
+<p><a href="http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=40505&amp;forum=10&amp;start=16">http://www.atmarkit.co.jp/bbs/phpBB/viewtopic.php?topic=40505&amp;forum=10&amp;start=16</a></p>
+<p>さっそく/sbin/ethtool -s eth0 speed 1000 duplex full autoneg onを実行したところうまく設定することができました。</p>
+<p>再起動しても有効になるよう、ifcfg-eth0にもETHTOOL_OPTS=&quot;autoneg on speed 1000 duplex full&quot;と書いておきます。</p>
+<p>最後にyum updateを実行すると一瞬でダウンロードが終わりましたｗ</p>
+<p>Source: New feed</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/vendor/bundle/ruby/2.6.0/gems/jekyll-feed-0.13.0/spec/fixtures/2013-12-12-dec-the-second/"> </a></li>
+      &nbsp;<li class="next"><a href="/post/2014-01-13-%E5%A4%A7%E9%B3%B3%E3%81%8A%E8%BF%8E%E3%81%88%E5%AE%8C%E4%BA%86/"> 大鳳お迎え完了！</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

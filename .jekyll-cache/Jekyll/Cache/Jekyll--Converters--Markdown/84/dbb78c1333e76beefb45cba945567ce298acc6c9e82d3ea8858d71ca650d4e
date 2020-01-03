@@ -1,0 +1,87 @@
+I"R<h4 id="auto-scaling"><a href="https://aws.amazon.com/jp/autoscaling/">Auto Scaling</a></h4>
+
+<p>情報元: <a href="https://www.slideshare.net/AmazonWebServicesJapan/aws-black-belt-online-seminar-2017-auto-scaling">AWS Black Belt Online Seminar 2017 Auto Scaling</a></p>
+
+<ul>
+  <li>動的スケーリング3種
+    <ul>
+      <li>ChangeInCapacity
+        <ul>
+          <li>指定したインスタンス数だけ容量を増減</li>
+          <li>ex. アラームが起きたら2台増やす</li>
+        </ul>
+      </li>
+      <li>ExactCapacity
+        <ul>
+          <li>指定したインスタンス数に容量を変更</li>
+          <li>アラームが起きたら2台にする</li>
+        </ul>
+      </li>
+      <li>PercentChangeInCapacity
+        <ul>
+          <li>指定したインスタンス数に容量を変更</li>
+          <li>現在のサイズから20%増やす</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>負荷が予想できるなら: スケジュールベース</li>
+  <li>予定された負荷の対策: 手動スケーリング</li>
+  <li>予測できない緩やかな負荷: 動的スケーリング</li>
+  <li>ヘルスチェック
+    <ul>
+      <li>EC2: ステータスがrunning以外の状態を以上と判断</li>
+      <li>ELB: ELBのヘルスチェックを利用</li>
+    </ul>
+  </li>
+  <li>クールダウン: スケーリングアクション実行後、指定した時間ないは次のスケーリングアクションを実行しない仕組み
+    <ul>
+      <li>シンプルスケーリングポリシーのみ対応</li>
+    </ul>
+  </li>
+  <li>ターミネーションポリシー: スケールイン時どのインスタンスから終了するか定義
+    <ul>
+      <li>OldestInstance / NewestInstance</li>
+      <li>OldestLaunchConfiguration</li>
+      <li>ClosestToNextInstanceHour (次の課金が始まるタイミングが最も近いインスタンス)</li>
+      <li>Default (OldestLaunchConfigurationとClosestToNextInstanceHourを順に適用し、複数インスタンスが残ればランダム)</li>
+      <li>インスタンス保護対象は除外</li>
+    </ul>
+  </li>
+  <li>インスタンスのアタッチ・デタッチ
+    <ul>
+      <li>インスタンスのアタッチ: Auto Scaling Groupに追加できる。Desired Capacityが自動で追加される</li>
+      <li>インスタンスのデタッチ: Auto Scaling Groupから取り除ける。Desired Capacityは変更されないため、新規インスタンスが追加される</li>
+      <li>どちらもELBとは連動する。</li>
+    </ul>
+  </li>
+  <li>スタンバイ: ELBからデタッチされ、トラフィックが流れないようになる
+    <ul>
+      <li>Desired Capasityも自動で変更される</li>
+    </ul>
+  </li>
+  <li>ライフサイクルフック: Auto Scalingによるインスタンス起動・終了を待機させ、起動時または終了時にカスタムアクションを実行できる仕組み
+    <ul>
+      <li>インスタンス起動・終了処理を待機させ、メッセージを通知。SNS、SQS、CloudWatchイベントに送られる</li>
+      <li>待機時間にカスタムアクションを(初期化・終了処理）を実行</li>
+      <li>ライフサイクルの終了または待機時間延長コマンドを実行</li>
+    </ul>
+  </li>
+  <li>突発的なスパイクには向いていない
+    <ul>
+      <li>CloudFrontにオフロード</li>
+      <li>API Gatewayでスロットリング</li>
+      <li>サイトを静的ページに切り替える</li>
+    </ul>
+  </li>
+  <li>アーキテクチャとしてはSQSやECS、Blue Green(ASGをCloudFormationで自動作成)等が挙げられる。</li>
+  <li>Application Auto Scaling: Auto Scalingと似たUXでAWSリソースの自動スケールを実現
+    <ul>
+      <li>ECS</li>
+      <li>Spot Fleet</li>
+      <li>EMR</li>
+    </ul>
+  </li>
+</ul>
+
+:ET

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JMeter on ことえりブログ</title>
+    <link>/categories/JMeter/</link>
+    <description>Recent content in JMeter on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Aug 2018 10:46:02 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/JMeter/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JMeterでHTTPプロキシサーバーを使いHTTPSサイトでもシナリオの自動作成を行う</title>
+      <link>/post/2018-08-20-JMeter%E3%81%A7HTTP%E3%83%97%E3%83%AD%E3%82%AD%E3%82%B7%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%82%92%E4%BD%BF%E3%81%84HTTPS%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E3%82%82%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA%E3%81%AE%E8%87%AA%E5%8B%95%E4%BD%9C%E6%88%90%E3%82%92%E8%A1%8C%E3%81%86/</link>
+      <pubDate>Mon, 20 Aug 2018 10:46:02 +0000</pubDate>
+      
+      <guid>/post/2018-08-20-JMeter%E3%81%A7HTTP%E3%83%97%E3%83%AD%E3%82%AD%E3%82%B7%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%82%92%E4%BD%BF%E3%81%84HTTPS%E3%82%B5%E3%82%A4%E3%83%88%E3%81%A7%E3%82%82%E3%82%B7%E3%83%8A%E3%83%AA%E3%82%AA%E3%81%AE%E8%87%AA%E5%8B%95%E4%BD%9C%E6%88%90%E3%82%92%E8%A1%8C%E3%81%86/</guid>
+      <description>JMeterにはプロキシを使ったシナリオの自動作成機能があります。
+プロキシの使い方を紹介しているサイトによってはHTTPSはJMeter単体ではできないと書いてあるのですが、単体でできたので手順をメモします。
+手順 1. 記録するHTTPSリクエストを置く空のスレッドグループを作成 2. 記録用のプロキシサーバを作成 3. プロキシサーバの設定 &amp;ldquo;対象となるコントローラ&amp;quot;に、先の手順で作成したスレッドグループを指定します。
+その後&amp;quot;開始&amp;quot;ボタンを押下します。
+プロキシ用のダミー証明書についての説明が書かれています。OKボタンを押下します。
+4. ダミー証明書をインストール JMeterのbinディレクトリ内に生成されたApacheJMeterTemporaryRootCA.crtファイルをダブルクリックで開きます。
+キーチェーンが開きますので、選択されている_ DO NOT INSTALLで始まる証明書ファイルを右クリックして&amp;quot;情報を見る&amp;quot;を押下します。
+5. 証明書を信頼 開いたウインドウの&amp;quot;信頼&amp;quot;タブの&amp;quot;この証明書を使用する時&amp;quot;のプルダウンで&amp;quot;常に信頼&amp;quot;を選択します。
+ウインドウを閉じるときにパスワードが求められるので入力します。
+6. プロキシ設定 システム環境設定のネットワークを押下します。
+詳細ボタンを押下します。
+&amp;ldquo;プロキシ&amp;quot;タブを開き、&amp;ldquo;保護されたWebプロキシ (HTTPS)&amp;ldquo;を選択し、&amp;ldquo;保護されたWebプロキシサーバ&amp;quot;にlocalhostを入力し、OKを押下する。
+7. プロキシを通じてページにアクセスする プロキシの設定ができたのでWebページにアクセスします。
+するとスレッドグループの配下にHTTPリクエストが追加されます。
+8. 最後に プロキシの利用が終わったら環境設定の&amp;quot;保護されたWebプロキシ (HTTPS)&amp;ldquo;のチェックを外します。</description>
+    </item>
+    
+  </channel>
+</rss>

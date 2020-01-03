@@ -1,0 +1,23 @@
+I"<p>mod_pythonを入れようとして、</p>
+
+<div class="highlight">
+  <pre><code class="language-">$ ./configure --with-apxs=/usr/local/apache2/bin/apxs
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+(略)
+checking for Py_NewInterpreter in -lpython2.6... no
+configure: error: Can not link to python
+</code></pre>
+</div>
+
+<p>と表示された場合。</p>
+
+<div class="highlight">
+  <pre><code class="language-">yum install python-devel
+</code></pre>
+</div>
+
+<p>で解決</p>
+
+<p>Source: New feed</p>
+:ET

@@ -1,0 +1,17 @@
+I"�<p>DynamoDBのオートスケール設定をAWS CLIから行う</p>
+
+<p>今までブラウザのAWSコンソールからポチポチやっていましたが、必要になったので調べました。
+オートスケール設定はDynamoDBではなくapplication-autoscaling経由で行うようです。</p>
+
+<p>DynamoDBテーブルの確認</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws application-autoscaling describe-scaling-policies <span class="nt">--service-namespace</span> dynamodb <span class="nt">--resource-id</span> <span class="s2">"table/テーブル名"</span>
+</code></pre></div></div>
+
+<p>オートスケールしきい値設定</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>aws application-autoscaling put-scaling-policy <span class="nt">--service-namespace</span> dynamodb <span class="nt">--policy-name</span> <span class="s2">"DynamoDBReadCapacityUtilization:table/テーブル名"</span>  <span class="nt">--resource-id</span> <span class="s2">"table/テーブル名"</span> <span class="nt">--scalable-dimension</span> dynamodb:table:ReadCapacityUnits <span class="nt">--policy-type</span> TargetTrackingScaling <span class="nt">--target-tracking-scaling-policy-configuration</span> <span class="s1">'{ "TargetValue": リードの値, "PredefinedMetricSpecification": { "PredefinedMetricType": "DynamoDBReadCapacityUtilization" } }'</span>
+aws application-autoscaling put-scaling-policy <span class="nt">--service-namespace</span> dynamodb <span class="nt">--policy-name</span> <span class="s2">"DynamoDBWriteCapacityUtilization:table/テーブル名"</span>  <span class="nt">--resource-id</span> <span class="s2">"table/テーブル名"</span> <span class="nt">--scalable-dimension</span> dynamodb:table:WriteCapacityUnits <span class="nt">--policy-type</span> TargetTrackingScaling <span class="nt">--target-tracking-scaling-policy-configuration</span> <span class="s1">'{ "TargetValue": ライトの値, "PredefinedMetricSpecification": { "PredefinedMetricType": "DynamoDBWriteCapacityUtilization" } }'</span>
+</code></pre></div></div>
+
+:ET

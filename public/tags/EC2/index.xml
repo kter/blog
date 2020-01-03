@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EC2 on ことえりブログ</title>
+    <link>/tags/EC2/</link>
+    <description>Recent content in EC2 on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 Jan 2018 18:22:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/EC2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EC2 IAMロールの作成と適用をCLIから行う</title>
+      <link>/post/2018-01-10-EC2IAM%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E9%81%A9%E7%94%A8%E3%82%92CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/</link>
+      <pubDate>Wed, 10 Jan 2018 18:22:00 +0000</pubDate>
+      
+      <guid>/post/2018-01-10-EC2IAM%E3%83%AD%E3%83%BC%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90%E3%81%A8%E9%81%A9%E7%94%A8%E3%82%92CLI%E3%81%8B%E3%82%89%E8%A1%8C%E3%81%86/</guid>
+      <description>EC2 IAMロールの作成と適用をCLIから行う
+AWSコンソールからであれば簡単なんですが、CLIからだとインスタンスプロファイル（EC2 IAMロール)を作るのにロールの作成から必要なので若干面倒です。
+ここでは前提として、複数のインスタンスに対してそれぞれ違うロール(ポリシーは同一)を適用します。
+表にすると次のような感じです。
+| インスタンスID | ロール名 / インスタンスプロファイル名 | ポリシーARN | | instanceid1 | rolename1 | arn:aws:iam::aws:policy/service-role/servicerole | | instanceid2 | rolename2 | arn:aws:iam::aws:policy/service-role/servicerole |
+手順 Assume-roleを準備 cat &amp;lt;&amp;lt; _EOF &amp;gt; Trust-Policy.json { &amp;#34;Version&amp;#34;: &amp;#34;2012-10-17&amp;#34;, &amp;#34;Statement&amp;#34;: [ { &amp;#34;Effect&amp;#34;: &amp;#34;Allow&amp;#34;, &amp;#34;Principal&amp;#34;: { &amp;#34;Service&amp;#34;: &amp;#34;ec2.amazonaws.com&amp;#34; }, &amp;#34;Action&amp;#34;: &amp;#34;sts:AssumeRole&amp;#34; } ] } _EOF インスタンスロール作成とロールのアタッチ INSTANCE_ROLE_NAMES=( rolename1 rolename2 ) for INSTANCE_ROLE_NAME in ${INSTANCE_ROLE_NAMES[@]}; do # ロール作成 aws iam create-role --role-name $INSTANCE_ROLE_NAME --assume-role-policy-document file://Trust-Policy.</description>
+    </item>
+    
+  </channel>
+</rss>

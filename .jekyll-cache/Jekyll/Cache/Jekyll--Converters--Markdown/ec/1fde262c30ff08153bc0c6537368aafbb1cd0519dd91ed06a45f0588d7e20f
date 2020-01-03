@@ -1,0 +1,36 @@
+I"'<p>CloudFormationでSecurityGroupを作るときにYou may not define rules between a VPC group and a non-VPC groupとエラーが出るときの対応</p>
+
+<p>解決まで地味に30分程度掛かったのでメモ。</p>
+
+<p>CloudFormationで次のような感じでSecurityGroupを作ろうとすると、<code class="highlighter-rouge">You may not define rules between a VPC group and a non-VPC group</code>とエラーが出てSecurityGroupが作れない。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">DBEC2SecurityGroup</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Allow</span><span class="nv"> </span><span class="s">access</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">specific</span><span class="nv"> </span><span class="s">SecurityGroup"</span>
+      <span class="na">SecurityGroupIngress</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">tcp</span>
+        <span class="na">FromPort</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3306'</span>
+        <span class="na">ToPort</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3306'</span>
+        <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s1">'</span><span class="s">EC2SecurityGroup'</span>
+</code></pre></div></div>
+
+<p>これはSourceSecurityGroupにVPCのSecurityGroupが指定されているのに、（VpcIdが指定されていないため）EC2 Classic環境にSecurityGroupが作られようとしているため出たエラーである（言葉にするとややこしい）。</p>
+
+<p><a href="https://docs.aws.amazon.com/ja_jp/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-security-group.html#cfn-ec2-securitygroup-vpcid">ドキュメント</a>にもあるが正しくはこんな感じ。</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">DBEC2SecurityGroup</span><span class="pi">:</span>
+    <span class="na">Type</span><span class="pi">:</span> <span class="s">AWS::EC2::SecurityGroup</span>
+    <span class="na">Properties</span><span class="pi">:</span>
+      <span class="na">VpcId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s">VPC</span>
+      <span class="na">GroupDescription</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Allow</span><span class="nv"> </span><span class="s">access</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">specific</span><span class="nv"> </span><span class="s">SecurityGroup"</span>
+      <span class="na">SecurityGroupIngress</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">IpProtocol</span><span class="pi">:</span> <span class="s">tcp</span>
+        <span class="na">FromPort</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3306'</span>
+        <span class="na">ToPort</span><span class="pi">:</span> <span class="s1">'</span><span class="s">3306'</span>
+        <span class="na">SourceSecurityGroupId</span><span class="pi">:</span> <span class="kt">!Ref</span> <span class="s1">'</span><span class="s">EC2SecurityGroup'</span>
+</code></pre></div></div>
+
+<p>ドキュメントは見ていたけど眠かったのとエラーメッセージに惑わされて解決まで時間掛かってしまった…。</p>
+
+:ET

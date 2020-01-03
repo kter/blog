@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OpsJAWS Systems Manager勉強会メモ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.62.1" />
+  <link href="" rel="alternate" type="application/rss+xml" title="ことえりブログ" />
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/hc.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  
+    
+    </head>
+    <body>
+<div class="nav-toggle"><i class="fa fa-bars fa-2x"></i> Herring Cove </div>
+      <div id = "wrapper">
+
+
+<div class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/"><p class="navbar-brand">ことえりブログ</p></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+					
+					
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+       
+       <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+					<img src="" />
+          <li class="sidebar-brand"><a href="/"><h1 class="brand">ことえりブログ</h1></a><h3></h3></li>
+          <hr />
+					
+          <hr />
+          <div id="social-wrapper">
+           
+           
+           
+           
+         </div>
+       </ul>
+     </div>
+
+
+
+     <div class="container">
+
+
+  <div id="article">
+   <div class="article-title">OpsJAWS Systems Manager勉強会メモ</div>
+   <p class="meta"><small>&nbsp;<i class="fa fa-calendar-o"></i> 2017-07-19</small></p> <hr/>
+   <div class="post">
+     <p>OpsJAWSの Meetup#12 ~ Systems Manager祭り ~に参加してきたので内容をメモ。</p>
+<h4 id="amazon-ec2-systems-manager">Amazon EC2 Systems Manager</h4>
+<p>OS内部の構成を管理</p>
+<p>下記の自動化</p>
+<ul>
+<li>
+<p>ソフトウェアインベントリの収集</p>
+</li>
+<li>
+<p>OSパッチの適用</p>
+</li>
+<li>
+<p>システムイメージの作成</p>
+</li>
+<li>
+<p>OS設定</p>
+</li>
+</ul>
+<p>Systems Managerは複数サービスで構成されている</p>
+<h5 id="run-command">Run Command</h5>
+<p>リモートから任意の実行が可能</p>
+<p>JSONベースでコマンド・タスクを定義</p>
+<p>SSHポートを開ける必要がない</p>
+<h5 id="heading">ステートマネージャー</h5>
+<p>OSとアプリケーションの設定を定義、状態を維持する</p>
+<p>JSONベースでポリシーを定義</p>
+<p>EC2だけではなくオンプレも管理できる</p>
+<h5 id="heading-1">インベントリ</h5>
+<p>ソフトウェアインベントリの情報収集</p>
+<p>オンプレも対応</p>
+<p>JSONベースで取得するデータを定義</p>
+<p>ステートマネージャから定期的に呼び出せる</p>
+<h5 id="heading-2">メンテナンスウィンドウ</h5>
+<p>事前に設定した時間でメンテナンスを実施</p>
+<p>組み込み済みのコマンド、Run Commandの実行が可能</p>
+<p>可用性と信頼性の向上</p>
+<p>時間と繰り返し間隔を設定 -&gt; メンテナンス対象のターゲットを指定 -&gt; 実行するタスクを設定</p>
+<h5 id="heading-3">パッチマネージャ</h5>
+<p>ベースラインを定義してWindows/Linuxのパッチを適用</p>
+<p>Patch Baselineを使ってカスタムパッチポリシーを定義</p>
+<h5 id="heading-4">オートメーション</h5>
+<p>シンプルなワークフローをつかって一般的なタスクを自動化</p>
+<h5 id="heading-5">パラメータストア</h5>
+<p>IT資産の集中管理</p>
+<p>ログイン、DB接続情報などを一元管理</p>
+<p>Run Command, State Manager, Automationやコンソールから参照、更新可能</p>
+<p>細かく権限管理して必要な人に必要な情報を提供</p>
+<p>KMSで暗号化</p>
+<p>IAMで制限できるため、パラメータ名の命名規則によって、環境ごとにアクセス可能なユーザを定義することができる</p>
+<p>定義済みドキュメントが豊富</p>
+<h4 id="ssm-agent">SSM Agent</h4>
+<p>Systems Managerの利用にはエージェントが必要</p>
+<p>64bitだとAmazon AMI, CentOS, RHEL</p>
+<p>Linuxではrootユーザでコマンドの実行が行われる</p>
+<p>LinuxではS3からダウンロードしてインストールする</p>
+<p>オンプレで使う場合、アクティベーションが必要。下記設定が必要</p>
+<ol>
+<li>
+<p>名前</p>
+</li>
+<li>
+<p>許可するサーバ数</p>
+</li>
+<li>
+<p>使用するIAMロール</p>
+</li>
+<li>
+<p>アクティベーションの有効期間</p>
+</li>
+<li>
+<p>サーバに付与する名前</p>
+</li>
+</ol>
+<h4 id="heading-6">利用例</h4>
+<p>AMI更新の自動化</p>
+<p>AMIから自動的にインスタンスを作成、アップデート適用後AMIを作成し、インスタンスを削除</p>
+<p>公式ドキュメントに手順が載っている</p>
+<p>入門編スライド</p>
+<!-- raw HTML omitted -->
+<p>ハンズオンスライド</p>
+<!-- raw HTML omitted -->
+<h4 id="heading-7">ライトニングトーク</h4>
+<p>Systems Managerのインベントリ情報をExcelに出力するツールを作った。</p>
+
+   </div>
+ </div>
+
+
+ <a href="https://twitter.com/share" class="twitter-share-button " data-size="small" data-count="none">Tweet</a>
+ <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+ <ul class="pager">
+      &nbsp;<li class="previous"><a href="/post/2017-07-19-kubernetes%E3%81%A7nfs%E3%82%92%E4%BD%BF%E3%81%86/"> KubernetesでNFSを使う</a></li>
+      &nbsp;<li class="next"><a href="/post/2017-07-23-apache%E3%81%A7%E3%83%A6%E3%83%BC%E3%82%B6%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%88%E3%81%A7%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E6%8B%92%E5%90%A6%E3%81%99%E3%82%8B/"> Apacheでユーザエージェントでアクセス拒否する</a></li>
+</ul>
+
+
+
+    </ul>
+    </div>
+    <footer>
+
+        <p class="text-muted credit">&copy; 2020. All rights reserved. </p>
+    </footer>
+ 
+    <script src="/js/jquery-1.10.2.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/hc.js"></script>
+</body>
+
+</html>
+

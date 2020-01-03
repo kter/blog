@@ -1,0 +1,103 @@
+I"�<h1 id="terraform-import手順">terraform import手順</h1>
+
+<p>簡単な例でS3バケットのimportをしてみる。
+先に書いておくと、terraform importは現状のAWSリソースの情報をいい感じにterraformのtfファイルに書き起こしてくれるわけではなく、tfstateファイルにリソース情報を記録してくれるだけ。
+あとはterraformのドキュメントとtfstateファイルを参考にtfファイルを手書きする感じとなる。</p>
+
+<h2 id="1-importしたいリソースをmaintfに記載">1. importしたいリソースをmain.tfに記載</h2>
+
+<p><code class="highlighter-rouge">resource (リソースタイプ) (リソース名)</code> の形式で記載する。
+※リソース名はterraform内の識別名</p>
+
+<pre><code class="language-:main.tf">resource "aws_s3_bucket" "test" {
+}
+</code></pre>
+
+<h2 id="2-terraform-importコマンドでterraformtfstateファイルに状態を保存">2. terraform importコマンドでterraform.tfstateファイルに状態を保存</h2>
+
+<p><code class="highlighter-rouge">terraform import (リソースタイプ).(リソース名) (importするリソースID)</code>の形式でコマンドを実行する。
+※S3バケットの場合importするリソースIDはバケット名</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>terraform import aws_s3_bucket.test tomohiko.io
+</code></pre></div></div>
+
+<p>※もしエラーが出たら<code class="highlighter-rouge">terraform init</code>を実行してAWSプラグインをインストールする</p>
+
+<h2 id="3-terraformtfstateファイルからmaintfファイルに必要なパラメータを抜き出しmaintfファイルに記載">3. terraform.tfstateファイルからmain.tfファイルに必要なパラメータを抜き出しmain.tfファイルに記載</h2>
+
+<p>terraform.tfstateファイルにimportしたリソースの状態が記録されるので、その情報とterraformのドキュメントを参考にmain.tfファイルを完成させる。</p>
+
+<p>※デフォルト設定のS3を作成するだけならbucketの指定だけで大丈夫です。</p>
+
+<pre><code class="language-:main.tf">resource "aws_s3_bucket" "test" {
+  bucket = "tomohiko.io"
+}
+</code></pre>
+
+<h1 id="個人的ハマりポイント">個人的ハマりポイント</h1>
+
+<h2 id="iam-role">IAM Role</h2>
+
+<p>IAM Roleを定義するためには下記3つのresourceと1つのdataを定義する必要がある。</p>
+
+<p>policy</p>
+
+<ul>
+  <li>aws_iam_role</li>
+  <li>aws_iam_policy_document</li>
+  <li>aws_iam_role_policy</li>
+</ul>
+
+<p>data</p>
+
+<ul>
+  <li>aws_iam_policy_document</li>
+</ul>
+
+<p>自分の書いたコードの一部を抜粋するとこんな感じ。</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>resource "aws_iam_role" "IAMロール名" {
+  name               = "IAMロール名"
+  assume_role_policy = "${data.aws_iam_policy_document.IAMロール名.json}"
+}
+
+data "aws_iam_policy_document" "IAMロール名" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy" "IAMロール名" {
+  name   = "IAMロール名"
+  role   = "${aws_iam_role.IAMロール名.id}"
+  policy = "${data.aws_iam_policy_document.IAMロール名-policy.json}"
+}
+
+data "aws_iam_policy_document" "IAMロール名-policy" {
+  statement {
+    actions = [
+        "s3:*"
+    ]
+    resources = [ "*" ]
+  }
+}
+</code></pre></div></div>
+
+<h2 id="ecs">ECS</h2>
+
+<p>コンテナ起動時にこんな感じのエラーが出る</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CannotPullContainerError: API error (500): Get https://111122223333.dkr.ecr.us-east-1.amazonaws.com/v2/: net/http: request canceled while waiting for connection"
+</code></pre></div></div>
+
+<p>AWSのドキュメントに全て書いてあるが、パブリックサブネット+パブリックIP自動割当じゃないとインターネットに接続できず、コンテナイメージをプルできないため。
+(もしくはIP自動割当OFF+NATゲートウェイを設置&amp;ルーティング設定)</p>
+
+<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/task_cannot_pull_image.html">コンテナイメージをプルできないエラー - Amazon Elastic Container Service</a></p>
+
+:ET

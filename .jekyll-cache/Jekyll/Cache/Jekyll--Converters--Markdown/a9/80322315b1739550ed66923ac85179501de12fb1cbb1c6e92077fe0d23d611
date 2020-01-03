@@ -1,0 +1,543 @@
+I"�H<h1 id="jaws-days-2018">JAWS DAYS 2018</h1>
+
+<p>内容の正当性は保証できません。こういう雰囲気でした。</p>
+
+<p>スライドとか公開されたら更新します。</p>
+
+<h2 id="概要">概要</h2>
+
+<p>JAWS DAYS 2018レポート</p>
+
+<p>日時: 2018年3月10日10時から</p>
+
+<p>URL: https://jawsdays2018.jaws-ug.jp/</p>
+
+<p>以下敬称略</p>
+
+<h2 id="コンテナでウェイウェイ-仮">コンテナでウェイウェイ (仮)</h2>
+
+<p>by @keisuke69　西谷圭介</p>
+
+<h3 id="なぜコンテナなのか">なぜコンテナなのか？</h3>
+
+<ul>
+  <li>パッケージング</li>
+  <li>配布</li>
+  <li>イミュータブルインフラストラクチャー</li>
+</ul>
+
+<h3 id="ユースケース">ユースケース</h3>
+
+<ul>
+  <li>マイクロサービスアーキテクチャ</li>
+  <li>非同期ジョブ実行（バッチコンピューティング）
+    <ul>
+      <li>柔軟にスケール</li>
+    </ul>
+  </li>
+  <li>継続的インテグレーション、デプロイ
+    <ul>
+      <li>開発テスト本番まで一貫したイメージを利用</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="amazon-container-service">Amazon Container Service</h3>
+
+<ul>
+  <li>レジストリ
+    <ul>
+      <li>Amazon ECR</li>
+    </ul>
+  </li>
+  <li>コントロールプレーン
+    <ul>
+      <li>Amazon ECS
+        <ul>
+          <li>年間アクティブユーザ+450%</li>
+          <li>毎週数百万ものインスタンスで数億コンテナが起動</li>
+          <li>2015年のGA以来50以上の機能がリリース</li>
+          <li>Task: コンテナ群の実行単位</li>
+          <li>Service: Taskの数を指定</li>
+          <li>IAM Role：　Taskごとに割当可能</li>
+          <li>TaskごとにENIを自動割当</li>
+          <li>Task内はlocalhostを共有</li>
+        </ul>
+      </li>
+      <li>AWS Fargate
+        <ul>
+          <li>ECSと一緒に使う</li>
+          <li>ECSのTaskでコンテナイメージを指定して実行</li>
+          <li>インスタンス管理不要</li>
+          <li>タスクに割り当てたリソース分の料金が掛かる</li>
+          <li>CPUとメモリを秒単位で課金</li>
+          <li>Fargateで難しいもの
+            <ul>
+              <li>WindowsContainer</li>
+              <li>GPU</li>
+              <li>docker execのようなインタラクティブなデバッグ</li>
+              <li>SpotやRIベースの価格モデルの適用</li>
+              <li>Taskレベルのメトリクス</li>
+            </ul>
+          </li>
+          <li>Lambdaの方がいい場合
+            <ul>
+              <li>イベントドリブン</li>
+              <li>ミリ秒単位のコンピュート</li>
+              <li>ランタイムの管理をしたくない</li>
+              <li>分散バッチコンピューティング</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>EKS
+        <ul>
+          <li>Masterの管理運用をEKSでサポート (マネージド、Multi-AZ)</li>
+          <li>EC2の管理は必要になるが、Fargateでのサポートも予定</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="our-ecs-journey">Our ECS Journey</h2>
+
+<p>by @calvinfo Calvin French-Owen</p>
+
+<p>Segmentで様々なAPIを一つにまとめるサービスを運用している。
+ECSは2015年から運用</p>
+
+<p>ECSは次の理由から使っている。</p>
+
+<ul>
+  <li>効率がいい</li>
+  <li>複数の環境間での実行</li>
+  <li>コードにできる</li>
+</ul>
+
+<p>dev-opsはコンテナに有利</p>
+
+<p>どのAWSのサービスを使うか？</p>
+
+<ul>
+  <li>Lambda: 関数が必要でgolang, node, java, python, c#</li>
+  <li>Fargate 上記以外でコンテナがどう実行されるか制御しなくていい</li>
+  <li>EKS: 上記以外でKubernetesか？</li>
+  <li>ECS: 上記以外</li>
+</ul>
+
+<p>ECSはノードにエージェントが入り、ECS APIから制御される。</p>
+
+<p>Terraformで環境構築を行っている。</p>
+
+<p>https://github.com/segmentio/stack</p>
+
+<p>本番ではCPUとメモリでスケールさせている。</p>
+
+<p>CIでイメージをビルドしている。</p>
+
+<p>git push -&gt; docker build (circle ci) -&gt; (ECR) -&gt; ECS &lt;- task udpate (Slack)</p>
+
+<p>CloudWatchとDatadog/Statsdを使ってモニタリングしている。</p>
+
+<p>1log group per service</p>
+
+<h2 id="aws-technical-evangelists-special-talk-session--スペシャルトークセッション-awsとユーザーコミュニティが生み出すno-borderな未来-">「AWS Technical Evangelists Special talk session -スペシャルトークセッション AWSとユーザーコミュニティが生み出すNo borderな未来-」</h2>
+
+<p>登壇者のトークっセッション</p>
+
+<p>Jeff Barr / Randall Hunt / Julio Faerman / Channy Yun / 亀田 治伸</p>
+
+<p>Q. 新サービスや新機能が多い。どうキャッチアップすればよいか？</p>
+
+<p>A. すべてキャッチアップは不可能。自分の好きなものから始めるといい。</p>
+
+<p>A. 好奇心を持つ。土台を築く</p>
+
+<p>Q. AWS認定のために何をどう勉強すればいいか？</p>
+
+<p>A. アソシエイトの試験は簡単。AWS使ったことなくても合格できる。一方でプロフェッショナルは難しい。ネットワークはアソシエイトでも特に難しい。時間は掛かるがドキュメントを読むといい。アーキテクチャを学ぶのにいいことは使用事例を見ること。</p>
+
+<p>A. 本を読んで定義を固める</p>
+
+<p>Q. プログラミング言語はどうすればいいか？</p>
+
+<p>A. Python, JavaScript。ただし問題解決のためのツールでしかないので必要に応じて。</p>
+
+<p>Q. 5年後、10年後もプロフェッショナルでいるためには？</p>
+
+<p>A. 特定のサービスやプロダクトにこだわりすぎると、新しいサービスとかに目を向けられなくなってしまう (初期のサービスは成熟したものに比べて完成度が低い)。</p>
+
+<p>A. 今起きていることを理解する。何が流行るかわからないから。</p>
+
+<h2 id="サービスをスケールさせるためにawsとaws利用者の技術">サービスをスケールさせるために〜AWSとAWS利用者の技術</h2>
+
+<p>by 荒木 靖宏</p>
+
+<p>サービスをスケールさせるためにユーザがやることは？</p>
+
+<ul>
+  <li>新機能追加
+    <ul>
+      <li>AWS Media Services: メディア配信に必要な物すべて提供</li>
+    </ul>
+  </li>
+  <li>面倒のアウトソース
+    <ul>
+      <li>Inter-Region VPC Peering: インターネットに出ないリージョン間のVPC Perring</li>
+      <li>Direct Connect Gateway: Direct Connectを使う時別のリージョンから使える</li>
+    </ul>
+  </li>
+  <li>地理的な拡大
+    <ul>
+      <li>DynamoDB Global Tables</li>
+      <li>大阪ローカルリージョン</li>
+      <li>Ningxia: 中国に二つ目のリージョン</li>
+      <li>Paris: ヨーロッパに4つ目のリージョン</li>
+      <li>冗長化した100GbEのネットワーク</li>
+      <li>トランジットセンター: 東京に2箇所、大阪に1箇所ある。サーバ等はなく、DX、Tier1 ISP等の接続を担う</li>
+      <li>カスタムのルーター　/ SDN を導入</li>
+      <li>C5インスタンスはカスタムのKVMを使っていてハードウェアのパフォーマンスをフルに引き出せる</li>
+    </ul>
+  </li>
+  <li>+α
+    <ul>
+      <li>Everything fails, all the time. Werner Vogels</li>
+      <li>セキュリティ、運用、開発も、攻撃や運用ミスを防ぐのは難しい。自動で検知対応できないといけない</li>
+      <li>障害を前提に
+        <ul>
+          <li>AutoScaling
+            <ul>
+              <li>可用性も良くなる
+ 　 * Automatic Feedback Control</li>
+              <li>アクセスログを継続的に解析、集計し、不審な挙動のIPアドレスをブロック対象として動的にWAFの設定を変更する</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>問題が発生しても修正、テスト、デプロイが即座に可能なプロセスを整備する</li>
+      <li>テストケースの生成を自動化する</li>
+      <li>Game-day Testing
+        <ul>
+          <li>実際の本番環境で、異常事態の対応を訓練</li>
+          <li>トラブルが起きたときしかトラブルシュートしなくて、いざトラブルが起きたときにスムーズに対応できるか？
+            <ul>
+              <li>設定をデタラメに設定したりイーサネットケーブルを抜いたり</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Error Injection
+        <ul>
+          <li>Netflix Simian Army: Mon-Thuesに障害を常時注入。四半期に一度はリージョンを飛ばす
+            <ul>
+              <li>Chaos Monkey</li>
+              <li>Chaos Gorilla</li>
+              <li>Chaos Kong</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>クラウド自体を進化させるのは事業者の役割</p>
+
+<p>基礎コンポーネントの提供は事業者だけができること</p>
+
+<p>AWS製のマネージドサービスも登場している</p>
+
+<p>クラウドを知り、使い方を深めるのはサービス提供事業者</p>
+
+<p>クラウドの限界を知り、それを前提として設計するのが現実</p>
+
+<h2 id="コンテナを守る技術-2018">コンテナを守る技術 2018</h2>
+
+<p>by @pottava 中丸 良</p>
+
+<p>オフィシャルのコンテナイメージでも脆弱性は普通にある。</p>
+
+<p>安心のための3つの問いかけ</p>
+
+<ol>
+  <li>アプリケーションの詳細な挙動を把握できているか？</li>
+  <li>セキュアな構成、設計ができているか？</li>
+  <li>セキュリティポリシーをテストする仕組みがあるか？</li>
+</ol>
+
+<h3 id="アプリケーションの詳細な挙動を把握できているか">アプリケーションの詳細な挙動を把握できているか？</h3>
+
+<p>コンテナ以前はホストごとの管理が基本: 複数のサービスが同居の場合どうしても穴が大きくなる</p>
+
+<p>ECSはTaskごとにENIがあるから、TaskそれぞれにセキュリティグループとIAMRoleが適用できる。</p>
+
+<h3 id="セキュアな構成設計ができているか">セキュアな構成、設計ができているか？</h3>
+
+<p>ホストまで管理したいが、コントロールプレーンは管理したくない場合はECS / Batchを使う</p>
+
+<p>ECSのaws vpcモードを使う。</p>
+
+<p>アプリケーションだけでいいならFargateを使う。</p>
+
+<p>ECSタスク定義はDockerのセキュリティオプションも数多く使える。</p>
+
+<p>セキュリティポリシーをテストする仕組みがあるか？</p>
+
+<ul>
+  <li>都度スキャン
+    <ul>
+      <li>コードベースが変わるたび</li>
+    </ul>
+  </li>
+  <li>定期スキャン (サービス横断)
+    <ul>
+      <li>新しく発見された脆弱性などの影響</li>
+    </ul>
+  </li>
+  <li>実行時スキャン(アプリ実行中に攻撃やポリシー違反がないかをモニタ)
+    <ul>
+      <li>コンテナだけではなくホストも</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="コンテナの守り方">コンテナの守り方</h3>
+
+<h4 id="コンポーネント">コンポーネント</h4>
+
+<p>守りやすい環境を整える</p>
+
+<p>セグメントを分け、攻撃対象・艦戦範囲を限定にする</p>
+
+<ul>
+  <li>クラスタを分割
+    <ul>
+      <li>役割、顧客、ビジネス、環境別</li>
+    </ul>
+  </li>
+  <li>ネットワークを分割
+    <ul>
+      <li>ホストとコンテナ</li>
+    </ul>
+  </li>
+</ul>
+
+<p>スケールアップよりスケールアウト: 被害を最小限に全滅を避ける</p>
+
+<p>インスタンスハードニング、堅牢化: ホワイトリストの導入 (NIST 800-167(), パッチ管理等</p>
+
+<p>セキュリティ製品のインストール: AWS Inspectorとか</p>
+
+<p>docker-bench-securityイメージ: Docker用ホストを本番で動かす場合のベストプラクティス等の確認</p>
+
+<p>これをLambdaでスケジュールしてRun Commandで実行。CloudWatch Logsに出力してアラートを出す。</p>
+
+<p>これはAWS公式のおすすめ。</p>
+
+<p>ECSエージェントおすすめ設定</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ECS_DISABLE_PRIVILEGED=true
+</code></pre></div></div>
+
+<p>SecuirtyOptionを使いたい時</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ECS_SELINUX_CAPABLE=true
+ECS_APPARMOR_CAPABLE=true
+</code></pre></div></div>
+
+<p>リソース制約</p>
+
+<ul>
+  <li>ulimits (–ulimit)で上限を決める</li>
+  <li>memoryを指定してそれを超えたらコンテナを落とす</li>
+</ul>
+
+<p>READ ONLY</p>
+
+<ul>
+  <li>マウントしたディレクトリ以外を書き込み禁止に
+    <ul>
+      <li>readonlyRootFilesystem</li>
+    </ul>
+  </li>
+  <li>マウントしたディレクトリを書き込み禁止に
+    <ul>
+      <li>mountPoints.readOnly</li>
+      <li>volumesFrom.readOnly</li>
+    </ul>
+  </li>
+  <li>AppArmorでパスベースのアクセス制御
+    <ul>
+      <li>dockerSecurityOptions</li>
+    </ul>
+  </li>
+</ul>
+
+<p>ルートユーザは使わない</p>
+
+<ul>
+  <li>適切なユーザで作成</li>
+  <li>システムコールに正しく権限チェックが掛かるように</li>
+</ul>
+
+<p>実行ファイルの管理</p>
+
+<ul>
+  <li>利用するバイナリだけをイメージに入れる。</li>
+  <li>静的なリンクにしておく (ldd/straceで確認)</li>
+  <li>suid, sgidがセットされたバイナリは無効にする</li>
+</ul>
+
+<p>通信を制限する</p>
+
+<ul>
+  <li>どこと通信するのかをまず把握</li>
+  <li>links, networkMode, disableNetwork</li>
+</ul>
+
+<p>システムコールを制限する</p>
+
+<ul>
+  <li>seccompを使う（ただしECSでは使えない)</li>
+</ul>
+
+<p>Build
+CI
+コードの静的解析、イメージの解析・ポリシーテスト</p>
+
+<ul>
+  <li>Static Application Security Testingツールを利用</li>
+  <li>dockerイメージのポリシーを定義  &amp; チェック</li>
+  <li>GoogleCloudPlatform/container-structure-test
+    <ul>
+      <li>コンテナのあるべき姿をポリシーとして定義、テスト可能</li>
+      <li>ファイル、パーミッション等のテストができる</li>
+      <li>ENTRYPOINTやCMD、環境変数、ポートなどのメタデータが正しいか確認できる</li>
+    </ul>
+  </li>
+  <li>自動化
+    <ul>
+      <li>Jenkins等でビルド、解析等をする。
+        <ul>
+          <li>TwistLock等を使う</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>定期的な解析</p>
+
+<ul>
+  <li>自前では難しい</li>
+  <li>おすすめはaqua (商用ツール)
+    <ul>
+      <li>ECRのイメージ解析
+        <ul>
+          <li>脆弱性チェック</li>
+          <li>設定不備、秘密情報の混入確認</li>
+        </ul>
+      </li>
+      <li>実行時防御
+        <ul>
+          <li>攻撃検知、ポリシー違反のチェック</li>
+          <li>ポリシーの自動生成</li>
+        </ul>
+      </li>
+      <li>IAM, KMS、秘密情報管理</li>
+    </ul>
+  </li>
+  <li>NeuVector
+    <ul>
+      <li>実行時脆弱性スキャン &amp; ポリシー違反チェック</li>
+    </ul>
+  </li>
+</ul>
+
+<p>秘密情報の扱い</p>
+
+<ul>
+  <li>環境変数使っても色んなところから見えたり消せなかったりする</li>
+  <li>SSM Parameter Store &amp; KMS &amp; IAM Roleを使ってパスワード情報を保存しよう</li>
+</ul>
+
+<h2 id="aws-japan-sa-lightnings">AWS Japan SA Lightnings!</h2>
+
+<p>by 浅野佑貴 / 藤原吉規 / 福井厚 / 江川大地 / 塚越啓介 / 桐山隼人 / 畑史彦 / 大村幸敬</p>
+
+<h3 id="save-on-cost">Save on Cost</h3>
+
+<p>by 浅野佑貴</p>
+
+<p>RI購入 / コンパーチブル変換デモ</p>
+
+<h3 id="aws-lambdaedgeでできること">AWS Lambda@Edgeでできること！</h3>
+
+<p>by 藤原吉規</p>
+
+<p>Lambda@Edgeでの画像リサイズデモ</p>
+
+<ul>
+  <li>リサイズ済み画像がなければ生成 &amp; 保存する</li>
+</ul>
+
+<h3 id="serverless-aspnet-core-20-applications">Serverless ASP.NET Core 2.0 Applications</h3>
+
+<p>by 福井厚</p>
+
+<p>デモ</p>
+
+<ul>
+  <li>LambdaファンクションでASP.NET Core Web APIアプリケーションを動かす</li>
+</ul>
+
+<h3 id="amazon-aurora-storage-クイズ">Amazon Aurora Storage クイズ</h3>
+
+<p>by 江川大地</p>
+
+<p>インスタンスとストレージでコンポーネントが分かれている。</p>
+
+<h3 id="happy-amplify">Happy Amplify</h3>
+
+<p>by 塚越啓介</p>
+
+<ul>
+  <li>AWS Amplifyで認証を使う。</li>
+  <li>JavaScriptのライブラリ</li>
+  <li>ライブコーディング</li>
+</ul>
+
+<h3 id="みんなクラウドセキュリティ">みんなクラウドセキュリティ</h3>
+
+<p>by 桐山隼人</p>
+
+<ul>
+  <li>AWS GuardDuty
+    <ul>
+      <li>攻撃の検知</li>
+      <li>ホワイトリスト・ブラックリストIPアドレスを設定できる</li>
+      <li>さまざまなセキュリティ企業と連携している</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="amazon-polly-aws-codebuild-aws-codecommitで自動プレゼンとを自動ビルド">Amazon Polly, AWS CodeBuild, AWS CodeCommitで自動プレゼンと/を自動ビルド</h3>
+
+<p>by 畑史彦</p>
+
+<p>remark.js + Amazon Polly + CodeCommit + CodeBuildで、スピーチ音声を自動生成し、それを発表するデモ。</p>
+
+<h3 id="いまcloudformationで知るべき10のこと">いまCloudFormationで知るべき10のこと</h3>
+
+<p>by 大村幸敬</p>
+
+<ul>
+  <li>YAML使おう。見やすい</li>
+  <li>JSON/YML変換にcfn-flipを使おう (オフィシャル）</li>
+  <li>Cross Stack Reference: 更新頻度と役割分担によってスタックを分ける (ネットワーク、セキュリティグループ…等）</li>
+  <li>Systems Manager Parameter Store: 変数を入れておく場所として使う。システムのパラメータ (ユーザ名とか) を集中管理</li>
+  <li>Drift Detection: テンプレートと実環境の差分（Comming soon)</li>
+</ul>
+
+:ET

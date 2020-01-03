@@ -1,0 +1,30 @@
+I"A<p>Ruby2.1系をソースインストールした時、Railsなどをインストールしようとすると、OpenSSLのインストールを促されますが、OpenSSLパッケージをインストールするだけではいけません。</p>
+
+<p>ソースのext/opensslでextconf.rbを実行し、生成されたMakefileでmake installする必要がありますが、Makefileが間違えているので修正する必要があります。修正しないと次のエラーが出ます</p>
+
+<blockquote>
+  <p>make: *** `ossl.o’ に必要なターゲット `/thread_native.h’ を make するルールがありません.  中止.</p>
+</blockquote>
+
+<p>よってRuby2.1.0でOpenSSLをインストールする際は次のようにする必要があります。</p>
+
+<p>cd /usr/local/src/ruby2.1.0/ext/openssl</p>
+
+<p>/usr/local/bin/ruby extconf.rb</p>
+
+<p>cp -iv Makefile .__Makefile.bak</p>
+
+<p>vim Makefile</p>
+
+<p>diff Makefile .__Makefile.20140407-01</p>
+
+<p>17d16</p>
+
+<p>&lt; top_srcdir = $(srcdir)/../..</p>
+
+<p>sudo make</p>
+
+<p>sudo make install</p>
+
+<p>Source: New feed</p>
+:ET

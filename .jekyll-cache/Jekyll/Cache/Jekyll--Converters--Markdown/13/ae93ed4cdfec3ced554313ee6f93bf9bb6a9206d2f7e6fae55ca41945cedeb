@@ -1,0 +1,19 @@
+I"�<p>Dockerで証明書を発行できる。</p>
+
+<p>※外部から443にアクセスできるようポートを開けておく</p>
+
+<div class="highlight">
+  <pre><code class="language-">docker run -it --rm -p 443:443 --name letsencrypt -v "/etc/letsencrypt:/etc/letsencrypt" -v "/var/lib/letsencrypt:/var/lib/letsencrypt" quay.io/letsencrypt/letsencrypt:latest certonly
+</code></pre>
+</div>
+
+<p>生成されたファイルは下記ファイルに保存される</p>
+
+<div class="highlight">
+  <pre><code class="language-">/etc/letsencrypt/live/ドメイン名/fullchain.pem
+/etc/letsencrypt/live/ドメイン名/privkey.pem
+</code></pre>
+</div>
+
+<p>Source: New feed</p>
+:ET

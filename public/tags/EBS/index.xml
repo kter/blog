@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EBS on ことえりブログ</title>
+    <link>/tags/EBS/</link>
+    <description>Recent content in EBS on ことえりブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 03 Jul 2016 13:10:55 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/EBS/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EC2のRetirement Notificationに対応した</title>
+      <link>/post/2016-07-03-ec2%E3%81%AEretirement-notification%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%9F/</link>
+      <pubDate>Sun, 03 Jul 2016 13:10:55 +0000</pubDate>
+      
+      <guid>/post/2016-07-03-ec2%E3%81%AEretirement-notification%E3%81%AB%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%9F/</guid>
+      <description>EC2のRetirement Notificationが来ていたので対応しました。
+メールでの対応方法では次のように来ていて、つまりAMIからインスタンスを作りなおせと書いてありました。
+ You may still be able to access the instance. We recommend that you replace the instance by creating an AMI of your instance and launch a new instance from the AMI. For more information please see Amazon Machine Images (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html&amp;lt;/a&amp;gt;) in the EC2 User Guide. In case of difficulties stopping your EBS-backed instance, please see the Instance FAQ (http://aws.amazon.com/instance-help/#ebs-stuck-stopping&amp;lt;/a&amp;gt;).
+ 実際にはインスタンスを停止してから起動するだけで大丈夫でした。</description>
+    </item>
+    
+  </channel>
+</rss>
